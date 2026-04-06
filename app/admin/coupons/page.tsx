@@ -32,8 +32,8 @@ export default function AdminCoupons() {
     setLoading(true)
     const [cRes, sRes, catRes] = await Promise.all([
       supabase.from('coupons').select('*, store:stores(name,slug), category:categories(name)').order('created_at', { ascending: false }),
-      supabase.from('stores').select('id,name').order('name'),
-      supabase.from('categories').select('id,name').order('name'),
+      supabase.from('stores').select('*').order('name'),
+      supabase.from('categories').select('*').order('name'),
     ])
     setCoupons(cRes.data || [])
     setStores(sRes.data || [])
