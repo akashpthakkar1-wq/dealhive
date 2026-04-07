@@ -38,34 +38,23 @@ export default async function HomePage() {
             India&apos;s most trusted coupon platform. Verified codes, real savings, zero hassle.
           </p>
 
-          {/* ── Live search — navigates to /search?q=... ── */}
-          <div className="max-w-lg mx-auto">
+          {/* ── Search form — navigates to /search?q=... ── */}
+          <form action="/search" method="GET" className="max-w-lg mx-auto">
             <div className="flex gap-2 bg-white rounded-2xl p-1.5 shadow-xl">
               <input
-                id="hero-search"
+                name="q"
                 placeholder="Search stores, coupons, deals…"
                 className="flex-1 px-4 py-2.5 text-gray-800 text-sm focus:outline-none rounded-xl bg-transparent placeholder-gray-400"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    const val = (e.target as HTMLInputElement).value.trim();
-                    if (val) window.location.href = `/search?q=${encodeURIComponent(val)}`;
-                    else window.location.href = '/search';
-                  }
-                }}
+                autoComplete="off"
               />
               <button
-                type="button"
-                onClick={() => {
-                  const val = (document.getElementById('hero-search') as HTMLInputElement)?.value.trim();
-                  if (val) window.location.href = `/search?q=${encodeURIComponent(val)}`;
-                  else window.location.href = '/search';
-                }}
+                type="submit"
                 className="bg-primary-500 hover:bg-primary-600 text-white font-bold px-6 py-2.5 rounded-xl text-sm transition-colors"
               >
                 Search
               </button>
             </div>
-          </div>
+          </form>
 
           <div className="flex items-center justify-center gap-6 mt-6 text-sm text-white/70">
             <span>✅ 3,200+ Active Deals</span>
