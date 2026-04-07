@@ -49,7 +49,7 @@ export default async function StorePage({ params }: Props) {
   const expiredCoupons  = allCoupons.filter((c) =>  isExpired(c.expiry_date))
   const codeCoupons     = activeCoupons.filter((c) => c.type === 'code')
   const dealCoupons     = activeCoupons.filter((c) => c.type === 'deal')
-  const freeCoupons     = activeCoupons.filter((c) => c.type === 'free')
+  const freeCoupons     = activeCoupons.filter((c) => (c.title + (c.description || '')).toLowerCase().includes('free ship'))
   const featuredCoupons = activeCoupons.filter((c) => c.is_featured)
   const verifiedCoupons = activeCoupons.filter((c) => c.is_verified)
   const maxDiscount = allCoupons.reduce((max, c) => { const n = parseInt(c.discount || '0'); return n > max ? n : max }, 0)
