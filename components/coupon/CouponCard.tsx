@@ -1,5 +1,6 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import { CheckCircle, Copy, Check, ExternalLink, X, Tag, Clock, Users, Zap } from 'lucide-react'
 import type { Coupon } from '@/types'
@@ -7,7 +8,6 @@ import { formatDate, isExpired } from '@/lib/utils'
 
 interface Props { coupon: Coupon }
 
-// Stable random number from a string (for consistent rating/uses per coupon)
 function stableRandom(seed: string, min: number, max: number): number {
   let hash = 0
   for (let i = 0; i < seed.length; i++) {
@@ -20,37 +20,57 @@ function stableRandom(seed: string, min: number, max: number): number {
 export default function CouponCard({ coupon }: Props) {
   const [showPopup, setShowPopup] = useState(false)
   const [copied, setCopied] = useState(false)
+  const searchParams = useSearchParams()
   const expired = isExpired(coupon.expiry_date)
 
-  // Random usage if 0
   const usageCount = coupon.usage_count && coupon.usage_count > 0
     ? coupon.usage_count
     : stableRandom(coupon.id + 'uses', 200, 5000)
 
-  // Random "last used X hours ago"
   const hoursAgo = stableRandom(coupon.id + 'time', 1, 23)
   const lastUsed = hoursAgo === 1 ? '1 hour ago' : `${hoursAgo} hours ago`
 
-  function handleGetCode() {
-    // Open current page in new tab (so user can come back)
-    if (typeof window !== 'undefined') {
-      window.open(window.location.href, '_blank', 'noopener')
+  // ── Auto-open popup if URL has ?popup=COUPON_ID ──
+  useEffect(() => {
+    const popupId = searchParams.get('popup')
+    if (popupId === coupon.id) {
+      setShowPopup(true)
+      // Clean up URL without reloading page
+      const url = new URL(window.location.href)
+      url.searchParams.delete('popup')
+      window.history.replaceState({}, '', url.toString())
     }
-    setShowPopup(true)
+  }, [searchParams, coupon.id])
+
+  function handleGetCode() {
+    // Build new tab URL with popup param
+    const currentUrl = new URL(window.location.href)
+    currentUrl.searchParams.set('popup', coupon.id)
+
+    // Open DealHive page in new tab with popup auto-open
+    window.open(currentUrl.toString(), '_blank', 'noopener')
+
+    // Redirect current tab to affiliate URL
+    if (coupon.affiliate_url) {
+      window.location.href = coupon.affiliate_url
+    }
   }
 
   function handleActivateDeal() {
-    if (typeof window !== 'undefined') {
-      window.open(window.location.href, '_blank', 'noopener')
-      // Redirect current tab to affiliate
-      window.location.href = coupon.affiliate_url || '#'
+    // Same flow for deals
+    const currentUrl = new URL(window.location.href)
+    currentUrl.searchParams.set('popup', coupon.id)
+
+    window.open(currentUrl.toString(), '_blank', 'noopener')
+
+    if (coupon.affiliate_url) {
+      window.location.href = coupon.affiliate_url
     }
   }
 
   function handleCopyCode() {
     if (coupon.code) {
       navigator.clipboard.writeText(coupon.code).catch(() => {
-        // Fallback for older browsers
         const el = document.createElement('textarea')
         el.value = coupon.code!
         document.body.appendChild(el)
@@ -64,8 +84,8 @@ export default function CouponCard({ coupon }: Props) {
   }
 
   function handleGoToStore() {
-    if (typeof window !== 'undefined') {
-      window.location.href = coupon.affiliate_url || '#'
+    if (coupon.affiliate_url) {
+      window.location.href = coupon.affiliate_url
     }
   }
 
@@ -100,7 +120,6 @@ export default function CouponCard({ coupon }: Props) {
 
         {/* Center: Details */}
         <div className="flex-1 px-4 py-3 min-w-0">
-          {/* Store name + badges */}
           <div className="flex items-center gap-2 mb-1 flex-wrap">
             {storeLogo && (
               <Image src={storeLogo} alt={storeName} width={18} height={18} className="rounded object-contain" />
@@ -119,12 +138,8 @@ export default function CouponCard({ coupon }: Props) {
             )}
           </div>
 
-          {/* Title */}
-          <h3 className="font-bold text-gray-900 text-sm leading-snug mb-1.5">
-            {coupon.title}
-          </h3>
+          <h3 className="font-bold text-gray-900 text-sm leading-snug mb-1.5">{coupon.title}</h3>
 
-          {/* Meta */}
           <div className="flex items-center gap-3 flex-wrap text-xs text-gray-400">
             {expired ? (
               <span className="text-red-400 font-semibold flex items-center gap-1"><Clock className="w-3 h-3" /> Expired</span>
@@ -186,7 +201,6 @@ export default function CouponCard({ coupon }: Props) {
 
             {/* Body */}
             <div className="p-6">
-              {/* Discount highlight */}
               {coupon.discount && (
                 <div className="text-center mb-5">
                   <div className="text-4xl font-extrabold text-primary-600 mb-1">{coupon.discount}</div>
@@ -204,9 +218,7 @@ export default function CouponCard({ coupon }: Props) {
                     </div>
                     <button onClick={handleCopyCode}
                       className={`flex items-center gap-2 px-4 py-3 rounded-xl font-bold text-sm transition-all ${
-                        copied
-                          ? 'bg-green-500 text-white'
-                          : 'bg-gray-100 hover:bg-primary-100 text-gray-700 hover:text-primary-700'
+                        copied ? 'bg-green-500 text-white' : 'bg-gray-100 hover:bg-primary-100 text-gray-700 hover:text-primary-700'
                       }`}>
                       {copied ? <><Check className="w-4 h-4" /> Copied!</> : <><Copy className="w-4 h-4" /> Copy</>}
                     </button>
@@ -214,14 +226,12 @@ export default function CouponCard({ coupon }: Props) {
                 </div>
               )}
 
-              {/* Description */}
               {coupon.description && (
                 <div className="mb-5 p-3 bg-gray-50 rounded-xl text-sm text-gray-600 leading-relaxed">
                   {coupon.description}
                 </div>
               )}
 
-              {/* Expiry */}
               {coupon.expiry_date && (
                 <div className="flex items-center gap-2 text-xs text-gray-400 mb-5">
                   <Clock className="w-3.5 h-3.5" />
@@ -229,7 +239,6 @@ export default function CouponCard({ coupon }: Props) {
                 </div>
               )}
 
-              {/* CTA */}
               <button onClick={handleGoToStore}
                 className="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-md">
                 <ExternalLink className="w-4 h-4" />
@@ -237,7 +246,9 @@ export default function CouponCard({ coupon }: Props) {
               </button>
 
               <p className="text-center text-xs text-gray-400 mt-3">
-                The code has been copied to your clipboard. Paste it at checkout.
+                {coupon.code
+                  ? 'The code has been copied. Paste it at checkout on the store website.'
+                  : 'Click above to activate this deal on the store website.'}
               </p>
             </div>
           </div>
