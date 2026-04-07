@@ -8,7 +8,6 @@ import {
   getRecentCoupons,
   getPopularStores,
   getCategories,
-  getCouponsByCategory,
 } from '@/lib/queries'
 
 export const revalidate = 3600
