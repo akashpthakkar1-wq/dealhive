@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Tag, TrendingUp, Star, Clock, Zap, Store } from 'lucide-react'
 import CouponCard from '@/components/coupon/CouponCard'
+import HeroSearchBar from '@/components/hero/HeroSearchBar'
 import {
   getFeaturedCoupons,
   getTrendingCoupons,
@@ -23,7 +24,7 @@ export default async function HomePage() {
 
   return (
     <div>
-      {/* ── HERO ─────────────────────────────────────── */}
+      {/* ── HERO ── */}
       <section className="bg-gradient-to-br from-primary-600 via-primary-500 to-primary-700 text-white py-14">
         <div className="container-main text-center">
           <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-semibold mb-5 border border-white/20">
@@ -38,23 +39,8 @@ export default async function HomePage() {
             India&apos;s most trusted coupon platform. Verified codes, real savings, zero hassle.
           </p>
 
-          {/* ── Search form — navigates to /search?q=... ── */}
-          <form action="/search" method="GET" className="max-w-lg mx-auto">
-            <div className="flex gap-2 bg-white rounded-2xl p-1.5 shadow-xl">
-              <input
-                name="q"
-                placeholder="Search stores, coupons, deals…"
-                className="flex-1 px-4 py-2.5 text-gray-800 text-sm focus:outline-none rounded-xl bg-transparent placeholder-gray-400"
-                autoComplete="off"
-              />
-              <button
-                type="submit"
-                className="bg-primary-500 hover:bg-primary-600 text-white font-bold px-6 py-2.5 rounded-xl text-sm transition-colors"
-              >
-                Search
-              </button>
-            </div>
-          </form>
+          {/* ✅ Client component — live search with dropdown */}
+          <HeroSearchBar />
 
           <div className="flex items-center justify-center gap-6 mt-6 text-sm text-white/70">
             <span>✅ 3,200+ Active Deals</span>
@@ -64,7 +50,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── CATEGORY BAR ─────────────────────────────── */}
+      {/* ── CATEGORY BAR ── */}
       <section className="bg-white border-b border-gray-100 py-4 sticky top-16 z-30 shadow-sm">
         <div className="container-main">
           <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
@@ -82,33 +68,26 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── 1. FEATURED DEALS ────────────────────────── */}
+      {/* ── FEATURED DEALS ── */}
       <section className="section-white">
         <div className="container-main">
-          <SectionHeader
-            icon={<Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />}
-            title="Featured Deals"
-            subtitle="Handpicked top offers from the best stores"
-            href="/search?filter=featured"
-          />
+          <SectionHeader icon={<Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />}
+            title="Featured Deals" subtitle="Handpicked top offers from the best stores"
+            href="/search?filter=featured" />
           {featured.length > 0 ? (
-            // ✅ 2-column grid desktop, 1-column mobile — items-stretch for equal height
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-stretch">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
               {featured.map((c) => <CouponCard key={c.id} coupon={c} />)}
             </div>
           ) : <EmptyState />}
         </div>
       </section>
 
-      {/* ── 2. POPULAR STORES ────────────────────────── */}
+      {/* ── POPULAR STORES ── */}
       <section className="section-purple">
         <div className="container-main">
-          <SectionHeader
-            icon={<Store className="w-5 h-5 text-primary-500" />}
-            title="Popular Stores"
-            subtitle="Browse top stores and their latest deals"
-            href="/stores"
-          />
+          <SectionHeader icon={<Store className="w-5 h-5 text-primary-500" />}
+            title="Popular Stores" subtitle="Browse top stores and their latest deals"
+            href="/stores" />
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
             {stores.map((store) => (
               <Link key={store.id} href={`/store/${store.slug}`}
@@ -130,39 +109,34 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── 3. TRENDING NOW ──────────────────────────── */}
+      {/* ── TRENDING NOW ── */}
       <section className="section-white">
         <div className="container-main">
-          <SectionHeader
-            icon={<TrendingUp className="w-5 h-5 text-red-500" />}
-            title="Trending Now"
-            subtitle="Hot deals flying off the shelf"
-            href="/search?filter=trending"
-          />
+          <SectionHeader icon={<TrendingUp className="w-5 h-5 text-red-500" />}
+            title="Trending Now" subtitle="Hot deals flying off the shelf"
+            href="/search?filter=trending" />
           {trending.length > 0 ? (
-            // ✅ 2-column grid desktop, 1-column mobile
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-stretch">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
               {trending.map((c) => <CouponCard key={c.id} coupon={c} />)}
             </div>
           ) : <EmptyState />}
         </div>
       </section>
 
-      {/* ── 4. BROWSE BY CATEGORY ────────────────────── */}
+      {/* ── BROWSE BY CATEGORY ── */}
       <section className="section-gray">
         <div className="container-main">
-          <SectionHeader
-            icon={<Tag className="w-5 h-5 text-primary-500" />}
-            title="Browse by Category"
-            subtitle="Find deals in your favourite categories"
-            href="/categories"
-          />
+          <SectionHeader icon={<Tag className="w-5 h-5 text-primary-500" />}
+            title="Browse by Category" subtitle="Find deals in your favourite categories"
+            href="/categories" />
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
             {categories.map((cat) => (
               <Link key={cat.id} href={`/category/${cat.slug}`}
                 className="bg-white rounded-xl border border-gray-100 p-5 flex flex-col items-center gap-2 hover:border-primary-300 hover:shadow-md hover:bg-primary-50 transition-all group text-center">
                 <div className="text-4xl">{cat.icon || '🏷️'}</div>
-                <div className="font-bold text-gray-800 text-sm group-hover:text-primary-600 transition-colors">{cat.name}</div>
+                <div className="font-bold text-gray-800 text-sm group-hover:text-primary-600 transition-colors">
+                  {cat.name}
+                </div>
               </Link>
             ))}
           </div>
@@ -172,18 +146,14 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── 5. RECENTLY ADDED ────────────────────────── */}
+      {/* ── RECENTLY ADDED ── */}
       <section className="section-white">
         <div className="container-main">
-          <SectionHeader
-            icon={<Clock className="w-5 h-5 text-blue-500" />}
-            title="Recently Added"
-            subtitle="Fresh deals added today"
-            href="/search?sort=recent"
-          />
+          <SectionHeader icon={<Clock className="w-5 h-5 text-blue-500" />}
+            title="Recently Added" subtitle="Fresh deals added today"
+            href="/search?sort=recent" />
           {recent.length > 0 ? (
-            // ✅ 2-column grid desktop, 1-column mobile
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-stretch">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
               {recent.map((c) => <CouponCard key={c.id} coupon={c} />)}
             </div>
           ) : <EmptyState />}

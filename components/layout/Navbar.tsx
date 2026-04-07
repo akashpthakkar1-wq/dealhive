@@ -2,19 +2,19 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Search, Menu, X, Tag, Percent } from 'lucide-react'
+import { Menu, X, Tag } from 'lucide-react'
+import LiveSearchBar from '@/components/search/LiveSearchBar'
 
 const NAV_LINKS = [
-  { href: '/',             label: 'Home' },
-  { href: '/stores',       label: 'Stores' },
-  { href: '/categories',   label: 'Categories' },
-  { href: '/search',       label: 'New Deals & Coupons' },
-  { href: '/blog',         label: 'Blog' },
+  { href: '/',           label: 'Home' },
+  { href: '/stores',     label: 'Stores' },
+  { href: '/categories', label: 'Categories' },
+  { href: '/search',     label: 'New Deals & Coupons' },
+  { href: '/blog',       label: 'Blog' },
 ]
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
-  const [search, setSearch] = useState('')
   const pathname = usePathname()
 
   return (
@@ -46,24 +46,14 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Search */}
+          {/* ✅ Live search bar — desktop */}
           <div className="flex-1 max-w-md ml-auto hidden md:block">
-            <form action="/search" method="GET">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input
-                  name="q"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search stores, coupons, deals..."
-                  className="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-primary-400 bg-gray-50"
-                />
-              </div>
-            </form>
+            <LiveSearchBar variant="navbar" placeholder="Search stores, coupons, deals..." />
           </div>
 
           {/* Mobile menu button */}
-          <button onClick={() => setOpen(!open)} className="lg:hidden ml-auto p-2 rounded-lg hover:bg-gray-100">
+          <button onClick={() => setOpen(!open)}
+            className="lg:hidden ml-auto p-2 rounded-lg hover:bg-gray-100">
             {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
@@ -73,12 +63,10 @@ export default function Navbar() {
       {open && (
         <div className="lg:hidden border-t border-gray-100 bg-white pb-4">
           <div className="container-main pt-3">
-            <form action="/search" method="GET" className="mb-3">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input name="q" placeholder="Search..." className="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-300 bg-gray-50" />
-              </div>
-            </form>
+            {/* ✅ Live search bar — mobile */}
+            <div className="mb-3">
+              <LiveSearchBar variant="navbar" placeholder="Search..." />
+            </div>
             <nav className="flex flex-col gap-1">
               {NAV_LINKS.map((l) => (
                 <Link key={l.href} href={l.href} onClick={() => setOpen(false)}
