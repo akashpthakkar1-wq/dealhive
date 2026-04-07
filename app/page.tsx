@@ -37,15 +37,36 @@ export default async function HomePage() {
           <p className="text-white/80 text-lg mb-8 max-w-xl mx-auto">
             India&apos;s most trusted coupon platform. Verified codes, real savings, zero hassle.
           </p>
-          <form action="/search" method="GET" className="max-w-lg mx-auto">
+
+          {/* ── Live search — navigates to /search?q=... ── */}
+          <div className="max-w-lg mx-auto">
             <div className="flex gap-2 bg-white rounded-2xl p-1.5 shadow-xl">
-              <input name="q" placeholder="Search stores, coupons, deals…"
-                className="flex-1 px-4 py-2.5 text-gray-800 text-sm focus:outline-none rounded-xl bg-transparent placeholder-gray-400" />
-              <button type="submit" className="bg-primary-500 hover:bg-primary-600 text-white font-bold px-6 py-2.5 rounded-xl text-sm transition-colors">
+              <input
+                id="hero-search"
+                placeholder="Search stores, coupons, deals…"
+                className="flex-1 px-4 py-2.5 text-gray-800 text-sm focus:outline-none rounded-xl bg-transparent placeholder-gray-400"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    const val = (e.target as HTMLInputElement).value.trim();
+                    if (val) window.location.href = `/search?q=${encodeURIComponent(val)}`;
+                    else window.location.href = '/search';
+                  }
+                }}
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  const val = (document.getElementById('hero-search') as HTMLInputElement)?.value.trim();
+                  if (val) window.location.href = `/search?q=${encodeURIComponent(val)}`;
+                  else window.location.href = '/search';
+                }}
+                className="bg-primary-500 hover:bg-primary-600 text-white font-bold px-6 py-2.5 rounded-xl text-sm transition-colors"
+              >
                 Search
               </button>
             </div>
-          </form>
+          </div>
+
           <div className="flex items-center justify-center gap-6 mt-6 text-sm text-white/70">
             <span>✅ 3,200+ Active Deals</span>
             <span>✅ 100% Verified</span>
@@ -75,9 +96,15 @@ export default async function HomePage() {
       {/* ── 1. FEATURED DEALS ────────────────────────── */}
       <section className="section-white">
         <div className="container-main">
-          <SectionHeader icon={<Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />} title="Featured Deals" subtitle="Handpicked top offers from the best stores" href="/search?filter=featured" />
+          <SectionHeader
+            icon={<Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />}
+            title="Featured Deals"
+            subtitle="Handpicked top offers from the best stores"
+            href="/search?filter=featured"
+          />
           {featured.length > 0 ? (
-            <div className="space-y-3">
+            // ✅ 2-column grid desktop, 1-column mobile — items-stretch for equal height
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-stretch">
               {featured.map((c) => <CouponCard key={c.id} coupon={c} />)}
             </div>
           ) : <EmptyState />}
@@ -87,7 +114,12 @@ export default async function HomePage() {
       {/* ── 2. POPULAR STORES ────────────────────────── */}
       <section className="section-purple">
         <div className="container-main">
-          <SectionHeader icon={<Store className="w-5 h-5 text-primary-500" />} title="Popular Stores" subtitle="Browse top stores and their latest deals" href="/stores" />
+          <SectionHeader
+            icon={<Store className="w-5 h-5 text-primary-500" />}
+            title="Popular Stores"
+            subtitle="Browse top stores and their latest deals"
+            href="/stores"
+          />
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
             {stores.map((store) => (
               <Link key={store.id} href={`/store/${store.slug}`}
@@ -97,7 +129,9 @@ export default async function HomePage() {
                     ? <Image src={store.logo} alt={store.name} width={48} height={48} className="object-contain p-1" />
                     : <Tag className="w-6 h-6 text-primary-400" />}
                 </div>
-                <span className="text-xs font-bold text-gray-700 text-center leading-tight group-hover:text-primary-600 transition-colors line-clamp-2">{store.name}</span>
+                <span className="text-xs font-bold text-gray-700 text-center leading-tight group-hover:text-primary-600 transition-colors line-clamp-2">
+                  {store.name}
+                </span>
               </Link>
             ))}
           </div>
@@ -110,9 +144,15 @@ export default async function HomePage() {
       {/* ── 3. TRENDING NOW ──────────────────────────── */}
       <section className="section-white">
         <div className="container-main">
-          <SectionHeader icon={<TrendingUp className="w-5 h-5 text-red-500" />} title="Trending Now" subtitle="Hot deals flying off the shelf" href="/search?filter=trending" />
+          <SectionHeader
+            icon={<TrendingUp className="w-5 h-5 text-red-500" />}
+            title="Trending Now"
+            subtitle="Hot deals flying off the shelf"
+            href="/search?filter=trending"
+          />
           {trending.length > 0 ? (
-            <div className="space-y-3">
+            // ✅ 2-column grid desktop, 1-column mobile
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-stretch">
               {trending.map((c) => <CouponCard key={c.id} coupon={c} />)}
             </div>
           ) : <EmptyState />}
@@ -122,7 +162,12 @@ export default async function HomePage() {
       {/* ── 4. BROWSE BY CATEGORY ────────────────────── */}
       <section className="section-gray">
         <div className="container-main">
-          <SectionHeader icon={<Tag className="w-5 h-5 text-primary-500" />} title="Browse by Category" subtitle="Find deals in your favourite categories" href="/categories" />
+          <SectionHeader
+            icon={<Tag className="w-5 h-5 text-primary-500" />}
+            title="Browse by Category"
+            subtitle="Find deals in your favourite categories"
+            href="/categories"
+          />
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
             {categories.map((cat) => (
               <Link key={cat.id} href={`/category/${cat.slug}`}
@@ -141,9 +186,15 @@ export default async function HomePage() {
       {/* ── 5. RECENTLY ADDED ────────────────────────── */}
       <section className="section-white">
         <div className="container-main">
-          <SectionHeader icon={<Clock className="w-5 h-5 text-blue-500" />} title="Recently Added" subtitle="Fresh deals added today" href="/search?sort=recent" />
+          <SectionHeader
+            icon={<Clock className="w-5 h-5 text-blue-500" />}
+            title="Recently Added"
+            subtitle="Fresh deals added today"
+            href="/search?sort=recent"
+          />
           {recent.length > 0 ? (
-            <div className="space-y-3">
+            // ✅ 2-column grid desktop, 1-column mobile
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-stretch">
               {recent.map((c) => <CouponCard key={c.id} coupon={c} />)}
             </div>
           ) : <EmptyState />}
@@ -156,7 +207,9 @@ export default async function HomePage() {
   )
 }
 
-function SectionHeader({ icon, title, subtitle, href }: { icon: React.ReactNode; title: string; subtitle: string; href: string }) {
+function SectionHeader({ icon, title, subtitle, href }: {
+  icon: React.ReactNode; title: string; subtitle: string; href: string
+}) {
   return (
     <div className="flex items-center justify-between mb-5">
       <div>

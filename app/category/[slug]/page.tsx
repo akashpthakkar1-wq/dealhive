@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import Image from 'next/image'
 import { Tag, ArrowRight } from 'lucide-react'
 import CouponCard from '@/components/coupon/CouponCard'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
@@ -23,7 +22,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CategoryPage({ params }: Props) {
   const supabase = createServerSupabaseClient()
 
-  // Get category
   const { data: cat } = await supabase
     .from('categories')
     .select('*')
@@ -32,15 +30,12 @@ export default async function CategoryPage({ params }: Props) {
 
   if (!cat) notFound()
 
-  // Get coupons by category_id (direct relationship)
   const { data: couponsByCategory } = await supabase
     .from('coupons')
-    .select('*, store:stores(name, slug, logo)')
+    .select('*, store:stores(name, slug, logo, website_url)')
     .eq('category_id', cat.id)
     .order('created_at', { ascending: false })
 
-  // ALSO get coupons from stores whose category matches this category name
-  // This fixes the "0 active offers" issue when stores are tagged with category name
   const { data: storesByCategory } = await supabase
     .from('stores')
     .select('id')
@@ -51,13 +46,12 @@ export default async function CategoryPage({ params }: Props) {
     const storeIds = storesByCategory.map((s) => s.id)
     const { data } = await supabase
       .from('coupons')
-      .select('*, store:stores(name, slug, logo)')
+      .select('*, store:stores(name, slug, logo, website_url)')
       .in('store_id', storeIds)
       .order('created_at', { ascending: false })
     couponsByStore = data || []
   }
 
-  // Merge and deduplicate
   const allCouponsMap = new Map()
   ;[...(couponsByCategory || []), ...couponsByStore].forEach((c) => {
     if (!allCouponsMap.has(c.id)) allCouponsMap.set(c.id, c)
@@ -67,8 +61,10 @@ export default async function CategoryPage({ params }: Props) {
   const activeCoupons = allCoupons.filter((c) => !isExpired(c.expiry_date))
   const expiredCoupons = allCoupons.filter((c) => isExpired(c.expiry_date))
 
-  // Get all categories for sidebar
-  const { data: allCats } = await supabase.from('categories').select('id,name,slug,icon').order('name')
+  const { data: allCats } = await supabase
+    .from('categories')
+    .select('id,name,slug,icon')
+    .order('name')
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -90,7 +86,7 @@ export default async function CategoryPage({ params }: Props) {
       <div className="container-main py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
 
-          {/* Main content */}
+          {/* ── Main content ── */}
           <div className="lg:col-span-3 space-y-4">
             <h2 className="font-bold text-gray-900 text-lg">
               {activeCoupons.length > 0
@@ -99,15 +95,20 @@ export default async function CategoryPage({ params }: Props) {
             </h2>
 
             {activeCoupons.length > 0 ? (
-              <div className="space-y-3">
-                {activeCoupons.map((c) => <CouponCard key={c.id} coupon={c} />)}
+              // ✅ 2-column grid on desktop, 1-column on mobile, equal height
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 items-stretch">
+                {activeCoupons.map((c) => (
+                  <CouponCard key={c.id} coupon={c} />
+                ))}
               </div>
             ) : (
               <div className="bg-white rounded-xl border border-gray-100 p-12 text-center">
                 <div className="text-5xl mb-4">{cat.icon || '🏷️'}</div>
                 <p className="font-semibold text-gray-500 mb-1">No active {cat.name} offers right now</p>
                 <p className="text-sm text-gray-400 mb-4">We update deals daily — check back soon!</p>
-                <Link href="/search" className="btn-primary">Browse All Deals <ArrowRight className="w-4 h-4" /></Link>
+                <Link href="/search" className="btn-primary">
+                  Browse All Deals <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
             )}
 
@@ -116,17 +117,22 @@ export default async function CategoryPage({ params }: Props) {
                 <summary className="cursor-pointer font-semibold text-gray-500 text-sm list-none flex items-center gap-2">
                   Show {expiredCoupons.length} expired offers
                 </summary>
-                <div className="mt-3 opacity-60 space-y-3">
-                  {expiredCoupons.slice(0, 3).map(c => <CouponCard key={c.id} coupon={c} />)}
+                {/* ✅ 2-column grid for expired too */}
+                <div className="mt-3 opacity-60 grid grid-cols-1 md:grid-cols-2 gap-3 items-stretch">
+                  {expiredCoupons.slice(0, 4).map((c) => (
+                    <CouponCard key={c.id} coupon={c} />
+                  ))}
                 </div>
               </details>
             )}
           </div>
 
-          {/* Sidebar */}
+          {/* ── Sidebar ── */}
           <div className="space-y-5">
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
-              <h3 className="font-bold text-gray-900 text-sm uppercase tracking-wider mb-4">All Categories</h3>
+              <h3 className="font-bold text-gray-900 text-sm uppercase tracking-wider mb-4">
+                All Categories
+              </h3>
               <div className="space-y-1">
                 {(allCats || []).map((c) => (
                   <Link key={c.id} href={`/category/${c.slug}`}
@@ -142,6 +148,7 @@ export default async function CategoryPage({ params }: Props) {
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
