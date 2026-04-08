@@ -24,12 +24,7 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 flex-shrink-0 group">
-            <div className="w-9 h-9 rounded-xl bg-primary-500 flex items-center justify-center shadow-sm group-hover:bg-primary-600 transition-colors">
-              <Tag className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-extrabold text-gray-900">
-              EndOver<span className="text-primary-500">Pay</span>
-            </span>
+            <img src="/logo.svg" alt="EndOverPay" className="h-10 w-auto" />
           </Link>
 
           {/* Desktop nav */}
