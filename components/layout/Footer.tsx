@@ -6,7 +6,7 @@ export default function Footer() {
   const stores = ['SHEIN', 'Myntra', 'Amazon', 'Flipkart', 'Swiggy', 'Nykaa', 'Zomato', 'MakeMyTrip']
 
   return (
-    <footer className="bg-primary-900 text-gray-200 mt-16">
+    <footer className="bg-gray-50 text-gray-700 mt-16">
       <div className="container-main py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
@@ -14,12 +14,12 @@ export default function Footer() {
             <Link href="/" className="flex items-center gap-2 mb-4">
               <img src="/logo.svg" alt="EndOverPay" className="h-10 w-auto" />
             </Link>
-            <p className="text-sm text-gray-400 leading-relaxed mb-5">
+            <p className="text-sm text-gray-500 leading-relaxed mb-5">
               India&apos;s most trusted coupon & deal platform. Verified codes, real savings.
             </p>
             <div className="flex gap-3">
               {[Twitter, Instagram, Mail].map((Icon, i) => (
-                <a key={i} href="#" className="w-9 h-9 bg-primary-700 rounded-lg flex items-center justify-center hover:bg-primary-500 transition-colors">
+                <a key={i} href="#" className="w-9 h-9 bg-gray-200 rounded-lg flex items-center justify-center hover:bg-primary-500 hover:text-white transition-colors">
                   <Icon className="w-4 h-4" />
                 </a>
               ))}
@@ -28,12 +28,12 @@ export default function Footer() {
 
           {/* Categories */}
           <div>
-            <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wider">Categories</h4>
+            <h4 className="font-bold text-gray-900 mb-4 text-sm uppercase tracking-wider">Categories</h4>
             <ul className="space-y-2">
               {categories.map((c) => (
                 <li key={c}>
                   <Link href={`/category/${c.toLowerCase()}`}
-                    className="text-sm text-gray-400 hover:text-primary-400 transition-colors">
+                    className="text-sm text-gray-500 hover:text-primary-400 transition-colors">
                     {c}
                   </Link>
                 </li>
@@ -43,12 +43,12 @@ export default function Footer() {
 
           {/* Popular Stores */}
           <div>
-            <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wider">Popular Stores</h4>
+            <h4 className="font-bold text-gray-900 mb-4 text-sm uppercase tracking-wider">Popular Stores</h4>
             <ul className="space-y-2">
               {stores.map((s) => (
                 <li key={s}>
                   <Link href={`/store/${s.toLowerCase()}`}
-                    className="text-sm text-gray-400 hover:text-primary-400 transition-colors">
+                    className="text-sm text-gray-500 hover:text-primary-400 transition-colors">
                     {s}
                   </Link>
                 </li>
@@ -58,11 +58,11 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="font-bold text-white mb-4 text-sm uppercase tracking-wider">Company</h4>
+            <h4 className="font-bold text-gray-900 mb-4 text-sm uppercase tracking-wider">Company</h4>
             <ul className="space-y-2">
               {['About Us', 'Blog', 'Contact', 'Privacy Policy', 'Terms of Service', 'Disclaimer', 'Submit a Coupon'].map((l) => (
                 <li key={l}>
-                  <Link href="#" className="text-sm text-gray-400 hover:text-primary-400 transition-colors">
+                  <Link href="#" className="text-sm text-gray-500 hover:text-primary-400 transition-colors">
                     {l}
                   </Link>
                 </li>
@@ -71,7 +71,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="border-t border-gray-200 mt-10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-gray-500">
             © {new Date().getFullYear()} EndOverPay. All rights reserved.
           </p>
