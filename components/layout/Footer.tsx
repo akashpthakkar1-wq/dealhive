@@ -7,24 +7,24 @@ export default function Footer() {
   const company = ['About Us', 'Blog', 'Contact', 'Privacy Policy', 'Terms of Service', 'Disclaimer', 'Submit a Coupon']
 
   return (
-    <footer className="bg-gray-50 border-t border-gray-200 mt-10">
-      <div className="container-main pt-10 pb-6">
+    <footer className="bg-gray-50 border-t border-gray-200 mt-8">
+      <div className="container-main pt-8 pb-4">
 
-        {/* Main grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
+        {/* Main 4-column grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5 lg:gap-6">
 
-          {/* Brand */}
+          {/* Brand column */}
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="inline-flex items-center mb-3">
-              <img src="/logo.svg" alt="EndOverPay" className="h-10 w-auto" />
+            <Link href="/" className="inline-flex items-center mb-2.5">
+              <img src="/logo.svg" alt="EndOverPay" className="h-9 w-auto" />
             </Link>
-            <p className="text-xs text-gray-500 leading-relaxed mb-3 max-w-[200px]">
+            <p className="text-xs text-gray-500 leading-5 mb-2.5 max-w-[190px]">
               India&apos;s most trusted coupon &amp; deal platform. Verified codes, real savings.
             </p>
             <div className="flex gap-2">
               {[Twitter, Instagram, Mail].map((Icon, i) => (
                 <a key={i} href="#"
-                  className="w-7 h-7 bg-gray-200 rounded-lg flex items-center justify-center hover:bg-primary-500 hover:text-white transition-colors text-gray-500">
+                  className="w-7 h-7 bg-gray-200 rounded-md flex items-center justify-center hover:bg-primary-500 hover:text-white transition-colors text-gray-500">
                   <Icon className="w-3.5 h-3.5" />
                 </a>
               ))}
@@ -33,12 +33,15 @@ export default function Footer() {
 
           {/* Categories */}
           <div>
-            <h4 className="font-bold text-gray-800 mb-2.5 text-xs uppercase tracking-wider">Categories</h4>
-            <ul className="space-y-1.5">
+            <h4 className="font-semibold text-gray-700 mb-2 text-xs uppercase tracking-wide">
+              Categories
+            </h4>
+            <ul className="space-y-1">
               {categories.map((c) => (
                 <li key={c}>
-                  <Link href={`/category/${c.toLowerCase()}`}
-                    className="text-xs text-gray-500 hover:text-primary-600 transition-colors leading-tight block">
+                  <Link
+                    href={`/category/${c.toLowerCase()}`}
+                    className="text-xs text-gray-500 hover:text-primary-600 transition-colors leading-5 block">
                     {c}
                   </Link>
                 </li>
@@ -48,12 +51,15 @@ export default function Footer() {
 
           {/* Popular Stores */}
           <div>
-            <h4 className="font-bold text-gray-800 mb-2.5 text-xs uppercase tracking-wider">Popular Stores</h4>
-            <ul className="space-y-1.5">
+            <h4 className="font-semibold text-gray-700 mb-2 text-xs uppercase tracking-wide">
+              Popular Stores
+            </h4>
+            <ul className="space-y-1">
               {stores.map((s) => (
                 <li key={s}>
-                  <Link href={`/store/${s.toLowerCase()}`}
-                    className="text-xs text-gray-500 hover:text-primary-600 transition-colors leading-tight block">
+                  <Link
+                    href={`/store/${s.toLowerCase()}`}
+                    className="text-xs text-gray-500 hover:text-primary-600 transition-colors leading-5 block">
                     {s}
                   </Link>
                 </li>
@@ -63,12 +69,15 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="font-bold text-gray-800 mb-2.5 text-xs uppercase tracking-wider">Company</h4>
-            <ul className="space-y-1.5">
+            <h4 className="font-semibold text-gray-700 mb-2 text-xs uppercase tracking-wide">
+              Company
+            </h4>
+            <ul className="space-y-1">
               {company.map((l) => (
                 <li key={l}>
-                  <Link href="#"
-                    className="text-xs text-gray-500 hover:text-primary-600 transition-colors leading-tight block">
+                  <Link
+                    href="#"
+                    className="text-xs text-gray-500 hover:text-primary-600 transition-colors leading-5 block">
                     {l}
                   </Link>
                 </li>
@@ -79,7 +88,7 @@ export default function Footer() {
         </div>
 
         {/* Divider + Copyright */}
-        <div className="border-t border-gray-200 mt-6 pt-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div className="border-t border-gray-200 mt-5 pt-3 flex flex-col sm:flex-row items-center justify-between gap-1">
           <p className="text-xs text-gray-400">
             © {new Date().getFullYear()} EndOverPay. All rights reserved.
           </p>
