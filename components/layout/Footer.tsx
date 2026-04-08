@@ -12,7 +12,7 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <img src="/logo.svg" alt="EndOverPay" className="h-10 w-auto brightness-0 invert" />
+              <img src="/logo.svg" alt="EndOverPay" className="h-10 w-auto" />
             </Link>
             <p className="text-sm text-gray-400 leading-relaxed mb-5">
               India&apos;s most trusted coupon & deal platform. Verified codes, real savings.
