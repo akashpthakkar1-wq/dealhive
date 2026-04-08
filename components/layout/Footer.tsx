@@ -1,3 +1,4 @@
+'use client'
 import Link from 'next/link'
 import { Mail, Twitter, Instagram } from 'lucide-react'
 
@@ -24,16 +25,7 @@ export default function Footer() {
             <div className="flex gap-2">
               {[Twitter, Instagram, Mail].map((Icon, i) => (
                 <a key={i} href="#"
-                  className="w-7 h-7 rounded-md flex items-center justify-center transition-all duration-200 hover:scale-105"
-                  style={{ backgroundColor: 'rgba(255,255,255,0.1)', color: '#D1C4E9' }}
-                  onMouseEnter={e => {
-                    (e.currentTarget as HTMLElement).style.color = '#F5CE4A'
-                    ;(e.currentTarget as HTMLElement).style.backgroundColor = 'rgba(255,255,255,0.15)'
-                  }}
-                  onMouseLeave={e => {
-                    (e.currentTarget as HTMLElement).style.color = '#D1C4E9'
-                    ;(e.currentTarget as HTMLElement).style.backgroundColor = 'rgba(255,255,255,0.1)'
-                  }}>
+                  className="footer-social-icon w-7 h-7 rounded-md flex items-center justify-center transition-all duration-200">
                   <Icon className="w-3.5 h-3.5" />
                 </a>
               ))}
@@ -48,11 +40,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {categories.map((c) => (
                 <li key={c}>
-                  <Link href={`/category/${c.toLowerCase()}`}
-                    className="text-xs leading-5 transition-all duration-200 hover:underline block"
-                    style={{ color: '#D1C4E9' }}
-                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#F5CE4A'}
-                    onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = '#D1C4E9'}>
+                  <Link href={`/category/${c.toLowerCase()}`} className="footer-link text-xs leading-5 transition-colors duration-200 block">
                     {c}
                   </Link>
                 </li>
@@ -68,11 +56,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {stores.map((s) => (
                 <li key={s}>
-                  <Link href={`/store/${s.toLowerCase()}`}
-                    className="text-xs leading-5 transition-all duration-200 hover:underline block"
-                    style={{ color: '#D1C4E9' }}
-                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#F5CE4A'}
-                    onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = '#D1C4E9'}>
+                  <Link href={`/store/${s.toLowerCase()}`} className="footer-link text-xs leading-5 transition-colors duration-200 block">
                     {s}
                   </Link>
                 </li>
@@ -88,11 +72,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {company.map((l) => (
                 <li key={l}>
-                  <Link href="#"
-                    className="text-xs leading-5 transition-all duration-200 hover:underline block"
-                    style={{ color: '#D1C4E9' }}
-                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#F5CE4A'}
-                    onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = '#D1C4E9'}>
+                  <Link href="#" className="footer-link text-xs leading-5 transition-colors duration-200 block">
                     {l}
                   </Link>
                 </li>
@@ -116,6 +96,26 @@ export default function Footer() {
         </div>
 
       </div>
+
+      {/* Inline CSS for custom hover colors */}
+      <style jsx global>{`
+        .footer-link {
+          color: #D1C4E9;
+        }
+        .footer-link:hover {
+          color: #F5CE4A;
+          text-decoration: underline;
+        }
+        .footer-social-icon {
+          background-color: rgba(255,255,255,0.1);
+          color: #D1C4E9;
+        }
+        .footer-social-icon:hover {
+          background-color: rgba(255,255,255,0.15);
+          color: #F5CE4A;
+          transform: scale(1.05);
+        }
+      `}</style>
     </footer>
   )
 }
