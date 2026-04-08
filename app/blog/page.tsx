@@ -22,9 +22,9 @@ async function getBlogPosts() {
 }
 
 export const metadata = {
-  title: 'Blog – Saving Tips & Coupon Guides | DealHive',
+  title: 'Blog – Saving Tips & Coupon Guides | EndOverPay',
   description:
-    'Read expert tips on saving money online, coupon strategies, and the latest deals from DealHive.',
+    'Read expert tips on saving money online, coupon strategies, and the latest deals from EndOverPay.',
 };
 
 export default async function BlogPage() {
@@ -34,7 +34,7 @@ export default async function BlogPage() {
     <main className="min-h-screen bg-gray-50">
       {/* Hero */}
       <div className="bg-[#822a7f] text-white py-12 px-4 text-center">
-        <h1 className="text-3xl sm:text-4xl font-bold mb-3">DealHive Blog</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold mb-3">EndOverPay Blog</h1>
         <p className="text-purple-200 text-base max-w-xl mx-auto">
           Saving tips, coupon guides, and the latest deals — straight from our team.
         </p>
@@ -63,7 +63,7 @@ export default async function BlogPage() {
                 {
                   icon: '📱',
                   tag: 'Guide',
-                  title: 'Best Cashback Apps That Work With DealHive',
+                  title: 'Best Cashback Apps That Work With EndOverPay',
                   date: 'Coming soon',
                 },
                 {

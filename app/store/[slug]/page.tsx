@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!store) return { title: 'Store Not Found' }
   const month = new Date().toLocaleString('en-IN', { month: 'long', year: 'numeric' })
   return {
-    title: `${store.name} Coupons & Promo Codes – Up to 90% Off | ${SITE_NAME}`,
+    title: `${store.name} Coupons & Promo Codes – Up to 90% Off`,
     description: `Find the latest verified ${store.name} coupon codes, promo codes and deals for ${month}. ${store.description || ''}`,
     alternates: { canonical: `${SITE_URL}/store/${store.slug}` },
   }

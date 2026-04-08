@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     default: `${SITE_NAME} – Best Coupons & Deals in India`,
     template: `%s | ${SITE_NAME}`,
   },
-  description: 'Find verified coupon codes and deals from top stores in India. Save big with DealHive!',
+  description: 'Find verified coupon codes and deals from top stores in India. Save big with EndOverPay!',
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',

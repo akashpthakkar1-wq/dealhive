@@ -46,5 +46,5 @@ export function getFakeUsageCount(id: string): number {
   return 100 + (hash % 9000)
 }
 
-export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'DealHive'
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://dealhive.in'
+export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'EndOverPay'
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://endoverpay.com'

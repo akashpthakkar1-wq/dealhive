@@ -28,7 +28,7 @@ export default function Navbar() {
               <Tag className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-extrabold text-gray-900">
-              Deal<span className="text-primary-500">Hive</span>
+              EndOver<span className="text-primary-500">Pay</span>
             </span>
           </Link>
 

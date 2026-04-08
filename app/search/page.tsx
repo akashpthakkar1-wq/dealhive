@@ -175,7 +175,7 @@ export default function SearchPage() {
   // 2. Navigate THIS tab → affiliate URL
   function handleCTA(coupon: Coupon) {
     const newTabUrl = `${window.location.origin}/search?popup=${encodeURIComponent(coupon.id)}`;
-    window.open(newTabUrl, '_blank');           // new tab: DealHive with popup
+    window.open(newTabUrl, '_blank');           // new tab: EndOverPay with popup
     window.location.href = coupon.affiliate_url; // this tab: goes to store
   }
 

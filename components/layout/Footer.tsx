@@ -16,7 +16,7 @@ export default function Footer() {
                 <Tag className="w-4 h-4 text-white" />
               </div>
               <span className="font-extrabold text-xl text-white">
-                Deal<span className="text-orange-400">Hive</span>
+                EndOver<span className="text-orange-400">Pay</span>
               </span>
             </Link>
             <p className="text-sm text-gray-400 leading-relaxed mb-5">
@@ -78,7 +78,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 mt-10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-gray-500">
-            © {new Date().getFullYear()} DealHive. All rights reserved.
+            © {new Date().getFullYear()} EndOverPay. All rights reserved.
           </p>
           <p className="text-xs text-gray-500">
             Some links may be affiliate links. Prices & offers subject to change.
