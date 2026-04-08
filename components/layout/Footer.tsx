@@ -6,7 +6,7 @@ export default function Footer() {
   const stores = ['SHEIN', 'Myntra', 'Amazon', 'Flipkart', 'Swiggy', 'Nykaa', 'Zomato', 'MakeMyTrip']
 
   return (
-    <footer className="bg-gray-900 text-gray-300 mt-16">
+    <footer className="bg-primary-900 text-gray-200 mt-16">
       <div className="container-main py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
@@ -19,7 +19,7 @@ export default function Footer() {
             </p>
             <div className="flex gap-3">
               {[Twitter, Instagram, Mail].map((Icon, i) => (
-                <a key={i} href="#" className="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary-500 transition-colors">
+                <a key={i} href="#" className="w-9 h-9 bg-primary-700 rounded-lg flex items-center justify-center hover:bg-primary-500 transition-colors">
                   <Icon className="w-4 h-4" />
                 </a>
               ))}
