@@ -19,13 +19,13 @@ export default function Footer() {
             <Link href="/" className="inline-flex items-center mb-3">
               <img src="/logo.svg" alt="EndOverPay" className="h-9 w-auto" />
             </Link>
-            <p className="text-xs leading-5 mb-4 max-w-[200px]" style={{ color: '#3D186B' }}>
+            <p className="text-sm leading-5 mb-4 max-w-[200px]" style={{ color: '#1F1F2E' }}>
               India&apos;s most trusted coupon &amp; deal platform. Verified codes, real savings.
             </p>
             <div className="flex gap-2">
               {[Twitter, Instagram, Mail].map((Icon, i) => (
                 <a key={i} href="#"
-                  className="footer-social-icon w-7 h-7 rounded-md flex items-center justify-center transition-all duration-200">
+                  className="footer-social w-7 h-7 rounded-md flex items-center justify-center transition-all duration-200">
                   <Icon className="w-3.5 h-3.5" />
                 </a>
               ))}
@@ -34,13 +34,13 @@ export default function Footer() {
 
           {/* Categories */}
           <div>
-            <h4 className="font-semibold text-purple-900 mb-2.5 text-xs uppercase tracking-wide">
+            <h4 className="font-semibold mb-2.5 text-xs uppercase tracking-wide" style={{ color: '#3D186B' }}>
               Categories
             </h4>
             <ul className="space-y-2">
               {categories.map((c) => (
                 <li key={c}>
-                  <Link href={`/category/${c.toLowerCase()}`} className="footer-link text-xs leading-5 transition-colors duration-200 block">
+                  <Link href={`/category/${c.toLowerCase()}`} className="footer-link text-sm leading-5 block transition-all duration-200">
                     {c}
                   </Link>
                 </li>
@@ -50,13 +50,13 @@ export default function Footer() {
 
           {/* Popular Stores */}
           <div>
-            <h4 className="font-semibold text-purple-900 mb-2.5 text-xs uppercase tracking-wide">
+            <h4 className="font-semibold mb-2.5 text-xs uppercase tracking-wide" style={{ color: '#3D186B' }}>
               Popular Stores
             </h4>
             <ul className="space-y-2">
               {stores.map((s) => (
                 <li key={s}>
-                  <Link href={`/store/${s.toLowerCase()}`} className="footer-link text-xs leading-5 transition-colors duration-200 block">
+                  <Link href={`/store/${s.toLowerCase()}`} className="footer-link text-sm leading-5 block transition-all duration-200">
                     {s}
                   </Link>
                 </li>
@@ -66,13 +66,13 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="font-semibold text-purple-900 mb-2.5 text-xs uppercase tracking-wide">
+            <h4 className="font-semibold mb-2.5 text-xs uppercase tracking-wide" style={{ color: '#3D186B' }}>
               Company
             </h4>
             <ul className="space-y-2">
               {company.map((l) => (
                 <li key={l}>
-                  <Link href="#" className="footer-link text-xs leading-5 transition-colors duration-200 block">
+                  <Link href="#" className="footer-link text-sm leading-5 block transition-all duration-200">
                     {l}
                   </Link>
                 </li>
@@ -83,36 +83,35 @@ export default function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="mt-6" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }} />
+        <div className="mt-6" style={{ borderTop: '1px solid rgba(0,0,0,0.15)' }} />
 
         {/* Bottom bar */}
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-1.5">
-          <p className="text-xs" style={{ color: '#3D186B' }}>
+          <p className="text-xs" style={{ color: '#4A4A4A' }}>
             © {new Date().getFullYear()} EndOverPay. All rights reserved.
           </p>
-          <p className="text-xs" style={{ color: '#3D186B' }}>
+          <p className="text-xs" style={{ color: '#4A4A4A' }}>
             Some links may be affiliate links. Prices &amp; offers subject to change.
           </p>
         </div>
 
       </div>
 
-      {/* Inline CSS for custom hover colors */}
       <style jsx global>{`
         .footer-link {
-          color: #D1C4E9;
+          color: #3D186B;
         }
         .footer-link:hover {
-          color: #F5CE4A;
+          color: #2A1250;
           text-decoration: underline;
         }
-        .footer-social-icon {
-          background-color: rgba(255,255,255,0.1);
-          color: #D1C4E9;
+        .footer-social {
+          background-color: rgba(0,0,0,0.1);
+          color: #3D186B;
         }
-        .footer-social-icon:hover {
-          background-color: rgba(255,255,255,0.15);
-          color: #F5CE4A;
+        .footer-social:hover {
+          background-color: rgba(255,255,255,0.3);
+          color: #000000;
           transform: scale(1.05);
         }
       `}</style>
