@@ -8,7 +8,7 @@ export default function Footer() {
   const company = ['About Us', 'Blog', 'Contact', 'Privacy Policy', 'Terms of Service', 'Disclaimer', 'Submit a Coupon']
 
   return (
-    <footer style={{ backgroundColor: '#3D186B' }} className="mt-8">
+    <footer style={{ backgroundColor: '#F5CE4A' }} className="mt-8">
       <div className="container-main pt-10 pb-6">
 
         {/* Main 4-column grid */}
@@ -19,7 +19,7 @@ export default function Footer() {
             <Link href="/" className="inline-flex items-center mb-3">
               <img src="/logo.svg" alt="EndOverPay" className="h-9 w-auto" />
             </Link>
-            <p className="text-xs leading-5 mb-4 max-w-[200px]" style={{ color: '#D1C4E9' }}>
+            <p className="text-xs leading-5 mb-4 max-w-[200px]" style={{ color: '#3D186B' }}>
               India&apos;s most trusted coupon &amp; deal platform. Verified codes, real savings.
             </p>
             <div className="flex gap-2">
@@ -34,7 +34,7 @@ export default function Footer() {
 
           {/* Categories */}
           <div>
-            <h4 className="font-semibold text-white mb-2.5 text-xs uppercase tracking-wide">
+            <h4 className="font-semibold text-purple-900 mb-2.5 text-xs uppercase tracking-wide">
               Categories
             </h4>
             <ul className="space-y-2">
@@ -50,7 +50,7 @@ export default function Footer() {
 
           {/* Popular Stores */}
           <div>
-            <h4 className="font-semibold text-white mb-2.5 text-xs uppercase tracking-wide">
+            <h4 className="font-semibold text-purple-900 mb-2.5 text-xs uppercase tracking-wide">
               Popular Stores
             </h4>
             <ul className="space-y-2">
@@ -66,7 +66,7 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="font-semibold text-white mb-2.5 text-xs uppercase tracking-wide">
+            <h4 className="font-semibold text-purple-900 mb-2.5 text-xs uppercase tracking-wide">
               Company
             </h4>
             <ul className="space-y-2">
@@ -87,10 +87,10 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-1.5">
-          <p className="text-xs" style={{ color: '#D1C4E9' }}>
+          <p className="text-xs" style={{ color: '#3D186B' }}>
             © {new Date().getFullYear()} EndOverPay. All rights reserved.
           </p>
-          <p className="text-xs" style={{ color: '#D1C4E9' }}>
+          <p className="text-xs" style={{ color: '#3D186B' }}>
             Some links may be affiliate links. Prices &amp; offers subject to change.
           </p>
         </div>
