@@ -7,24 +7,33 @@ export default function Footer() {
   const company = ['About Us', 'Blog', 'Contact', 'Privacy Policy', 'Terms of Service', 'Disclaimer', 'Submit a Coupon']
 
   return (
-    <footer className="bg-gray-50 border-t border-gray-200 mt-8">
-      <div className="container-main pt-8 pb-4">
+    <footer style={{ backgroundColor: '#3D186B' }} className="mt-8">
+      <div className="container-main pt-10 pb-6">
 
         {/* Main 4-column grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-5 lg:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
 
           {/* Brand column */}
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="inline-flex items-center mb-2.5">
+            <Link href="/" className="inline-flex items-center mb-3">
               <img src="/logo.svg" alt="EndOverPay" className="h-9 w-auto" />
             </Link>
-            <p className="text-xs text-gray-500 leading-5 mb-2.5 max-w-[190px]">
+            <p className="text-xs leading-5 mb-4 max-w-[200px]" style={{ color: '#D1C4E9' }}>
               India&apos;s most trusted coupon &amp; deal platform. Verified codes, real savings.
             </p>
             <div className="flex gap-2">
               {[Twitter, Instagram, Mail].map((Icon, i) => (
                 <a key={i} href="#"
-                  className="w-7 h-7 bg-gray-200 rounded-md flex items-center justify-center hover:bg-primary-500 hover:text-white transition-colors text-gray-500">
+                  className="w-7 h-7 rounded-md flex items-center justify-center transition-all duration-200 hover:scale-105"
+                  style={{ backgroundColor: 'rgba(255,255,255,0.1)', color: '#D1C4E9' }}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLElement).style.color = '#F5CE4A'
+                    ;(e.currentTarget as HTMLElement).style.backgroundColor = 'rgba(255,255,255,0.15)'
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLElement).style.color = '#D1C4E9'
+                    ;(e.currentTarget as HTMLElement).style.backgroundColor = 'rgba(255,255,255,0.1)'
+                  }}>
                   <Icon className="w-3.5 h-3.5" />
                 </a>
               ))}
@@ -33,15 +42,17 @@ export default function Footer() {
 
           {/* Categories */}
           <div>
-            <h4 className="font-semibold text-gray-700 mb-2 text-xs uppercase tracking-wide">
+            <h4 className="font-semibold text-white mb-2.5 text-xs uppercase tracking-wide">
               Categories
             </h4>
-            <ul className="space-y-1">
+            <ul className="space-y-2">
               {categories.map((c) => (
                 <li key={c}>
-                  <Link
-                    href={`/category/${c.toLowerCase()}`}
-                    className="text-xs text-gray-500 hover:text-primary-600 transition-colors leading-5 block">
+                  <Link href={`/category/${c.toLowerCase()}`}
+                    className="text-xs leading-5 transition-all duration-200 hover:underline block"
+                    style={{ color: '#D1C4E9' }}
+                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#F5CE4A'}
+                    onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = '#D1C4E9'}>
                     {c}
                   </Link>
                 </li>
@@ -51,15 +62,17 @@ export default function Footer() {
 
           {/* Popular Stores */}
           <div>
-            <h4 className="font-semibold text-gray-700 mb-2 text-xs uppercase tracking-wide">
+            <h4 className="font-semibold text-white mb-2.5 text-xs uppercase tracking-wide">
               Popular Stores
             </h4>
-            <ul className="space-y-1">
+            <ul className="space-y-2">
               {stores.map((s) => (
                 <li key={s}>
-                  <Link
-                    href={`/store/${s.toLowerCase()}`}
-                    className="text-xs text-gray-500 hover:text-primary-600 transition-colors leading-5 block">
+                  <Link href={`/store/${s.toLowerCase()}`}
+                    className="text-xs leading-5 transition-all duration-200 hover:underline block"
+                    style={{ color: '#D1C4E9' }}
+                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#F5CE4A'}
+                    onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = '#D1C4E9'}>
                     {s}
                   </Link>
                 </li>
@@ -69,15 +82,17 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="font-semibold text-gray-700 mb-2 text-xs uppercase tracking-wide">
+            <h4 className="font-semibold text-white mb-2.5 text-xs uppercase tracking-wide">
               Company
             </h4>
-            <ul className="space-y-1">
+            <ul className="space-y-2">
               {company.map((l) => (
                 <li key={l}>
-                  <Link
-                    href="#"
-                    className="text-xs text-gray-500 hover:text-primary-600 transition-colors leading-5 block">
+                  <Link href="#"
+                    className="text-xs leading-5 transition-all duration-200 hover:underline block"
+                    style={{ color: '#D1C4E9' }}
+                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.color = '#F5CE4A'}
+                    onMouseLeave={e => (e.currentTarget as HTMLElement).style.color = '#D1C4E9'}>
                     {l}
                   </Link>
                 </li>
@@ -87,12 +102,15 @@ export default function Footer() {
 
         </div>
 
-        {/* Divider + Copyright */}
-        <div className="border-t border-gray-200 mt-5 pt-3 flex flex-col sm:flex-row items-center justify-between gap-1">
-          <p className="text-xs text-gray-400">
+        {/* Divider */}
+        <div className="mt-6" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }} />
+
+        {/* Bottom bar */}
+        <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-1.5">
+          <p className="text-xs" style={{ color: '#D1C4E9' }}>
             © {new Date().getFullYear()} EndOverPay. All rights reserved.
           </p>
-          <p className="text-xs text-gray-400">
+          <p className="text-xs" style={{ color: '#D1C4E9' }}>
             Some links may be affiliate links. Prices &amp; offers subject to change.
           </p>
         </div>
