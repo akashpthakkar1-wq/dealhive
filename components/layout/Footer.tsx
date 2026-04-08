@@ -12,11 +12,11 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
                 <Tag className="w-4 h-4 text-white" />
               </div>
               <span className="font-extrabold text-xl text-white">
-                EndOver<span className="text-orange-400">Pay</span>
+                EndOver<span className="text-primary-400">Pay</span>
               </span>
             </Link>
             <p className="text-sm text-gray-400 leading-relaxed mb-5">
@@ -24,7 +24,7 @@ export default function Footer() {
             </p>
             <div className="flex gap-3">
               {[Twitter, Instagram, Mail].map((Icon, i) => (
-                <a key={i} href="#" className="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-orange-500 transition-colors">
+                <a key={i} href="#" className="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-primary-500 transition-colors">
                   <Icon className="w-4 h-4" />
                 </a>
               ))}
@@ -38,7 +38,7 @@ export default function Footer() {
               {categories.map((c) => (
                 <li key={c}>
                   <Link href={`/category/${c.toLowerCase()}`}
-                    className="text-sm text-gray-400 hover:text-orange-400 transition-colors">
+                    className="text-sm text-gray-400 hover:text-primary-400 transition-colors">
                     {c}
                   </Link>
                 </li>
@@ -53,7 +53,7 @@ export default function Footer() {
               {stores.map((s) => (
                 <li key={s}>
                   <Link href={`/store/${s.toLowerCase()}`}
-                    className="text-sm text-gray-400 hover:text-orange-400 transition-colors">
+                    className="text-sm text-gray-400 hover:text-primary-400 transition-colors">
                     {s}
                   </Link>
                 </li>
@@ -67,7 +67,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {['About Us', 'Blog', 'Contact', 'Privacy Policy', 'Terms of Service', 'Disclaimer', 'Submit a Coupon'].map((l) => (
                 <li key={l}>
-                  <Link href="#" className="text-sm text-gray-400 hover:text-orange-400 transition-colors">
+                  <Link href="#" className="text-sm text-gray-400 hover:text-primary-400 transition-colors">
                     {l}
                   </Link>
                 </li>
