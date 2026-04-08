@@ -127,54 +127,81 @@ export default async function StorePage({ params, searchParams }: Props) {
 
       {/* ── HERO ────────────────────────────────────── */}
       <div className="bg-white border-b border-gray-100">
-        <div className="container-main py-6">
+        <div className="container-main py-4 md:py-6">
           <Breadcrumb items={[{ label: 'Stores', href: '/stores' }, { label: `${store.name} Coupons` }]} />
 
-          <div className="flex flex-col md:flex-row items-start gap-5 mb-5">
-            <div className="w-20 h-20 rounded-2xl border-2 border-gray-100 bg-white shadow-sm flex-shrink-0 flex items-center justify-center overflow-hidden">
+          {/* Logo + Content — side by side on both mobile and desktop */}
+          <div className="flex flex-row items-start gap-3 md:gap-5 mt-3 mb-3 md:mb-5">
+
+            {/* Logo — smaller on mobile */}
+            <div className="w-14 h-14 md:w-20 md:h-20 rounded-xl md:rounded-2xl border-2 border-gray-100 bg-white shadow-sm flex-shrink-0 flex items-center justify-center overflow-hidden">
               {store.logo
                 ? <Image src={store.logo} alt={`${store.name} logo`} width={80} height={80} className="object-contain p-1" />
-                : <Tag className="w-10 h-10 text-primary-400" />}
+                : <Tag className="w-8 h-8 md:w-10 md:h-10 text-primary-400" />}
             </div>
-            <div className="flex-1">
-              <div className="flex flex-wrap items-center gap-2 mb-2">
-                <span className="badge-verified"><CheckCircle className="w-3 h-3" /> Verified Store</span>
+
+            {/* Content */}
+            <div className="flex-1 min-w-0">
+
+              {/* Badges */}
+              <div className="flex flex-wrap items-center gap-1.5 mb-1.5">
+                <span className="badge-verified"><CheckCircle className="w-3 h-3" /> Verified</span>
                 {store.category && <span className="badge-type">{store.category}</span>}
-                <span className="text-xs text-gray-400">Updated today</span>
+                <span className="hidden sm:inline text-xs text-gray-400">Updated today</span>
               </div>
-              <h1 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-2">
-                {store.name} Coupons &amp; Promo Codes – {month}
+
+              {/* Title */}
+              <h1 className="text-lg leading-tight md:text-3xl font-extrabold text-gray-900 mb-1.5">
+                {store.name} Coupons &amp; Promo Codes
+                <span className="hidden md:inline"> – {month}</span>
               </h1>
-              <p className="text-gray-500 text-sm mb-3 max-w-2xl">
+
+              {/* Description — desktop only inside row */}
+              <p className="hidden md:block text-gray-500 text-sm mb-3 max-w-2xl">
                 {store.description || `Find the best ${store.name} coupon codes and deals verified by our team.`}{' '}
                 Save big with <strong>{activeCoupons.length} active offers</strong>
                 {maxDiscount > 0 && <>, including up to <strong>{maxDiscount}% off</strong></>}.
               </p>
-              <div className="flex items-center gap-3 flex-wrap">
+
+              {/* Rating + Visit button */}
+              <div className="flex flex-wrap items-center gap-2 md:gap-3">
                 <RatingStars rating={parseFloat(rating)} />
-                <span className="text-sm font-semibold text-gray-700">{rating}</span>
-                <span className="text-sm text-gray-400">by {Math.max(100, (displayUses / 100) | 0).toLocaleString()}+ shoppers</span>
+                <span className="text-xs md:text-sm font-semibold text-gray-700">{rating}</span>
+                <span className="hidden sm:inline text-xs md:text-sm text-gray-400">
+                  by {Math.max(100, (displayUses / 100) | 0).toLocaleString()}+ shoppers
+                </span>
                 {store.website_url && (
-                  <a href={store.website_url} target="_blank" rel="noopener noreferrer" className="btn-primary btn-sm flex items-center gap-1.5 ml-2">
-                    <ExternalLink className="w-3.5 h-3.5" /> Visit {store.name}
+                  <a href={store.website_url} target="_blank" rel="noopener noreferrer"
+                    className="btn-primary btn-sm flex items-center gap-1 text-xs px-2.5 py-1.5 md:px-4 md:py-2 md:text-sm md:gap-1.5">
+                    <ExternalLink className="w-3 h-3 md:w-3.5 md:h-3.5" />
+                    <span className="hidden sm:inline">Visit </span>{store.name}
                   </a>
                 )}
               </div>
             </div>
           </div>
 
-          {/* Stats pills */}
-          <div className="flex flex-wrap gap-2">
+          {/* Description — mobile only, shown below the logo row */}
+          <p className="md:hidden text-gray-500 text-xs leading-relaxed mb-3">
+            {store.description || `Find the best ${store.name} coupon codes and deals verified by our team.`}{' '}
+            Save big with <strong>{activeCoupons.length} active offers</strong>
+            {maxDiscount > 0 && <>, up to <strong>{maxDiscount}% off</strong></>}.
+          </p>
+
+          {/* Stats pills — 2-col grid on mobile, flex row on desktop */}
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 mb-1">
             {[
-              { l: 'Total Offers', v: allCoupons.length },
-              { l: 'Active Now', v: activeCoupons.length, hi: true },
+              { l: 'Total Offers',  v: allCoupons.length },
+              { l: 'Active Now',    v: activeCoupons.length,                              hi: true },
               { l: 'Best Discount', v: maxDiscount > 0 ? `${maxDiscount}% OFF` : 'Great Deals', hi: true },
-              { l: 'Codes', v: codeCoupons.length },
-              { l: 'Total Uses', v: displayUses.toLocaleString() },
+              { l: 'Codes',         v: codeCoupons.length },
+              { l: 'Total Uses',    v: displayUses.toLocaleString() },
             ].map(({ l, v, hi }) => (
-              <div key={l} className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-semibold ${hi ? 'bg-primary-50 border-primary-200 text-primary-700' : 'bg-white border-gray-100 text-gray-700'}`}>
-                <span className="text-xs text-gray-400 font-medium">{l}</span>
-                <span className={hi ? 'text-primary-600 font-bold' : ''}>{v}</span>
+              <div key={l} className={`flex items-center justify-between sm:justify-start gap-2 px-3 py-2 md:px-4 md:py-2.5 rounded-xl border font-semibold ${
+                hi ? 'bg-primary-50 border-primary-200 text-primary-700' : 'bg-white border-gray-100 text-gray-700'
+              }`}>
+                <span className="text-xs text-gray-400 font-medium leading-tight">{l}</span>
+                <span className={`text-xs md:text-sm font-bold ${hi ? 'text-primary-600' : ''}`}>{v}</span>
               </div>
             ))}
           </div>
