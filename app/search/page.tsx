@@ -4,12 +4,6 @@ import { useEffect, useState, useRef } from 'react';
 import { createClient } from '@supabase/supabase-js';
 import type { Coupon, Store } from '@/types/index';
 
-export const metadata = {
-  title: 'New Deals & Coupons – Latest Verified Offers',
-  description: 'Browse the latest verified coupon codes and deals from top stores in India. Updated daily.',
-  robots: { index: false, follow: true },
-}
-
 
 
 const supabase = createClient(
