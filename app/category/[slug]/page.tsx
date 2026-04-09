@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { data: cat } = await supabase.from('categories').select('*').eq('slug', params.slug).single()
   if (!cat) return { title: 'Category Not Found' }
   const month = new Date().toLocaleString('en-IN', { month: 'long', year: 'numeric' })
-  const title = `Best ${cat.name} Coupons & Deals – ${month} | ${SITE_NAME}`
+  const title = `Best ${cat.name} Coupons & Deals – ${month}`
   const description = `Find the best verified ${cat.name} coupons, promo codes and deals for ${month}. Save on top ${cat.name} brands in India.`
   return {
     title,
