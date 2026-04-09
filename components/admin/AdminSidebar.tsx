@@ -3,18 +3,19 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
   LayoutDashboard, Store, FolderOpen, Tag, FileText,
-  Code2, Code, Import, ChevronRight, ArrowLeft
+  Code2, Import, ChevronRight, ArrowLeft
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import AdminLogoutButton from './AdminLogoutButton'
 
 const navItems = [
-  { href: '/admin',            label: 'Dashboard',         icon: LayoutDashboard, exact: true },
-  { href: '/admin/stores',     label: 'Stores',            icon: Store },
-  { href: '/admin/categories', label: 'Categories',        icon: FolderOpen },
-  { href: '/admin/coupons',    label: 'Coupons & Deals',   icon: Tag },
-  { href: '/admin/blog',       label: 'Blog Posts',        icon: FileText },
-  { href: '/admin/scripts',    label: 'Script Manager',    icon: Code2 },
-  { href: '/admin/import',     label: 'Import / Export',   icon: Import },
+  { href: '/admin',            label: 'Dashboard',       icon: LayoutDashboard, exact: true },
+  { href: '/admin/stores',     label: 'Stores',          icon: Store },
+  { href: '/admin/categories', label: 'Categories',      icon: FolderOpen },
+  { href: '/admin/coupons',    label: 'Coupons & Deals', icon: Tag },
+  { href: '/admin/blog',       label: 'Blog Posts',      icon: FileText },
+  { href: '/admin/scripts',    label: 'Script Manager',  icon: Code2 },
+  { href: '/admin/import',     label: 'Import / Export', icon: Import },
 ]
 
 export default function AdminSidebar() {
@@ -29,7 +30,7 @@ export default function AdminSidebar() {
             <Tag className="w-4 h-4 text-white" />
           </div>
           <div>
-            <div className="font-extrabold text-gray-900 text-base leading-tight">DealHive</div>
+            <div className="font-extrabold text-gray-900 text-base leading-tight">EndOverPay</div>
             <div className="text-xs text-gray-400 font-semibold">Admin Panel</div>
           </div>
         </div>
@@ -55,12 +56,14 @@ export default function AdminSidebar() {
         })}
       </nav>
 
-      {/* Back to site */}
-      <div className="p-3 border-t border-gray-100">
-        <Link href="/" className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold text-gray-500 hover:bg-gray-50 hover:text-orange-600 transition-all">
+      {/* Bottom — Back to site + Logout */}
+      <div className="p-3 border-t border-gray-100 space-y-1">
+        <Link href="/"
+          className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold text-gray-500 hover:bg-gray-50 hover:text-orange-600 transition-all">
           <ArrowLeft className="w-4 h-4" />
           Back to Website
         </Link>
+        <AdminLogoutButton />
       </div>
     </aside>
   )
