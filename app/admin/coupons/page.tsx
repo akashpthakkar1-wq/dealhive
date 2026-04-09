@@ -36,8 +36,8 @@ export default function AdminCoupons() {
       supabase.from('categories').select('id,name').order('name'),
     ])
     setCoupons(cRes.data || [])
-    setStores(sRes.data || [])
-    setCategories(catRes.data || [])
+    setStores((sRes.data || []) as any)
+    setCategories((catRes.data || []) as any)
     setLoading(false)
   }
 
