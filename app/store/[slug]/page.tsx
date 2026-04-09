@@ -235,21 +235,29 @@ export default async function StorePage({ params, searchParams }: Props) {
           <div className="lg:col-span-2 space-y-6">
 
             {/* Filter chips — horizontal scroll on mobile, wrap on desktop */}
-            <div className="flex overflow-x-auto md:flex-wrap gap-2 pb-1 md:pb-0 scroll-smooth"
-              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-              {FILTER_TABS.map((tab) => (
-                <Link key={tab.id} href={`/store/${store.slug}?filter=${tab.id}`}
-                  className={`flex-shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold border whitespace-nowrap transition-all ${
-                    filter === tab.id
-                      ? 'bg-primary-500 text-white border-primary-500 shadow-sm'
-                      : 'bg-white text-gray-600 border-gray-200 hover:border-primary-300 hover:text-primary-600'
-                  }`}>
-                  {tab.label}
-                  <span className={`text-xs px-1.5 py-0.5 rounded-full font-bold ${filter === tab.id ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'}`}>
-                    {counts[tab.id]}
-                  </span>
-                </Link>
-              ))}
+            <div className="relative mt-4">
+
+              {/* Scroll container */}
+              <div className="flex overflow-x-auto md:flex-wrap gap-2 md:gap-2 px-1 pb-2 md:pb-0 scroll-smooth scroll-px-4"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                {FILTER_TABS.map((tab) => (
+                  <Link key={tab.id} href={`/store/${store.slug}?filter=${tab.id}`}
+                    className={`flex-shrink-0 inline-flex items-center gap-1.5 px-4 min-h-[40px] rounded-full text-sm font-semibold border whitespace-nowrap transition-all ${
+                      filter === tab.id
+                        ? 'bg-primary-500 text-white border-primary-500 shadow-sm'
+                        : 'bg-white text-gray-600 border-gray-200 hover:border-primary-300 hover:text-primary-600'
+                    }`}>
+                    {tab.label}
+                    <span className={`text-xs px-1.5 py-0.5 rounded-full font-bold ${filter === tab.id ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'}`}>
+                      {counts[tab.id]}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Fade overlay — mobile only, hints at horizontal scroll */}
+              <div className="md:hidden pointer-events-none absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-gray-50 to-transparent" />
+
             </div>
 
             {/* Coupons list — first card always visible */}
