@@ -7,7 +7,7 @@ import { SITE_NAME } from '@/lib/utils'
 import StoresSearchBar from '@/components/stores/StoresSearchBar'
 
 export const metadata: Metadata = {
-  title: `All Stores – Find Coupons & Deals | ${SITE_NAME}`,
+  title: `All Stores – Find Coupons & Deals`,
   description: `Browse all stores on ${SITE_NAME}. Find verified coupon codes and deals from hundreds of top online stores in India.`,
 }
 
