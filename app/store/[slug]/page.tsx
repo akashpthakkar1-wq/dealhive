@@ -188,22 +188,41 @@ export default async function StorePage({ params, searchParams }: Props) {
             {maxDiscount > 0 && <>, up to <strong>{maxDiscount}% off</strong></>}.
           </p>
 
-          {/* Stats pills — 2-col grid on mobile, flex row on desktop */}
+          {/* Stats pills — mobile: 2 cards only | desktop: all 5 */}
           <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 mb-1">
-            {[
-              { l: 'Total Offers',  v: allCoupons.length },
-              { l: 'Active Now',    v: activeCoupons.length,                              hi: true },
-              { l: 'Best Discount', v: maxDiscount > 0 ? `${maxDiscount}% OFF` : 'Great Deals', hi: true },
-              { l: 'Codes',         v: codeCoupons.length },
-              { l: 'Total Uses',    v: displayUses.toLocaleString() },
-            ].map(({ l, v, hi }) => (
-              <div key={l} className={`flex items-center justify-between sm:justify-start gap-2 px-3 py-2 md:px-4 md:py-2.5 rounded-xl border font-semibold ${
-                hi ? 'bg-primary-50 border-primary-200 text-primary-700' : 'bg-white border-gray-100 text-gray-700'
-              }`}>
-                <span className="text-xs text-gray-400 font-medium leading-tight">{l}</span>
-                <span className={`text-xs md:text-sm font-bold ${hi ? 'text-primary-600' : ''}`}>{v}</span>
-              </div>
-            ))}
+
+            {/* Total Offers — desktop only */}
+            <div className="hidden sm:flex items-center justify-start gap-2 px-4 py-2.5 rounded-xl border font-semibold bg-white border-gray-100 text-gray-700">
+              <span className="text-xs text-gray-400 font-medium">Total Offers</span>
+              <span className="text-sm font-bold">{allCoupons.length}</span>
+            </div>
+
+            {/* Active Now — desktop only */}
+            <div className="hidden sm:flex items-center justify-start gap-2 px-4 py-2.5 rounded-xl border font-semibold bg-primary-50 border-primary-200 text-primary-700">
+              <span className="text-xs text-gray-400 font-medium">Active Now</span>
+              <span className="text-sm font-bold text-primary-600">{activeCoupons.length}</span>
+            </div>
+
+            {/* Best Discount — always visible */}
+            <div className="flex items-center justify-between sm:justify-start gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl border font-semibold bg-primary-50 border-primary-200 text-primary-700">
+              <span className="text-xs text-gray-400 font-medium leading-tight">Best Discount</span>
+              <span className="text-xs sm:text-sm font-bold text-primary-600">
+                {maxDiscount > 0 ? `${maxDiscount}% OFF` : 'Great Deals'}
+              </span>
+            </div>
+
+            {/* Codes — desktop only */}
+            <div className="hidden sm:flex items-center justify-start gap-2 px-4 py-2.5 rounded-xl border font-semibold bg-white border-gray-100 text-gray-700">
+              <span className="text-xs text-gray-400 font-medium">Codes</span>
+              <span className="text-sm font-bold">{codeCoupons.length}</span>
+            </div>
+
+            {/* Total Uses — always visible */}
+            <div className="flex items-center justify-between sm:justify-start gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl border font-semibold bg-white border-gray-100 text-gray-700">
+              <span className="text-xs text-gray-400 font-medium leading-tight">Total Uses</span>
+              <span className="text-xs sm:text-sm font-bold">{displayUses.toLocaleString()}</span>
+            </div>
+
           </div>
         </div>
       </div>
@@ -215,11 +234,12 @@ export default async function StorePage({ params, searchParams }: Props) {
           {/* ── LEFT ──────────────────────────────────── */}
           <div className="lg:col-span-2 space-y-6">
 
-            {/* Filter tabs — link-based so they actually filter */}
-            <div className="flex flex-wrap gap-2">
+            {/* Filter chips — horizontal scroll on mobile, wrap on desktop */}
+            <div className="flex overflow-x-auto md:flex-wrap gap-2 pb-1 md:pb-0 scroll-smooth"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               {FILTER_TABS.map((tab) => (
                 <Link key={tab.id} href={`/store/${store.slug}?filter=${tab.id}`}
-                  className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold border transition-all ${
+                  className={`flex-shrink-0 inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold border whitespace-nowrap transition-all ${
                     filter === tab.id
                       ? 'bg-primary-500 text-white border-primary-500 shadow-sm'
                       : 'bg-white text-gray-600 border-gray-200 hover:border-primary-300 hover:text-primary-600'
