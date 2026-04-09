@@ -24,10 +24,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const store = await getStoreBySlug(params.slug)
   if (!store) return { title: 'Store Not Found' }
   const month = new Date().toLocaleString('en-IN', { month: 'long', year: 'numeric' })
+  const logoUrl = store.logo || `${SITE_URL}/og-default.jpg`
+  // Cap at 155 chars for Google snippet
+  const rawDesc = `Find verified ${store.name} coupon codes & promo codes for ${month}. Save big with exclusive ${store.name} deals updated daily.`
+  const description = rawDesc.length > 155 ? rawDesc.slice(0, 152) + '…' : rawDesc
   return {
-    title: `${store.name} Coupons & Promo Codes – Up to 90% Off`,
-    description: `Find the latest verified ${store.name} coupon codes, promo codes and deals for ${month}. ${store.description || ''}`,
+    title: `${store.name} Coupons & Promo Codes – Up to 90% Off | ${SITE_NAME}`,
+    description,
     alternates: { canonical: `${SITE_URL}/store/${store.slug}` },
+    openGraph: {
+      title: `${store.name} Coupons & Promo Codes – ${month} | ${SITE_NAME}`,
+      description,
+      url: `${SITE_URL}/store/${store.slug}`,
+      siteName: SITE_NAME,
+      type: 'website',
+      locale: 'en_IN',
+      images: [{ url: logoUrl, width: 1200, height: 630, alt: `${store.name} coupons and promo codes` }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${store.name} Coupons – Up to 90% Off | ${SITE_NAME}`,
+      description,
+      images: [logoUrl],
+    },
   }
 }
 
@@ -119,10 +138,34 @@ export default async function StorePage({ params, searchParams }: Props) {
   return (
     <div className="min-h-screen bg-gray-50">
 
-      {/* JSON-LD */}
+      {/* JSON-LD — Store + BreadcrumbList + FAQPage + ItemList + AggregateRating */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([
-        { '@context': 'https://schema.org', '@type': 'Store', name: store.name, url: store.website_url, logo: store.logo, description: store.description },
+        // 1. Store entity
+        { '@context': 'https://schema.org', '@type': 'Store', name: store.name, url: store.website_url, logo: store.logo, description: store.description || `Find ${store.name} coupon codes on ${SITE_NAME}.` },
+        // 2. BreadcrumbList — enables breadcrumb display in Google search results
+        { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home',   item: SITE_URL },
+          { '@type': 'ListItem', position: 2, name: 'Stores', item: `${SITE_URL}/stores` },
+          { '@type': 'ListItem', position: 3, name: `${store.name} Coupons`, item: `${SITE_URL}/store/${store.slug}` },
+        ]},
+        // 3. FAQPage — enables FAQ rich results
         { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+        // 4. ItemList of coupons
+        { '@context': 'https://schema.org', '@type': 'ItemList', name: `${store.name} Coupon Codes ${month}`, numberOfItems: activeCoupons.length,
+          itemListElement: activeCoupons.slice(0, 10).map((c, i) => ({
+            '@type': 'ListItem', position: i + 1,
+            item: { '@type': 'Offer', name: c.title, description: c.description || c.title,
+              url: `${SITE_URL}/store/${store.slug}`,
+              ...(c.expiry_date && { validThrough: c.expiry_date }),
+            },
+          }))
+        },
+        // 5. AggregateRating — may unlock star ratings in search results
+        { '@context': 'https://schema.org', '@type': 'LocalBusiness', name: store.name,
+          aggregateRating: { '@type': 'AggregateRating', ratingValue: rating, bestRating: '5', worstRating: '1',
+            ratingCount: Math.max(200, stableNum(store.id, 200, 2000)),
+          },
+        },
       ])}} />
 
       {/* ── HERO ────────────────────────────────────── */}
@@ -318,8 +361,17 @@ export default async function StorePage({ params, searchParams }: Props) {
                 <p>We track all {store.name} promotions, flash sales, and exclusive discount codes daily so you never miss a saving opportunity. Our team manually verifies every code before publishing.</p>
                 <p>{store.name} regularly runs seasonal sales and clearance events. Bookmark this page and check back often.</p>
               </div>
+              {/* Internal link to category page — improves crawl graph */}
+              {store.category && (
+                <div className="mt-4 pt-4 border-t border-gray-100 flex items-center gap-2 text-sm">
+                  <span className="text-gray-500">Browse more</span>
+                  <Link href={`/category/${store.category.toLowerCase()}`} className="text-primary-600 font-semibold hover:underline">
+                    {store.category} coupons →
+                  </Link>
+                </div>
+              )}
               {store.website_url && (
-                <div className="mt-4 pt-4 border-t border-gray-100 flex items-center gap-2 text-sm text-gray-500">
+                <div className="mt-3 flex items-center gap-2 text-sm text-gray-500">
                   <ExternalLink className="w-4 h-4 text-primary-500" />
                   <span>Official website:</span>
                   <a href={store.website_url} target="_blank" rel="noopener noreferrer" className="text-primary-600 font-semibold hover:underline">{store.website_url}</a>

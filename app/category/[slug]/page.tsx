@@ -8,14 +8,32 @@ import { isExpired, SITE_NAME, SITE_URL } from '@/lib/utils'
 
 interface Props { params: { slug: string } }
 
+export const revalidate = 3600
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const supabase = createServerSupabaseClient()
   const { data: cat } = await supabase.from('categories').select('*').eq('slug', params.slug).single()
   if (!cat) return { title: 'Category Not Found' }
+  const month = new Date().toLocaleString('en-IN', { month: 'long', year: 'numeric' })
+  const title = `Best ${cat.name} Coupons & Deals – ${month} | ${SITE_NAME}`
+  const description = `Find the best verified ${cat.name} coupons, promo codes and deals for ${month}. Save on top ${cat.name} brands in India.`
   return {
-    title: `${cat.name} Coupons & Deals | ${SITE_NAME}`,
-    description: `Find the best ${cat.name} coupon codes and deals. Verified offers updated daily.`,
+    title,
+    description,
     alternates: { canonical: `${SITE_URL}/category/${cat.slug}` },
+    openGraph: {
+      title,
+      description,
+      url: `${SITE_URL}/category/${cat.slug}`,
+      siteName: SITE_NAME,
+      type: 'website',
+      locale: 'en_IN',
+    },
+    twitter: {
+      card: 'summary',
+      title,
+      description,
+    },
   }
 }
 
@@ -66,15 +84,40 @@ export default async function CategoryPage({ params }: Props) {
     .select('id,name,slug,icon')
     .order('name')
 
+  const month = new Date().toLocaleString('en-IN', { month: 'long', year: 'numeric' })
+
+  const jsonLd = [
+    { '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home',       item: SITE_URL },
+        { '@type': 'ListItem', position: 2, name: 'Categories', item: `${SITE_URL}/categories` },
+        { '@type': 'ListItem', position: 3, name: `${cat.name} Coupons`, item: `${SITE_URL}/category/${cat.slug}` },
+      ],
+    },
+    { '@context': 'https://schema.org', '@type': 'ItemList',
+      name: `Best ${cat.name} Coupons ${month}`,
+      numberOfItems: activeCoupons.length,
+      itemListElement: activeCoupons.slice(0, 10).map((c: any, i: number) => ({
+        '@type': 'ListItem', position: i + 1,
+        item: { '@type': 'Offer', name: c.title, url: `${SITE_URL}/store/${c.store?.slug}`,
+          ...(c.expiry_date && { validThrough: c.expiry_date }),
+        },
+      })),
+    },
+  ]
+
   return (
     <div className="min-h-screen bg-gray-50">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {/* Header */}
       <div className="bg-gradient-to-br from-primary-600 to-primary-700 text-white py-10">
         <div className="container-main">
           <div className="flex items-center gap-4">
             <div className="text-5xl">{cat.icon || '🏷️'}</div>
             <div>
-              <h1 className="text-3xl font-extrabold mb-1">{cat.name} Coupons &amp; Deals</h1>
+              <h1 className="text-3xl font-extrabold mb-1">
+                {cat.name} Coupons &amp; Deals – {month}
+              </h1>
               <p className="text-white/80 text-sm">
                 {activeCoupons.length} active offers · Updated today
               </p>
