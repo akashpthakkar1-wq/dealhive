@@ -131,7 +131,7 @@ export default async function StorePage({ params, searchParams }: Props) {
           <Breadcrumb items={[{ label: 'Stores', href: '/stores' }, { label: `${store.name} Coupons` }]} />
 
           {/* Logo + Content — side by side on both mobile and desktop */}
-          <div className="flex flex-row items-start gap-3 md:gap-5 mt-3 mb-3 md:mb-5">
+          <div className="flex flex-row items-start gap-3 md:gap-5 mt-3 mb-3 md:mb-4">
 
             {/* Logo — smaller on mobile */}
             <div className="w-14 h-14 md:w-20 md:h-20 rounded-xl md:rounded-2xl border-2 border-gray-100 bg-white shadow-sm flex-shrink-0 flex items-center justify-center overflow-hidden">
@@ -141,30 +141,30 @@ export default async function StorePage({ params, searchParams }: Props) {
             </div>
 
             {/* Content */}
-            <div className="flex-1 min-w-0">
+            <div className="flex-1 min-w-0 space-y-1.5 md:space-y-2">
 
               {/* Badges */}
-              <div className="flex flex-wrap items-center gap-1.5 mb-1.5">
+              <div className="flex flex-wrap items-center gap-1.5">
                 <span className="badge-verified"><CheckCircle className="w-3 h-3" /> Verified</span>
                 {store.category && <span className="badge-type">{store.category}</span>}
                 <span className="hidden sm:inline text-xs text-gray-400">Updated today</span>
               </div>
 
               {/* Title */}
-              <h1 className="text-lg leading-tight md:text-3xl font-extrabold text-gray-900 mb-1.5">
+              <h1 className="text-lg leading-tight md:text-3xl font-extrabold text-gray-900">
                 {store.name} Coupons &amp; Promo Codes
                 <span className="hidden md:inline"> – {month}</span>
               </h1>
 
               {/* Description — desktop only inside row */}
-              <p className="hidden md:block text-gray-500 text-sm mb-3 max-w-2xl">
+              <p className="hidden md:block text-gray-500 text-sm max-w-2xl">
                 {store.description || `Find the best ${store.name} coupon codes and deals verified by our team.`}{' '}
                 Save big with <strong>{activeCoupons.length} active offers</strong>
                 {maxDiscount > 0 && <>, including up to <strong>{maxDiscount}% off</strong></>}.
               </p>
 
               {/* Rating + Visit button */}
-              <div className="flex flex-wrap items-center gap-2 md:gap-3">
+              <div className="flex flex-wrap items-center gap-2 md:gap-3 mt-2">
                 <RatingStars rating={parseFloat(rating)} />
                 <span className="text-xs md:text-sm font-semibold text-gray-700">{rating}</span>
                 <span className="hidden sm:inline text-xs md:text-sm text-gray-400">
@@ -189,7 +189,7 @@ export default async function StorePage({ params, searchParams }: Props) {
           </p>
 
           {/* Stats pills — mobile: 2 cards only | desktop: all 5 */}
-          <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 mb-1">
+          <div className="grid grid-cols-2 sm:flex sm:flex-nowrap sm:overflow-x-auto sm:gap-2 gap-2 mb-1 pb-1">
 
             {/* Total Offers — desktop only */}
             <div className="hidden sm:flex items-center justify-start gap-2 px-4 py-2.5 rounded-xl border font-semibold bg-white border-gray-100 text-gray-700">
@@ -238,7 +238,7 @@ export default async function StorePage({ params, searchParams }: Props) {
             <div className="relative mt-4">
 
               {/* Scroll container */}
-              <div className="flex overflow-x-auto md:flex-wrap gap-2 md:gap-2 px-1 pb-2 md:pb-0 scroll-smooth scroll-px-4"
+              <div className="flex overflow-x-auto flex-nowrap gap-2 px-1 pb-2 md:pb-1 scroll-smooth scroll-px-4"
                 style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
                 {FILTER_TABS.map((tab) => (
                   <Link key={tab.id} href={`/store/${store.slug}?filter=${tab.id}`}
