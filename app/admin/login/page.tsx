@@ -1,14 +1,12 @@
 'use client'
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { Lock, Eye, EyeOff, LogIn } from 'lucide-react'
 
 export default function AdminLoginPage() {
-  const [password, setPassword]   = useState('')
-  const [showPw,   setShowPw]     = useState(false)
-  const [error,    setError]      = useState('')
-  const [loading,  setLoading]    = useState(false)
-  const router = useRouter()
+  const [password, setPassword] = useState('')
+  const [showPw,   setShowPw]   = useState(false)
+  const [error,    setError]    = useState('')
+  const [loading,  setLoading]  = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -23,14 +21,14 @@ export default function AdminLoginPage() {
       })
 
       if (res.ok) {
-        router.push('/admin')
-        router.refresh()
+        // Hard redirect — ensures middleware re-evaluates the cookie
+        window.location.href = '/admin'
       } else {
         setError('Incorrect password. Please try again.')
+        setLoading(false)
       }
     } catch {
       setError('Something went wrong. Please try again.')
-    } finally {
       setLoading(false)
     }
   }
@@ -74,8 +72,10 @@ export default function AdminLoginPage() {
               </div>
             </div>
 
+            {/* Error message */}
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-2.5 rounded-xl">
+              <div className="bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-2.5 rounded-xl flex items-center gap-2">
+                <span className="text-red-500">⚠️</span>
                 {error}
               </div>
             )}
@@ -85,9 +85,12 @@ export default function AdminLoginPage() {
               disabled={loading || !password}
               className="w-full bg-primary-500 hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 transition-all">
               {loading ? (
-                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <>
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  Verifying...
+                </>
               ) : (
-                <><LogIn className="w-4 h-4" /> Login</>
+                <><LogIn className="w-4 h-4" /> Login to Admin</>
               )}
             </button>
           </form>
