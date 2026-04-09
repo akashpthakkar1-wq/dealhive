@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const rawDesc = `Find verified ${store.name} coupon codes & promo codes for ${month}. Save big with exclusive ${store.name} deals updated daily.`
   const description = rawDesc.length > 155 ? rawDesc.slice(0, 152) + '…' : rawDesc
   return {
-    title: `${store.name} Coupons & Promo Codes – Up to 90% Off | ${SITE_NAME}`,
+    title: `${store.name} Coupons & Promo Codes – Up to 90% Off`,
     description,
     alternates: { canonical: `${SITE_URL}/store/${store.slug}` },
     openGraph: {
