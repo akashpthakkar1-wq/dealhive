@@ -140,7 +140,7 @@ export default function SearchBar({ compact }: Props) {
                     <Tag className="w-3 h-3" /> Coupons
                   </div>
                   {results!.coupons.map((c) => (
-                    <Link key={c.id} href={`/coupon/${c.slug}`}
+                    <Link key={c.id} href={`/store/${(c.store as any)?.slug}?popup=${c.id}`}
                       onClick={() => setFocused(false)}
                       className="flex items-center justify-between px-4 py-2.5 hover:bg-primary-50 transition-colors group">
                       <div className="flex-1 min-w-0">
