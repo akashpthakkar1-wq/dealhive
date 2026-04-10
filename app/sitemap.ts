@@ -1,10 +1,10 @@
 import { MetadataRoute } from 'next'
-import { createServerSupabaseClient } from '@/lib/supabase-server'
+import { createAdminSupabaseClient } from '@/lib/supabase-server'
 
 const SITE_URL = 'https://endoverpay.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const supabase = createServerSupabaseClient()
+  const supabase = createAdminSupabaseClient()
 
   const [storesRes, categoriesRes, couponsRes] = await Promise.all([
     supabase.from('stores').select('slug, updated_at, created_at'),
