@@ -55,3 +55,4 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [...staticPages, ...storePages, ...categoryPages, ...couponPages]
 }
+// Sat Apr 11 02:31:33 IST 2026
