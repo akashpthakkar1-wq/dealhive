@@ -1,13 +1,15 @@
 import { MetadataRoute } from 'next'
 import { createClient } from '@supabase/supabase-js'
 
+export const dynamic = 'force-dynamic'
+
 const SITE_URL = 'https://endoverpay.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Plain client — no cookies needed, works in sitemap context
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
+    process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   )
 
   const [storesRes, categoriesRes, couponsRes] = await Promise.all([
