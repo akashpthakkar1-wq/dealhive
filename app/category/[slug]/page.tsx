@@ -94,7 +94,9 @@ export default async function CategoryPage({ params }: Props) {
         { '@type': 'ListItem', position: 3, name: `${cat.name} Coupons`, item: `${SITE_URL}/category/${cat.slug}` },
       ],
     },
-    { '@context': 'https://schema.org', '@type': 'ItemList',
+    // Only output ItemList when coupons exist — empty itemListElement causes SEMrush error
+    ...(activeCoupons.length > 0 ? [{
+      '@context': 'https://schema.org', '@type': 'ItemList',
       name: `Best ${cat.name} Coupons ${month}`,
       numberOfItems: activeCoupons.length,
       itemListElement: activeCoupons.slice(0, 10).map((c: any, i: number) => ({
@@ -103,7 +105,7 @@ export default async function CategoryPage({ params }: Props) {
           ...(c.expiry_date && { validThrough: c.expiry_date }),
         },
       })),
-    },
+    }] : []),
   ]
 
   return (
