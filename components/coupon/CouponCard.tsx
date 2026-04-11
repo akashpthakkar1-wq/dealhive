@@ -57,7 +57,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
               className="w-14 h-14 rounded-xl border border-gray-100 flex-shrink-0 object-contain bg-white p-1.5" />
             <div className="flex-1 min-w-0">
               <div className="flex items-center flex-wrap gap-1.5">
-                <span className="text-xs font-semibold text-gray-500 truncate max-w-[120px]">
+                <span className="text-xs font-semibold text-gray-700 truncate max-w-[120px]">
                   {coupon.store?.name}
                 </span>
                 {coupon.is_verified && (
@@ -66,7 +66,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
                   </span>
                 )}
                 {coupon.is_trending && (
-                  <span className="text-[11px] text-orange-600 bg-orange-50 border border-orange-200 px-1.5 py-px rounded-full font-semibold whitespace-nowrap">
+                  <span className="text-[11px] text-orange-800 bg-orange-100 border border-orange-300 px-1.5 py-px rounded-full font-semibold whitespace-nowrap">
                     🔥 Trending
                   </span>
                 )}
@@ -88,7 +88,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
           </div>
 
           {/* Meta — flex-1 pushes CTA to bottom */}
-          <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2 text-xs text-gray-400 flex-1 content-start">
+          <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2 text-xs text-gray-600 flex-1 content-start">
             {coupon.expiry_date && (
               <span>🕐 Expires {new Date(coupon.expiry_date).toLocaleDateString('en-IN')}</span>
             )}
