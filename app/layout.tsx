@@ -5,7 +5,15 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import GlobalPopupHandler from '@/components/layout/GlobalPopupHandler'
 import { SITE_NAME, SITE_URL } from '@/lib/utils'
+import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
+  variable: '--font-plus-jakarta-sans',
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -47,7 +55,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={plusJakartaSans.variable}>
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         {/* Organization schema — on every page */}
@@ -73,7 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           },
         }) }} />
       </head>
-      <body>
+      <body className={plusJakartaSans.className}>
         <Toaster
           position="top-center"
           toastOptions={{
