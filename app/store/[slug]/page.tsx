@@ -374,7 +374,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                 <div className="mt-3 flex items-center gap-2 text-sm text-gray-500">
                   <ExternalLink className="w-4 h-4 text-primary-500" aria-hidden="true" />
                   <span>Official website:</span>
-                  <a href={store.website_url} target="_blank" rel="noopener noreferrer" className="text-primary-600 font-semibold hover:underline">{store.website_url}</a>
+                  <a href={store.website_url} target="_blank" rel="noopener noreferrer" className="text-primary-600 font-semibold hover:underline">Visit {store.name} official website</a>
                 </div>
               )}
             </div>
