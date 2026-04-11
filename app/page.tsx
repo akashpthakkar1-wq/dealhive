@@ -15,8 +15,8 @@ export const revalidate = 3600
 
 export default async function HomePage() {
   const [featured, trending, recent, stores, categories] = await Promise.all([
-    getFeaturedCoupons(12),
-    getTrendingCoupons(8),
+    getFeaturedCoupons(6),
+    getTrendingCoupons(6),
     getRecentCoupons(8),
     getPopularStores(12),
     getCategories(),
@@ -76,7 +76,7 @@ export default async function HomePage() {
             href="/search?filter=featured" />
           {featured.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
-              {featured.map((c) => <CouponCard key={c.id} coupon={c} />)}
+              {featured.slice(0, 6).map((c) => <CouponCard key={c.id} coupon={c} />)}
             </div>
           ) : <EmptyState />}
         </div>
@@ -117,7 +117,7 @@ export default async function HomePage() {
             href="/search?filter=trending" />
           {trending.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
-              {trending.map((c) => <CouponCard key={c.id} coupon={c} />)}
+              {trending.slice(0, 6).map((c) => <CouponCard key={c.id} coupon={c} />)}
             </div>
           ) : <EmptyState />}
         </div>
@@ -154,7 +154,7 @@ export default async function HomePage() {
             href="/search?sort=recent" />
           {recent.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
-              {recent.map((c) => <CouponCard key={c.id} coupon={c} />)}
+              {recent.slice(0, 6).map((c) => <CouponCard key={c.id} coupon={c} />)}
             </div>
           ) : <EmptyState />}
           <div className="text-center mt-6">
