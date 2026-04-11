@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Tag, TrendingUp, Star, Clock, Zap, Store } from 'lucide-react'
-import CouponCard from '@/components/coupon/CouponCard'
+import dynamic from 'next/dynamic'
+const CouponCard = dynamic(() => import('@/components/coupon/CouponCard'), { ssr: false })
 import HeroSearchBar from '@/components/hero/HeroSearchBar'
 import {
   getFeaturedCoupons,
