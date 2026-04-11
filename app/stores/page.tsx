@@ -91,7 +91,7 @@ export default async function StoresPage() {
                     className="bg-white rounded-xl border border-gray-100 p-4 flex flex-col items-center gap-2.5 hover:border-primary-300 hover:shadow-md hover:bg-primary-50 transition-all group text-center">
                     <div className="w-14 h-14 rounded-xl overflow-hidden border border-gray-100 bg-gray-50 flex items-center justify-center flex-shrink-0">
                       {store.logo
-                        ? <Image src={store.logo} alt={`${store.name} logo`} width={56} height={56} className="object-contain p-1" />
+                        ? <Image src={store.logo} alt={`${store.name} logo`} width={56} height={56} className="object-contain p-2 w-full h-full" />
                         : <Tag className="w-7 h-7 text-primary-300" />}
                     </div>
                     <div>

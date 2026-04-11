@@ -179,7 +179,7 @@ export default async function StorePage({ params, searchParams }: Props) {
             {/* Logo — smaller on mobile */}
             <div className="w-14 h-14 md:w-20 md:h-20 rounded-xl md:rounded-2xl border-2 border-gray-100 bg-white shadow-sm flex-shrink-0 flex items-center justify-center overflow-hidden">
               {store.logo
-                ? <Image src={store.logo} alt={`${store.name} logo`} width={80} height={80} className="object-contain p-1" />
+                ? <Image src={store.logo} alt={`${store.name} logo`} width={80} height={80} className="object-contain p-2 w-full h-full" />
                 : <Tag className="w-8 h-8 md:w-10 md:h-10 text-primary-400" />}
             </div>
 
@@ -523,7 +523,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                   {sidebarStores.map(s => (
                     <Link key={s.id} href={`/store/${s.slug}`} className="flex items-center gap-3 p-2 rounded-lg hover:bg-primary-50 transition-colors group">
                       <div className="w-10 h-10 rounded-xl border border-gray-100 bg-white overflow-hidden flex items-center justify-center flex-shrink-0">
-                        {s.logo ? <Image src={s.logo} alt={`${s.name} logo`} width={40} height={40} className="object-contain p-0.5" /> : <Tag className="w-4 h-4 text-primary-400" />}
+                        {s.logo ? <Image src={s.logo} alt={`${s.name} logo`} width={40} height={40} className="object-contain p-1 w-full h-full" /> : <Tag className="w-4 h-4 text-primary-400" />}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="font-semibold text-gray-900 text-sm group-hover:text-primary-600 transition-colors truncate">{s.name}</div>
