@@ -166,7 +166,7 @@ export default async function StorePage({ params, searchParams }: Props) {
             ratingCount: Math.max(200, stableNum(store.id, 200, 2000)),
           },
         }] : []),
-      ])])}} />
+      ])}} />
 
       {/* ── HERO ────────────────────────────────────── */}
       <div className="bg-white border-b border-gray-100">
