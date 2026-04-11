@@ -13,8 +13,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   )
 
   const [storesRes, categoriesRes, couponsRes] = await Promise.all([
-    supabase.from('stores').select('slug, updated_at, created_at'),
-    supabase.from('categories').select('slug, updated_at'),
+    supabase.from('stores').select('slug'),
+    supabase.from('categories').select('slug'),
     supabase
       .from('coupons')
       .select('slug, created_at, expiry_date')
@@ -31,14 +31,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const storePages: MetadataRoute.Sitemap = (storesRes.data || []).map((s) => ({
     url: `${SITE_URL}/store/${s.slug}`,
-    lastModified: s.updated_at ? new Date(s.updated_at) : new Date(s.created_at),
+    lastModified: new Date(),
     changeFrequency: 'daily' as const,
     priority: 0.9,
   }))
 
   const categoryPages: MetadataRoute.Sitemap = (categoriesRes.data || []).map((c) => ({
     url: `${SITE_URL}/category/${c.slug}`,
-    lastModified: c.updated_at ? new Date(c.updated_at) : new Date(),
+    lastModified: new Date(),
     changeFrequency: 'daily' as const,
     priority: 0.8,
   }))
