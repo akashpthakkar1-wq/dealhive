@@ -23,8 +23,12 @@ export default function Footer() {
               India&apos;s most trusted coupon &amp; deal platform. Verified codes, real savings.
             </p>
             <div className="flex gap-2">
-              {[Twitter, Instagram, Mail].map((Icon, i) => (
-                <a key={i} href="#"
+              {[
+                { Icon: Twitter, label: 'Twitter' },
+                { Icon: Instagram, label: 'Instagram' },
+                { Icon: Mail, label: 'Email' },
+              ].map(({ Icon, label }) => (
+                <a key={label} href="#" aria-label={label}
                   className="footer-social w-7 h-7 rounded-md flex items-center justify-center transition-all duration-200">
                   <Icon className="w-3.5 h-3.5" />
                 </a>
