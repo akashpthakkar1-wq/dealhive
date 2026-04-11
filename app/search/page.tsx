@@ -272,7 +272,7 @@ export default function SearchPage() {
                           >
                             <img
                               src={getStoreLogo(store)}
-                              alt={store.name}
+                              alt={`${store.name} logo`}
                               className="w-9 h-9 rounded-lg border border-gray-100 object-contain bg-white flex-shrink-0"
                             />
                             <div className="flex-1 min-w-0">

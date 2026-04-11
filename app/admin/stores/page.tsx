@@ -146,7 +146,7 @@ export default function AdminStores() {
                     <td className="px-5 py-3">
                       <div className="flex items-center gap-3">
                         {s.logo ? (
-                          <img src={s.logo} alt={s.name} className="w-8 h-8 rounded-lg object-contain border border-gray-100 bg-white" onError={(e: any) => e.target.style.display = 'none'} />
+                          <img src={s.logo} alt={`${s.name} logo`} className="w-8 h-8 rounded-lg object-contain border border-gray-100 bg-white" onError={(e: any) => e.target.style.display = 'none'} />
                         ) : (
                           <div className="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center"><Store className="w-4 h-4 text-orange-400" /></div>
                         )}

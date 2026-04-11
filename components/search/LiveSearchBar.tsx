@@ -177,7 +177,7 @@ export default function LiveSearchBar({
                       onMouseDown={(e) => { e.preventDefault(); setOpen(false); window.location.href = `/store/${store.slug}`; }}
                       className="w-full flex items-center gap-3 px-4 py-3 hover:bg-purple-50 transition-colors border-b border-gray-50 last:border-0 text-left"
                     >
-                      <img src={getStoreLogo(store)} alt={store.name}
+                      <img src={getStoreLogo(store)} alt={`${store.name} logo`}
                         className="w-8 h-8 rounded-lg border border-gray-100 object-contain bg-white flex-shrink-0" />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-semibold text-gray-800 truncate">

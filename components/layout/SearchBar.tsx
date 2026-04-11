@@ -122,7 +122,7 @@ export default function SearchBar({ compact }: Props) {
                       className="flex items-center gap-3 px-4 py-2.5 hover:bg-primary-50 transition-colors">
                       {store.logo && (
                         <div className="w-7 h-7 rounded-lg overflow-hidden border border-gray-100 flex-shrink-0">
-                          <Image src={store.logo} alt={store.name} width={28} height={28} className="object-contain" />
+                          <Image src={store.logo} alt={`${store.name} logo`} width={28} height={28} className="object-contain" />
                         </div>
                       )}
                       <div>

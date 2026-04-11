@@ -94,7 +94,7 @@ export default async function HomePage() {
                 className="bg-white rounded-xl border border-gray-100 p-4 flex flex-col items-center gap-2 hover:border-primary-300 hover:shadow-md transition-all group">
                 <div className="w-12 h-12 rounded-xl overflow-hidden border border-gray-100 bg-gray-50 flex items-center justify-center">
                   {store.logo
-                    ? <Image src={store.logo} alt={store.name} width={48} height={48} className="object-contain p-1" />
+                    ? <Image src={store.logo} alt={`${store.name} logo`} width={48} height={48} className="object-contain p-1" />
                     : <Tag className="w-6 h-6 text-primary-400" />}
                 </div>
                 <span className="text-xs font-bold text-gray-700 text-center leading-tight group-hover:text-primary-600 transition-colors line-clamp-2">

@@ -51,7 +51,7 @@ export default function Navbar() {
           {/* Mobile hamburger */}
           <button
             onClick={() => setOpen(!open)}
-            className="lg:hidden ml-auto p-2 rounded-lg transition-colors hover:bg-black/10"
+            className="lg:hidden ml-auto p-2 rounded-lg transition-colors hover:bg-black/10" aria-label="Open menu"
             style={{ color: '#3D186B' }}>
             {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
