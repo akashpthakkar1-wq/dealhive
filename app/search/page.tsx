@@ -21,21 +21,6 @@ const FILTERS = [
   { label: '🔥 Trending', value: 'trending' },
 ];
 
-// ─── Logo helpers ─────────────────────────────────────────────────────────────
-}
-
-function getCouponLogo(coupon: Coupon): string {
-  if (coupon.store?.logo) return coupon.store.logo;
-  if (coupon.store?.website_url) return getLogoFromUrl(coupon.store.website_url);
-  if (coupon.affiliate_url) return getLogoFromUrl(coupon.affiliate_url);
-  return '/placeholder-logo.png';
-}
-
-function getStoreLogo(store: Store): string {
-  if (store.logo) return store.logo;
-  if (store.website_url) return getLogoFromUrl(store.website_url);
-  return '/placeholder-logo.png';
-}
 
 // ─── Highlight matching text ──────────────────────────────────────────────────
 function Highlight({ text, query }: { text: string; query: string }) {
@@ -265,7 +250,7 @@ export default function SearchPage() {
                             className="w-full flex items-center gap-3 px-4 py-3 hover:bg-purple-50 transition-colors border-b border-gray-50 last:border-0 text-left"
                           >
                             <img
-                              src={getStoreLogo(store)}
+                              src={getStoreLogo(store.website_url)}
                               alt={`${store.name} logo`}
                               className="w-9 h-9 rounded-lg border border-gray-100 object-contain bg-white flex-shrink-0"
                             />

@@ -11,19 +11,6 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-// ─── Logo helpers ─────────────────────────────────────────────────────────────
-}
-function getCouponLogo(c: Coupon) {
-  if (c.store?.logo) return c.store.logo;
-  if (c.store?.website_url) return getLogoFromUrl(c.store.website_url);
-  if (c.affiliate_url) return getLogoFromUrl(c.affiliate_url);
-  return '/placeholder-logo.png';
-}
-function getStoreLogo(s: Store) {
-  if (s.logo) return s.logo;
-  if (s.website_url) return getLogoFromUrl(s.website_url);
-  return '/placeholder-logo.png';
-}
 
 // ─── Highlight matching text ──────────────────────────────────────────────────
 function Highlight({ text, query }: { text: string; query: string }) {
@@ -173,7 +160,7 @@ export default function LiveSearchBar({
                       onMouseDown={(e) => { e.preventDefault(); setOpen(false); window.location.href = `/store/${store.slug}`; }}
                       className="w-full flex items-center gap-3 px-4 py-3 hover:bg-purple-50 transition-colors border-b border-gray-50 last:border-0 text-left"
                     >
-                      <img src={getStoreLogo(store)} alt={`${store.name} logo`}
+                      <img src={getStoreLogo(store.website_url)} alt={`${store.name} logo`}
                         className="w-8 h-8 rounded-lg border border-gray-100 object-contain bg-white flex-shrink-0" />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-semibold text-gray-800 truncate">
