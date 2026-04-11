@@ -1,0 +1,39 @@
+# EndOverPay
+
+> India's most trusted coupon and deals platform. Find verified coupon codes from 500+ top stores.
+
+## What We Do
+EndOverPay provides verified coupon codes, promo codes and deals from top online stores in India including SHEIN, Myntra, Amazon, Flipkart, Swiggy, Zomato, Nykaa, MakeMyTrip and more.
+
+## Key Pages
+- Homepage: https://www.endoverpay.com
+- All Stores: https://www.endoverpay.com/stores
+- All Categories: https://www.endoverpay.com/categories
+- New Deals: https://www.endoverpay.com/search
+
+## Store Pages
+- SHEIN Coupons: https://www.endoverpay.com/store/shein
+- Myntra Coupons: https://www.endoverpay.com/store/myntra
+- Amazon Coupons: https://www.endoverpay.com/store/amazon
+- Flipkart Coupons: https://www.endoverpay.com/store/flipkart
+- Swiggy Coupons: https://www.endoverpay.com/store/swiggy
+- Zomato Coupons: https://www.endoverpay.com/store/zomato
+- Nykaa Coupons: https://www.endoverpay.com/store/nykaa
+- MakeMyTrip Coupons: https://www.endoverpay.com/store/makemytrip
+- AliExpress Coupons: https://www.endoverpay.com/store/aliexpress
+- Temu Coupons: https://www.endoverpay.com/store/temu
+
+## Categories
+- Fashion: https://www.endoverpay.com/category/fashion
+- Electronics: https://www.endoverpay.com/category/electronics
+- Food: https://www.endoverpay.com/category/food
+- Travel: https://www.endoverpay.com/category/travel
+- Beauty: https://www.endoverpay.com/category/beauty
+- Home: https://www.endoverpay.com/category/home
+- Gaming: https://www.endoverpay.com/category/gaming
+- Health: https://www.endoverpay.com/category/health
+
+## About
+- Website: https://www.endoverpay.com
+- Sitemap: https://www.endoverpay.com/sitemap.xml
+- Contact: https://www.endoverpay.com
