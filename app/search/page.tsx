@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
+import { getCouponLogo, getStoreLogo } from '@/lib/logos'
 import { createClient } from '@supabase/supabase-js';
 import type { Coupon, Store } from '@/types/index';
 
@@ -21,13 +22,6 @@ const FILTERS = [
 ];
 
 // ─── Logo helpers ─────────────────────────────────────────────────────────────
-function getLogoFromUrl(url: string): string {
-  try {
-    const hostname = new URL(url).hostname.replace('www.', '');
-    return `https://www.google.com/s2/favicons?domain=${hostname}&sz=64`;
-  } catch {
-    return '/placeholder-logo.png';
-  }
 }
 
 function getCouponLogo(coupon: Coupon): string {

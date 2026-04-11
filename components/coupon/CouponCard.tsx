@@ -1,6 +1,7 @@
 'use client';
 
 import type { Coupon } from '@/types/index';
+import { getCouponLogo, getStoreLogo } from '@/lib/logos'
 
 interface CouponCardProps {
   coupon: Coupon;
@@ -10,11 +11,6 @@ interface CouponCardProps {
   onCopy?: (coupon: Coupon) => void;
 }
 
-function getLogoFromUrl(url: string) {
-  try {
-    const hostname = new URL(url).hostname.replace('www.', '');
-    return `https://www.google.com/s2/favicons?domain=${hostname}&sz=64`;
-  } catch { return '/placeholder-logo.png'; }
 }
 
 function getLogo(coupon: Coupon): string {

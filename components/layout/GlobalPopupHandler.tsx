@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { getCouponLogo, getStoreLogo } from '@/lib/logos'
 import { useSearchParams } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
 import type { Coupon } from '@/types/index';
@@ -10,11 +11,6 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-function getLogoFromUrl(url: string) {
-  try {
-    const hostname = new URL(url).hostname.replace('www.', '');
-    return `https://www.google.com/s2/favicons?domain=${hostname}&sz=64`;
-  } catch { return '/placeholder-logo.png'; }
 }
 
 function getLogo(coupon: Coupon): string {
