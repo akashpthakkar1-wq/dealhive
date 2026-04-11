@@ -47,4 +47,4 @@ export function getFakeUsageCount(id: string): number {
 }
 
 export const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'EndOverPay'
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://endoverpay.com'
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.endoverpay.com'

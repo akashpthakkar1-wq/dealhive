@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 
 export const dynamic = 'force-dynamic'
 
-const SITE_URL = 'https://endoverpay.com'
+const SITE_URL = 'https://www.endoverpay.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Plain client — no cookies needed, works in sitemap context
