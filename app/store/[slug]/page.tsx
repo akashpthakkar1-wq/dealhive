@@ -217,7 +217,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                   <a href={store.website_url} target="_blank" rel="noopener noreferrer"
                     className="btn-primary btn-sm flex items-center gap-1 text-xs px-2.5 py-1.5 md:px-4 md:py-2 md:text-sm md:gap-1.5">
                     <ExternalLink className="w-3 h-3 md:w-3.5 md:h-3.5" />
-                    <span className="hidden sm:inline">Visit </span>{store.name}
+                    Visit {store.name}
                   </a>
                 )}
               </div>
@@ -372,7 +372,7 @@ export default async function StorePage({ params, searchParams }: Props) {
               )}
               {store.website_url && (
                 <div className="mt-3 flex items-center gap-2 text-sm text-gray-500">
-                  <ExternalLink className="w-4 h-4 text-primary-500" />
+                  <ExternalLink className="w-4 h-4 text-primary-500" aria-hidden="true" />
                   <span>Official website:</span>
                   <a href={store.website_url} target="_blank" rel="noopener noreferrer" className="text-primary-600 font-semibold hover:underline">{store.website_url}</a>
                 </div>
