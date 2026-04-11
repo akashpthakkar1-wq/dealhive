@@ -1,5 +1,5 @@
 
-const DEFAULT_LOGO = '/logo.svg'
+const DEFAULT_LOGO = '/logo.png'
 
 export function getStoreLogo(url?: string | null): string {
   if (!url) return DEFAULT_LOGO
