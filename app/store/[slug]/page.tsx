@@ -141,7 +141,7 @@ export default async function StorePage({ params, searchParams }: Props) {
       {/* JSON-LD — Store + BreadcrumbList + FAQPage + ItemList + AggregateRating */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([
         // 1. Store entity
-        { '@context': 'https://schema.org', '@type': 'Store', name: store.name, url: store.website_url, logo: store.logo, description: store.description || `Find ${store.name} coupon codes on ${SITE_NAME}.` },
+        { '@context': 'https://schema.org', '@type': 'Organization', name: store.name, url: store.website_url, logo: store.logo, description: store.description || `Find ${store.name} coupon codes on ${SITE_NAME}.` },
         // 2. BreadcrumbList — enables breadcrumb display in Google search results
         { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Home',   item: SITE_URL },
@@ -151,7 +151,7 @@ export default async function StorePage({ params, searchParams }: Props) {
         // 3. FAQPage — enables FAQ rich results
         { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
         // 4. ItemList of coupons
-        { '@context': 'https://schema.org', '@type': 'ItemList', name: `${store.name} Coupon Codes ${month}`, numberOfItems: activeCoupons.length,
+        ...(activeCoupons.length > 0 ? [{ '@context': 'https://schema.org', '@type': 'ItemList', name: `${store.name} Coupon Codes ${month}`, numberOfItems: activeCoupons.length,
           itemListElement: activeCoupons.slice(0, 10).map((c, i) => ({
             '@type': 'ListItem', position: i + 1,
             item: { '@type': 'Offer', name: c.title, description: c.description || c.title,
@@ -161,12 +161,12 @@ export default async function StorePage({ params, searchParams }: Props) {
           }))
         },
         // 5. AggregateRating — may unlock star ratings in search results
-        { '@context': 'https://schema.org', '@type': 'LocalBusiness', name: store.name,
+        { '@context': 'https://schema.org', '@type': 'Organization', name: store.name,
           aggregateRating: { '@type': 'AggregateRating', ratingValue: rating, bestRating: '5', worstRating: '1',
             ratingCount: Math.max(200, stableNum(store.id, 200, 2000)),
           },
-        },
-      ])}} />
+        }] : []),
+      ])])}} />
 
       {/* ── HERO ────────────────────────────────────── */}
       <div className="bg-white border-b border-gray-100">
