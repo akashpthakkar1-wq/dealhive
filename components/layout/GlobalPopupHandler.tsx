@@ -11,13 +11,11 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-}
-
 function getLogo(coupon: Coupon): string {
   if (coupon.store?.logo) return coupon.store.logo;
-  if (coupon.store?.website_url) return getLogoFromUrl(coupon.store.website_url);
-  if (coupon.affiliate_url) return getLogoFromUrl(coupon.affiliate_url);
-  return '/placeholder-logo.png';
+  if (coupon.store?.website_url) return getCouponLogo({ store: coupon.store });
+  if (coupon.affiliate_url) return getCouponLogo({ affiliate_url: coupon.affiliate_url });
+  return '/logo.svg';
 }
 
 export default function GlobalPopupHandler() {
