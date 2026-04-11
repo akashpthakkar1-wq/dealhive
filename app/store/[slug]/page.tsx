@@ -177,7 +177,7 @@ export default async function StorePage({ params, searchParams }: Props) {
           <div className="flex flex-row items-start gap-3 md:gap-5 mt-3 mb-3 md:mb-4">
 
             {/* Logo — smaller on mobile */}
-            <div className="w-14 h-14 md:w-20 md:h-20 rounded-xl md:rounded-2xl border-2 border-gray-100 bg-white shadow-sm flex-shrink-0 flex items-center justify-center overflow-hidden">
+            <div className="w-16 h-16 md:w-24 md:h-24 rounded-xl md:rounded-2xl border-2 border-gray-100 bg-white shadow-sm flex-shrink-0 flex items-center justify-center overflow-hidden p-1">
               {store.logo
                 ? <img src={store.logo} alt={`${store.name} logo`} className="w-full h-full object-contain p-2" />
                 : <Tag className="w-8 h-8 md:w-10 md:h-10 text-primary-400" />}

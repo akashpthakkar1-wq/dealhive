@@ -89,7 +89,7 @@ export default async function StoresPage() {
                 {grouped[letter].map((store) => (
                   <Link key={store.id} href={`/store/${store.slug}`}
                     className="bg-white rounded-xl border border-gray-100 p-4 flex flex-col items-center gap-2.5 hover:border-primary-300 hover:shadow-md hover:bg-primary-50 transition-all group text-center">
-                    <div className="w-14 h-14 rounded-xl overflow-hidden border border-gray-100 bg-gray-50 flex items-center justify-center flex-shrink-0">
+                    <div className="w-16 h-16 rounded-xl overflow-hidden border border-gray-100 bg-white flex items-center justify-center flex-shrink-0 p-1">
                       {store.logo
                         ? <img src={store.logo} alt={`${store.name} logo`} className="w-full h-full object-contain p-1" />
                         : <Tag className="w-7 h-7 text-primary-300" />}
