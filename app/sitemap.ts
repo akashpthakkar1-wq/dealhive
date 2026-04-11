@@ -43,16 +43,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }))
 
-  const now = new Date()
-  const couponPages: MetadataRoute.Sitemap = (couponsRes.data || [])
-    .filter((c) => c.slug && (!c.expiry_date || new Date(c.expiry_date) > now))
-    .map((c) => ({
-      url: `${SITE_URL}/coupon/${c.slug}`,
-      lastModified: new Date(c.created_at),
-      changeFrequency: 'weekly' as const,
-      priority: 0.6,
-    }))
-
-  return [...staticPages, ...storePages, ...categoryPages, ...couponPages]
+  return [...staticPages, ...storePages, ...categoryPages]
 }
 // Sat Apr 11 02:31:33 IST 2026
