@@ -17,6 +17,31 @@ export default function AdminStores() {
   const [editId, setEditId] = useState<string | null>(null)
   const [search, setSearch] = useState('')
   const [saving, setSaving] = useState(false)
+  const [generating, setGenerating] = useState(false)
+
+  async function generateDescription() {
+    if (!form.name) return alert('Please enter a store name first')
+    setGenerating(true)
+    try {
+      const response = await fetch('/api/generate-store-content', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          storeName: form.name, 
+          category: form.category,
+          websiteUrl: form.website_url 
+        }),
+      })
+      const data = await response.json()
+      if (data.description) {
+        setForm(f => ({ ...f, description: data.description }))
+      }
+    } catch (e) {
+      alert('Failed to generate content. Please try again.')
+    } finally {
+      setGenerating(false)
+    }
+  }
   const [deleteId, setDeleteId] = useState<string | null>(null)
   const supabase = createClient()
 
@@ -109,9 +134,16 @@ export default function AdminStores() {
                 className="input-base" placeholder="https://amazon.in" />
             </div>
             <div className="md:col-span-2">
-              <label className="label-base">Description</label>
+              <div className="flex items-center justify-between mb-1">
+                <label className="label-base">Description</label>
+                <button type="button" onClick={generateDescription} disabled={generating}
+                  className="text-xs px-3 py-1 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50 flex items-center gap-1">
+                  {generating ? '⏳ Generating…' : '✨ Generate with AI'}
+                </button>
+              </div>
               <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })}
-                className="input-base" rows={2} placeholder="Brief store description…" />
+                className="input-base" rows={4} placeholder="Click 'Generate with AI' or write a description…" />
+              <p className="text-xs text-gray-400 mt-1">AI-generated content should be reviewed before saving.</p>
             </div>
           </div>
           <div className="flex gap-3 mt-5">
