@@ -8,6 +8,12 @@ export interface Store {
   category: string | null
   created_at: string
   coupon_count?: number
+  about_content?: string | null
+  how_to_use_content?: string | null
+  saving_tips_content?: string | null
+  faq_content?: any | null
+  content_reviewed?: boolean
+  content_generated_at?: string | null
 }
 
 export interface Category {

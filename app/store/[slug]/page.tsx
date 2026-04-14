@@ -122,7 +122,9 @@ export default async function StorePage({ params, searchParams }: Props) {
   const sidebarStores = relatedStores.slice(0, 5)
   const month = new Date().toLocaleString('en-IN', { month: 'long', year: 'numeric' })
 
-  const faqs = [
+  const faqs = store.faq_content && Array.isArray(store.faq_content) && store.faq_content.length > 0
+    ? store.faq_content.map((f: any) => ({ q: f.q, a: f.a }))
+    : [
     { q: `How do I use a ${store.name} coupon code?`, a: `Click "Get Code" to reveal the code. You will be redirected to ${store.name}'s website. Add items to your cart, proceed to checkout, paste the coupon code in the promo code box, and click Apply.` },
     { q: `How many ${store.name} coupons are available today?`, a: `There are currently ${activeCoupons.length} active ${store.name} coupon codes and deals on ${SITE_NAME}. We update our offers daily.` },
     { q: `What is the best ${store.name} coupon code right now?`, a: `The best ${store.name} coupon right now offers${maxDiscount > 0 ? ` up to ${maxDiscount}% off` : ' great discounts'}. Check our verified offers above.` },
@@ -390,7 +392,7 @@ export default async function StorePage({ params, searchParams }: Props) {
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-3">About {store.name} Coupon Codes & Deals</h2>
               <div className="text-sm text-gray-600 leading-relaxed space-y-3">
-                <p>{store.description || `${store.name} is a popular online store offering a wide range of products at competitive prices.`} Shop the latest deals and save with verified {store.name} coupon codes on {SITE_NAME}.</p>
+                <p>{store.about_content || store.description || `${store.name} is a trusted online store. Shop the latest deals and save with verified ${store.name} coupon codes on ${SITE_NAME}.`}</p>
                 <p>We track all {store.name} promotions, flash sales, and exclusive discount codes daily so you never miss a saving opportunity. Our team manually verifies every code before publishing.</p>
                 <p>{store.name} regularly runs seasonal sales and clearance events. Bookmark this page and check back often.</p>
               </div>

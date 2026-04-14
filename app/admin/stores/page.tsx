@@ -1,4 +1,5 @@
 'use client'
+import ContentGenerator from './ContentGenerator'
 import { useState, useEffect } from 'react'
 import { Plus, Pencil, Trash2, X, Save, Search, Store } from 'lucide-react'
 import toast from 'react-hot-toast'
@@ -6,7 +7,7 @@ import { createClient } from '@/lib/supabase'
 import { slugify } from '@/lib/utils'
 import type { Store as StoreType } from '@/types'
 
-const empty = { name: '', slug: '', logo: '', description: '', website_url: '', category: '' }
+const empty = { name: '', slug: '', logo: '', description: '', website_url: '', category: '', about_content: '', how_to_use_content: '', saving_tips_content: '', faq_content: '', content_reviewed: false }
 const cats = ['Fashion', 'Electronics', 'Food', 'Travel', 'Beauty', 'Home', 'Gaming', 'Health', 'Other']
 
 export default function AdminStores() {
@@ -17,31 +18,7 @@ export default function AdminStores() {
   const [editId, setEditId] = useState<string | null>(null)
   const [search, setSearch] = useState('')
   const [saving, setSaving] = useState(false)
-  const [generating, setGenerating] = useState(false)
 
-  async function generateDescription() {
-    if (!form.name) return alert('Please enter a store name first')
-    setGenerating(true)
-    try {
-      const response = await fetch('/api/generate-store-content', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          storeName: form.name, 
-          category: form.category,
-          websiteUrl: form.website_url 
-        }),
-      })
-      const data = await response.json()
-      if (data.description) {
-        setForm(f => ({ ...f, description: data.description }))
-      }
-    } catch (e) {
-      alert('Failed to generate content. Please try again.')
-    } finally {
-      setGenerating(false)
-    }
-  }
   const [deleteId, setDeleteId] = useState<string | null>(null)
   const supabase = createClient()
 
@@ -56,7 +33,7 @@ export default function AdminStores() {
 
   function openAdd() { setForm(empty); setEditId(null); setShowForm(true) }
   function openEdit(s: StoreType) {
-    setForm({ name: s.name, slug: s.slug, logo: s.logo || '', description: s.description || '', website_url: s.website_url || '', category: s.category || '' })
+    setForm({ name: s.name, slug: s.slug, logo: s.logo || '', description: s.description || '', website_url: s.website_url || '', category: s.category || '', about_content: s.about_content || '', how_to_use_content: s.how_to_use_content || '', saving_tips_content: s.saving_tips_content || '', faq_content: s.faq_content ? JSON.stringify(s.faq_content, null, 2) : '', content_reviewed: s.content_reviewed || false })
     setEditId(s.id)
     setShowForm(true)
   }
@@ -133,18 +110,13 @@ export default function AdminStores() {
               <input value={form.website_url} onChange={(e) => setForm({ ...form, website_url: e.target.value })}
                 className="input-base" placeholder="https://amazon.in" />
             </div>
-            <div className="md:col-span-2">
-              <div className="flex items-center justify-between mb-1">
-                <label className="label-base">Description</label>
-                <button type="button" onClick={generateDescription} disabled={generating}
-                  className="text-xs px-3 py-1 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50 flex items-center gap-1">
-                  {generating ? '⏳ Generating…' : '✨ Generate with AI'}
-                </button>
-              </div>
-              <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })}
-                className="input-base" rows={4} placeholder="Click 'Generate with AI' or write a description…" />
-              <p className="text-xs text-gray-400 mt-1">AI-generated content should be reviewed before saving.</p>
-            </div>
+            <ContentGenerator
+              storeName={form.name}
+              category={form.category}
+              websiteUrl={form.website_url}
+              form={form}
+              setForm={setForm}
+            />
           </div>
           <div className="flex gap-3 mt-5">
             <button onClick={handleSave} disabled={saving} className="btn-primary">
