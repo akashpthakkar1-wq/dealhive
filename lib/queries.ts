@@ -34,6 +34,33 @@ export async function getPopularStores(limit = 12): Promise<Store[]> {
 }
 
 
+
+export async function getCouponsByCategory(categorySlug: string, excludeStoreId: string, limit = 6): Promise<Coupon[]> {
+  const supabase = createServerSupabaseClient()
+
+  // Get store IDs in this category excluding current store
+  const { data: stores } = await supabase
+    .from('stores')
+    .select('id')
+    .eq('category', categorySlug)
+    .neq('id', excludeStoreId)
+
+  if (!stores || stores.length === 0) return []
+
+  const storeIds = stores.map((s) => s.id)
+
+  const { data, error } = await supabase
+    .from('coupons')
+    .select('*, store:stores(name, slug, logo, website_url)')
+    .in('store_id', storeIds)
+    .eq('is_active', true)
+    .order('created_at', { ascending: false })
+    .limit(limit)
+
+  if (error) { console.error('getCouponsByCategory:', error); return [] }
+  return data || []
+}
+
 export async function getRelatedStores(categorySlug: string, excludeStoreId: string, limit = 5): Promise<Store[]> {
   const supabase = createServerSupabaseClient()
   

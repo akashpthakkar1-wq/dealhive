@@ -6,7 +6,7 @@ import { ExternalLink, Star, Clock, Tag, CheckCircle, TrendingUp, Users, Chevron
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import dynamic from 'next/dynamic'
 const CouponCard = dynamic(() => import('@/components/coupon/CouponCard'), { ssr: false })
-import { getStoreBySlug, getCouponsByStore, getRelatedStores } from '@/lib/queries'
+import { getStoreBySlug, getCouponsByStore, getRelatedStores, getCouponsByCategory } from '@/lib/queries'
 import { formatDate, isExpired, SITE_NAME, SITE_URL } from '@/lib/utils'
 
 interface Props {
@@ -77,9 +77,10 @@ export default async function StorePage({ params, searchParams }: Props) {
 
   const store = await getStoreBySlug(params.slug)
   if (!store) notFound()
-  const [allCoupons, relatedStores] = await Promise.all([
+  const [allCoupons, relatedStores, categoryCoupons] = await Promise.all([
     getCouponsByStore(params.slug),
     getRelatedStores(store.category || '', store.id, 5),
+    getCouponsByCategory(store.category || '', store.id, 6),
   ])
 
   if (!store) notFound()
@@ -326,6 +327,28 @@ export default async function StorePage({ params, searchParams }: Props) {
                 </div>
               )}
             </div>
+
+
+            {/* More category deals */}
+            {categoryCoupons.length > 0 && (
+              <div className="mt-6">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-bold text-gray-900">
+                    More {store.category} Deals
+                  </h2>
+                  {store.category && (
+                    <Link href={`/category/${store.category}`} className="text-sm text-primary-600 font-semibold hover:underline flex items-center gap-1">
+                      View all <ChevronRight className="w-4 h-4" />
+                    </Link>
+                  )}
+                </div>
+                <div className="space-y-3">
+                  {categoryCoupons.map((coupon: any) => (
+                    <CouponCard key={coupon.id} coupon={coupon} />
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* ── Quick summary table ── */}
             {activeCoupons.length > 0 && (
