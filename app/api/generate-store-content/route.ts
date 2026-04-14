@@ -31,13 +31,14 @@ Only output the description paragraph, nothing else.`
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-sonnet-4-6',
         max_tokens: 300,
         messages: [{ role: 'user', content: prompt }],
       }),
     })
 
     const data = await response.json()
+    console.log('API response:', JSON.stringify(data))
     const description = data.content?.[0]?.text?.trim()
 
     if (!description) {
