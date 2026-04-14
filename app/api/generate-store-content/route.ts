@@ -31,7 +31,7 @@ Only output the description paragraph, nothing else.`
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
+        model: 'claude-sonnet-4-5',
         max_tokens: 300,
         messages: [{ role: 'user', content: prompt }],
       }),
@@ -39,10 +39,15 @@ Only output the description paragraph, nothing else.`
 
     const data = await response.json()
     console.log('API response:', JSON.stringify(data))
+    
+    if (!response.ok) {
+      return NextResponse.json({ error: data.error?.message || 'API error', details: data }, { status: 500 })
+    }
+    
     const description = data.content?.[0]?.text?.trim()
 
     if (!description) {
-      return NextResponse.json({ error: 'Failed to generate content' }, { status: 500 })
+      return NextResponse.json({ error: 'Empty response', details: data }, { status: 500 })
     }
 
     return NextResponse.json({ description })
