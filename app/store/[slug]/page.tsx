@@ -20,6 +20,8 @@ function stableNum(seed: string, min: number, max: number): number {
   return min + (Math.abs(h) % (max - min + 1))
 }
 
+export const revalidate = 3600 // revalidate every 1 hour
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const store = await getStoreBySlug(params.slug)
   if (!store) return { title: 'Store Not Found' }
