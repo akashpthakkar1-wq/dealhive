@@ -336,18 +336,23 @@ export default async function StorePage({ params, searchParams }: Props) {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="bg-gray-50 border-b border-gray-100">
-                        {['Offer', 'Discount', 'Expires', 'Code'].map(h => (
-                          <th key={h} className="text-left px-4 py-3 font-bold text-gray-600 text-xs uppercase tracking-wider">{h}</th>
+                        {[
+                          { label: 'Offer', cls: 'w-[45%]' },
+                          { label: 'Discount', cls: 'w-[15%]' },
+                          { label: 'Expires', cls: 'w-[20%]' },
+                          { label: 'Code', cls: 'w-[20%]' },
+                        ].map(({ label, cls }) => (
+                          <th key={label} className={`text-left px-2 py-3 font-bold text-gray-600 text-xs uppercase tracking-wider ${cls}`}>{label}</th>
                         ))}
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-50">
                       {activeCoupons.slice(0, 8).map(c => (
                         <tr key={c.id} className="hover:bg-primary-50/30 transition-colors">
-                          <td className="px-4 py-3 font-medium text-gray-800 text-sm">{c.title.length > 50 ? c.title.slice(0, 50) + '…' : c.title}</td>
-                          <td className="px-4 py-3">{c.discount && <span className="text-xs font-bold bg-primary-100 text-primary-700 px-2 py-0.5 rounded-full">{c.discount}</span>}</td>
-                          <td className="px-4 py-3 text-gray-400 text-xs whitespace-nowrap">{c.expiry_date ? formatDate(c.expiry_date) : 'No expiry'}</td>
-                          <td className="px-4 py-3 font-mono text-xs font-bold text-primary-600 whitespace-nowrap">{c.code ? c.code.slice(0, 4) + '•••' : '— Auto'}</td>
+                          <td className="px-2 py-3 font-medium text-gray-800 text-sm">{c.title.length > 40 ? c.title.slice(0, 40) + '…' : c.title}</td>
+                          <td className="px-2 py-3">{c.discount && <span className="text-xs font-bold bg-primary-100 text-primary-700 px-2 py-0.5 rounded-full">{c.discount}</span>}</td>
+                          <td className="px-2 py-3 text-gray-400 text-xs whitespace-nowrap">{c.expiry_date ? formatDate(c.expiry_date) : 'No expiry'}</td>
+                          <td className="px-2 py-3 font-mono text-xs font-bold text-primary-600 whitespace-nowrap">{c.code ? c.code.slice(0, 4) + '•••' : '— Auto'}</td>
                         </tr>
                       ))}
                     </tbody>
