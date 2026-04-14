@@ -137,7 +137,7 @@ export default async function CategoryPage({ params }: Props) {
             <div className="text-5xl">{cat.icon || '🏷️'}</div>
             <div>
               <h1 className="text-3xl font-extrabold mb-1">
-                {cat.name} Coupons &amp; Deals – {month}
+                Best {cat.name} Coupons, Promo Codes &amp; Deals – {month}
               </h1>
               <p className="text-white/80 text-sm">
                 {activeCoupons.length} active offers · Updated today
