@@ -4,7 +4,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ExternalLink, Star, Clock, Tag, CheckCircle, TrendingUp, Users, ChevronRight, Info, AlertCircle } from 'lucide-react'
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import CouponCard from '@/components/coupon/CouponCard'
+import dynamic from 'next/dynamic'
+const CouponCard = dynamic(() => import('@/components/coupon/CouponCard'), { ssr: false })
 import { getStoreBySlug, getCouponsByStore, getPopularStores } from '@/lib/queries'
 import { formatDate, isExpired, SITE_NAME, SITE_URL } from '@/lib/utils'
 
