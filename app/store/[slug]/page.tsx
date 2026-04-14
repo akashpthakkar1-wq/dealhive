@@ -337,7 +337,7 @@ export default async function StorePage({ params, searchParams }: Props) {
                     More {store.category} Deals
                   </h2>
                   {store.category && (
-                    <Link href={`/category/${store.category}`} className="text-sm text-primary-600 font-semibold hover:underline flex items-center gap-1">
+                    <Link href={`/category/${store.category?.toLowerCase()}`} className="text-sm text-primary-600 font-semibold hover:underline flex items-center gap-1">
                       View all <ChevronRight className="w-4 h-4" />
                     </Link>
                   )}
