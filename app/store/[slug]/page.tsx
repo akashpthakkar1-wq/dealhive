@@ -393,8 +393,8 @@ export default async function StorePage({ params, searchParams }: Props) {
               <h2 className="text-xl font-bold text-gray-900 mb-3">About {store.name} Coupon Codes & Deals</h2>
               <div className="text-sm text-gray-600 leading-relaxed space-y-3">
                 <p>{store.about_content || store.description || `${store.name} is a trusted online store. Shop the latest deals and save with verified ${store.name} coupon codes on ${SITE_NAME}.`}</p>
-                <p>We track all {store.name} promotions, flash sales, and exclusive discount codes daily so you never miss a saving opportunity. Our team manually verifies every code before publishing.</p>
-                <p>{store.name} regularly runs seasonal sales and clearance events. Bookmark this page and check back often.</p>
+                {!store.about_content && <><p className="mt-3">We track all {store.name} promotions, flash sales, and exclusive discount codes daily so you never miss a saving opportunity. Our team manually verifies every code before publishing.</p>
+                <p className="mt-3">{store.name} regularly runs seasonal sales and clearance events. Bookmark this page and check back often.</p></>}
               </div>
               {/* Internal link to category page — improves crawl graph */}
               {store.category && (
@@ -417,6 +417,9 @@ export default async function StorePage({ params, searchParams }: Props) {
             {/* How to use */}
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-5">How to Use a {store.name} Coupon Code or Promo Code</h2>
+              {store.how_to_use_content ? (
+                <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line">{store.how_to_use_content}</p>
+              ) : (
               <ol className="space-y-4">
                 {[
                   { n: 1, t: 'Find your coupon', d: `Browse verified ${store.name} codes above. Look for the highest discount or best match.` },
@@ -434,21 +437,26 @@ export default async function StorePage({ params, searchParams }: Props) {
                   </li>
                 ))}
               </ol>
+              )}
             </div>
 
             {/* Saving tips */}
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-4">How to Save More at {store.name} – Tips & Tricks</h2>
-              <ul className="space-y-3">
-                {savingTips.map((tip, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <CheckCircle className="w-3 h-3 text-green-600" />
-                    </div>
-                    <span className="text-sm text-gray-600 leading-relaxed">{tip}</span>
-                  </li>
-                ))}
-              </ul>
+              {store.saving_tips_content ? (
+                <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line">{store.saving_tips_content}</p>
+              ) : (
+                <ul className="space-y-3">
+                  {savingTips.map((tip, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <CheckCircle className="w-3 h-3 text-green-600" />
+                      </div>
+                      <span className="text-sm text-gray-600 leading-relaxed">{tip}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
 
             {/* FAQs */}

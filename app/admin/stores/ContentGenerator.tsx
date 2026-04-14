@@ -31,11 +31,15 @@ export default function ContentGenerator({ storeName, category, websiteUrl, form
       })
       const data = await res.json()
       if (section === 'faq') {
-        setForm((f: any) => ({ ...f, [field]: JSON.stringify(data.faq, null, 2) }))
+        if (data.faq) {
+          setForm((f: any) => ({ ...f, [field]: JSON.stringify(data.faq, null, 2) }))
+        } else {
+          alert('FAQ generation failed: ' + (data.error || 'Unknown error'))
+        }
       } else if (data.content) {
         setForm((f: any) => ({ ...f, [field]: data.content }))
       } else {
-        alert('Failed: ' + (data.error || 'Unknown error'))
+        alert('Failed: ' + (data.error || 'Unknown error. Response: ' + JSON.stringify(data)))
       }
     } catch (e) {
       alert('Error generating content')
