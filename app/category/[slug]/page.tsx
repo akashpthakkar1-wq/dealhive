@@ -157,6 +157,14 @@ export default async function CategoryPage({ params }: Props) {
                 ? `${activeCoupons.length} Active ${cat.name} Coupons & Deals`
                 : `No active ${cat.name} coupons right now`}
             </h2>
+            {activeCoupons.length > 0 && (
+              <p className="text-sm text-gray-500 mt-2 mb-4">
+                Browse the best <strong>{cat.name} coupon codes</strong>, promo codes and voucher codes for {month}.
+                All <strong>{cat.name} discount codes</strong> are verified and updated daily.
+                Save on top {cat.name} brands with exclusive deals — up to{' '}
+                <strong>{Math.max(...activeCoupons.map((c: any) => parseInt(c.discount || '0')).filter(Boolean))}% off</strong>.
+              </p>
+            )}
 
             {activeCoupons.length > 0 ? (
               // ✅ 2-column grid on desktop, 1-column on mobile, equal height

@@ -206,9 +206,10 @@ export default async function StorePage({ params, searchParams }: Props) {
 
               {/* Description — desktop only inside row */}
               <p className="hidden md:block text-gray-500 text-sm max-w-2xl">
-                {store.description || `Find the best ${store.name} coupon codes and deals verified by our team.`}{' '}
-                Save big with <strong>{activeCoupons.length} active offers</strong>
-                {maxDiscount > 0 && <>, including up to <strong>{maxDiscount}% off</strong></>}.
+                {store.description || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}{' '}
+                Browse <strong>{activeCoupons.length} active {store.name} discount codes</strong>
+                {maxDiscount > 0 && <>, including up to <strong>{maxDiscount}% off</strong></>}.{' '}
+                All {store.name} promo codes are tested and verified for {month}.
               </p>
 
               {/* Rating + Visit button */}
