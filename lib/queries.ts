@@ -53,7 +53,6 @@ export async function getCouponsByCategory(categorySlug: string, excludeStoreId:
     .from('coupons')
     .select('*, store:stores(name, slug, logo, website_url)')
     .in('store_id', storeIds)
-    .eq('is_active', true)
     .order('created_at', { ascending: false })
     .limit(limit)
 
