@@ -32,11 +32,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const rawDesc = `Find verified ${store.name} coupon codes & promo codes for ${month}. Save big with exclusive ${store.name} deals updated daily.`
   const description = rawDesc.length > 155 ? rawDesc.slice(0, 152) + '…' : rawDesc
   return {
-    title: `${store.name} Coupons & Promo Codes – Up to 90% Off`,
+    title: `${store.name} Coupons, Promo Codes & Voucher Codes – Up to 90% Off`,
     description,
     alternates: { canonical: `${SITE_URL}/store/${store.slug}` },
     openGraph: {
-      title: `${store.name} Coupons & Promo Codes – ${month} | ${SITE_NAME}`,
+      title: `${store.name} Coupons & Promo Codes ${month} – Up to 90% Off | ${SITE_NAME}`,
       description,
       url: `${SITE_URL}/store/${store.slug}`,
       siteName: SITE_NAME,
@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${store.name} Coupons – Up to 90% Off | ${SITE_NAME}`,
+      title: `${store.name} Discount Codes & Voucher Codes – Up to 90% Off | ${SITE_NAME}`,
       description,
       images: [logoUrl],
     },
@@ -200,7 +200,7 @@ export default async function StorePage({ params, searchParams }: Props) {
 
               {/* Title */}
               <h1 className="text-lg leading-tight md:text-3xl font-extrabold text-gray-900">
-                {store.name} Coupons &amp; Promo Codes
+                {store.name} Coupons, Promo Codes &amp; Voucher Codes
                 <span className="hidden md:inline"> – {month}</span>
               </h1>
 
@@ -387,7 +387,7 @@ export default async function StorePage({ params, searchParams }: Props) {
 
             {/* About store */}
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-3">About {store.name}</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-3">About {store.name} Coupon Codes & Deals</h2>
               <div className="text-sm text-gray-600 leading-relaxed space-y-3">
                 <p>{store.description || `${store.name} is a popular online store offering a wide range of products at competitive prices.`} Shop the latest deals and save with verified {store.name} coupon codes on {SITE_NAME}.</p>
                 <p>We track all {store.name} promotions, flash sales, and exclusive discount codes daily so you never miss a saving opportunity. Our team manually verifies every code before publishing.</p>
@@ -413,7 +413,7 @@ export default async function StorePage({ params, searchParams }: Props) {
 
             {/* How to use */}
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-5">How to Use a {store.name} Coupon Code</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-5">How to Use a {store.name} Coupon Code or Promo Code</h2>
               <ol className="space-y-4">
                 {[
                   { n: 1, t: 'Find your coupon', d: `Browse verified ${store.name} codes above. Look for the highest discount or best match.` },
@@ -435,7 +435,7 @@ export default async function StorePage({ params, searchParams }: Props) {
 
             {/* Saving tips */}
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">How to Save More at {store.name}</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">How to Save More at {store.name} – Tips & Tricks</h2>
               <ul className="space-y-3">
                 {savingTips.map((tip, i) => (
                   <li key={i} className="flex items-start gap-3">
@@ -450,7 +450,7 @@ export default async function StorePage({ params, searchParams }: Props) {
 
             {/* FAQs */}
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-5">FAQs on {store.name} Coupons &amp; Offers</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-5">{store.name} Coupon Codes – Frequently Asked Questions</h2>
               <div className="space-y-3">
                 {faqs.map((faq, i) => (
                   <details key={i} className="group border border-gray-100 rounded-xl overflow-hidden">

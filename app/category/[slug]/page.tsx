@@ -34,8 +34,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { data: cat } = await supabase.from('categories').select('*').eq('slug', params.slug).single()
   if (!cat) return { title: 'Category Not Found' }
   const month = new Date().toLocaleString('en-IN', { month: 'long', year: 'numeric' })
-  const title = `Best ${cat.name} Coupons & Deals – ${month}`
-  const description = `Find the best verified ${cat.name} coupons, promo codes and deals for ${month}. Save on top ${cat.name} brands worldwide.`
+  const title = `Best ${cat.name} Coupons, Promo Codes & Deals – ${month}`
+  const description = `Find the best verified ${cat.name} coupons, promo codes, voucher codes and discount codes for ${month}. Save on top ${cat.name} brands worldwide.`
   return {
     title,
     description,
@@ -152,7 +152,7 @@ export default async function CategoryPage({ params }: Props) {
 
           {/* ── Main content ── */}
           <div className="lg:col-span-3 space-y-4">
-            <h2 className="font-bold text-gray-900 text-lg">
+            <h2 className="font-bold text-gray-900 text-lg">Best 
               {activeCoupons.length > 0
                 ? `${activeCoupons.length} Active ${cat.name} Coupons & Deals`
                 : `No active ${cat.name} coupons right now`}
