@@ -55,10 +55,16 @@ export async function POST(req: NextRequest) {
     // Parse FAQ as JSON
     if (section === 'faq') {
       try {
-        const faq = JSON.parse(content)
+        // Strip markdown code blocks if present
+        const cleaned = content
+          .replace(/^```json\n?/i, '')
+          .replace(/^```\n?/, '')
+          .replace(/\n?```$/, '')
+          .trim()
+        const faq = JSON.parse(cleaned)
         return NextResponse.json({ faq })
-      } catch {
-        return NextResponse.json({ error: 'Invalid FAQ format' }, { status: 500 })
+      } catch (e) {
+        return NextResponse.json({ error: 'Invalid FAQ format', raw: content }, { status: 500 })
       }
     }
 
