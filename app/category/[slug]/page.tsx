@@ -10,6 +10,25 @@ interface Props { params: { slug: string } }
 
 export const revalidate = 3600
 
+function interleaveCoupons(coupons: any[]) {
+  const byStore: Record<string, any[]> = {}
+  for (const coupon of coupons) {
+    const key = coupon.store?.slug || 'unknown'
+    if (!byStore[key]) byStore[key] = []
+    byStore[key].push(coupon)
+  }
+  const groups = Object.values(byStore)
+  const result: any[] = []
+  let i = 0
+  while (result.length < coupons.length) {
+    for (const group of groups) {
+      if (group[i] !== undefined) result.push(group[i])
+    }
+    i++
+  }
+  return result
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const supabase = createServerSupabaseClient()
   const { data: cat } = await supabase.from('categories').select('*').eq('slug', params.slug).single()
@@ -76,7 +95,7 @@ export default async function CategoryPage({ params }: Props) {
   })
   const allCoupons = Array.from(allCouponsMap.values())
 
-  const activeCoupons = allCoupons.filter((c) => !isExpired(c.expiry_date))
+  const activeCoupons = interleaveCoupons(allCoupons.filter((c) => !isExpired(c.expiry_date)))
   const expiredCoupons = allCoupons.filter((c) => isExpired(c.expiry_date))
 
   const { data: allCats } = await supabase
