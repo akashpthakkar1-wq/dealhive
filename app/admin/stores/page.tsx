@@ -41,7 +41,14 @@ export default function AdminStores() {
   async function handleSave() {
     if (!form.name.trim()) { toast.error('Store name is required'); return }
     setSaving(true)
-    const payload = { ...form, slug: form.slug || slugify(form.name) }
+    const payload = { 
+      ...form, 
+      slug: form.slug || slugify(form.name),
+      faq_content: form.faq_content ? (() => { 
+        try { return JSON.parse(form.faq_content) } 
+        catch { return null } 
+      })() : null
+    }
     const { error } = editId
       ? await supabase.from('stores').update(payload).eq('id', editId)
       : await supabase.from('stores').insert(payload)
