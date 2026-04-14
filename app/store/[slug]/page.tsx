@@ -6,7 +6,7 @@ import { ExternalLink, Star, Clock, Tag, CheckCircle, TrendingUp, Users, Chevron
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import dynamic from 'next/dynamic'
 const CouponCard = dynamic(() => import('@/components/coupon/CouponCard'), { ssr: false })
-import { getStoreBySlug, getCouponsByStore, getPopularStores } from '@/lib/queries'
+import { getStoreBySlug, getCouponsByStore, getRelatedStores } from '@/lib/queries'
 import { formatDate, isExpired, SITE_NAME, SITE_URL } from '@/lib/utils'
 
 interface Props {
@@ -75,10 +75,11 @@ const FILTER_TABS = [
 export default async function StorePage({ params, searchParams }: Props) {
   const filter = searchParams.filter || 'all'
 
-  const [store, allCoupons, relatedStores] = await Promise.all([
-    getStoreBySlug(params.slug),
+  const store = await getStoreBySlug(params.slug)
+  if (!store) notFound()
+  const [allCoupons, relatedStores] = await Promise.all([
     getCouponsByStore(params.slug),
-    getPopularStores(7),
+    getRelatedStores(store.category || '', store.id, 5),
   ])
 
   if (!store) notFound()
@@ -117,7 +118,7 @@ export default async function StorePage({ params, searchParams }: Props) {
   const ratingRaw = 40 + stableNum(store.id + 'rating', 0, 9)
   const rating = (ratingRaw / 10).toFixed(1)
 
-  const sidebarStores = relatedStores.filter((s) => s.id !== store.id).slice(0, 5)
+  const sidebarStores = relatedStores.slice(0, 5)
   const month = new Date().toLocaleString('en-IN', { month: 'long', year: 'numeric' })
 
   const faqs = [

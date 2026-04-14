@@ -33,6 +33,32 @@ export async function getPopularStores(limit = 12): Promise<Store[]> {
   return data || []
 }
 
+
+export async function getRelatedStores(categorySlug: string, excludeStoreId: string, limit = 5): Promise<Store[]> {
+  const supabase = createServerSupabaseClient()
+  
+  // First try to get stores from same category
+  const { data: sameCat } = await supabase
+    .from('stores')
+    .select('*, coupons(count)')
+    .eq('category', categorySlug)
+    .neq('id', excludeStoreId)
+    .limit(limit)
+    .order('name')
+
+  if (sameCat && sameCat.length >= 3) return sameCat
+
+  // Fallback to popular stores if not enough same-category stores
+  const { data: popular } = await supabase
+    .from('stores')
+    .select('*, coupons(count)')
+    .neq('id', excludeStoreId)
+    .limit(limit)
+    .order('name')
+
+  return popular || []
+}
+
 export async function getCategories(): Promise<Category[]> {
   const supabase = createServerSupabaseClient()
   const { data, error } = await supabase
