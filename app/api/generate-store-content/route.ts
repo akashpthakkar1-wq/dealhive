@@ -47,6 +47,7 @@ Only output the description paragraph, nothing else.`
 
     return NextResponse.json({ description })
   } catch (error) {
-    return NextResponse.json({ error: 'API error' }, { status: 500 })
+    console.error('Generation error:', error)
+    return NextResponse.json({ error: String(error) }, { status: 500 })
   }
 }
