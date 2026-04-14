@@ -57,6 +57,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={plusJakartaSans.variable} suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
+        <link rel="dns-prefetch" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
+        <link rel="preconnect" href="https://www.google.com" />
+        <link rel="dns-prefetch" href="https://www.google.com" />
+      </head>
+      <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         {/* Organization schema — on every page */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
