@@ -26,7 +26,7 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 flex-shrink-0">
-            <img src="/logo.svg" alt="EndOverPay" className="h-9 w-auto" />
+            <img src="/logo.svg" alt="EndOverPay" className="h-9 w-auto" width="120" height="36" />
           </Link>
 
           {/* Desktop nav */}

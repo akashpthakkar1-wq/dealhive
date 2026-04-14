@@ -17,7 +17,7 @@ export default function Footer() {
           {/* Brand column */}
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="inline-flex items-center mb-3">
-              <img src="/logo.svg" alt="EndOverPay" className="h-12 w-auto" />
+              <img src="/logo.svg" alt="EndOverPay" className="h-12 w-auto" width="160" height="48" />
             </Link>
             <p className="text-sm leading-5 mb-4 max-w-[200px]" style={{ color: '#1F1F2E' }}>
               India&apos;s most trusted coupon &amp; deal platform. Verified codes, real savings.
@@ -38,9 +38,9 @@ export default function Footer() {
 
           {/* Categories */}
           <div>
-            <h4 className="font-semibold mb-2.5 text-xs uppercase tracking-wide" style={{ color: '#3D186B' }}>
+            <h3 className="font-semibold mb-2.5 text-xs uppercase tracking-wide" style={{ color: '#3D186B' }}>
               Categories
-            </h4>
+            </h3>
             <ul className="space-y-2">
               {categories.map((c) => (
                 <li key={c}>
@@ -54,9 +54,9 @@ export default function Footer() {
 
           {/* Popular Stores */}
           <div>
-            <h4 className="font-semibold mb-2.5 text-xs uppercase tracking-wide" style={{ color: '#3D186B' }}>
+            <h3 className="font-semibold mb-2.5 text-xs uppercase tracking-wide" style={{ color: '#3D186B' }}>
               Popular Stores
-            </h4>
+            </h3>
             <ul className="space-y-2">
               {stores.map((s) => (
                 <li key={s}>
@@ -70,9 +70,9 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="font-semibold mb-2.5 text-xs uppercase tracking-wide" style={{ color: '#3D186B' }}>
+            <h3 className="font-semibold mb-2.5 text-xs uppercase tracking-wide" style={{ color: '#3D186B' }}>
               Company
-            </h4>
+            </h3>
             <ul className="space-y-2">
               {company.map((l) => (
                 <li key={l}>
