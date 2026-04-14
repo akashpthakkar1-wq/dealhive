@@ -33,11 +33,11 @@ export default async function HomePage() {
             1,240 people saving right now
           </div>
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
-            Best Coupon Codes &amp; Promo Codes in India –<br />
+            Best Coupon Codes, Promo Codes &amp; Voucher Codes –<br />
             <span className="text-yellow-300">Save Up to 90% Off</span>
           </h1>
           <p className="text-white/80 text-lg mb-8 max-w-xl mx-auto">
-            India&apos;s most trusted coupon platform. Verified codes, real savings, zero hassle.
+            Your trusted coupon platform worldwide. Verified codes, real savings, zero hassle.
           </p>
 
           {/* ✅ Client component — live search with dropdown */}

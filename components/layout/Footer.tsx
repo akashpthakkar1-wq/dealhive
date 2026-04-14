@@ -20,7 +20,7 @@ export default function Footer() {
               <img src="/logo.svg" alt="EndOverPay" className="h-12 w-auto" width="160" height="48" />
             </Link>
             <p className="text-sm leading-5 mb-4 max-w-[200px]" style={{ color: '#1F1F2E' }}>
-              India&apos;s most trusted coupon &amp; deal platform. Verified codes, real savings.
+              Your trusted coupon &amp; deal platform worldwide. Verified codes, real savings.
             </p>
             <div className="flex gap-2">
               {[

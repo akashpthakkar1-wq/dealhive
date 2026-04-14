@@ -18,11 +18,11 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} – Best Coupon Codes & Promo Codes in India`,
+    default: `${SITE_NAME} – Best Coupon Codes, Promo Codes & Voucher Codes`,
     template: `%s | ${SITE_NAME}`,
   },
-  description: `Find verified coupon codes and promo codes from 500+ top stores in India. Save on fashion, electronics, food, travel and more with ${SITE_NAME}.`,
-  keywords: 'coupons, promo codes, deals, discount codes, India, SHEIN, Amazon, Myntra, Flipkart, Swiggy',
+  description: `Find verified coupon codes, promo codes and voucher codes from 500+ top stores worldwide. Save on fashion, electronics, food, travel and more with ${SITE_NAME}.`,
+  keywords: 'coupons, promo codes, voucher codes, discount codes, deals, SHEIN, Amazon, Myntra, Flipkart, Swiggy',
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     url: SITE_URL,
     siteName: SITE_NAME,
-    title: `${SITE_NAME} – Best Coupon Codes & Promo Codes in India`,
-    description: `Find verified coupon codes from 500+ top stores in India.`,
+    title: `${SITE_NAME} – Best Coupon Codes, Promo Codes & Voucher Codes`,
+    description: `Find verified coupon codes from 500+ top stores worldwide.`,
     images: [
       {
         url: `${SITE_URL}/og-default.jpg`,
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@endoverpay',
     title: `${SITE_NAME} – Best Coupon Codes & Promo Codes`,
-    description: 'Find verified coupon codes from 500+ top stores in India.',
+    description: 'Find verified coupon codes from 500+ top stores worldwide.',
     images: [`${SITE_URL}/og-default.jpg`],
   },
 }
@@ -71,7 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           name: SITE_NAME,
           url: SITE_URL,
           logo: `${SITE_URL}/logo.svg`,
-          description: `India's most trusted coupon and deals platform. Find verified coupon codes from top stores.`,
+          description: `Your trusted coupon and deals platform. Find verified coupon codes from top stores worldwide.`,
           sameAs: ['https://twitter.com/endoverpay', 'https://instagram.com/endoverpay'],
         }) }} />
         {/* WebSite schema with SearchAction — enables Sitelinks Searchbox in Google */}

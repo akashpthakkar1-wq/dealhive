@@ -8,7 +8,7 @@ import StoresSearchBar from '@/components/stores/StoresSearchBar'
 
 export const metadata: Metadata = {
   title: `All Stores – Find Coupons & Deals`,
-  description: `Browse all stores on ${SITE_NAME}. Find verified coupon codes and deals from hundreds of top online stores in India.`,
+  description: `Browse all stores on ${SITE_NAME}. Find verified coupon codes and deals from hundreds of top online stores worldwide.`,
 }
 
 export const revalidate = 3600
