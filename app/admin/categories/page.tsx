@@ -16,6 +16,26 @@ export default function AdminCategories() {
   const [form, setForm] = useState(empty)
   const [editId, setEditId] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
+  const [generating, setGenerating] = useState(false)
+
+  async function generateDescription() {
+    if (!form.name) return alert('Please enter a category name first')
+    setGenerating(true)
+    try {
+      const res = await fetch('/api/generate-store-content', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ storeName: form.name, section: 'category' }),
+      })
+      const data = await res.json()
+      if (data.content) setForm(f => ({ ...f, description: data.content }))
+      else alert('Failed: ' + (data.error || 'Unknown error'))
+    } catch (e) {
+      alert('Error generating content')
+    } finally {
+      setGenerating(false)
+    }
+  }
   const [deleteId, setDeleteId] = useState<string | null>(null)
   const supabase = createClient()
 
@@ -90,8 +110,15 @@ export default function AdminCategories() {
             </div>
             <div>
               <label className="label-base">Description</label>
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-xs text-gray-400">Category description for SEO</span>
+                <button type="button" onClick={generateDescription} disabled={generating}
+                  className="text-xs px-3 py-1 bg-primary-50 text-primary-700 border border-primary-200 rounded-lg hover:bg-primary-100 disabled:opacity-50">
+                  {generating ? '⏳ Generating…' : '✨ Generate with AI'}
+                </button>
+              </div>
               <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })}
-                className="input-base" rows={2} placeholder="Optional description…" />
+                className="input-base" rows={3} placeholder="Click Generate or write a description…" />
             </div>
           </div>
           <div className="flex gap-3 mt-4">

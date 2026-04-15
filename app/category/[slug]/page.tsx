@@ -159,10 +159,10 @@ export default async function CategoryPage({ params }: Props) {
             </h2>
             {activeCoupons.length > 0 && (
               <p className="text-sm text-gray-500 mt-2 mb-4">
-                Browse the best <strong>{cat.name} coupon codes</strong>, promo codes and voucher codes for {month}.
+                {cat.description || <>Browse the best <strong>{cat.name} coupon codes</strong>, promo codes and voucher codes for {month}.
                 All <strong>{cat.name} discount codes</strong> are verified and updated daily.
                 Save on top {cat.name} brands with exclusive deals — up to{' '}
-                <strong>{Math.max(...activeCoupons.map((c: any) => parseInt(c.discount || '0')).filter(Boolean))}% off</strong>.
+                <strong>{Math.max(...activeCoupons.map((c: any) => parseInt(c.discount || '0')).filter(Boolean))}% off</strong>.</>}
               </p>
             )}
 

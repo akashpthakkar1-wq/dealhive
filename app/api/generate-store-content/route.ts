@@ -16,6 +16,12 @@ export async function POST(req: NextRequest) {
 
     saving_tips: `Write 5 specific money-saving tips (100-150 words total) for shopping at ${storeName}. Cover: their loyalty/rewards program, app-exclusive discounts, best time of year to shop, price match/return policies, lesser-known discount methods. Be specific to ${storeName}, not generic. IMPORTANT: Do not use markdown formatting, headers, or bold text. Plain text only. Output only the tips as a short paragraph, nothing else.`,
 
+    category: `Write a 100-word description for a "${storeName}" category page on a coupon website. 
+Naturally include keyword variations like "${storeName} coupon codes", "${storeName} promo codes", "${storeName} discount codes". 
+Cover: what types of stores/brands are in this category, what shoppers can save on, best times to find deals.
+Write for real users, not search engines. No bullet points, plain text only. No generic phrases.
+Output only the description paragraph, nothing else.`,
+
     faq: `Write exactly 5 FAQs that users search for about ${storeName} coupon codes. Make questions store-specific and answers accurate and helpful. Format as JSON array like: [{"q":"question here","a":"answer here"}]. Output only the JSON array, nothing else.`,
   }
 
