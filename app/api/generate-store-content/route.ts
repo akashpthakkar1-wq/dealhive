@@ -46,7 +46,19 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: data.error?.message || 'API error' }, { status: 500 })
     }
 
-    const content = data.content?.[0]?.text?.trim()
+    let content = data.content?.[0]?.text?.trim()
+    
+    // Strip markdown formatting
+    if (content && section !== 'faq') {
+      content = content
+        .replace(/^#+\s+.+\n?/gm, '')        // Remove # headings
+        .replace(/\*\*([^*]+)\*\*/g, '$1')  // Remove **bold**
+        .replace(/\*([^*]+)\*/g, '$1')        // Remove *italic*
+        .replace(/^[-*]\s+/gm, '')            // Remove bullet points
+        .replace(/^\d+\.\s+/gm, '')         // Remove numbered lists
+        .replace(/\n{3,}/g, '\n\n')         // Max 2 newlines
+        .trim()
+    }
 
     if (!content) {
       return NextResponse.json({ error: 'Empty response' }, { status: 500 })
