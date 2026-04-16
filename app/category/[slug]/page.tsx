@@ -75,7 +75,7 @@ export default async function CategoryPage({ params }: Props) {
 
   const { data: storesByCategory } = await supabase
     .from('stores')
-    .select('id')
+    .select('id, name, slug, logo')
     .ilike('category', cat.name)
 
   let couponsByStore: any[] = []
