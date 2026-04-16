@@ -188,7 +188,7 @@ function SectionHeader({ icon, title, subtitle, href }: {
         <h2 className="text-xl font-extrabold text-gray-900 flex items-center gap-2 mb-0.5">
           {icon} {title}
         </h2>
-        <p className="text-sm text-gray-600">{subtitle}</p>
+        <h3 className="text-sm text-gray-600 font-normal">{subtitle}</h3>
       </div>
       <Link href={href} className="text-primary-600 hover:text-primary-700 font-semibold text-sm flex items-center gap-1 whitespace-nowrap">
         View All <ArrowRight className="w-3.5 h-3.5" />

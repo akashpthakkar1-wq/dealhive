@@ -30,7 +30,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const logoUrl = store.logo || `${SITE_URL}/og-default.jpg`
   // Cap at 155 chars for Google snippet
   const rawDesc = `Find verified ${store.name} coupon codes & promo codes for ${month}. Save big with exclusive ${store.name} deals updated daily.`
-  const rawMeta = `Find verified ${store.name} coupon codes, promo codes & voucher codes for ${month}. Save up to 90% off with manually tested ${store.name} discount codes. Updated daily.`
+  const { data: couponData } = await supabase
+    .from('coupons')
+    .select('id', { count: 'exact' })
+    .eq('store_id', store.id)
+    .eq('is_active', true)
+  const couponCount = couponData?.length || 0
+  const countText = couponCount > 0 ? `${couponCount} verified` : 'Verified'
+  const rawMeta = `${countText} ${store.name} coupon codes for ${month}. Save up to 90% off on ${store.name} deals. All codes manually tested & updated daily. Get your ${store.name} promo code now.`
   const description = rawMeta.length > 155 ? rawMeta.slice(0, 152) + '…' : rawMeta
   return {
     title: `${store.name} Coupons – Get Verified Promo Codes & Deals | Up to 90% Off`,
