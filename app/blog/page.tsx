@@ -1,7 +1,8 @@
-export const metadata = { robots: { index: false, follow: false } }
-
 import Link from 'next/link';
 import { createClient } from '@supabase/supabase-js';
+
+export const metadata = { robots: { index: false, follow: false } }
+
 
 // If you have blog_posts table in Supabase, this will fetch them.
 // Otherwise it renders a "Coming Soon" UI.
