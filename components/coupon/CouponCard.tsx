@@ -1,11 +1,10 @@
 'use client';
 
 import type { Coupon } from '@/types/index';
-import { getCouponLogo, getStoreLogo } from '@/lib/logos'
+import { getCouponLogo } from '@/lib/logos'
 
 interface CouponCardProps {
   coupon: Coupon;
-  // Legacy props — kept for backward compatibility
   copiedId?: string | null;
   onGetCode?: (coupon: Coupon) => void;
   onCopy?: (coupon: Coupon) => void;
@@ -22,15 +21,13 @@ export default function CouponCard({ coupon }: CouponCardProps) {
   const logo = getLogo(coupon);
 
   function handleCTA() {
-    // ✅ Step 1: Open NEW tab → current page URL + ?popup=COUPON_ID
-    // GlobalPopupHandler in layout.tsx detects this and shows the modal
     const currentPage = window.location.origin + window.location.pathname;
     const popupUrl = `${currentPage}?popup=${encodeURIComponent(coupon.id)}`;
     window.open(popupUrl, '_blank');
-
-    // ✅ Step 2: Navigate CURRENT tab → affiliate URL
     window.location.href = coupon.affiliate_url;
   }
+
+  const isCode = coupon.type === 'code';
 
   return (
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden h-full flex flex-col">
@@ -42,16 +39,16 @@ export default function CouponCard({ coupon }: CouponCardProps) {
             {coupon.discount}
           </span>
           <span className={`mt-2 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${
-            coupon.type === 'code' ? 'bg-blue-100 text-blue-600' : 'bg-orange-100 text-orange-600'
+            isCode ? 'bg-blue-100 text-blue-600' : 'bg-orange-100 text-orange-600'
           }`}>
             {coupon.type}
           </span>
         </div>
 
         {/* Main content */}
-        <div className="flex-1 p-4 flex flex-col min-w-0">
+        <div className="flex-1 p-4 flex flex-col gap-3 min-w-0">
 
-          {/* Logo + Store + Badges */}
+          {/* Logo + Store + Badges + Title */}
           <div className="flex items-start gap-3">
             <img src={logo} alt={coupon.store?.name ?? 'Store'}
               className="w-14 h-14 rounded-xl border border-gray-100 flex-shrink-0 object-contain bg-white p-1.5" />
@@ -80,46 +77,46 @@ export default function CouponCard({ coupon }: CouponCardProps) {
                   {coupon.discount}
                 </span>
               </div>
-              {/* Title — max 2 lines, won't break layout */}
               <p className="text-sm font-semibold text-gray-800 mt-1 leading-snug line-clamp-2">
                 {coupon.title}
               </p>
             </div>
           </div>
 
-          {/* Meta — flex-1 pushes CTA to bottom */}
-          <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2 text-xs text-gray-600 flex-1 content-start">
-            {coupon.expiry_date && (
-              <span>🕐 Expires {new Date(coupon.expiry_date).toLocaleDateString('en-IN')}</span>
-            )}
-            {coupon.usage_count > 0 && (
-              <span>👥 {coupon.usage_count.toLocaleString()} used</span>
-            )}
-          </div>
+          {/* Meta + CTA in same row */}
+          <div className="flex items-center justify-between gap-2 mt-auto">
+            <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-gray-600 min-w-0">
+              {coupon.expiry_date && (
+                <span className="whitespace-nowrap">🕐 Expires {new Date(coupon.expiry_date).toLocaleDateString('en-GB')}</span>
+              )}
+              {coupon.usage_count > 0 && (
+                <span className="whitespace-nowrap">👥 {coupon.usage_count.toLocaleString()} used</span>
+              )}
+            </div>
 
-          {/* CTA — mt-auto always at bottom */}
-          <div className="mt-auto pt-3">
-            {coupon.type === 'code' ? (
+            {/* CTA Button */}
+            {isCode ? (
               <button
                 onClick={handleCTA}
-                className="inline-flex items-center rounded-xl overflow-hidden text-sm font-semibold shadow-sm active:scale-95 transition-transform"
+                className="inline-flex items-center rounded-xl overflow-hidden text-sm font-semibold shadow-sm active:scale-95 transition-transform flex-shrink-0"
               >
-                <span className="bg-[#822a7f] text-white px-5 py-2.5 hover:bg-[#6b2268] transition-colors">
+                <span className="bg-[#822a7f] text-white px-4 py-2 hover:bg-[#6b2268] transition-colors whitespace-nowrap">
                   Get Code
                 </span>
-                <span className="bg-[#6b2268] text-purple-200 px-3 py-2.5 font-mono text-xs tracking-wider border-l border-purple-600">
+                <span className="bg-[#6b2268] text-purple-200 px-2 py-2 font-mono text-xs tracking-wider border-l border-purple-600 whitespace-nowrap">
                   {coupon.code?.slice(0, 4) ?? '????'}•••
                 </span>
               </button>
             ) : (
               <button
                 onClick={handleCTA}
-                className="inline-flex items-center bg-[#822a7f] text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-[#6b2268] active:scale-95 transition-all"
+                className="inline-flex items-center bg-green-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-green-700 active:scale-95 transition-all flex-shrink-0 whitespace-nowrap"
               >
                 Activate Deal →
               </button>
             )}
           </div>
+
         </div>
       </div>
     </div>
