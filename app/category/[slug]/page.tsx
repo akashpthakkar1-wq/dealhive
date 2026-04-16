@@ -187,7 +187,7 @@ export default async function CategoryPage({ params }: Props) {
                 {cat.description || <>Browse the best <strong>{cat.name} coupon codes</strong>, promo codes and voucher codes for {month}.
                 All <strong>{cat.name} discount codes</strong> are verified and updated daily.
                 Save on top {cat.name} brands with exclusive deals — up to{' '}
-                <strong>{Math.max(...activeCoupons.map((c: any) => parseInt(c.discount || '0')).filter(Boolean))}% off</strong>.</>}
+                <strong>{Math.max(0, ...activeCoupons.map((c: any) => parseInt(c.discount || '0')).filter(Boolean))}% off</strong>.</>}
               </p>
             )}
 
