@@ -30,9 +30,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const logoUrl = store.logo || `${SITE_URL}/og-default.jpg`
   // Cap at 155 chars for Google snippet
   const rawDesc = `Find verified ${store.name} coupon codes & promo codes for ${month}. Save big with exclusive ${store.name} deals updated daily.`
-  const { data: couponData } = await supabase
+  const { createClient: createSbClient } = await import('@supabase/supabase-js')
+  const sbMeta = createSbClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
+  const { data: couponData } = await sbMeta
     .from('coupons')
-    .select('id', { count: 'exact' })
+    .select('id')
     .eq('store_id', store.id)
     .eq('is_active', true)
   const couponCount = couponData?.length || 0
