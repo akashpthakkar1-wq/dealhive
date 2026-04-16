@@ -5,7 +5,15 @@ import { Mail, Twitter, Instagram } from 'lucide-react'
 export default function Footer() {
   const categories = ['Fashion', 'Electronics', 'Food', 'Travel', 'Beauty', 'Home', 'Gaming', 'Health']
   const stores = ['SHEIN', 'Myntra', 'Amazon', 'Flipkart', 'Swiggy', 'Nykaa', 'Zomato', 'MakeMyTrip']
-  const company = ['About Us', 'Blog', 'Contact', 'Privacy Policy', 'Terms of Service', 'Disclaimer', 'Submit a Coupon']
+  const company = [
+    { label: 'About Us', href: '/about' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Contact', href: '/contact' },
+    { label: 'Privacy Policy', href: '/privacy-policy' },
+    { label: 'Terms of Service', href: '/terms' },
+    { label: 'Disclaimer', href: '/disclaimer' },
+    { label: 'Submit a Coupon', href: '/submit-coupon' },
+  ]
 
   return (
     <footer style={{ backgroundColor: '#1C1917' }} className="mt-8">
