@@ -138,8 +138,16 @@ export default async function CategoryPage({ params }: Props) {
       { q: `Where can I find the best ${cat.name} deals?`, a: `EndOverPay updates ${cat.name} deals daily. Bookmark this page and check back often for the latest verified ${cat.name} coupon codes and promo codes.` },
     ],
   }
-  const faqs = (cat.faq_content && Array.isArray(cat.faq_content) && cat.faq_content.length > 0)
-    ? cat.faq_content.map((f: any) => ({ q: f.q, a: f.a }))
+  const parsedFaq = (() => {
+    if (!cat.faq_content) return null
+    if (Array.isArray(cat.faq_content)) return cat.faq_content
+    if (typeof cat.faq_content === 'string') {
+      try { return JSON.parse(cat.faq_content) } catch { return null }
+    }
+    return null
+  })()
+  const faqs = (parsedFaq && parsedFaq.length > 0)
+    ? parsedFaq.map((f: any) => ({ q: f.q, a: f.a }))
     : categoryFaqs[cat.slug] || [
     { q: `What are the best ${cat.name} coupon codes right now?`, a: `Browse our verified ${cat.name} coupon codes above. All codes are manually tested and updated daily.` },
     { q: `How do I use a ${cat.name} promo code?`, a: `Click "Get Code" on any offer above. Copy the code and paste it at checkout on the store's website.` },
