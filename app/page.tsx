@@ -85,7 +85,7 @@ export default async function HomePage() {
       <section className="section-white">
         <div className="container-main">
           <SectionHeader icon={<Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />}
-            title="Featured Deals" subtitle="Handpicked top offers from the best stores"
+            title="Featured Deals" subtitle="Handpicked verified coupon codes from top stores worldwide"
             href="/search?filter=featured" />
           {featured.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
@@ -99,7 +99,7 @@ export default async function HomePage() {
       <section className="section-white">
         <div className="container-main">
           <SectionHeader icon={<Store className="w-5 h-5 text-primary-500" />}
-            title="Popular Stores" subtitle="Browse top stores and their latest deals"
+            title="Popular Stores" subtitle="Find coupon codes & promo codes from 500+ global stores"
             href="/stores" />
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
             {stores.map((store) => (
@@ -126,7 +126,7 @@ export default async function HomePage() {
       <section className="section-white">
         <div className="container-main">
           <SectionHeader icon={<TrendingUp className="w-5 h-5 text-red-500" />}
-            title="Trending Now" subtitle="Hot deals flying off the shelf"
+            title="Trending Now" subtitle="Most used coupon codes and promo codes today"
             href="/search?filter=trending" />
           {trending.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
@@ -140,7 +140,7 @@ export default async function HomePage() {
       <section className="section-gray">
         <div className="container-main">
           <SectionHeader icon={<Tag className="w-5 h-5 text-primary-500" />}
-            title="Browse by Category" subtitle="Find deals in your favourite categories"
+            title="Browse by Category" subtitle="Coupon codes by category — fashion, electronics, food & more"
             href="/categories" />
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
             {categories.map((cat) => (
@@ -163,7 +163,7 @@ export default async function HomePage() {
       <section className="section-white">
         <div className="container-main">
           <SectionHeader icon={<Clock className="w-5 h-5 text-blue-500" />}
-            title="Recently Added" subtitle="Fresh deals added today"
+            title="Recently Added" subtitle="Latest verified coupon codes added today"
             href="/search?sort=recent" />
           {recent.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">

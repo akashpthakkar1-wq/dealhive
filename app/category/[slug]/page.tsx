@@ -271,7 +271,8 @@ export default async function CategoryPage({ params }: Props) {
             {/* FAQ Section */}
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
               <h2 className="text-lg font-bold text-gray-900 mb-4">
-                {cat.name} Coupons — Frequently Asked Questions
+                {cat.name} Coupons — Frequently Asked Questions</h2>
+              <h3 className="text-sm font-semibold text-primary-600 mb-4">Common questions about {cat.name} coupon codes &amp; deals
               </h2>
               <div className="space-y-3">
                 {faqs.map((faq: {q: string, a: string}, i: number) => (

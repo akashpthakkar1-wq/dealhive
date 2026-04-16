@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const rawMeta = `Find verified ${store.name} coupon codes, promo codes & voucher codes for ${month}. Save up to 90% off with manually tested ${store.name} discount codes. Updated daily.`
   const description = rawMeta.length > 155 ? rawMeta.slice(0, 152) + '…' : rawMeta
   return {
-    title: `${store.name} Coupons, Promo Codes & Voucher Codes – Up to 90% Off`,
+    title: `${store.name} Coupons – Get Verified Promo Codes & Deals | Up to 90% Off`,
     description,
     alternates: { canonical: `${SITE_URL}/store/${store.slug}` },
     openGraph: {
