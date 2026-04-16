@@ -7,7 +7,7 @@ import { slugify } from '@/lib/utils'
 import type { Category } from '@/types'
 
 const ICONS = ['👗','📱','🍕','✈️','💄','🏠','🎮','🏥','🛒','💻','📚','🚗','🎵','🌿','💰']
-const empty = { name: '', slug: '', icon: '', description: '' }
+const empty = { name: '', slug: '', icon: '', description: '', faq_content: '' }
 
 export default function AdminCategories() {
   const [cats, setCats] = useState<Category[]>([])
@@ -17,6 +17,25 @@ export default function AdminCategories() {
   const [editId, setEditId] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
   const [generating, setGenerating] = useState(false)
+
+  async function generateFaq() {
+    if (!form.name) return alert('Please enter a category name first')
+    setGenerating(true)
+    try {
+      const res = await fetch('/api/generate-store-content', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ storeName: form.name, section: 'faq' }),
+      })
+      const data = await res.json()
+      if (data.faq) setForm((f: any) => ({ ...f, faq_content: JSON.stringify(data.faq, null, 2) }))
+      else alert('Failed: ' + (data.error || 'Unknown error'))
+    } catch (e) {
+      alert('Error generating FAQ')
+    } finally {
+      setGenerating(false)
+    }
+  }
 
   async function generateDescription() {
     if (!form.name) return alert('Please enter a category name first')
@@ -50,7 +69,7 @@ export default function AdminCategories() {
 
   function openAdd() { setForm(empty); setEditId(null); setShowForm(true) }
   function openEdit(c: Category) {
-    setForm({ name: c.name, slug: c.slug, icon: c.icon || '', description: c.description || '' })
+    setForm({ name: c.name, slug: c.slug, icon: c.icon || '', description: c.description || '', faq_content: c.faq_content ? JSON.stringify(c.faq_content, null, 2) : '' })
     setEditId(c.id); setShowForm(true)
   }
 
@@ -119,6 +138,21 @@ export default function AdminCategories() {
               </div>
               <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })}
                 className="input-base" rows={3} placeholder="Click Generate or write a description…" />
+            </div>
+            <div className="md:col-span-2">
+              <div className="flex items-center justify-between mb-1">
+                <div>
+                  <label className="label-base">FAQ Content</label>
+                  <span className="text-xs text-gray-400 ml-2">5 Q&As shown on category page</span>
+                </div>
+                <button type="button" onClick={generateFaq} disabled={generating}
+                  className="text-xs px-3 py-1 bg-primary-50 text-primary-700 border border-primary-200 rounded-lg hover:bg-primary-100 disabled:opacity-50">
+                  {generating ? '⏳ Generating…' : '✨ Generate FAQ'}
+                </button>
+              </div>
+              <textarea value={form.faq_content || ''} onChange={(e) => setForm({ ...form, faq_content: e.target.value })}
+                className="input-base font-mono text-xs" rows={8} placeholder="Click Generate FAQ or paste JSON array…" />
+              <p className="text-xs text-gray-400 mt-1">Format: [{`{"q":"question","a":"answer"}`}]</p>
             </div>
           </div>
           <div className="flex gap-3 mt-4">

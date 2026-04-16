@@ -127,9 +127,34 @@ export default async function CategoryPage({ params }: Props) {
     }] : []),
   ]
 
+
+  // Category FAQs
+  const categoryFaqs: Record<string, {q: string, a: string}[]> = {
+    fashion: [
+      { q: `What are the best ${cat.name} coupon codes right now?`, a: `Browse our verified ${cat.name} coupon codes above. All codes are manually tested and updated daily. Look for codes marked "Verified" for guaranteed savings.` },
+      { q: `How do I use a ${cat.name} promo code?`, a: `Find a coupon code above and click "Get Code". Copy the code, visit the store, add items to your cart, and paste the code at checkout in the promo code box.` },
+      { q: `Do ${cat.name} discount codes expire?`, a: `Yes, most ${cat.name} discount codes have an expiry date. Always check the expiry shown on each coupon. We remove expired codes daily to keep our listings fresh.` },
+      { q: `Can I stack multiple ${cat.name} coupon codes?`, a: `Most stores allow only one coupon code per order. However, you can often combine a coupon code with a sale price for extra savings.` },
+      { q: `Where can I find the best ${cat.name} deals?`, a: `EndOverPay updates ${cat.name} deals daily. Bookmark this page and check back often for the latest verified ${cat.name} coupon codes and promo codes.` },
+    ],
+  }
+  const faqs = (cat.faq_content && Array.isArray(cat.faq_content) && cat.faq_content.length > 0)
+    ? cat.faq_content.map((f: any) => ({ q: f.q, a: f.a }))
+    : categoryFaqs[cat.slug] || [
+    { q: `What are the best ${cat.name} coupon codes right now?`, a: `Browse our verified ${cat.name} coupon codes above. All codes are manually tested and updated daily.` },
+    { q: `How do I use a ${cat.name} promo code?`, a: `Click "Get Code" on any offer above. Copy the code and paste it at checkout on the store's website.` },
+    { q: `Do ${cat.name} discount codes expire?`, a: `Yes, most codes have an expiry date shown on each coupon. We remove expired codes daily.` },
+    { q: `Are ${cat.name} coupon codes free to use?`, a: `Yes, all coupon codes on EndOverPay are completely free. Simply copy and apply at checkout.` },
+    { q: `How often are ${cat.name} deals updated?`, a: `We update ${cat.name} deals daily. New coupon codes are added as soon as they become available.` },
+  ]
+
   return (
     <div className="min-h-screen bg-gray-50">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        '@context': 'https://schema.org', '@type': 'FAQPage',
+        mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } }))
+      }) }} />
       {/* Header */}
       <div className="bg-gradient-to-br from-primary-600 to-primary-700 text-white py-10">
         <div className="container-main">
@@ -189,7 +214,6 @@ export default async function CategoryPage({ params }: Props) {
                 <summary className="cursor-pointer font-semibold text-gray-500 text-sm list-none flex items-center gap-2">
                   Show {expiredCoupons.length} expired offers
                 </summary>
-                {/* ✅ 2-column grid for expired too */}
                 <div className="mt-3 opacity-60 grid grid-cols-1 md:grid-cols-2 gap-3 items-stretch">
                   {expiredCoupons.slice(0, 4).map((c) => (
                     <CouponCard key={c.id} coupon={c} />
@@ -197,6 +221,45 @@ export default async function CategoryPage({ params }: Props) {
                 </div>
               </details>
             )}
+
+            {/* Top Stores in Category */}
+            {storesByCategory && storesByCategory.length > 0 && (
+              <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+                <h2 className="text-lg font-bold text-gray-900 mb-4">
+                  Top {cat.name} Stores
+                </h2>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {storesByCategory.slice(0, 6).map((s: any) => (
+                    <Link key={s.id} href={`/store/${s.slug}`}
+                      className="flex items-center gap-2 p-3 rounded-xl border border-gray-100 hover:border-primary-300 hover:bg-primary-50 transition-all">
+                      <div className="w-8 h-8 rounded-lg border border-gray-100 bg-white overflow-hidden flex items-center justify-center flex-shrink-0">
+                        {s.logo ? <img src={s.logo} alt={s.name} className="w-full h-full object-contain p-1" /> : <span className="text-xs font-bold text-primary-400">{s.name[0]}</span>}
+                      </div>
+                      <span className="text-xs font-semibold text-gray-700 truncate">{s.name}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* FAQ Section */}
+            <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+              <h2 className="text-lg font-bold text-gray-900 mb-4">
+                {cat.name} Coupons — Frequently Asked Questions
+              </h2>
+              <div className="space-y-3">
+                {faqs.map((faq, i) => (
+                  <details key={i} className="group border border-gray-100 rounded-xl overflow-hidden">
+                    <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-primary-50 transition-colors list-none">
+                      <span className="font-semibold text-gray-900 text-sm pr-4">{faq.q}</span>
+                      <span className="text-gray-400 group-open:rotate-90 transition-transform flex-shrink-0">›</span>
+                    </summary>
+                    <div className="px-4 pb-4 pt-2 text-sm text-gray-600 leading-relaxed border-t border-gray-50">{faq.a}</div>
+                  </details>
+                ))}
+              </div>
+            </div>
+
           </div>
 
           {/* ── Sidebar ── */}

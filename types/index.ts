@@ -22,6 +22,7 @@ export interface Category {
   slug: string
   icon: string | null
   description: string | null
+  faq_content?: any | null
   created_at: string
 }
 
