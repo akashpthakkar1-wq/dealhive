@@ -51,19 +51,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── TRUST BAR ── */}
-      <section className="bg-[#1C1917] py-3">
-        <div className="container-main">
-          <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-gray-400">
-            <span className="flex items-center gap-1.5"><span className="text-green-400 font-bold">✓</span> Manually Verified Codes</span>
-            <span className="flex items-center gap-1.5"><span className="text-green-400 font-bold">✓</span> Updated Daily</span>
-            <span className="flex items-center gap-1.5"><span className="text-green-400 font-bold">✓</span> 500+ Global Stores</span>
-            <span className="flex items-center gap-1.5"><span className="text-green-400 font-bold">✓</span> Free to Use — No Signup</span>
-            <span className="flex items-center gap-1.5"><span className="text-green-400 font-bold">✓</span> Affiliate Disclosure</span>
-          </div>
-        </div>
-      </section>
-
       {/* ── CATEGORY BAR ── */}
       <section className="bg-white border-b border-gray-100 py-4 sticky top-16 z-30 shadow-sm">
         <div className="container-main">
@@ -131,32 +118,6 @@ export default async function HomePage() {
           </div>
           <div className="text-center mt-6">
             <Link href="/stores" className="btn-secondary">View All Stores <ArrowRight className="w-4 h-4" /></Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── INTERNAL STORE LINKS ── */}
-      <section className="bg-white border-t border-b border-gray-100 py-5">
-        <div className="container-main">
-          <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Popular Coupon Code Pages</p>
-          <div className="flex flex-wrap gap-2">
-            {[
-              { name: 'Amazon Coupon Codes', slug: 'amazon' },
-              { name: 'Myntra Promo Codes', slug: 'myntra' },
-              { name: 'Flipkart Discount Codes', slug: 'flipkart' },
-              { name: 'SHEIN Voucher Codes', slug: 'shein' },
-              { name: 'Swiggy Coupon Codes', slug: 'swiggy' },
-              { name: 'Zomato Promo Codes', slug: 'zomato' },
-              { name: 'Nykaa Discount Codes', slug: 'nykaa' },
-              { name: 'MakeMyTrip Coupons', slug: 'makemytrip' },
-              { name: 'AliExpress Coupon Codes', slug: 'aliexpress' },
-              { name: 'Temu Promo Codes', slug: 'temu' },
-            ].map((store) => (
-              <Link key={store.slug} href={`/store/${store.slug}`}
-                className="text-xs px-3 py-1.5 bg-orange-50 hover:bg-orange-100 text-orange-700 rounded-lg font-semibold transition-all border border-orange-100">
-                {store.name}
-              </Link>
-            ))}
           </div>
         </div>
       </section>
