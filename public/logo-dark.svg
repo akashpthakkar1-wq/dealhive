@@ -1,0 +1,5 @@
+<svg width="210" height="38" viewBox="0 0 210 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M16 3 L29 8 L29 19 C29 26 16 35 16 35 C16 35 3 26 3 19 L3 8 Z" fill="#EA580C"/>
+  <text x="16" y="23" font-family="system-ui,sans-serif" font-weight="900" font-size="13" fill="white" text-anchor="middle">E</text>
+  <text x="40" y="23" font-family="system-ui,sans-serif" font-weight="800" font-size="14" fill="white">End<tspan fill="#EA580C">Over</tspan>Pay</text>
+</svg>
