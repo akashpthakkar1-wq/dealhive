@@ -1,9 +1,6 @@
 import Link from 'next/link';
 import { createClient } from '@supabase/supabase-js';
 
-export const metadata = { robots: { index: false, follow: false } }
-
-
 // If you have blog_posts table in Supabase, this will fetch them.
 // Otherwise it renders a "Coming Soon" UI.
 
@@ -25,6 +22,7 @@ async function getBlogPosts() {
 }
 
 export const metadata = {
+  robots: { index: false, follow: false },
   title: 'Blog – Saving Tips & Coupon Guides | EndOverPay',
   description:
     'Read expert tips on saving money online, coupon strategies, and the latest deals from EndOverPay.',
