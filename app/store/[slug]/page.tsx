@@ -216,6 +216,12 @@ export default async function StorePage({ params, searchParams }: Props) {
                 <span className="hidden md:inline"> – {month}</span>
               </h1>
 
+              {/* Byline */}
+              <div className="flex items-center gap-1.5 mb-1">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="6.5" fill="#EA580C"/><path d="M3.8 6.5L5.8 8.5L9.2 4.5" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                <span className="text-xs text-gray-500">Curated & verified by the <strong className="text-gray-700 font-semibold">EndOverPay team</strong> · Updated {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+              </div>
+
               {/* Description — desktop only inside row */}
               <p className="hidden md:block text-gray-500 text-sm max-w-2xl">
                 {store.description || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}

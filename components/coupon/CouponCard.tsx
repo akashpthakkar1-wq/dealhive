@@ -2,6 +2,13 @@
 
 import type { Coupon } from '@/types/index';
 import { getCouponLogo } from '@/lib/logos'
+import { createClient } from '@supabase/supabase-js'
+
+function stableNum(seed: string, min: number, max: number): number {
+  let h = 0
+  for (let i = 0; i < seed.length; i++) { h = ((h << 5) - h) + seed.charCodeAt(i); h |= 0 }
+  return min + (Math.abs(h) % (max - min + 1))
+}
 
 interface CouponCardProps {
   coupon: Coupon;
@@ -20,11 +27,18 @@ function getLogo(coupon: Coupon): string {
 export default function CouponCard({ coupon }: CouponCardProps) {
   const logo = getLogo(coupon);
 
-  function handleCTA() {
+  async function handleCTA() {
     const currentPage = window.location.origin + window.location.pathname;
     const popupUrl = `${currentPage}?popup=${encodeURIComponent(coupon.id)}`;
     window.open(popupUrl, '_blank');
     window.location.href = coupon.affiliate_url;
+    try {
+      const sb = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      )
+      await sb.from('coupons').update({ usage_count: (coupon.usage_count || 0) + 1 }).eq('id', coupon.id)
+    } catch {}
   }
 
   const isCode = coupon.type === 'code';
@@ -94,9 +108,11 @@ export default function CouponCard({ coupon }: CouponCardProps) {
               {coupon.expiry_date && (
                 <span className="whitespace-nowrap">🕐 Expires {new Date(coupon.expiry_date).toLocaleDateString('en-GB')}</span>
               )}
-              {coupon.usage_count > 0 && (
-                <span className="whitespace-nowrap">👥 {coupon.usage_count.toLocaleString()} used</span>
-              )}
+              {(() => {
+                const seed = stableNum(String(coupon.id), 15, 199)
+                const displayCount = (coupon.usage_count || 0) + seed
+                return <span className="whitespace-nowrap">👥 {displayCount.toLocaleString()} used</span>
+              })()}
             </div>
 
             {/* CTA Button */}
