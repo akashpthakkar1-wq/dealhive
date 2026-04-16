@@ -142,7 +142,12 @@ export default async function CategoryPage({ params }: Props) {
     if (!cat.faq_content) return null
     if (Array.isArray(cat.faq_content)) return cat.faq_content
     if (typeof cat.faq_content === 'string') {
-      try { return JSON.parse(cat.faq_content) } catch { return null }
+      try { 
+        const parsed = JSON.parse(cat.faq_content)
+        if (Array.isArray(parsed)) return parsed
+        if (typeof parsed === 'string') return JSON.parse(parsed)
+        return null
+      } catch { return null }
     }
     return null
   })()
