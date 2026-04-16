@@ -69,6 +69,20 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── SEO INTRO TEXT ── */}
+      <section className="bg-white border-b border-gray-100 py-6">
+        <div className="container-main">
+          <div className="max-w-4xl mx-auto text-center">
+            <p className="text-sm text-gray-600 leading-relaxed">
+              Welcome to <strong>EndOverPay</strong> — your trusted source for verified <strong>coupon codes</strong>, <strong>promo codes</strong>, <strong>voucher codes</strong> and <strong>discount codes</strong> from hundreds of top online stores worldwide. 
+              We manually verify every deal before publishing so you never waste time on expired codes. 
+              From fashion and electronics to food delivery and travel, find the best deals updated daily across all categories. 
+              Stop overpaying — start saving smarter with EndOverPay.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ── FEATURED DEALS ── */}
       <section className="section-white">
         <div className="container-main">
@@ -84,7 +98,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── POPULAR STORES ── */}
-      <section className="section-purple">
+      <section className="section-white">
         <div className="container-main">
           <SectionHeader icon={<Store className="w-5 h-5 text-primary-500" />}
             title="Popular Stores" subtitle="Browse top stores and their latest deals"
