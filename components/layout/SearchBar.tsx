@@ -81,7 +81,7 @@ export default function SearchBar({ compact }: Props) {
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => setFocused(true)}
             placeholder={compact ? 'Search deals…' : 'Search stores, coupons, deals…'}
-            className="w-full bg-white border border-black/10 rounded-full pl-10 pr-10 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#3D186B]/20 focus:border-[#3D186B]/30 focus:bg-white transition-all"
+            className="w-full bg-white border border-black/10 rounded-full pl-10 pr-10 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#EA580C]/20 focus:border-[#EA580C]/30 focus:bg-white transition-all"
           />
           {query && (
             <button type="button" onClick={() => { setQuery(''); setResults(null) }}

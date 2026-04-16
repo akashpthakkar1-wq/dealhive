@@ -33,9 +33,9 @@ export default async function BlogPage() {
   return (
     <main className="min-h-screen bg-gray-50">
       {/* Hero */}
-      <div className="bg-[#822a7f] text-white py-12 px-4 text-center">
+      <div className="bg-[#EA580C] text-white py-12 px-4 text-center">
         <h1 className="text-3xl sm:text-4xl font-bold mb-3">EndOverPay Blog</h1>
-        <p className="text-purple-200 text-base max-w-xl mx-auto">
+        <p className="text-orange-200 text-base max-w-xl mx-auto">
           Saving tips, coupon guides, and the latest deals — straight from our team.
         </p>
       </div>
@@ -83,7 +83,7 @@ export default async function BlogPage() {
                   key={i}
                   className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5"
                 >
-                  <span className="text-xs font-semibold bg-purple-100 text-[#822a7f] px-2 py-0.5 rounded-full">
+                  <span className="text-xs font-semibold bg-orange-100 text-[#EA580C] px-2 py-0.5 rounded-full">
                     {post.tag}
                   </span>
                   <p className="text-2xl mt-3 mb-1">{post.icon}</p>
@@ -97,7 +97,7 @@ export default async function BlogPage() {
 
             <Link
               href="/"
-              className="mt-10 inline-block bg-[#822a7f] text-white px-8 py-3 rounded-xl font-semibold hover:bg-[#6b2268] transition-colors"
+              className="mt-10 inline-block bg-[#EA580C] text-white px-8 py-3 rounded-xl font-semibold hover:bg-[#C2410C] transition-colors"
             >
               Browse Deals Instead →
             </Link>
@@ -120,7 +120,7 @@ export default async function BlogPage() {
                 )}
                 <div className="p-4">
                   {post.category && (
-                    <span className="text-xs font-semibold bg-purple-100 text-[#822a7f] px-2 py-0.5 rounded-full">
+                    <span className="text-xs font-semibold bg-orange-100 text-[#EA580C] px-2 py-0.5 rounded-full">
                       {post.category}
                     </span>
                   )}

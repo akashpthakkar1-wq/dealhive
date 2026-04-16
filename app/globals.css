@@ -13,10 +13,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --primary: #822a7f;
-  --primary-light: #fdf4fd;
-  --primary-dark: #6e2369;
-  --primary-border: #edc8ed;
+  --primary: #EA580C;
+  --primary-light: #FFF7ED;
+  --primary-dark: #C2410C;
+  --primary-border: #FED7AA;
+  --cta-green: #059669;
+  --cta-green-dark: #047857;
 }
 
 @layer base {
@@ -25,7 +27,7 @@
     max-width: 100vw;
   }
   body {
-    @apply font-sans text-gray-800 bg-gray-50;
+    @apply font-sans text-gray-800 bg-[#FFFBF7];
     overflow-x: hidden;
     max-width: 100vw;
     position: relative;
@@ -42,7 +44,7 @@
 
   /* ── Buttons ── */
   .btn-primary {
-    @apply inline-flex items-center gap-2 bg-primary-500 hover:bg-primary-600 text-white font-bold px-5 py-2.5 rounded-xl transition-all shadow-sm hover:shadow-md text-sm;
+    @apply inline-flex items-center gap-2 bg-primary-500 hover:bg-primary-700 text-white font-bold px-5 py-2.5 rounded-xl transition-all shadow-sm hover:shadow-md text-sm;
   }
   .btn-secondary {
     @apply inline-flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 font-semibold px-5 py-2.5 rounded-xl border border-gray-200 transition-all text-sm;

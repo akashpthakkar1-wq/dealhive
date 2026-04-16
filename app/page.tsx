@@ -26,15 +26,15 @@ export default async function HomePage() {
   return (
     <div>
       {/* ── HERO ── */}
-      <section className="bg-gradient-to-br from-primary-600 via-primary-500 to-primary-700 text-white py-14">
+      <section className="bg-gradient-to-br from-[#EA580C] via-[#C2410C] to-[#9A3412] text-white py-14">
         <div className="container-main text-center">
           <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-semibold mb-5 border border-white/20">
-            <Zap className="w-3.5 h-3.5 text-yellow-300" />
+            <Zap className="w-3.5 h-3.5 text-[#FED7AA]" />
             1,240 people saving right now
           </div>
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
             Best Coupon Codes, Promo Codes &amp; Voucher Codes –<br />
-            <span className="text-yellow-300">Save Up to 90% Off</span>
+            <span className="text-[#FED7AA]">Save Up to 90% Off</span>
           </h1>
           <p className="text-white/80 text-lg mb-8 max-w-xl mx-auto">
             Your trusted coupon platform worldwide. Verified codes, real savings, zero hassle.

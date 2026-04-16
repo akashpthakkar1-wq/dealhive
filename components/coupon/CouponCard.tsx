@@ -34,8 +34,8 @@ export default function CouponCard({ coupon }: CouponCardProps) {
       <div className="flex flex-1">
 
         {/* Left discount badge — desktop only */}
-        <div className="hidden sm:flex flex-col items-center justify-center bg-gradient-to-b from-purple-50 to-purple-100/60 w-[88px] flex-shrink-0 text-center border-r border-purple-100 px-2">
-          <span className="text-sm font-extrabold text-[#822a7f] leading-tight break-words w-full text-center">
+        <div className="hidden sm:flex flex-col items-center justify-center bg-gradient-to-b from-orange-50 to-orange-100/60 w-[88px] flex-shrink-0 text-center border-r border-orange-100 px-2">
+          <span className="text-sm font-extrabold text-[#EA580C] leading-tight break-words w-full text-center">
             {coupon.discount}
           </span>
           <span className={`mt-2 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${
@@ -73,13 +73,18 @@ export default function CouponCard({ coupon }: CouponCardProps) {
                   </span>
                 )}
                 {/* Mobile discount badge */}
-                <span className="sm:hidden ml-auto text-xs font-extrabold text-[#822a7f] bg-purple-50 border border-purple-200 px-2 py-px rounded-full whitespace-nowrap flex-shrink-0">
+                <span className="sm:hidden ml-auto text-xs font-extrabold text-[#EA580C] bg-orange-50 border border-orange-200 px-2 py-px rounded-full whitespace-nowrap flex-shrink-0">
                   {coupon.discount}
                 </span>
               </div>
               <p className="text-sm font-semibold text-gray-800 mt-1 leading-snug line-clamp-2">
                 {coupon.title}
               </p>
+              {coupon.description && (
+                <p className="text-xs text-gray-500 mt-1 leading-snug line-clamp-2">
+                  {coupon.description}
+                </p>
+              )}
             </div>
           </div>
 
@@ -100,17 +105,17 @@ export default function CouponCard({ coupon }: CouponCardProps) {
                 onClick={handleCTA}
                 className="inline-flex items-center rounded-xl overflow-hidden text-sm font-semibold shadow-sm active:scale-95 transition-transform flex-shrink-0"
               >
-                <span className="bg-[#822a7f] text-white px-4 py-2 hover:bg-[#6b2268] transition-colors whitespace-nowrap">
+                <span className="bg-[#EA580C] text-white px-4 py-2 hover:bg-[#C2410C] transition-colors whitespace-nowrap">
                   Get Code
                 </span>
-                <span className="bg-[#6b2268] text-purple-200 px-2 py-2 font-mono text-xs tracking-wider border-l border-purple-600 whitespace-nowrap">
+                <span className="bg-[#C2410C] text-orange-100 px-2 py-2 font-mono text-xs tracking-wider border-l border-orange-700 whitespace-nowrap">
                   {coupon.code?.slice(0, 4) ?? '????'}•••
                 </span>
               </button>
             ) : (
               <button
                 onClick={handleCTA}
-                className="inline-flex items-center bg-green-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-green-700 active:scale-95 transition-all flex-shrink-0 whitespace-nowrap"
+                className="inline-flex items-center bg-[#059669] text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-[#047857] active:scale-95 transition-all flex-shrink-0 whitespace-nowrap"
               >
                 Activate Deal →
               </button>

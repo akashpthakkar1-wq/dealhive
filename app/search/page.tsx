@@ -163,10 +163,10 @@ export default function SearchPage() {
   return (
     <main className="min-h-screen bg-gray-50">
       {/* ── Header ── */}
-      <div className="bg-[#822a7f] text-white py-10 px-4">
+      <div className="bg-[#EA580C] text-white py-10 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-3xl font-bold mb-2">New Deals & Coupons</h1>
-          <p className="text-purple-200 mb-6">
+          <p className="text-orange-200 mb-6">
             Latest verified coupon codes and deals — updated daily
           </p>
 
@@ -208,7 +208,7 @@ export default function SearchPage() {
                   setGridSearch(inputValue);
                   setDropdownOpen(false);
                 }}
-                className="bg-[#6b2268] hover:bg-[#5a1d57] text-white px-5 py-3.5 text-sm font-bold transition-colors flex-shrink-0"
+                className="bg-[#C2410C] hover:bg-[#5a1d57] text-white px-5 py-3.5 text-sm font-bold transition-colors flex-shrink-0"
               >
                 Search
               </button>
@@ -247,7 +247,7 @@ export default function SearchPage() {
                               setDropdownOpen(false);
                               window.location.href = `/store/${store.slug}`;
                             }}
-                            className="w-full flex items-center gap-3 px-4 py-3 hover:bg-purple-50 transition-colors border-b border-gray-50 last:border-0 text-left"
+                            className="w-full flex items-center gap-3 px-4 py-3 hover:bg-orange-50 transition-colors border-b border-gray-50 last:border-0 text-left"
                           >
                             <img
                               src={getStoreLogo(store.website_url)}
@@ -262,7 +262,7 @@ export default function SearchPage() {
                                 <p className="text-xs text-gray-400">{store.category}</p>
                               )}
                             </div>
-                            <span className="text-xs text-[#822a7f] font-semibold flex-shrink-0">
+                            <span className="text-xs text-[#EA580C] font-semibold flex-shrink-0">
                               View →
                             </span>
                           </button>
@@ -285,7 +285,7 @@ export default function SearchPage() {
                               setInputValue(coupon.title);
                               setGridSearch(coupon.title);
                             }}
-                            className="w-full flex items-center gap-3 px-4 py-3 hover:bg-purple-50 transition-colors border-b border-gray-50 last:border-0 text-left"
+                            className="w-full flex items-center gap-3 px-4 py-3 hover:bg-orange-50 transition-colors border-b border-gray-50 last:border-0 text-left"
                           >
                             <img
                               src={getCouponLogo(coupon)}
@@ -299,7 +299,7 @@ export default function SearchPage() {
                               <p className="text-xs text-gray-400 truncate">
                                 {coupon.store?.name}
                                 {coupon.discount && (
-                                  <span className="ml-1.5 font-semibold text-[#822a7f]">
+                                  <span className="ml-1.5 font-semibold text-[#EA580C]">
                                     · {coupon.discount}
                                   </span>
                                 )}
@@ -333,8 +333,8 @@ export default function SearchPage() {
               onClick={() => setFilter(f.value)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                 filter === f.value
-                  ? 'bg-[#822a7f] text-white'
-                  : 'bg-white text-gray-600 border border-gray-200 hover:border-[#822a7f] hover:text-[#822a7f]'
+                  ? 'bg-[#EA580C] text-white'
+                  : 'bg-white text-gray-600 border border-gray-200 hover:border-[#EA580C] hover:text-[#EA580C]'
               }`}
             >
               {f.label}
@@ -351,7 +351,7 @@ export default function SearchPage() {
 
         {loading ? (
           <div className="text-center py-16">
-            <div className="inline-block w-8 h-8 border-4 border-[#822a7f] border-t-transparent rounded-full animate-spin mb-3" />
+            <div className="inline-block w-8 h-8 border-4 border-[#EA580C] border-t-transparent rounded-full animate-spin mb-3" />
             <p className="text-gray-400 text-sm">Loading deals...</p>
           </div>
         ) : filtered.length === 0 ? (
@@ -385,8 +385,8 @@ function CouponCard({ coupon, onCTA }: { coupon: Coupon; onCTA: (c: Coupon) => v
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden h-full flex flex-col">
       <div className="flex flex-1">
         {/* Left discount badge — desktop only */}
-        <div className="hidden sm:flex flex-col items-center justify-center bg-gradient-to-b from-purple-50 to-purple-100/60 w-[88px] flex-shrink-0 text-center border-r border-purple-100 px-2">
-          <span className="text-sm font-extrabold text-[#822a7f] leading-tight break-words w-full text-center">
+        <div className="hidden sm:flex flex-col items-center justify-center bg-gradient-to-b from-orange-50 to-orange-100/60 w-[88px] flex-shrink-0 text-center border-r border-orange-100 px-2">
+          <span className="text-sm font-extrabold text-[#EA580C] leading-tight break-words w-full text-center">
             {coupon.discount}
           </span>
           <span className={`mt-2 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${
@@ -421,7 +421,7 @@ function CouponCard({ coupon, onCTA }: { coupon: Coupon; onCTA: (c: Coupon) => v
                   </span>
                 )}
                 {/* Mobile discount badge */}
-                <span className="sm:hidden ml-auto text-xs font-extrabold text-[#822a7f] bg-purple-50 border border-purple-200 px-2 py-px rounded-full whitespace-nowrap">
+                <span className="sm:hidden ml-auto text-xs font-extrabold text-[#EA580C] bg-orange-50 border border-orange-200 px-2 py-px rounded-full whitespace-nowrap">
                   {coupon.discount}
                 </span>
               </div>
@@ -448,17 +448,17 @@ function CouponCard({ coupon, onCTA }: { coupon: Coupon; onCTA: (c: Coupon) => v
                 onClick={() => onCTA(coupon)}
                 className="inline-flex items-center rounded-xl overflow-hidden text-sm font-semibold shadow-sm active:scale-95 transition-transform"
               >
-                <span className="bg-[#822a7f] text-white px-5 py-2.5 hover:bg-[#6b2268] transition-colors">
+                <span className="bg-[#EA580C] text-white px-5 py-2.5 hover:bg-[#C2410C] transition-colors">
                   Get Code
                 </span>
-                <span className="bg-[#6b2268] text-purple-200 px-3 py-2.5 font-mono text-xs tracking-wider border-l border-purple-600">
+                <span className="bg-[#C2410C] text-orange-200 px-3 py-2.5 font-mono text-xs tracking-wider border-l border-orange-600">
                   {coupon.code?.slice(0, 4) ?? '????'}•••
                 </span>
               </button>
             ) : (
               <button
                 onClick={() => onCTA(coupon)}
-                className="inline-flex items-center bg-[#822a7f] text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-[#6b2268] active:scale-95 transition-all"
+                className="inline-flex items-center bg-[#EA580C] text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-[#C2410C] active:scale-95 transition-all"
               >
                 Activate Deal →
               </button>
@@ -500,7 +500,7 @@ function CouponModal({ coupon, onClose }: { coupon: Coupon; onClose: () => void 
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="bg-[#822a7f] px-5 py-4 flex items-center justify-between">
+        <div className="bg-[#EA580C] px-5 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3 min-w-0">
             <img
               src={logo}
@@ -509,7 +509,7 @@ function CouponModal({ coupon, onClose }: { coupon: Coupon; onClose: () => void 
             />
             <div className="min-w-0">
               <p className="text-white font-semibold text-sm truncate">{coupon.store?.name}</p>
-              <p className="text-purple-200 text-xs line-clamp-1">{coupon.title}</p>
+              <p className="text-orange-200 text-xs line-clamp-1">{coupon.title}</p>
             </div>
           </div>
           <button
@@ -520,7 +520,7 @@ function CouponModal({ coupon, onClose }: { coupon: Coupon; onClose: () => void 
 
         <div className="p-5">
           <div className="text-center mb-5">
-            <p className="text-3xl font-extrabold text-[#822a7f]">{coupon.discount}</p>
+            <p className="text-3xl font-extrabold text-[#EA580C]">{coupon.discount}</p>
             <p className="text-gray-400 text-sm mt-0.5">Best available offer</p>
           </div>
 
@@ -530,7 +530,7 @@ function CouponModal({ coupon, onClose }: { coupon: Coupon; onClose: () => void 
                 Your Coupon Code
               </p>
               <div className="flex gap-2 mb-4">
-                <div className="flex-1 border-2 border-dashed border-purple-300 rounded-xl px-4 py-3 text-center font-mono font-bold text-xl text-gray-800 tracking-widest bg-purple-50 select-all">
+                <div className="flex-1 border-2 border-dashed border-orange-300 rounded-xl px-4 py-3 text-center font-mono font-bold text-xl text-gray-800 tracking-widest bg-orange-50 select-all">
                   {coupon.code}
                 </div>
                 <button
@@ -557,7 +557,7 @@ function CouponModal({ coupon, onClose }: { coupon: Coupon; onClose: () => void 
               )}
               <button
                 onClick={handleGoToStore}
-                className="w-full text-center bg-[#822a7f] text-white py-3 rounded-xl font-semibold text-sm hover:bg-[#6b2268] transition-colors"
+                className="w-full text-center bg-[#EA580C] text-white py-3 rounded-xl font-semibold text-sm hover:bg-[#C2410C] transition-colors"
               >
                 🔗 Go to {coupon.store?.name} & Apply Code
               </button>
@@ -590,7 +590,7 @@ function CouponModal({ coupon, onClose }: { coupon: Coupon; onClose: () => void 
               )}
               <button
                 onClick={handleGoToStore}
-                className="w-full text-center bg-[#822a7f] text-white py-3 rounded-xl font-semibold text-sm hover:bg-[#6b2268] transition-colors"
+                className="w-full text-center bg-[#EA580C] text-white py-3 rounded-xl font-semibold text-sm hover:bg-[#C2410C] transition-colors"
               >
                 🛒 Go to {coupon.store?.name}
               </button>

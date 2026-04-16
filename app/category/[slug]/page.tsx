@@ -156,7 +156,7 @@ export default async function CategoryPage({ params }: Props) {
         mainEntity: faqs.map((f: {q: string, a: string}) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } }))
       }) }} />}
       {/* Header */}
-      <div className="bg-gradient-to-br from-primary-600 to-primary-700 text-white py-10">
+      <div className="bg-gradient-to-br from-[#EA580C] to-[#9A3412] text-white py-10">
         <div className="container-main">
           <div className="flex items-center gap-4">
             <div className="text-5xl">{cat.icon || '🏷️'}</div>

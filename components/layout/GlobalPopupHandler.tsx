@@ -83,13 +83,13 @@ function CouponModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="bg-[#822a7f] px-5 py-4 flex items-center justify-between">
+        <div className="bg-[#EA580C] px-5 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3 min-w-0">
             <img src={logo} alt={coupon.store?.name ?? 'Store'}
               className="w-9 h-9 rounded-lg bg-white p-0.5 object-contain flex-shrink-0" />
             <div className="min-w-0">
               <p className="text-white font-semibold text-sm truncate">{coupon.store?.name}</p>
-              <p className="text-purple-200 text-xs line-clamp-1">{coupon.title}</p>
+              <p className="text-orange-200 text-xs line-clamp-1">{coupon.title}</p>
             </div>
           </div>
           <button onClick={onClose}
@@ -101,7 +101,7 @@ function CouponModal({
         <div className="p-5">
           {/* Discount */}
           <div className="text-center mb-5">
-            <p className="text-3xl font-extrabold text-[#822a7f]">{coupon.discount}</p>
+            <p className="text-3xl font-extrabold text-[#EA580C]">{coupon.discount}</p>
             <p className="text-gray-400 text-sm mt-0.5">Best available offer</p>
           </div>
 
@@ -111,7 +111,7 @@ function CouponModal({
                 Your Coupon Code
               </p>
               <div className="flex gap-2 mb-4">
-                <div className="flex-1 border-2 border-dashed border-purple-300 rounded-xl px-4 py-3 text-center font-mono font-bold text-xl text-gray-800 tracking-widest bg-purple-50 select-all">
+                <div className="flex-1 border-2 border-dashed border-orange-300 rounded-xl px-4 py-3 text-center font-mono font-bold text-xl text-gray-800 tracking-widest bg-orange-50 select-all">
                   {coupon.code}
                 </div>
                 <button onClick={handleCopy}
@@ -134,7 +134,7 @@ function CouponModal({
                 </p>
               )}
               <button onClick={handleGoToStore}
-                className="w-full text-center bg-[#822a7f] text-white py-3 rounded-xl font-semibold text-sm hover:bg-[#6b2268] transition-colors">
+                className="w-full text-center bg-[#EA580C] text-white py-3 rounded-xl font-semibold text-sm hover:bg-[#C2410C] transition-colors">
                 🔗 Go to {coupon.store?.name} & Apply Code
               </button>
               {copied && (
@@ -164,7 +164,7 @@ function CouponModal({
                 </p>
               )}
               <button onClick={handleGoToStore}
-                className="w-full text-center bg-[#822a7f] text-white py-3 rounded-xl font-semibold text-sm hover:bg-[#6b2268] transition-colors">
+                className="w-full text-center bg-[#EA580C] text-white py-3 rounded-xl font-semibold text-sm hover:bg-[#C2410C] transition-colors">
                 🛒 Go to {coupon.store?.name}
               </button>
             </>

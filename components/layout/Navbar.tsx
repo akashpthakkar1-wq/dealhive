@@ -20,7 +20,7 @@ export default function Navbar() {
   return (
     <header
       className="sticky top-0 z-50 border-b border-black/10 shadow-sm"
-      style={{ backgroundColor: '#F5CE4A' }}>
+      style={{ backgroundColor: '#FFFFFF' }}>
       <div className="container-main">
         <div className="flex items-center gap-3 h-14">
 
@@ -36,7 +36,7 @@ export default function Navbar() {
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap ${
                   pathname === l.href
                     ? 'bg-black/10 text-[#2A1250] font-semibold'
-                    : 'text-[#3D186B] hover:text-black hover:bg-black/10'
+                    : 'text-[#EA580C] hover:text-black hover:bg-black/10'
                 }`}>
                 {l.label}
               </Link>
@@ -52,7 +52,7 @@ export default function Navbar() {
           <button
             onClick={() => setOpen(!open)}
             className="lg:hidden ml-auto p-2 rounded-lg transition-colors hover:bg-black/10" aria-label="Open menu"
-            style={{ color: '#3D186B' }}>
+            style={{ color: '#EA580C' }}>
             {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
@@ -62,7 +62,7 @@ export default function Navbar() {
       {open && (
         <div
           className="lg:hidden border-t border-black/10 pb-3"
-          style={{ backgroundColor: '#F5CE4A' }}>
+          style={{ backgroundColor: '#FFFFFF' }}>
           <div className="container-main pt-3">
 
             {/* Mobile search — also uses SearchBar with dropdown */}
@@ -78,7 +78,7 @@ export default function Navbar() {
                   className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                     pathname === l.href
                       ? 'bg-black/10 text-[#2A1250] font-semibold'
-                      : 'text-[#3D186B] hover:bg-black/10 hover:text-black'
+                      : 'text-[#EA580C] hover:bg-black/10 hover:text-black'
                   }`}>
                   {l.label}
                 </Link>

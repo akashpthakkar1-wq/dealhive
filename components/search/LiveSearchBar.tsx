@@ -158,7 +158,7 @@ export default function LiveSearchBar({
                     <button
                       key={store.id}
                       onMouseDown={(e) => { e.preventDefault(); setOpen(false); window.location.href = `/store/${store.slug}`; }}
-                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-purple-50 transition-colors border-b border-gray-50 last:border-0 text-left"
+                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-orange-50 transition-colors border-b border-gray-50 last:border-0 text-left"
                     >
                       <img src={getStoreLogo(store.website_url)} alt={`${store.name} logo`}
                         className="w-8 h-8 rounded-lg border border-gray-100 object-contain bg-white flex-shrink-0" />
@@ -188,7 +188,7 @@ export default function LiveSearchBar({
                         setOpen(false);
                         window.location.href = `/search?q=${encodeURIComponent(coupon.title)}`;
                       }}
-                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-purple-50 transition-colors border-b border-gray-50 last:border-0 text-left"
+                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-orange-50 transition-colors border-b border-gray-50 last:border-0 text-left"
                     >
                       <img src={getCouponLogo(coupon)} alt={coupon.store?.name ?? 'Store'}
                         className="w-8 h-8 rounded-lg border border-gray-100 object-contain bg-white flex-shrink-0" />

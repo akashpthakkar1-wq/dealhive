@@ -8,7 +8,7 @@ export default function Footer() {
   const company = ['About Us', 'Blog', 'Contact', 'Privacy Policy', 'Terms of Service', 'Disclaimer', 'Submit a Coupon']
 
   return (
-    <footer style={{ backgroundColor: '#F5CE4A' }} className="mt-8">
+    <footer style={{ backgroundColor: '#1C1917' }} className="mt-8">
       <div className="container-main pt-10 pb-6">
 
         {/* Main 4-column grid */}
@@ -19,7 +19,7 @@ export default function Footer() {
             <Link href="/" className="inline-flex items-center mb-3">
               <img src="/logo.svg" alt="EndOverPay" className="h-12 w-auto" width="160" height="48" />
             </Link>
-            <p className="text-sm leading-5 mb-4 max-w-[200px]" style={{ color: '#1F1F2E' }}>
+            <p className="text-sm leading-5 mb-4 max-w-[200px]" style={{ color: '#D6D3D1' }}>
               Your trusted coupon &amp; deal platform worldwide. Verified codes, real savings.
             </p>
             <div className="flex gap-2">
@@ -38,7 +38,7 @@ export default function Footer() {
 
           {/* Categories */}
           <div>
-            <h3 className="font-semibold mb-2.5 text-xs uppercase tracking-wide" style={{ color: '#3D186B' }}>
+            <h3 className="font-semibold mb-2.5 text-xs uppercase tracking-wide" style={{ color: '#EA580C' }}>
               Categories
             </h3>
             <ul className="space-y-2">
@@ -54,7 +54,7 @@ export default function Footer() {
 
           {/* Popular Stores */}
           <div>
-            <h3 className="font-semibold mb-2.5 text-xs uppercase tracking-wide" style={{ color: '#3D186B' }}>
+            <h3 className="font-semibold mb-2.5 text-xs uppercase tracking-wide" style={{ color: '#EA580C' }}>
               Popular Stores
             </h3>
             <ul className="space-y-2">
@@ -70,7 +70,7 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h3 className="font-semibold mb-2.5 text-xs uppercase tracking-wide" style={{ color: '#3D186B' }}>
+            <h3 className="font-semibold mb-2.5 text-xs uppercase tracking-wide" style={{ color: '#EA580C' }}>
               Company
             </h3>
             <ul className="space-y-2">
@@ -87,14 +87,14 @@ export default function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="mt-6" style={{ borderTop: '1px solid rgba(0,0,0,0.15)' }} />
+        <div className="mt-6" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }} />
 
         {/* Bottom bar */}
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-1.5">
-          <p className="text-xs" style={{ color: '#4A4A4A' }}>
+          <p className="text-xs" style={{ color: '#A8A29E' }}>
             © {new Date().getFullYear()} EndOverPay. All rights reserved.
           </p>
-          <p className="text-xs" style={{ color: '#4A4A4A' }}>
+          <p className="text-xs" style={{ color: '#A8A29E' }}>
             Some links may be affiliate links. Prices &amp; offers subject to change.
           </p>
         </div>
@@ -103,15 +103,15 @@ export default function Footer() {
 
       <style jsx global>{`
         .footer-link {
-          color: #3D186B;
+          color: #FED7AA;
         }
         .footer-link:hover {
-          color: #2A1250;
+          color: #EA580C;
           text-decoration: underline;
         }
         .footer-social {
           background-color: rgba(0,0,0,0.1);
-          color: #3D186B;
+          color: #FED7AA;
         }
         .footer-social:hover {
           background-color: rgba(255,255,255,0.3);
