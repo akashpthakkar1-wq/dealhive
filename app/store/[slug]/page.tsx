@@ -277,20 +277,6 @@ export default async function StorePage({ params, searchParams }: Props) {
       </div>
 
       {/* ── MAIN ─────────────────────────────────────── */}
-      {/* Breadcrumbs */}
-      <div className="bg-white border-b border-gray-100">
-        <div className="container-main py-2">
-          <nav className="flex items-center gap-2 text-xs text-gray-500">
-            <Link href="/" className="hover:text-primary-600">Home</Link>
-            <span>›</span>
-            <Link href="/stores" className="hover:text-primary-600">Stores</Link>
-            <span>›</span>
-            {store.category && <><Link href={`/category/${store.category.toLowerCase()}`} className="hover:text-primary-600">{store.category}</Link><span>›</span></>}
-            <span className="text-gray-900 font-medium">{store.name}</span>
-          </nav>
-        </div>
-      </div>
-
       <div className="container-main py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
