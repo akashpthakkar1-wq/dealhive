@@ -30,7 +30,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const logoUrl = store.logo || `${SITE_URL}/og-default.jpg`
   // Cap at 155 chars for Google snippet
   const rawDesc = `Find verified ${store.name} coupon codes & promo codes for ${month}. Save big with exclusive ${store.name} deals updated daily.`
-  const description = rawDesc.length > 155 ? rawDesc.slice(0, 152) + '…' : rawDesc
+  const rawMeta = `Find ${activeCoupons.length} verified ${store.name} coupon codes, promo codes & voucher codes for ${month}. Save up to ${maxDiscount > 0 ? maxDiscount + '%' : '90%'} off. All ${store.name} discount codes manually tested & updated daily.`
+  const description = rawMeta.length > 155 ? rawMeta.slice(0, 152) + '…' : rawMeta
   return {
     title: `${store.name} Coupons, Promo Codes & Voucher Codes – Up to 90% Off`,
     description,
@@ -276,6 +277,20 @@ export default async function StorePage({ params, searchParams }: Props) {
       </div>
 
       {/* ── MAIN ─────────────────────────────────────── */}
+      {/* Breadcrumbs */}
+      <div className="bg-white border-b border-gray-100">
+        <div className="container-main py-2">
+          <nav className="flex items-center gap-2 text-xs text-gray-500">
+            <Link href="/" className="hover:text-primary-600">Home</Link>
+            <span>›</span>
+            <Link href="/stores" className="hover:text-primary-600">Stores</Link>
+            <span>›</span>
+            {store.category && <><Link href={`/category/${store.category.toLowerCase()}`} className="hover:text-primary-600">{store.category}</Link><span>›</span></>}
+            <span className="text-gray-900 font-medium">{store.name}</span>
+          </nav>
+        </div>
+      </div>
+
       <div className="container-main py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 

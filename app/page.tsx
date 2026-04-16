@@ -51,6 +51,19 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── TRUST BAR ── */}
+      <section className="bg-[#1C1917] py-3">
+        <div className="container-main">
+          <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-gray-400">
+            <span className="flex items-center gap-1.5"><span className="text-green-400 font-bold">✓</span> Manually Verified Codes</span>
+            <span className="flex items-center gap-1.5"><span className="text-green-400 font-bold">✓</span> Updated Daily</span>
+            <span className="flex items-center gap-1.5"><span className="text-green-400 font-bold">✓</span> 500+ Global Stores</span>
+            <span className="flex items-center gap-1.5"><span className="text-green-400 font-bold">✓</span> Free to Use — No Signup</span>
+            <span className="flex items-center gap-1.5"><span className="text-green-400 font-bold">✓</span> Affiliate Disclosure</span>
+          </div>
+        </div>
+      </section>
+
       {/* ── CATEGORY BAR ── */}
       <section className="bg-white border-b border-gray-100 py-4 sticky top-16 z-30 shadow-sm">
         <div className="container-main">

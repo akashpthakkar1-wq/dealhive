@@ -59,7 +59,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
                 </span>
                 {coupon.is_verified && (
                   <span className="text-[11px] text-green-700 bg-green-50 border border-green-200 px-1.5 py-px rounded-full font-semibold whitespace-nowrap">
-                    ✅ Verified
+                    ✅ Verified Today
                   </span>
                 )}
                 {coupon.is_trending && (

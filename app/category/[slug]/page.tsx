@@ -185,6 +185,19 @@ export default async function CategoryPage({ params }: Props) {
         </div>
       </div>
 
+      {/* Breadcrumbs */}
+      <div className="bg-white border-b border-gray-100">
+        <div className="container-main py-2">
+          <nav className="flex items-center gap-2 text-xs text-gray-500">
+            <Link href="/" className="hover:text-primary-600">Home</Link>
+            <span>›</span>
+            <Link href="/categories" className="hover:text-primary-600">Categories</Link>
+            <span>›</span>
+            <span className="text-gray-900 font-medium">{cat.name}</span>
+          </nav>
+        </div>
+      </div>
+
       <div className="container-main py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
 
