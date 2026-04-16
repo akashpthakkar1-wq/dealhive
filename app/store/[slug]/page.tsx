@@ -355,7 +355,7 @@ export default async function StorePage({ params, searchParams }: Props) {
             {activeCoupons.length > 0 && (
               <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
                 <div className="bg-primary-50 px-5 py-3 border-b border-primary-100">
-                  <h3 className="font-bold text-gray-900">Top {store.name} Coupons &amp; Promo Codes {month}</h3>
+                  <h2 className="font-bold text-gray-900">Today's Best {store.name} Deals & Coupon Codes – {month}</h2>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
@@ -388,7 +388,8 @@ export default async function StorePage({ params, searchParams }: Props) {
 
             {/* About store */}
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-3">About {store.name} Coupon Codes & Deals</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-2">About {store.name} Coupon Codes & Deals</h2>
+              <h3 className="text-sm font-semibold text-primary-600 mb-3">Why shop at {store.name} with EndOverPay?</h3>
               <div className="text-sm text-gray-600 leading-relaxed space-y-3">
                 <p>{store.about_content || store.description || `${store.name} is a trusted online store. Shop the latest deals and save with verified ${store.name} coupon codes on ${SITE_NAME}.`}</p>
                 {!store.about_content && <><p className="mt-3">We track all {store.name} promotions, flash sales, and exclusive discount codes daily so you never miss a saving opportunity. Our team manually verifies every code before publishing.</p>
@@ -440,7 +441,8 @@ export default async function StorePage({ params, searchParams }: Props) {
 
             {/* Saving tips */}
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">How to Save More at {store.name} – Tips & Tricks</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-2">How to Save More at {store.name} – Tips & Tricks</h2>
+              <h3 className="text-sm font-semibold text-primary-600 mb-3">Top money-saving strategies for {store.name} shoppers</h3>
               {store.saving_tips_content ? (
                 <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line">{store.saving_tips_content}</p>
               ) : (
@@ -472,6 +474,22 @@ export default async function StorePage({ params, searchParams }: Props) {
                 ))}
               </div>
             </div>
+
+            {/* Related stores text links */}
+            {relatedStores && relatedStores.length > 0 && (
+              <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+                <h2 className="text-lg font-bold text-gray-900 mb-3">More {store.category} Stores with Coupon Codes</h2>
+                <p className="text-sm text-gray-500 mb-4">Looking for more deals? Check out these popular {store.category} stores for verified coupon codes and promo codes:</p>
+                <div className="flex flex-wrap gap-2">
+                  {relatedStores.map((s: any) => (
+                    <Link key={s.id} href={`/store/${s.slug}`}
+                      className="inline-flex items-center gap-2 px-3 py-2 bg-primary-50 hover:bg-primary-100 text-primary-700 rounded-lg text-sm font-semibold transition-all border border-primary-100">
+                      {s.name} Coupons →
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Expired coupons */}
             {expiredCoupons.length > 0 && (

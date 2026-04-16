@@ -76,6 +76,20 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Top Stores */}
+          <div className="col-span-2 md:col-span-1">
+            <h3 className="font-semibold mb-2.5 text-xs uppercase tracking-wide" style={{ color: '#EA580C' }}>Top Stores</h3>
+            <ul className="space-y-2">
+              {['amazon', 'myntra', 'flipkart', 'shein', 'swiggy', 'zomato', 'nykaa', 'makemytrip', 'aliexpress', 'temu'].map((s) => (
+                <li key={s}>
+                  <a href={`/store/${s}`} className="footer-link text-sm leading-5 block transition-all duration-200" style={{ textTransform: 'capitalize' }}>
+                    {s.charAt(0).toUpperCase() + s.slice(1)} Coupons
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* Company */}
           <div>
             <h3 className="font-semibold mb-2.5 text-xs uppercase tracking-wide" style={{ color: '#EA580C' }}>
