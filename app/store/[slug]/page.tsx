@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const logoUrl = store.logo || `${SITE_URL}/og-default.jpg`
   // Cap at 155 chars for Google snippet
   const rawDesc = `Find verified ${store.name} coupon codes & promo codes for ${month}. Save big with exclusive ${store.name} deals updated daily.`
-  const rawMeta = `Find ${activeCoupons.length} verified ${store.name} coupon codes, promo codes & voucher codes for ${month}. Save up to ${maxDiscount > 0 ? maxDiscount + '%' : '90%'} off. All ${store.name} discount codes manually tested & updated daily.`
+  const rawMeta = `Find verified ${store.name} coupon codes, promo codes & voucher codes for ${month}. Save up to 90% off with manually tested ${store.name} discount codes. Updated daily.`
   const description = rawMeta.length > 155 ? rawMeta.slice(0, 152) + '…' : rawMeta
   return {
     title: `${store.name} Coupons, Promo Codes & Voucher Codes – Up to 90% Off`,
