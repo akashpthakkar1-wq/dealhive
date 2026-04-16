@@ -228,14 +228,14 @@ export default async function CategoryPage({ params }: Props) {
                 <h2 className="text-lg font-bold text-gray-900 mb-4">
                   Top {cat.name} Stores
                 </h2>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <div className="flex flex-wrap gap-2">
                   {storesByCategory.slice(0, 6).map((s: any) => (
                     <Link key={s.id} href={`/store/${s.slug}`}
-                      className="flex items-center gap-2 p-3 rounded-xl border border-gray-100 hover:border-primary-300 hover:bg-primary-50 transition-all">
-                      <div className="w-8 h-8 rounded-lg border border-gray-100 bg-white overflow-hidden flex items-center justify-center flex-shrink-0">
-                        {s.logo ? <img src={s.logo} alt={s.name} className="w-full h-full object-contain p-1" /> : <span className="text-xs font-bold text-primary-400">{s.name[0]}</span>}
+                      className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-gray-100 hover:border-primary-300 hover:bg-primary-50 transition-all">
+                      <div className="w-7 h-7 rounded-lg border border-gray-100 bg-white overflow-hidden flex items-center justify-center flex-shrink-0">
+                        {s.logo ? <img src={s.logo} alt={s.name} className="w-full h-full object-contain p-0.5" /> : <span className="text-xs font-bold text-primary-400">{s.name[0]}</span>}
                       </div>
-                      <span className="text-xs font-semibold text-gray-700 truncate">{s.name}</span>
+                      <span className="text-xs font-semibold text-gray-700 whitespace-nowrap">{s.name}</span>
                     </Link>
                   ))}
                 </div>
