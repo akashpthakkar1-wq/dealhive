@@ -30,8 +30,6 @@ export default function CouponCard({ coupon }: CouponCardProps) {
   async function handleCTA() {
     const currentPage = window.location.origin + window.location.pathname;
     const popupUrl = `${currentPage}?popup=${encodeURIComponent(coupon.id)}`;
-    window.open(popupUrl, '_blank');
-    window.location.href = coupon.affiliate_url;
     try {
       const sb = createClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -39,6 +37,8 @@ export default function CouponCard({ coupon }: CouponCardProps) {
       )
       await sb.from('coupons').update({ usage_count: (coupon.usage_count || 0) + 1 }).eq('id', coupon.id)
     } catch {}
+    window.open(popupUrl, '_blank');
+    window.location.href = coupon.affiliate_url;
   }
 
   const isCode = coupon.type === 'code';
