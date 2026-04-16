@@ -248,7 +248,7 @@ export default async function CategoryPage({ params }: Props) {
                 {cat.name} Coupons — Frequently Asked Questions
               </h2>
               <div className="space-y-3">
-                {faqs.map((faq, i) => (
+                {faqs.map((faq: {q: string, a: string}, i: number) => (
                   <details key={i} className="group border border-gray-100 rounded-xl overflow-hidden">
                     <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-primary-50 transition-colors list-none">
                       <span className="font-semibold text-gray-900 text-sm pr-4">{faq.q}</span>
