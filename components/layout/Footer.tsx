@@ -82,10 +82,10 @@ export default function Footer() {
               Company
             </h3>
             <ul className="space-y-2">
-              {company.map((l) => (
-                <li key={l}>
-                  <Link href="#" className="footer-link text-sm leading-5 block transition-all duration-200">
-                    {l}
+              {company.map((item) => (
+                <li key={item.label}>
+                  <Link href={item.href} className="footer-link text-sm leading-5 block transition-all duration-200">
+                    {item.label}
                   </Link>
                 </li>
               ))}
