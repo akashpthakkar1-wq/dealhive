@@ -17,7 +17,7 @@ export default function Footer() {
           {/* Brand column */}
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="inline-flex items-center mb-3">
-              <img src="/logo-dark.svg" alt="EndOverPay" className="h-8 w-auto" width="140" height="32" />
+              <img src="/logo-dark.svg" alt="EndOverPay" className="h-9 w-auto" width="160" height="36" />
             </Link>
             <p className="text-sm leading-5 mb-4 max-w-[200px]" style={{ color: '#D6D3D1' }}>
               Your trusted coupon &amp; deal platform worldwide. Verified codes, real savings.
