@@ -22,6 +22,9 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description: `Find verified coupon codes, promo codes and voucher codes from 500+ top stores worldwide. Save on fashion, electronics, food, travel and more with ${SITE_NAME}.`,
+  verification: {
+    google: 'eN_E2NyrvrNTuKG5Zkd7V93ZdD_M_Vr3rAN0cPcV1eA',
+  },
   keywords: 'coupons, promo codes, voucher codes, discount codes, deals, SHEIN, Amazon, Myntra, Flipkart, Swiggy',
   icons: {
     icon: '/favicon.svg',
