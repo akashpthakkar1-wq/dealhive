@@ -475,22 +475,6 @@ export default async function StorePage({ params, searchParams }: Props) {
               </div>
             </div>
 
-            {/* Related stores text links */}
-            {relatedStores && relatedStores.length > 0 && (
-              <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
-                <h2 className="text-lg font-bold text-gray-900 mb-3">More {store.category} Stores with Coupon Codes</h2>
-                <p className="text-sm text-gray-500 mb-4">Looking for more deals? Check out these popular {store.category} stores for verified coupon codes and promo codes:</p>
-                <div className="flex flex-wrap gap-2">
-                  {relatedStores.map((s: any) => (
-                    <Link key={s.id} href={`/store/${s.slug}`}
-                      className="inline-flex items-center gap-2 px-3 py-2 bg-primary-50 hover:bg-primary-100 text-primary-700 rounded-lg text-sm font-semibold transition-all border border-primary-100">
-                      {s.name} Coupons →
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {/* Expired coupons */}
             {expiredCoupons.length > 0 && (
               <details className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
