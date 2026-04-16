@@ -203,10 +203,10 @@ export default async function CategoryPage({ params }: Props) {
 
           {/* ── Main content ── */}
           <div className="lg:col-span-3 space-y-4">
-            <h2 className="font-bold text-gray-900 text-lg">Best 
+            <h2 className="font-bold text-gray-900 text-lg">
               {activeCoupons.length > 0
-                ? `${activeCoupons.length} Active ${cat.name} Coupons & Deals`
-                : `No active ${cat.name} coupons right now`}
+                ? `Best ${activeCoupons.length} Active ${cat.name} Coupons & Deals`
+                : `Best ${cat.name} Coupons & Deals`}
             </h2>
             {activeCoupons.length > 0 && (
               <p className="text-sm text-gray-500 mt-2 mb-4">
