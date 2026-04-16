@@ -72,14 +72,12 @@ export default async function HomePage() {
       {/* ── SEO INTRO TEXT ── */}
       <section className="bg-white border-b border-gray-100 py-6">
         <div className="container-main">
-          <div className="max-w-4xl mx-auto text-center">
-            <p className="text-sm text-gray-600 leading-relaxed">
+          <p className="text-sm text-gray-500 leading-relaxed">
               Welcome to <strong>EndOverPay</strong> — your trusted source for verified <strong>coupon codes</strong>, <strong>promo codes</strong>, <strong>voucher codes</strong> and <strong>discount codes</strong> from hundreds of top online stores worldwide. 
               We manually verify every deal before publishing so you never waste time on expired codes. 
               From fashion and electronics to food delivery and travel, find the best deals updated daily across all categories. 
               Stop overpaying — start saving smarter with EndOverPay.
-            </p>
-          </div>
+          </p>
         </div>
       </section>
 
