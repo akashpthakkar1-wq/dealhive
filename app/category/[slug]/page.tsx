@@ -8,7 +8,7 @@ import { isExpired, SITE_NAME, SITE_URL } from '@/lib/utils'
 
 interface Props { params: { slug: string } }
 
-export const revalidate = 3600
+export const revalidate = 60
 
 function interleaveCoupons(coupons: any[]) {
   const byStore: Record<string, any[]> = {}
