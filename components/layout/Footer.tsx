@@ -112,6 +112,7 @@ export default function Footer() {
       <style jsx global>{`
         .footer-link {
           color: #FED7AA;
+          transition: none;
         }
         .footer-link:hover {
           color: #EA580C;
@@ -120,11 +121,11 @@ export default function Footer() {
         .footer-social {
           background-color: rgba(0,0,0,0.1);
           color: #FED7AA;
+          transition: none;
         }
         .footer-social:hover {
           background-color: rgba(255,255,255,0.3);
           color: #000000;
-          transform: scale(1.05);
         }
       `}</style>
     </footer>
