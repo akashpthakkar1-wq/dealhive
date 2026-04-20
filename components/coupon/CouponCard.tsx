@@ -37,6 +37,15 @@ export default function CouponCard({ coupon }: CouponCardProps) {
       )
       await sb.from('coupons').update({ usage_count: (coupon.usage_count || 0) + 1 }).eq('id', coupon.id)
     } catch {}
+    // Fire GA4 event
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', coupon.type === 'code' ? 'get_code_click' : 'activate_deal_click', {
+        store_name: coupon.store?.name || '',
+        coupon_title: coupon.title?.substring(0, 50) || '',
+        discount: coupon.discount || '',
+        coupon_type: coupon.type,
+      })
+    }
     window.open(popupUrl, '_blank');
     window.location.href = coupon.affiliate_url;
   }
