@@ -10,11 +10,12 @@ import './globals.css'
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['400', '500', '700', '800'],
-  display: 'swap',
+  weight: ['400', '700', '800'],
+  display: 'optional',
   variable: '--font-plus-jakarta-sans',
   preload: true,
   fallback: ['system-ui', '-apple-system', 'sans-serif'],
+  adjustFontFallback: false,
 })
 
 export const metadata: Metadata = {
@@ -63,7 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={plusJakartaSans.variable} suppressHydrationWarning>
       <head>
-        {/* Supabase preconnect - needed for data fetching */}
+                {/* Supabase preconnect - needed for data fetching */}
         <link rel="preconnect" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
         <link rel="dns-prefetch" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
