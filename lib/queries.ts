@@ -37,52 +37,32 @@ export async function getPopularStores(limit = 12): Promise<Store[]> {
 
 export async function getCouponsByCategory(categorySlug: string, excludeStoreId: string, limit = 6): Promise<Coupon[]> {
   const supabase = createServerSupabaseClient()
-
-  // Get store IDs in this category excluding current store
-  const { data: stores } = await supabase
-    .from('stores')
-    .select('id')
-    .eq('category', categorySlug)
-    .neq('id', excludeStoreId)
-
-  if (!stores || stores.length === 0) return []
-
-  const storeIds = stores.map((s) => s.id)
-
+  const { data: storeIds } = await supabase
+    .from('stores').select('id').eq('category', categorySlug).neq('id', excludeStoreId)
+  if (!storeIds || storeIds.length === 0) return []
+  const ids = storeIds.map((s: any) => s.id)
   const { data, error } = await supabase
     .from('coupons')
-    .select('*, store:stores(name, slug, logo, website_url)')
-    .in('store_id', storeIds)
+    .select('*, store:stores(id, name, slug, logo, website_url)')
+    .in('store_id', ids)
     .order('created_at', { ascending: false })
     .limit(limit)
-
   if (error) { console.error('getCouponsByCategory:', error); return [] }
   return data || []
 }
 
 export async function getRelatedStores(categorySlug: string, excludeStoreId: string, limit = 5): Promise<Store[]> {
   const supabase = createServerSupabaseClient()
-  
-  // First try to get stores from same category
-  const { data: sameCat } = await supabase
+  const { data } = await supabase
     .from('stores')
-    .select('*, coupons(count)')
-    .eq('category', categorySlug)
+    .select('id, name, slug, logo, website_url, category')
     .neq('id', excludeStoreId)
-    .limit(limit)
+    .limit(20)
     .order('name')
-
-  if (sameCat && sameCat.length >= 3) return sameCat
-
-  // Fallback to popular stores if not enough same-category stores
-  const { data: popular } = await supabase
-    .from('stores')
-    .select('*, coupons(count)')
-    .neq('id', excludeStoreId)
-    .limit(limit)
-    .order('name')
-
-  return popular || []
+  if (!data) return []
+  const sameCat = data.filter((s: any) => s.category === categorySlug)
+  const others = data.filter((s: any) => s.category !== categorySlug)
+  return ([...sameCat, ...others].slice(0, limit)) as Store[]
 }
 
 export async function getCategories(): Promise<Category[]> {
@@ -145,9 +125,15 @@ export async function getCouponBySlug(slug: string): Promise<Coupon | null> {
 
 export async function getCouponsByStore(storeSlug: string): Promise<Coupon[]> {
   const supabase = createServerSupabaseClient()
-  const store = await getStoreBySlug(storeSlug)
-  if (!store) return []
-  return getCoupons({ storeId: store.id, excludeExpired: false })
+  const { data: storeData } = await supabase.from('stores').select('id').eq('slug', storeSlug).single()
+  if (!storeData) return []
+  const { data, error } = await supabase
+    .from('coupons')
+    .select('*, store:stores(id, name, slug, logo, website_url, category), category:categories(name, slug)')
+    .eq('store_id', storeData.id)
+    .order('created_at', { ascending: false })
+  if (error) return []
+  return data || []
 }
 
 export async function getTrendingCoupons(limit = 6): Promise<Coupon[]> {
