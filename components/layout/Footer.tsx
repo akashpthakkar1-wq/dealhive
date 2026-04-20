@@ -37,7 +37,7 @@ export default function Footer() {
                 { Icon: Mail, label: 'Email' },
               ].map(({ Icon, label }) => (
                 <a key={label} href="#" aria-label={label}
-                  className="footer-social w-7 h-7 rounded-md flex items-center justify-center transition-colors duration-200">
+                  className="footer-social w-7 h-7 rounded-md flex items-center justify-center">
                   <Icon className="w-3.5 h-3.5" />
                 </a>
               ))}
@@ -52,7 +52,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {categories.map((c) => (
                 <li key={c}>
-                  <Link href={`/category/${c.toLowerCase()}`} className="footer-link text-sm leading-5 block transition-colors duration-200">
+                  <Link href={`/category/${c.toLowerCase()}`} className="footer-link text-sm leading-5 block">
                     {c}
                   </Link>
                 </li>
@@ -68,7 +68,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {stores.map((s) => (
                 <li key={s}>
-                  <Link href={`/store/${s.toLowerCase()}`} className="footer-link text-sm leading-5 block transition-colors duration-200">
+                  <Link href={`/store/${s.toLowerCase()}`} className="footer-link text-sm leading-5 block">
                     {s}
                   </Link>
                 </li>
@@ -84,7 +84,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {company.map((item) => (
                 <li key={item.label}>
-                  <Link href={item.href} className="footer-link text-sm leading-5 block transition-colors duration-200">
+                  <Link href={item.href} className="footer-link text-sm leading-5 block">
                     {item.label}
                   </Link>
                 </li>
