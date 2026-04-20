@@ -10,9 +10,11 @@ import './globals.css'
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
+  weight: ['400', '500', '700', '800'],
   display: 'swap',
   variable: '--font-plus-jakarta-sans',
+  preload: true,
+  fallback: ['system-ui', '-apple-system', 'sans-serif'],
 })
 
 export const metadata: Metadata = {
@@ -63,10 +65,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
         <link rel="dns-prefetch" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
-        <link rel="preconnect" href="https://www.google.com" />
-        <link rel="dns-prefetch" href="https://www.google.com" />
-      </head>
-      <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         {/* Organization schema — on every page */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
