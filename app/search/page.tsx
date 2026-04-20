@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { getCouponLogo, getStoreLogo } from '@/lib/logos'
 import { createClient } from '@supabase/supabase-js';
 import type { Coupon, Store } from '@/types/index';
+import SharedCouponCard from '@/components/coupon/CouponCard';
 
 
 
@@ -363,7 +364,7 @@ export default function SearchPage() {
           // ✅ Equal-height 2-col grid
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
             {filtered.map((coupon) => (
-              <CouponCard key={coupon.id} coupon={coupon} onCTA={handleCTA} />
+              <SharedCouponCard key={coupon.id} coupon={coupon} />
             ))}
           </div>
         )}
