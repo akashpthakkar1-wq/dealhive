@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Analytics } from '@vercel/analytics/next'
 import { Suspense } from 'react'
 import { Toaster } from 'react-hot-toast'
 import Navbar from '@/components/layout/Navbar'
@@ -120,6 +121,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Suspense fallback={null}>
           <GlobalPopupHandler />
         </Suspense>
+        <Analytics />
       </body>
     </html>
   )
