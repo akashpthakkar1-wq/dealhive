@@ -63,6 +63,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={plusJakartaSans.variable} suppressHydrationWarning>
       <head>
+        {/* Supabase preconnect - needed for data fetching */}
         <link rel="preconnect" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
         <link rel="dns-prefetch" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

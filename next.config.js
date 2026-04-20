@@ -40,8 +40,11 @@ const nextConfig = {
       { protocol: 'https', hostname: '**.imgur.com' },
       { protocol: 'https', hostname: 'i.postimg.cc' },
     ],
-    // Re-enable optimization - was disabled, costing us LCP performance
+    // Re-enable optimization for external images
     unoptimized: false,
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
     deviceSizes: [640, 750, 828, 1080, 1200],
