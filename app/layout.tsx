@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Suspense } from 'react'
 import { Toaster } from 'react-hot-toast'
 import Navbar from '@/components/layout/Navbar'
@@ -72,6 +73,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* DNS prefetch for Supabase - data fetching */}
         <link rel="dns-prefetch" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        {/* Google Analytics GA4 */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-K8ESRFKELG" />
+        <script dangerouslySetInnerHTML={{ __html: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-K8ESRFKELG');
+        `}} />
         {/* Organization schema — on every page */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           '@context': 'https://schema.org',
@@ -122,6 +131,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <GlobalPopupHandler />
         </Suspense>
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
