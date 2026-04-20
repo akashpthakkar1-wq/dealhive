@@ -64,7 +64,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={plusJakartaSans.variable} suppressHydrationWarning>
       <head>
-                {/* Supabase preconnect - needed for data fetching */}
+        {/* Preload latin-extended font subset — discovered late via CSS without this */}
+        <link rel="preload" as="font" type="font/woff2"
+          href="/_next/static/media/9e7b0a821b9dfcb4.woff2"
+          crossOrigin="anonymous" />
+        {/* Supabase preconnect - needed for data fetching */}
         <link rel="preconnect" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
         <link rel="dns-prefetch" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
