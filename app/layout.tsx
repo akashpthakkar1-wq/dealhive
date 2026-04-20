@@ -68,8 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preload" as="font" type="font/woff2"
           href="/_next/static/media/9e7b0a821b9dfcb4.woff2"
           crossOrigin="anonymous" />
-        {/* Supabase preconnect - needed for data fetching */}
-        <link rel="preconnect" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
+        {/* DNS prefetch for Supabase - data fetching */}
         <link rel="dns-prefetch" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         {/* Organization schema — on every page */}
