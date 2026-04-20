@@ -65,7 +65,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
           {/* Logo + Store + Badges + Title */}
           <div className="flex items-start gap-3">
             <img src={logo} alt={coupon.store?.name ?? 'Store'}
-              className="w-14 h-14 rounded-xl border border-gray-100 flex-shrink-0 object-contain bg-white p-1.5" />
+              className="w-14 h-14 rounded-xl border border-gray-100 flex-shrink-0 object-contain bg-white p-1.5" loading="lazy" fetchPriority="low" />
             <div className="flex-1 min-w-0">
               <div className="flex items-center flex-wrap gap-1.5">
                 <span className="text-xs font-semibold text-gray-700 truncate max-w-[120px]">
