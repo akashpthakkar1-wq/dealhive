@@ -73,6 +73,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* DNS prefetch for Supabase - data fetching */}
         <link rel="dns-prefetch" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        {/* Admitad site verification */}
+        <meta name="verify-admitad" content="5560665c4d" />
         {/* Google Analytics GA4 */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-K8ESRFKELG" />
         <script dangerouslySetInnerHTML={{ __html: `
