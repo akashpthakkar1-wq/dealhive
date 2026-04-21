@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { getCouponLogo, getStoreLogo } from '@/lib/logos'
-// Supabase client created lazily below
+import { createClient } from '@supabase/supabase-js';
 import type { Coupon, Store } from '@/types/index';
 import SharedCouponCard from '@/components/coupon/CouponCard';
 
