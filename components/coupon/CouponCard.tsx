@@ -2,7 +2,7 @@
 
 import type { Coupon } from '@/types/index';
 import { getCouponLogo } from '@/lib/logos'
-import { createClient } from '@supabase/supabase-js'
+// Supabase loaded lazily on click only - saves 162KB on initial page load
 
 function stableNum(seed: string, min: number, max: number): number {
   let h = 0
@@ -31,6 +31,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
     const currentPage = window.location.origin + window.location.pathname;
     const popupUrl = `${currentPage}?popup=${encodeURIComponent(coupon.id)}`;
     try {
+      const { createClient } = await import('@supabase/supabase-js')
       const sb = createClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
