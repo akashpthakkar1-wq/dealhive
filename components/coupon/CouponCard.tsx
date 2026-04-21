@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import type { Coupon } from '@/types/index';
 import { getCouponLogo } from '@/lib/logos'
 // Supabase loaded lazily on click only - saves 162KB on initial page load
@@ -26,19 +27,14 @@ function getLogo(coupon: Coupon): string {
 
 export default function CouponCard({ coupon }: CouponCardProps) {
   const logo = getLogo(coupon);
+  const [loading, setLoading] = useState(false);
 
   async function handleCTA() {
+    if (loading) return;
+    setLoading(true);
     const currentPage = window.location.origin + window.location.pathname;
     const popupUrl = `${currentPage}?popup=${encodeURIComponent(coupon.id)}`;
-    try {
-      const { createClient } = await import('@supabase/supabase-js')
-      const sb = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-      )
-      await sb.from('coupons').update({ usage_count: (coupon.usage_count || 0) + 1 }).eq('id', coupon.id)
-    } catch {}
-    // Fire GA4 event
+    // Fire GA4 event immediately - no await needed
     if (typeof window !== 'undefined' && (window as any).gtag) {
       (window as any).gtag('event', coupon.type === 'code' ? 'get_code_click' : 'activate_deal_click', {
         store_name: coupon.store?.name || '',
@@ -47,8 +43,17 @@ export default function CouponCard({ coupon }: CouponCardProps) {
         coupon_type: coupon.type,
       })
     }
+    // Navigate immediately - user gets instant response
     window.open(popupUrl, '_blank');
     window.location.href = coupon.affiliate_url;
+    // Update DB in background - fire and forget (no await = no delay)
+    import('@supabase/supabase-js').then(({ createClient }) => {
+      const sb = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      )
+      sb.from('coupons').update({ usage_count: (coupon.usage_count || 0) + 1 }).eq('id', coupon.id).then(() => {})
+    }).catch(() => {})
   }
 
   const isCode = coupon.type === 'code';
@@ -129,10 +134,11 @@ export default function CouponCard({ coupon }: CouponCardProps) {
             {isCode ? (
               <button
                 onClick={handleCTA}
-                className="inline-flex items-center rounded-xl overflow-hidden text-sm font-semibold shadow-sm active:scale-95 transition-transform flex-shrink-0"
+                disabled={loading}
+                className="inline-flex items-center rounded-xl overflow-hidden text-sm font-semibold shadow-sm active:scale-95 transition-transform flex-shrink-0 disabled:opacity-75"
               >
                 <span className="bg-[#EA580C] text-white px-4 py-2 hover:bg-[#C2410C] transition-colors whitespace-nowrap">
-                  Get Code
+                  {loading ? 'Opening...' : 'Get Code'}
                 </span>
                 <span className="bg-[#C2410C] text-orange-100 px-2 py-2 font-mono text-xs tracking-wider border-l border-orange-700 whitespace-nowrap">
                   {coupon.code?.slice(0, 4) ?? '????'}•••
@@ -141,9 +147,10 @@ export default function CouponCard({ coupon }: CouponCardProps) {
             ) : (
               <button
                 onClick={handleCTA}
-                className="inline-flex items-center bg-[#059669] text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-[#047857] active:scale-95 transition-all flex-shrink-0 whitespace-nowrap"
+                disabled={loading}
+                className="inline-flex items-center bg-[#059669] text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-[#047857] active:scale-95 transition-all flex-shrink-0 whitespace-nowrap disabled:opacity-75"
               >
-                Activate Deal →
+                {loading ? 'Opening...' : 'Activate Deal →'}
               </button>
             )}
           </div>
