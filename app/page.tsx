@@ -101,7 +101,7 @@ export default async function HomePage() {
             href="/stores" />
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
             {stores.map((store) => (
-              <Link key={store.id} href={`/store/${store.slug}`}
+              <Link key={store.id} href={`/store/${store.slug}`} prefetch={false}
                 className="bg-white rounded-xl border border-gray-100 p-4 flex flex-col items-center gap-2 hover:border-primary-300 hover:shadow-md transition-all group">
                 <div className="w-12 h-12 rounded-xl overflow-hidden border border-gray-100 bg-gray-50 flex items-center justify-center">
                   {store.logo

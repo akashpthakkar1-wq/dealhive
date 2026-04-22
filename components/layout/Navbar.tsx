@@ -32,7 +32,7 @@ export default function Navbar() {
           {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-1 ml-3">
             {NAV_LINKS.map((l) => (
-              <Link key={l.href} href={l.href}
+              <Link key={l.href} href={l.href} prefetch={true}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap ${
                   pathname === l.href
                     ? 'bg-black/10 text-[#2A1250] font-semibold'
@@ -73,7 +73,7 @@ export default function Navbar() {
             {/* Mobile nav links */}
             <nav className="flex flex-col gap-0.5">
               {NAV_LINKS.map((l) => (
-                <Link key={l.href} href={l.href}
+                <Link key={l.href} href={l.href} prefetch={true}
                   onClick={() => setOpen(false)}
                   className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                     pathname === l.href
