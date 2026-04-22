@@ -15,20 +15,6 @@ import {
 
 export const revalidate = 3600
 
-from 'react'
-
-function LiveSavingCount() {
-  const base = 1100
-  const variance = Math.floor(Math.random() * 1300)
-  const count = (base + variance).toLocaleString()
-  return (
-    <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-semibold mb-5 border border-white/20">
-      <Zap className="w-3.5 h-3.5 text-[#FED7AA]" />
-      {count} people saving right now
-    </div>
-  )
-}
-
 export default async function HomePage() {
   const [featured, trending, recent, stores, categories] = await Promise.all([
     getFeaturedCoupons(6),
