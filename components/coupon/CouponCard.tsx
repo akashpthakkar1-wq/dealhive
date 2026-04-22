@@ -119,14 +119,14 @@ export default function CouponCard({ coupon }: CouponCardProps) {
 
           {/* Meta + CTA in same row */}
           <div className="flex items-center justify-between gap-2 mt-auto">
-            <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-gray-600 min-w-0">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-y-0.5 sm:gap-x-3 text-xs text-gray-600 min-w-0">
               {coupon.expiry_date && (
                 <span className="whitespace-nowrap">🕐 Expires {new Date(coupon.expiry_date).toLocaleDateString('en-GB')}</span>
               )}
               {(() => {
                 const seed = stableNum(String(coupon.id), 15, 199)
                 const displayCount = (coupon.usage_count || 0) + seed
-                return <span className="whitespace-nowrap">👥 {displayCount.toLocaleString()} used</span>
+                return <span className="whitespace-nowrap">👥 {displayCount.toLocaleString()} times used</span>
               })()}
             </div>
 
