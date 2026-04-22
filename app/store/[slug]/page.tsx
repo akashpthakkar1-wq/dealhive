@@ -611,7 +611,7 @@ export default async function StorePage({ params, searchParams }: Props) {
             {/* Disclaimer */}
             <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
               <p className="text-xs text-gray-400 leading-relaxed">
-                <strong className="text-gray-600">Disclaimer:</strong> Coupon availability may change. Some links may be affiliate links. We verify all codes before publishing.
+                <strong className="text-gray-600">Affiliate Disclosure:</strong> EndOverPay earns a commission when you click our links and make a purchase, at no extra cost to you. All coupon codes are manually verified before publishing.
               </p>
             </div>
           </div>

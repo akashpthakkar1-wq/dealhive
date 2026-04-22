@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import LiveSavingCount from '@/components/ui/LiveSavingCount'
 import Image from 'next/image'
 import { ArrowRight, Tag, TrendingUp, Star, Clock, Zap, Store } from 'lucide-react'
 import dynamic from 'next/dynamic'
@@ -14,6 +15,20 @@ import {
 
 export const revalidate = 3600
 
+from 'react'
+
+function LiveSavingCount() {
+  const base = 1100
+  const variance = Math.floor(Math.random() * 1300)
+  const count = (base + variance).toLocaleString()
+  return (
+    <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-semibold mb-5 border border-white/20">
+      <Zap className="w-3.5 h-3.5 text-[#FED7AA]" />
+      {count} people saving right now
+    </div>
+  )
+}
+
 export default async function HomePage() {
   const [featured, trending, recent, stores, categories] = await Promise.all([
     getFeaturedCoupons(6),
@@ -28,10 +43,7 @@ export default async function HomePage() {
       {/* ── HERO ── */}
       <section className="bg-gradient-to-br from-[#EA580C] via-[#C2410C] to-[#9A3412] text-white py-14">
         <div className="container-main text-center">
-          <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm px-4 py-1.5 rounded-full text-sm font-semibold mb-5 border border-white/20">
-            <Zap className="w-3.5 h-3.5 text-[#FED7AA]" />
-            1,240 people saving right now
-          </div>
+          <LiveSavingCount />
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
             Best Coupon Codes, Promo Codes &amp; Voucher Codes –<br />
             <span className="text-[#FED7AA]">Save Up to 90% Off</span>
