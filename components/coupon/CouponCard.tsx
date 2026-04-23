@@ -79,7 +79,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
         <div className="flex-1 p-4 flex flex-col gap-3 min-w-0">
 
           {/* Logo + Store + Badges + Title */}
-          <div className="flex items-start gap-3">
+          <div className="flex items-start gap-3 relative">
             <img src={logo} alt={coupon.store?.name ?? 'Store'}
               className="w-14 h-14 rounded-xl border border-gray-100 flex-shrink-0 object-contain bg-white p-1.5" loading="lazy" fetchPriority="low" />
             <div className="flex-1 min-w-0">
@@ -102,10 +102,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
                     ⭐ Featured
                   </span>
                 )}
-                {/* Mobile discount badge */}
-                <span className="sm:hidden ml-auto text-xs font-extrabold text-[#EA580C] bg-orange-50 border border-orange-200 px-2 py-px rounded-full whitespace-nowrap flex-shrink-0">
-                  {coupon.discount}
-                </span>
+
               </div>
               <p className="text-sm font-semibold text-gray-800 mt-1 leading-snug line-clamp-2">
                 {coupon.title}
@@ -117,6 +114,11 @@ export default function CouponCard({ coupon }: CouponCardProps) {
               )}
             </div>
           </div>
+
+          {/* Mobile discount badge — absolute top-right, always visible */}
+          <span className="sm:hidden absolute top-0 right-0 text-xs font-extrabold text-[#EA580C] bg-orange-50 border border-orange-200 px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0">
+            {coupon.discount}
+          </span>
 
           {/* Meta + CTA in same row */}
           <div className="flex items-center justify-between gap-2 mt-auto">
