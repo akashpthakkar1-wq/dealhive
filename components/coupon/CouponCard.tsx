@@ -28,6 +28,7 @@ function getLogo(coupon: Coupon): string {
 export default function CouponCard({ coupon }: CouponCardProps) {
   const logo = getLogo(coupon);
   const [loading, setLoading] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
 
   async function handleCTA() {
     if (loading) return;
@@ -155,6 +156,66 @@ export default function CouponCard({ coupon }: CouponCardProps) {
             )}
           </div>
 
+        </div>
+      </div>
+
+      {/* ── Show Details Toggle ── */}
+      <div className="border-t border-gray-100">
+        <button
+          onClick={() => setShowDetails(!showDetails)}
+          className="w-full flex items-center justify-center gap-1.5 px-4 py-2 text-xs text-gray-500 hover:bg-gray-50 transition-colors"
+        >
+          <svg
+            className={`w-3.5 h-3.5 transition-transform duration-250 ${showDetails ? 'rotate-180' : ''}`}
+            viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M3 5L7 9L11 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <span>{showDetails ? 'Hide details' : 'Show details'}</span>
+          <span className="w-1 h-1 rounded-full bg-gray-300 mx-0.5" />
+          <span className="text-gray-400">Offer info &amp; terms</span>
+        </button>
+
+        {/* ── Details Panel ── */}
+        <div className={`overflow-hidden transition-all duration-300 ease-in-out ${showDetails ? 'max-h-[400px]' : 'max-h-0'}`}>
+          <div className="bg-gray-50 border-t border-gray-100 p-4">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-3 mb-4">
+              {coupon.discount && (
+                <div>
+                  <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">{isCode ? 'Discount' : 'Deal type'}</p>
+                  <p className="text-xs font-semibold text-[#EA580C]">{coupon.discount}</p>
+                </div>
+              )}
+              {coupon.expiry_date && (
+                <div>
+                  <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">Expiry date</p>
+                  <p className="text-xs font-semibold text-gray-800">{new Date(coupon.expiry_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+                </div>
+              )}
+              {coupon.category?.name && (
+                <div>
+                  <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">Valid on</p>
+                  <p className="text-xs font-semibold text-gray-800">{coupon.category.name}</p>
+                </div>
+              )}
+              <div>
+                <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">Status</p>
+                <p className="text-xs font-semibold text-green-600">✓ Active &amp; verified</p>
+              </div>
+            </div>
+            {coupon.description && (
+              <div className="bg-white border border-gray-200 rounded-xl p-3">
+                <p className="text-[10px] text-gray-400 uppercase tracking-wider font-medium mb-2 flex items-center gap-1.5">
+                  <svg className="w-3 h-3 text-orange-400 flex-shrink-0" viewBox="0 0 12 12" fill="none">
+                    <rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" strokeWidth="1.2"/>
+                    <path d="M3.5 4.5h5M3.5 6h5M3.5 7.5h3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                  </svg>
+                  Terms &amp; conditions
+                </p>
+                <p className="text-xs text-gray-500 leading-relaxed">{coupon.description}</p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
