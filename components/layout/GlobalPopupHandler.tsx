@@ -78,10 +78,10 @@ function DetailsSection({ coupon }: { coupon: Coupon }) {
             <p className="text-xs font-semibold text-gray-800">{new Date(coupon.expiry_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
           </div>
         )}
-        {coupon.category?.name && (
+        {coupon.min_order_value && (
           <div className="px-3 py-2">
-            <p className="text-[9px] text-gray-400 uppercase tracking-wider mb-0.5">Valid on</p>
-            <p className="text-xs font-semibold text-gray-800">{coupon.category.name}</p>
+            <p className="text-[9px] text-gray-400 uppercase tracking-wider mb-0.5">Min. order</p>
+            <p className="text-xs font-semibold text-gray-800">{coupon.min_order_value}</p>
           </div>
         )}
         <div className="px-3 py-2">
@@ -90,10 +90,10 @@ function DetailsSection({ coupon }: { coupon: Coupon }) {
         </div>
       </div>
       {/* Terms */}
-      {coupon.description && (
+      {coupon.terms_conditions && (
         <div className="px-3 py-2.5 bg-orange-50 border-t border-gray-100">
           <p className="text-[9px] text-orange-700 uppercase tracking-wider font-semibold mb-1">Terms &amp; conditions</p>
-          <p className="text-xs text-gray-500 leading-relaxed">{coupon.description}</p>
+          <p className="text-xs text-gray-500 leading-relaxed">{coupon.terms_conditions}</p>
         </div>
       )}
     </div>

@@ -121,9 +121,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
           {/* Meta + CTA in same row */}
           <div className="flex items-center justify-between gap-2 mt-auto">
             <div className="flex flex-col sm:flex-row sm:flex-wrap gap-y-0.5 sm:gap-x-3 text-xs text-gray-600 min-w-0">
-              {coupon.expiry_date && (
-                <span className="whitespace-nowrap">🕐 Expires {new Date(coupon.expiry_date).toLocaleDateString('en-GB')}</span>
-              )}
+
               {(() => {
                 const seed = stableNum(String(coupon.id), 15, 199)
                 const displayCount = (coupon.usage_count || 0) + seed
@@ -192,10 +190,10 @@ export default function CouponCard({ coupon }: CouponCardProps) {
                   <p className="text-xs font-semibold text-gray-800">{new Date(coupon.expiry_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
                 </div>
               )}
-              {coupon.category?.name && (
+              {coupon.min_order_value && (
                 <div>
-                  <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">Valid on</p>
-                  <p className="text-xs font-semibold text-gray-800">{coupon.category.name}</p>
+                  <p className="text-[10px] text-gray-400 uppercase tracking-wider mb-0.5">Min. order</p>
+                  <p className="text-xs font-semibold text-gray-800">{coupon.min_order_value}</p>
                 </div>
               )}
               <div>
@@ -203,7 +201,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
                 <p className="text-xs font-semibold text-green-600">✓ Active &amp; verified</p>
               </div>
             </div>
-            {coupon.description && (
+            {coupon.terms_conditions && (
               <div className="bg-white border border-gray-200 rounded-xl p-3">
                 <p className="text-[10px] text-gray-400 uppercase tracking-wider font-medium mb-2 flex items-center gap-1.5">
                   <svg className="w-3 h-3 text-orange-400 flex-shrink-0" viewBox="0 0 12 12" fill="none">
@@ -212,7 +210,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
                   </svg>
                   Terms &amp; conditions
                 </p>
-                <p className="text-xs text-gray-500 leading-relaxed">{coupon.description}</p>
+                <p className="text-xs text-gray-500 leading-relaxed">{coupon.terms_conditions}</p>
               </div>
             )}
           </div>

@@ -9,6 +9,7 @@ import type { Coupon, Store, Category } from '@/types'
 const emptyForm = {
   title: '', slug: '', description: '', code: '', discount: '',
   affiliate_url: '', store_id: '', category_id: '', expiry_date: '',
+  min_order_value: '', terms_conditions: '',
   is_verified: true, type: 'code' as 'code' | 'deal',
   is_featured: false, is_trending: false, usage_count: 0,
 }
@@ -51,6 +52,7 @@ export default function AdminCoupons() {
       title: c.title, slug: c.slug, description: c.description || '', code: c.code || '',
       discount: c.discount || '', affiliate_url: c.affiliate_url, store_id: c.store_id || '',
       category_id: c.category_id || '', expiry_date: c.expiry_date ? c.expiry_date.slice(0, 10) : '',
+      min_order_value: c.min_order_value || '', terms_conditions: c.terms_conditions || '',
       is_verified: c.is_verified, type: c.type, is_featured: c.is_featured,
       is_trending: c.is_trending, usage_count: c.usage_count,
     })
@@ -66,6 +68,8 @@ export default function AdminCoupons() {
       slug: form.slug || slugify(form.title),
       code: form.type === 'deal' ? null : (form.code || null),
       expiry_date: form.expiry_date || null,
+      min_order_value: form.min_order_value || null,
+      terms_conditions: form.terms_conditions || null,
       store_id: form.store_id || null,
       category_id: form.category_id || null,
     }
@@ -178,6 +182,11 @@ export default function AdminCoupons() {
             <div>
               <label className="label-base">Expiry Date</label>
               <input type="date" value={form.expiry_date} onChange={(e) => f('expiry_date', e.target.value)} className="input-base" />
+              <label className="label-base mt-3">Min. Order Value <span className="text-gray-400 font-normal text-xs">(optional — e.g. ₹499 or $9.90)</span></label>
+              <input type="text" value={form.min_order_value} onChange={(e) => f('min_order_value', e.target.value)} className="input-base" placeholder="e.g. ₹499" />
+              <label className="label-base mt-3">Terms & Conditions <span className="text-gray-400 font-normal text-xs">(shown in Show Details & popup)</span></label>
+              <textarea value={form.terms_conditions} onChange={(e) => f('terms_conditions', e.target.value)}
+                className="input-base" rows={4} placeholder="e.g. Valid on all categories. Cannot be combined with bank offers. One use per account." />
             </div>
             <div>
               <label className="label-base">Usage Count (fake/real)</label>

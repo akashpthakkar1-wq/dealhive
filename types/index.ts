@@ -41,6 +41,8 @@ export interface Coupon {
   is_featured: boolean
   is_trending: boolean
   usage_count: number
+  min_order_value: string | null
+  terms_conditions: string | null
   slug: string
   created_at: string
   store?: Store
