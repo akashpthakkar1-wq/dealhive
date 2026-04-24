@@ -74,12 +74,12 @@ export default function AdminCoupons() {
       terms_conditions: form.terms_conditions || null,
       store_id: form.store_id || null,
       category_id: form.category_id || null,
-      deal_of_the_day_order: (form as any).deal_of_the_day_order || null,
+      deal_of_the_day_order: (form as any).deal_of_the_day_order ?? null,
     }
     const { error } = editId
       ? await supabase.from('coupons').update(payload).eq('id', editId)
       : await supabase.from('coupons').insert(payload)
-    if (error) { toast.error(error.message); setSaving(false); return }
+    if (error) { toast.error(error.message || error.details || 'Save failed'); console.error('Save error:', error); setSaving(false); return }
     toast.success(editId ? 'Coupon updated!' : 'Coupon added!')
     // Revalidate the store page cache so changes appear immediately
     const storeObj = stores?.find((s: any) => s.id === form.store_id)
