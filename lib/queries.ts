@@ -31,7 +31,7 @@ export async function getPopularStores(limit = 12): Promise<Store[]> {
   const supabase = createReadClient()
   const { data, error } = await supabase
     .from('stores')
-    .select('*, coupons(count)')
+    .select('*, coupons(discount)')
     .limit(limit)
     .order('name')
   if (error) { console.error('getPopularStores:', error); return [] }

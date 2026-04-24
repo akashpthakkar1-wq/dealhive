@@ -114,34 +114,38 @@ export default async function HomePage() {
           <SectionHeader icon={<Store className="w-5 h-5 text-primary-500" />}
             title="Popular Stores with Coupon Codes" subtitle="Find coupon codes & promo codes from 500+ global stores"
             href="/stores" />
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             {stores.map((store) => {
-              const coupons = (store as any).coupons
-              const couponCount = Array.isArray(coupons)
-                ? coupons.length
-                : (coupons as any)?.count ?? 0
+              const rawCoupons = (store as any).coupons as any[]
+              const couponCount = Array.isArray(rawCoupons) ? rawCoupons.length : 0
+              const maxDiscount = Array.isArray(rawCoupons)
+                ? rawCoupons.reduce((max: number, cp: any) => {
+                    const n = parseInt(cp.discount || '0')
+                    return n > max ? n : max
+                  }, 0)
+                : 0
               return (
                 <Link key={store.id} href={`/store/${store.slug}`} prefetch={false}
-                  className="bg-white rounded-xl border border-gray-100 p-3 flex flex-col items-center gap-2 hover:border-primary-300 hover:shadow-md transition-all group relative">
-                  {/* Coupon count badge */}
-                  {couponCount > 0 && (
-                    <span className="absolute top-2 right-2 text-[9px] font-bold bg-primary-50 text-primary-600 border border-primary-200 rounded-full px-1.5 py-0.5 leading-none">
-                      {couponCount}
-                    </span>
-                  )}
-                  <div className="w-12 h-12 rounded-xl overflow-hidden border border-gray-100 bg-gray-50 flex items-center justify-center">
+                  className="bg-white rounded-xl border border-gray-100 p-3 flex items-center gap-3 hover:border-primary-300 hover:shadow-md transition-all group">
+                  <div className="w-11 h-11 rounded-xl overflow-hidden border border-gray-100 bg-gray-50 flex items-center justify-center flex-shrink-0">
                     {store.logo
-                      ? <Image src={store.logo} alt={`${store.name} logo`} width={48} height={48} className="object-contain p-1" />
-                      : <Tag className="w-6 h-6 text-primary-400" />}
+                      ? <Image src={store.logo} alt={`${store.name} logo`} width={44} height={44} className="object-contain p-1" />
+                      : <Tag className="w-5 h-5 text-primary-400" />}
                   </div>
-                  <span className="text-xs font-bold text-gray-700 text-center leading-tight group-hover:text-primary-600 transition-colors line-clamp-2">
-                    {store.name}
-                  </span>
-                  {/* Category badge */}
-                  {store.category && (
-                    <span className="text-[9px] text-gray-400 bg-gray-50 border border-gray-100 rounded-full px-1.5 py-0.5 leading-none text-center truncate w-full">
-                      {store.category}
-                    </span>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-semibold text-gray-800 group-hover:text-primary-600 transition-colors truncate">
+                      {store.name}
+                    </div>
+                    <div className="text-[11px] text-gray-400 mt-0.5">
+                      {store.category && <span>{store.category}</span>}
+                      {couponCount > 0 && <span className="ml-1">· {couponCount} codes</span>}
+                    </div>
+                  </div>
+                  {maxDiscount > 0 && (
+                    <div className="text-right flex-shrink-0">
+                      <div className="text-base font-semibold text-primary-600 leading-none">{maxDiscount}%</div>
+                      <div className="text-[9px] text-gray-400 mt-0.5">max off</div>
+                    </div>
                   )}
                 </Link>
               )
