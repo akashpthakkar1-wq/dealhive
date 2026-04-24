@@ -20,7 +20,7 @@ export default async function HomePage() {
     getFeaturedCoupons(6),
     getTrendingCoupons(6),
     getRecentCoupons(8),
-    getPopularStores(12),
+    getPopularStores(9),
     getCategories(),
   ])
 
