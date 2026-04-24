@@ -84,11 +84,22 @@ export default function AdminCoupons() {
       usage_count: form.usage_count,
       deal_of_the_day_order: (form as any).deal_of_the_day_order ?? null,
     }
-    const { error } = editId
-      ? await supabase.from('coupons').update(payload).eq('id', editId)
-      : await supabase.from('coupons').insert(payload)
+    const { error, data } = editId
+      ? await supabase.from('coupons').update(payload).eq('id', editId).select()
+      : await supabase.from('coupons').insert(payload).select()
     if (error) { toast.error(error.message || error.details || 'Save failed'); console.error('Save error:', error); setSaving(false); return }
     toast.success(editId ? 'Coupon updated!' : 'Coupon added!')
+
+    // Save deal_of_the_day_order via dedicated API (bypasses Supabase schema cache)
+    const savedId = editId || (data as any)?.[0]?.id
+    if (savedId) {
+      await fetch('/api/admin/set-dotd', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ coupon_id: savedId, slot: (form as any).deal_of_the_day_order ?? null })
+      })
+    }
+
     // Revalidate the store page cache so changes appear immediately
     const storeObj = stores?.find((s: any) => s.id === form.store_id)
     if (storeObj?.slug) {
