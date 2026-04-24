@@ -230,23 +230,25 @@ export default function AdminCoupons() {
               </label>
             ))}
             {/* Deal of the Day slot selector */}
-            <div className="flex items-center gap-3 pl-2 border-l-2 border-orange-300">
-              <div>
-                <div className="text-sm font-semibold text-gray-700 flex items-center gap-1.5">
-                  <span>⚡</span> Deal of the Day
-                </div>
-                <div className="text-xs text-gray-400 mt-0.5">Slot 1=Mon · 2=Tue · 3=Wed · 4=Thu · 5=Fri · 6=Sat · 7=Sun</div>
+            <div className="w-full mt-3 pt-3 border-t border-gray-100">
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-sm font-semibold text-gray-700">⚡ Deal of the Day Slot</span>
+                <span className="text-xs text-gray-400">1=Mon · 2=Tue · 3=Wed · 4=Thu · 5=Fri · 6=Sat · 7=Sun</span>
               </div>
-              <select
-                value={(form as any).deal_of_the_day_order ?? ''}
-                onChange={(e) => f('deal_of_the_day_order', e.target.value ? parseInt(e.target.value) : null)}
-                className="input-base w-32 ml-2"
-              >
-                <option value="">Not set</option>
+              <div className="flex gap-2 flex-wrap">
+                <button type="button"
+                  onClick={() => f('deal_of_the_day_order', null)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${!(form as any).deal_of_the_day_order ? 'bg-gray-800 text-white border-gray-800' : 'bg-white text-gray-500 border-gray-200 hover:border-gray-400'}`}>
+                  Not set
+                </button>
                 {[1,2,3,4,5,6,7].map(n => (
-                  <option key={n} value={n}>Slot {n}</option>
+                  <button key={n} type="button"
+                    onClick={() => f('deal_of_the_day_order', n)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${(form as any).deal_of_the_day_order === n ? 'bg-orange-500 text-white border-orange-500' : 'bg-white text-gray-500 border-gray-200 hover:border-orange-300'}`}>
+                    Slot {n}
+                  </button>
                 ))}
-              </select>
+              </div>
             </div>
           </div>
 
