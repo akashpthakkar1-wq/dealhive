@@ -26,11 +26,14 @@ export default async function HomePage() {
     getDealOfTheDayCoupons(),
   ])
 
-  // Pick today's deal based on day of week (0=Sun...6=Sat)
-  const dayIndex = new Date().getDay()
-  const todaysDeal = dealOfTheDayCoupons.length > 0
-    ? dealOfTheDayCoupons[dayIndex % dealOfTheDayCoupons.length]
-    : featured[0] // fallback to first featured if no deals set
+  // Pick today's deal based on slot number matching day of week
+  // getDay(): 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
+  // Our slots: 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat, 7=Sun
+  const dayOfWeek = new Date().getDay()
+  const todaySlot = dayOfWeek === 0 ? 7 : dayOfWeek // Sun=7, Mon=1...Sat=6
+  const todaysDeal = dealOfTheDayCoupons.find((c: any) => c.deal_of_the_day_order === todaySlot)
+    ?? dealOfTheDayCoupons[0] // fallback to first set slot
+    ?? featured[0] // fallback to first featured
 
   return (
     <div>
