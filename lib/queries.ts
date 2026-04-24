@@ -228,7 +228,13 @@ export async function getSiteScripts(position?: 'header' | 'footer') {
 }
 
 export async function getDealOfTheDayCoupons(): Promise<Coupon[]> {
-  const supabase = createServerSupabaseClient()
+  // Use service role key to bypass PostgREST schema cache for deal_of_the_day_order column
+  const { createClient } = await import('@supabase/supabase-js')
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { persistSession: false } }
+  )
   const { data, error } = await supabase
     .from('coupons')
     .select('*, store:stores(id, name, slug, logo, website_url, category), category:categories(name, slug)')
@@ -236,5 +242,5 @@ export async function getDealOfTheDayCoupons(): Promise<Coupon[]> {
     .order('deal_of_the_day_order', { ascending: true })
     .limit(7)
   if (error) { console.error('getDealOfTheDayCoupons:', error); return [] }
-  return data || []
+  return (data || []) as any
 }
