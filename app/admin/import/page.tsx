@@ -6,7 +6,7 @@ import { createClient } from '@/lib/supabase'
 import { slugify } from '@/lib/utils'
 
 interface ParsedRow {
-  title: string; store_name: string; type: string; discount: string; min_order_value: string; terms_conditions: string;
+  title: string; store_name: string; type: string; discount: string; usage_count: string; min_order_value: string; terms_conditions: string;
   code: string; description: string; expiry_date: string; rate: string;
   affiliate_url: string; is_verified: string; is_featured: string; is_trending: string
 }
