@@ -1,10 +1,10 @@
 import Link from 'next/link'
-import LiveSavingCount from '@/components/ui/LiveSavingCount'
 import Image from 'next/image'
 import { ArrowRight, Tag, TrendingUp, Star, Clock, Zap, Store } from 'lucide-react'
-import dynamic from 'next/dynamic'
-const CouponCard = dynamic(() => import('@/components/coupon/CouponCard'), { ssr: false })
+import LiveSavingCount from '@/components/ui/LiveSavingCount'
 import HeroSearchBar from '@/components/hero/HeroSearchBar'
+import CouponCard from '@/components/coupon/CouponCard'
+import DealOfTheDay from '@/components/ui/DealOfTheDay'
 import {
   getFeaturedCoupons,
   getTrendingCoupons,
@@ -93,6 +93,21 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* ── DEAL OF THE DAY ── */}
+      {featured.length > 0 && (
+        <section className="section-white">
+          <div className="container-main">
+            <SectionHeader
+              icon={<Zap className="w-5 h-5 text-[#EA580C]" />}
+              title="Deal of the Day"
+              subtitle="Hand-picked top deal — expires at midnight"
+              href="/search?filter=featured"
+            />
+            <DealOfTheDay coupon={featured[0]} />
+          </div>
+        </section>
+      )}
+
       {/* ── POPULAR STORES ── */}
       <section className="section-white">
         <div className="container-main">
@@ -100,19 +115,37 @@ export default async function HomePage() {
             title="Popular Stores with Coupon Codes" subtitle="Find coupon codes & promo codes from 500+ global stores"
             href="/stores" />
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
-            {stores.map((store) => (
-              <Link key={store.id} href={`/store/${store.slug}`} prefetch={false}
-                className="bg-white rounded-xl border border-gray-100 p-4 flex flex-col items-center gap-2 hover:border-primary-300 hover:shadow-md transition-all group">
-                <div className="w-12 h-12 rounded-xl overflow-hidden border border-gray-100 bg-gray-50 flex items-center justify-center">
-                  {store.logo
-                    ? <Image src={store.logo} alt={`${store.name} logo`} width={48} height={48} className="object-contain p-1" />
-                    : <Tag className="w-6 h-6 text-primary-400" />}
-                </div>
-                <span className="text-xs font-bold text-gray-700 text-center leading-tight group-hover:text-primary-600 transition-colors line-clamp-2">
-                  {store.name}
-                </span>
-              </Link>
-            ))}
+            {stores.map((store) => {
+              const coupons = (store as any).coupons
+              const couponCount = Array.isArray(coupons)
+                ? coupons.length
+                : (coupons as any)?.count ?? 0
+              return (
+                <Link key={store.id} href={`/store/${store.slug}`} prefetch={false}
+                  className="bg-white rounded-xl border border-gray-100 p-3 flex flex-col items-center gap-2 hover:border-primary-300 hover:shadow-md transition-all group relative">
+                  {/* Coupon count badge */}
+                  {couponCount > 0 && (
+                    <span className="absolute top-2 right-2 text-[9px] font-bold bg-primary-50 text-primary-600 border border-primary-200 rounded-full px-1.5 py-0.5 leading-none">
+                      {couponCount}
+                    </span>
+                  )}
+                  <div className="w-12 h-12 rounded-xl overflow-hidden border border-gray-100 bg-gray-50 flex items-center justify-center">
+                    {store.logo
+                      ? <Image src={store.logo} alt={`${store.name} logo`} width={48} height={48} className="object-contain p-1" />
+                      : <Tag className="w-6 h-6 text-primary-400" />}
+                  </div>
+                  <span className="text-xs font-bold text-gray-700 text-center leading-tight group-hover:text-primary-600 transition-colors line-clamp-2">
+                    {store.name}
+                  </span>
+                  {/* Category badge */}
+                  {store.category && (
+                    <span className="text-[9px] text-gray-400 bg-gray-50 border border-gray-100 rounded-full px-1.5 py-0.5 leading-none text-center truncate w-full">
+                      {store.category}
+                    </span>
+                  )}
+                </Link>
+              )
+            })}
           </div>
           <div className="text-center mt-6">
             <Link href="/stores" className="btn-secondary">View All Stores <ArrowRight className="w-4 h-4" /></Link>
