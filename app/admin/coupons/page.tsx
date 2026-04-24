@@ -66,14 +66,22 @@ export default function AdminCoupons() {
     if (!form.affiliate_url.trim()) { toast.error('Affiliate URL is required'); return }
     setSaving(true)
     const payload = {
-      ...form,
+      title: form.title,
       slug: form.slug || slugify(form.title),
+      description: form.description || null,
       code: form.type === 'deal' ? null : (form.code || null),
+      type: form.type,
+      discount: form.discount || null,
+      affiliate_url: form.affiliate_url,
+      store_id: form.store_id || null,
+      category_id: form.category_id || null,
       expiry_date: form.expiry_date || null,
       min_order_value: form.min_order_value || null,
       terms_conditions: form.terms_conditions || null,
-      store_id: form.store_id || null,
-      category_id: form.category_id || null,
+      is_verified: form.is_verified,
+      is_featured: form.is_featured,
+      is_trending: form.is_trending,
+      usage_count: form.usage_count,
       deal_of_the_day_order: (form as any).deal_of_the_day_order ?? null,
     }
     const { error } = editId
