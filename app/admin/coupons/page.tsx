@@ -78,6 +78,15 @@ export default function AdminCoupons() {
       : await supabase.from('coupons').insert(payload)
     if (error) { toast.error(error.message); setSaving(false); return }
     toast.success(editId ? 'Coupon updated!' : 'Coupon added!')
+    // Revalidate the store page cache so changes appear immediately
+    const storeObj = stores?.find((s: any) => s.id === form.store_id)
+    if (storeObj?.slug) {
+      fetch('/api/revalidate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-revalidate-secret': 'endoverpay_revalidate_2026' },
+        body: JSON.stringify({ storeSlug: storeObj.slug, tag: 'coupons' })
+      }).catch(() => {})
+    }
     setShowForm(false); setEditId(null); setSaving(false); load()
   }
 

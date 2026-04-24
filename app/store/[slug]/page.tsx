@@ -4,8 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ExternalLink, Star, Clock, Tag, CheckCircle, TrendingUp, Users, ChevronRight, Info, AlertCircle } from 'lucide-react'
 import Breadcrumb from '@/components/ui/Breadcrumb'
-import dynamic from 'next/dynamic'
-const CouponCard = dynamic(() => import('@/components/coupon/CouponCard'), { ssr: false })
+import CouponCard from '@/components/coupon/CouponCard'
 import { getStoreBySlug, getCouponsByStore, getRelatedStores, getCouponsByCategory } from '@/lib/queries'
 import { formatDate, isExpired, SITE_NAME, SITE_URL } from '@/lib/utils'
 
@@ -21,7 +20,22 @@ function stableNum(seed: string, min: number, max: number): number {
   return min + (Math.abs(h) % (max - min + 1))
 }
 
-export const revalidate = 60 // revalidate every 60 seconds
+export const revalidate = 3600 // revalidate every 1 hour — served from CDN edge
+export const dynamicParams = true // allow on-demand generation for new stores
+
+export async function generateStaticParams() {
+  const { createClient } = await import('@supabase/supabase-js')
+  const sb = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
+  const { data } = await sb
+    .from('stores')
+    .select('slug')
+    .order('name')
+    .limit(100)
+  return (data || []).map((s: { slug: string }) => ({ slug: s.slug }))
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const store = await getStoreBySlug(params.slug)
@@ -30,14 +44,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const logoUrl = store.logo || `${SITE_URL}/og-default.jpg`
   // Cap at 155 chars for Google snippet
   const rawDesc = `Find verified ${store.name} coupon codes & promo codes for ${month}. Save big with exclusive ${store.name} deals updated daily.`
-  const { createClient: createSbClient } = await import('@supabase/supabase-js')
-  const sbMeta = createSbClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
-  const { data: couponData } = await sbMeta
-    .from('coupons')
-    .select('id')
-    .eq('store_id', store.id)
-    .eq('is_active', true)
-  const couponCount = couponData?.length || 0
+  const couponsForMeta = await getCouponsByStore(params.slug)
+  const couponCount = couponsForMeta?.length || 0
   const countText = couponCount > 0 ? `${couponCount} verified` : 'Verified'
   const rawMeta = `${countText} ${store.name} coupon codes for ${month}. Save up to 90% off on ${store.name} deals. All codes manually tested & updated daily. Get your ${store.name} promo code now.`
   const description = rawMeta.length > 155 ? rawMeta.slice(0, 152) + '…' : rawMeta

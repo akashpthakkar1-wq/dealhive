@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
+import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Suspense } from 'react'
 import dynamic from 'next/dynamic'
@@ -76,14 +77,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         {/* Admitad site verification */}
         <meta name="verify-admitad" content="5560665c4d" />
-        {/* Google Analytics GA4 */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-K8ESRFKELG" />
-        <script dangerouslySetInnerHTML={{ __html: `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'G-K8ESRFKELG');
-        `}} />
+        {/* Google Analytics GA4 — lazyOnload so it never blocks rendering */}
         {/* Organization schema — on every page */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           '@context': 'https://schema.org',
@@ -108,6 +102,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         }) }} />
       </head>
       <body className={plusJakartaSans.className}>
+        {/* GA4 — loads after page is interactive, never blocks navigation */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-K8ESRFKELG"
+          strategy="lazyOnload"
+        />
+        <Script id="ga4-init" strategy="lazyOnload">{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-K8ESRFKELG', { send_page_view: true });
+        `}</Script>
         <Toaster
           position="top-center"
           toastOptions={{
