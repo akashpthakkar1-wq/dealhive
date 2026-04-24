@@ -23,20 +23,6 @@ function stableNum(seed: string, min: number, max: number): number {
 export const revalidate = 3600 // revalidate every 1 hour — served from CDN edge
 export const dynamicParams = true // allow on-demand generation for new stores
 
-export async function generateStaticParams() {
-  const { createClient } = await import('@supabase/supabase-js')
-  const sb = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
-  const { data } = await sb
-    .from('stores')
-    .select('slug')
-    .order('name')
-    .limit(100)
-  return (data || []).map((s: { slug: string }) => ({ slug: s.slug }))
-}
-
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const store = await getStoreBySlug(params.slug)
   if (!store) return { title: 'Store Not Found' }
