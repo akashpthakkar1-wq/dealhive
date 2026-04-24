@@ -47,6 +47,19 @@ export default function AdminCoupons() {
 
   function f(key: string, val: any) { setForm((p) => ({ ...p, [key]: val })) }
 
+  async function saveSlot(slot: number | null) {
+    f('deal_of_the_day_order', slot)
+    if (!editId) return
+    const res = await fetch('/api/admin/set-dotd', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ coupon_id: editId, slot })
+    })
+    const data = await res.json()
+    if (data.success) toast.success(slot ? `Deal of the Day slot ${slot} saved!` : 'Slot cleared!')
+    else toast.error(data.error || 'Failed to save slot')
+  }
+
   function openAdd() { setForm(emptyForm); setEditId(null); setShowForm(true); window.scrollTo({ top: 0, behavior: 'smooth' }) }
   function openEdit(c: Coupon) {
     setForm({
@@ -248,13 +261,13 @@ export default function AdminCoupons() {
               </div>
               <div className="flex gap-2 flex-wrap">
                 <button type="button"
-                  onClick={() => f('deal_of_the_day_order', null)}
+                  onClick={() => saveSlot(null)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${!(form as any).deal_of_the_day_order ? 'bg-gray-800 text-white border-gray-800' : 'bg-white text-gray-500 border-gray-200 hover:border-gray-400'}`}>
                   Not set
                 </button>
                 {[1,2,3,4,5,6,7].map(n => (
                   <button key={n} type="button"
-                    onClick={() => f('deal_of_the_day_order', n)}
+                    onClick={() => saveSlot(n)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${(form as any).deal_of_the_day_order === n ? 'bg-orange-500 text-white border-orange-500' : 'bg-white text-gray-500 border-gray-200 hover:border-orange-300'}`}>
                     Slot {n}
                   </button>
