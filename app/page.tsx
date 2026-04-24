@@ -20,7 +20,7 @@ export default async function HomePage() {
     getFeaturedCoupons(6),
     getTrendingCoupons(6),
     getRecentCoupons(8),
-    getPopularStores(9),
+    getPopularStores(12),
     getCategories(),
   ])
 
@@ -114,7 +114,7 @@ export default async function HomePage() {
           <SectionHeader icon={<Store className="w-5 h-5 text-primary-500" />}
             title="Popular Stores with Coupon Codes" subtitle="Find coupon codes & promo codes from 500+ global stores"
             href="/stores" />
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {stores.map((store) => {
               const rawCoupons = (store as any).coupons as any[]
               const couponCount = Array.isArray(rawCoupons) ? rawCoupons.length : 0
@@ -127,24 +127,33 @@ export default async function HomePage() {
               return (
                 <Link key={store.id} href={`/store/${store.slug}`} prefetch={false}
                   className="bg-white rounded-xl border border-gray-100 p-3 flex items-center gap-3 hover:border-primary-300 hover:shadow-md transition-all group">
-                  <div className="w-11 h-11 rounded-xl overflow-hidden border border-gray-100 bg-gray-50 flex items-center justify-center flex-shrink-0">
+                  {/* Logo */}
+                  <div className="w-10 h-10 rounded-xl overflow-hidden border border-gray-100 bg-gray-50 flex items-center justify-center flex-shrink-0">
                     {store.logo
-                      ? <Image src={store.logo} alt={`${store.name} logo`} width={44} height={44} className="object-contain p-1" />
+                      ? <Image src={store.logo} alt={`${store.name} logo`} width={40} height={40} className="object-contain p-1" />
                       : <Tag className="w-5 h-5 text-primary-400" />}
                   </div>
+                  {/* Info — stacked: name, offers, category */}
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm font-semibold text-gray-800 group-hover:text-primary-600 transition-colors truncate">
+                    <div className="text-sm font-semibold text-gray-800 group-hover:text-primary-600 transition-colors truncate leading-tight">
                       {store.name}
                     </div>
-                    <div className="text-[11px] text-gray-400 mt-0.5">
-                      {store.category && <span>{store.category}</span>}
-                      {couponCount > 0 && <span className="ml-1">· {couponCount} codes</span>}
-                    </div>
+                    {couponCount > 0 && (
+                      <div className="text-[11px] text-primary-500 font-medium leading-tight mt-0.5 truncate">
+                        {couponCount} offers
+                      </div>
+                    )}
+                    {store.category && (
+                      <div className="text-[10px] text-gray-400 leading-tight mt-0.5 truncate">
+                        {store.category}
+                      </div>
+                    )}
                   </div>
+                  {/* Discount badge */}
                   {maxDiscount > 0 && (
                     <div className="text-right flex-shrink-0">
-                      <div className="text-base font-semibold text-primary-600 leading-none">{maxDiscount}%</div>
-                      <div className="text-[9px] text-gray-400 mt-0.5">max off</div>
+                      <div className="text-sm font-semibold text-primary-600 leading-none">{maxDiscount}%</div>
+                      <div className="text-[9px] text-gray-400 mt-0.5 whitespace-nowrap">max off</div>
                     </div>
                   )}
                 </Link>
