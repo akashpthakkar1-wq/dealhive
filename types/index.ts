@@ -40,6 +40,7 @@ export interface Coupon {
   type: 'code' | 'deal'
   is_featured: boolean
   is_trending: boolean
+  deal_of_the_day_order: number | null
   usage_count: number
   min_order_value: string | null
   terms_conditions: string | null

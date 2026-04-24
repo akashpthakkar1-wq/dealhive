@@ -226,3 +226,15 @@ export async function getSiteScripts(position?: 'header' | 'footer') {
   const { data } = await query
   return data || []
 }
+
+export async function getDealOfTheDayCoupons(): Promise<Coupon[]> {
+  const supabase = createServerSupabaseClient()
+  const { data, error } = await supabase
+    .from('coupons')
+    .select('*, store:stores(id, name, slug, logo, website_url, category), category:categories(name, slug)')
+    .not('deal_of_the_day_order', 'is', null)
+    .order('deal_of_the_day_order', { ascending: true })
+    .limit(7)
+  if (error) { console.error('getDealOfTheDayCoupons:', error); return [] }
+  return data || []
+}

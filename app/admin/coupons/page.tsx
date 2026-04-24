@@ -12,6 +12,7 @@ const emptyForm = {
   min_order_value: '', terms_conditions: '',
   is_verified: true, type: 'code' as 'code' | 'deal',
   is_featured: false, is_trending: false, usage_count: 0,
+  deal_of_the_day_order: null as number | null,
 }
 
 export default function AdminCoupons() {
@@ -55,6 +56,7 @@ export default function AdminCoupons() {
       min_order_value: c.min_order_value || '', terms_conditions: c.terms_conditions || '',
       is_verified: c.is_verified, type: c.type, is_featured: c.is_featured,
       is_trending: c.is_trending, usage_count: c.usage_count,
+      deal_of_the_day_order: (c as any).deal_of_the_day_order ?? null,
     })
     setEditId(c.id); setShowForm(true); window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -72,6 +74,7 @@ export default function AdminCoupons() {
       terms_conditions: form.terms_conditions || null,
       store_id: form.store_id || null,
       category_id: form.category_id || null,
+      deal_of_the_day_order: (form as any).deal_of_the_day_order || null,
     }
     const { error } = editId
       ? await supabase.from('coupons').update(payload).eq('id', editId)
@@ -218,6 +221,25 @@ export default function AdminCoupons() {
                 <span className="text-sm font-semibold text-gray-700">{label}</span>
               </label>
             ))}
+            {/* Deal of the Day slot selector */}
+            <div className="flex items-center gap-3 pl-2 border-l-2 border-orange-300">
+              <div>
+                <div className="text-sm font-semibold text-gray-700 flex items-center gap-1.5">
+                  <span>⚡</span> Deal of the Day
+                </div>
+                <div className="text-xs text-gray-400 mt-0.5">Slot 1=Mon · 2=Tue · 3=Wed · 4=Thu · 5=Fri · 6=Sat · 7=Sun</div>
+              </div>
+              <select
+                value={(form as any).deal_of_the_day_order ?? ''}
+                onChange={(e) => f('deal_of_the_day_order', e.target.value ? parseInt(e.target.value) : null)}
+                className="input-base w-32 ml-2"
+              >
+                <option value="">Not set</option>
+                {[1,2,3,4,5,6,7].map(n => (
+                  <option key={n} value={n}>Slot {n}</option>
+                ))}
+              </select>
+            </div>
           </div>
 
           <div className="flex gap-3 mt-5">

@@ -11,18 +11,26 @@ import {
   getRecentCoupons,
   getPopularStores,
   getCategories,
+  getDealOfTheDayCoupons,
 } from '@/lib/queries'
 
 export const revalidate = 3600
 
 export default async function HomePage() {
-  const [featured, trending, recent, stores, categories] = await Promise.all([
+  const [featured, trending, recent, stores, categories, dealOfTheDayCoupons] = await Promise.all([
     getFeaturedCoupons(6),
     getTrendingCoupons(6),
     getRecentCoupons(8),
     getPopularStores(12),
     getCategories(),
+    getDealOfTheDayCoupons(),
   ])
+
+  // Pick today's deal based on day of week (0=Sun...6=Sat)
+  const dayIndex = new Date().getDay()
+  const todaysDeal = dealOfTheDayCoupons.length > 0
+    ? dealOfTheDayCoupons[dayIndex % dealOfTheDayCoupons.length]
+    : featured[0] // fallback to first featured if no deals set
 
   return (
     <div>
@@ -94,7 +102,7 @@ export default async function HomePage() {
       </section>
 
       {/* ── DEAL OF THE DAY ── */}
-      {featured.length > 0 && (
+      {todaysDeal && (
         <section className="section-white">
           <div className="container-main">
             <SectionHeader
@@ -103,7 +111,7 @@ export default async function HomePage() {
               subtitle="Hand-picked top deal — expires at midnight"
               href="/search?filter=featured"
             />
-            <DealOfTheDay coupon={featured[0]} />
+            <DealOfTheDay coupon={todaysDeal} />
           </div>
         </section>
       )}
