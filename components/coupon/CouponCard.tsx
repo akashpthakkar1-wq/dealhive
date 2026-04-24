@@ -132,27 +132,56 @@ export default function CouponCard({ coupon }: CouponCardProps) {
               })()}
             </div>
 
-            {/* CTA Button */}
+            {/* CTA Buttons v2 */}
             {isCode ? (
               <button
                 onClick={handleCTA}
                 disabled={loading}
-                className="inline-flex items-center rounded-xl overflow-hidden text-sm font-semibold shadow-sm active:scale-95 transition-transform flex-shrink-0 disabled:opacity-75"
+                className="inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#EA580C]"
               >
-                <span className="bg-[#EA580C] text-white px-4 py-2 hover:bg-[#C2410C] transition-colors whitespace-nowrap">
-                  {loading ? 'Opening...' : 'Get Code'}
+                {/* Left: Get Code + sub-label */}
+                <span className="bg-[#EA580C] text-white px-3 py-1.5 flex flex-col items-start justify-center gap-0 hover:bg-[#C2410C] transition-colors">
+                  <span className="text-[13px] font-semibold leading-snug whitespace-nowrap">
+                    {loading ? 'Opening...' : 'Get Code'}
+                  </span>
+                  <span className="text-[9px] text-orange-200 font-normal leading-snug whitespace-nowrap">
+                    tap to reveal
+                  </span>
                 </span>
-                <span className="bg-[#C2410C] text-orange-100 px-2 py-2 font-mono text-xs tracking-wider border-l border-orange-700 whitespace-nowrap">
-                  {coupon.code?.slice(0, 4) ?? '????'}•••
+                {/* Arrow section */}
+                <span className="bg-[#C2410C] px-2 flex items-center justify-center border-l border-orange-700">
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                    <path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
+                {/* Right: half-char reveal — overflow:hidden clips second-to-last char */}
+                <span className="bg-[#FFF7ED] flex items-center overflow-hidden border-l-2 border-dashed border-[#EA580C]" style={{width:'26px', paddingLeft:'4px', paddingRight:'4px'}}>
+                  <span className="font-mono text-[14px] font-semibold text-[#EA580C] tracking-wide whitespace-nowrap" style={{transform:'translateX(-7px)'}}>
+                    {coupon.code ? coupon.code.slice(-2) : '??'}
+                  </span>
                 </span>
               </button>
             ) : (
               <button
                 onClick={handleCTA}
                 disabled={loading}
-                className="inline-flex items-center bg-[#059669] text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-[#047857] active:scale-95 transition-all flex-shrink-0 whitespace-nowrap disabled:opacity-75"
+                className="inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#059669]"
               >
-                {loading ? 'Opening...' : 'Activate Deal →'}
+                {/* Left: Activate Deal + sub-label */}
+                <span className="bg-[#059669] text-white px-3 py-1.5 flex flex-col items-start justify-center gap-0 hover:bg-[#047857] transition-colors">
+                  <span className="text-[13px] font-semibold leading-snug whitespace-nowrap">
+                    {loading ? 'Opening...' : 'Activate Deal'}
+                  </span>
+                  <span className="text-[9px] text-green-200 font-normal leading-snug whitespace-nowrap">
+                    auto-applied at checkout
+                  </span>
+                </span>
+                {/* Arrow section */}
+                <span className="bg-[#047857] px-2 flex items-center justify-center border-l border-green-700">
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                    <path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
               </button>
             )}
           </div>
