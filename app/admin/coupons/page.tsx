@@ -28,6 +28,7 @@ export default function AdminCoupons() {
   const [search, setSearch] = useState('')
   const [filterStore, setFilterStore] = useState('')
   const [filterType, setFilterType] = useState('')
+  const [dotdSlots, setDotdSlots] = useState<Record<string, number>>({})
   const supabase = createClient()
 
   async function load() {
@@ -40,6 +41,12 @@ export default function AdminCoupons() {
     setCoupons(cRes.data || [])
     setStores((sRes.data || []) as any)
     setCategories((catRes.data || []) as any)
+    // Load deal_of_the_day_order separately via API (bypasses PostgREST schema cache)
+    fetch('/api/admin/set-dotd').then(r => r.json()).then((slots: any[]) => {
+      const map: Record<string, number> = {}
+      slots.forEach((s: any) => { map[s.coupon_id] = s.slot })
+      setDotdSlots(map)
+    }).catch(() => {})
     setLoading(false)
   }
 
@@ -69,7 +76,7 @@ export default function AdminCoupons() {
       min_order_value: c.min_order_value || '', terms_conditions: c.terms_conditions || '',
       is_verified: c.is_verified, type: c.type, is_featured: c.is_featured,
       is_trending: c.is_trending, usage_count: c.usage_count,
-      deal_of_the_day_order: (c as any).deal_of_the_day_order ?? null,
+      deal_of_the_day_order: dotdSlots[c.id] ?? null,
     })
     setEditId(c.id); setShowForm(true); window.scrollTo({ top: 0, behavior: 'smooth' })
   }
