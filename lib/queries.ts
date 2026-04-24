@@ -16,21 +16,15 @@ export const getStores = unstable_cache(
   { revalidate: 3600, tags: ['stores'] }
 )
 
-export function getStoreBySlug(slug: string): Promise<Store | null> {
-  return unstable_cache(
-    async (): Promise<Store | null> => {
-      const supabase = createReadClient()
-      const { data, error } = await supabase
-        .from('stores')
-        .select('*')
-        .eq('slug', slug)
-        .single()
-      if (error) return null
-      return data
-    },
-    [`store-by-slug-${slug}`],
-    { revalidate: 3600, tags: ['stores', `store-${slug}`] }
-  )()
+export async function getStoreBySlug(slug: string): Promise<Store | null> {
+  const supabase = createReadClient()
+  const { data, error } = await supabase
+    .from('stores')
+    .select('*')
+    .eq('slug', slug)
+    .single()
+  if (error) return null
+  return data
 }
 
 export async function getPopularStores(limit = 12): Promise<Store[]> {
@@ -68,24 +62,18 @@ export function getCouponsByCategory(categorySlug: string, excludeStoreId: strin
   )()
 }
 
-export function getRelatedStores(categorySlug: string, excludeStoreId: string, limit = 5): Promise<Store[]> {
-  return unstable_cache(
-    async (): Promise<Store[]> => {
-      const supabase = createReadClient()
-      const { data } = await supabase
-        .from('stores')
-        .select('id, name, slug, logo, website_url, category')
-        .neq('id', excludeStoreId)
-        .limit(20)
-        .order('name')
-      if (!data) return []
-      const sameCat = data.filter((s: any) => s.category === categorySlug)
-      const others = data.filter((s: any) => s.category !== categorySlug)
-      return ([...sameCat, ...others].slice(0, limit)) as Store[]
-    },
-    [`related-stores-${categorySlug}-${excludeStoreId}`],
-    { revalidate: 3600, tags: ['stores'] }
-  )()
+export async function getRelatedStores(categorySlug: string, excludeStoreId: string, limit = 5): Promise<Store[]> {
+  const supabase = createReadClient()
+  const { data } = await supabase
+    .from('stores')
+    .select('id, name, slug, logo, website_url, category')
+    .neq('id', excludeStoreId)
+    .limit(20)
+    .order('name')
+  if (!data) return []
+  const sameCat = data.filter((s: any) => s.category === categorySlug)
+  const others = data.filter((s: any) => s.category !== categorySlug)
+  return ([...sameCat, ...others].slice(0, limit)) as Store[]
 }
 
 export async function getCategories(): Promise<Category[]> {
@@ -146,24 +134,18 @@ export async function getCouponBySlug(slug: string): Promise<Coupon | null> {
   return data
 }
 
-export function getCouponsByStore(storeSlug: string): Promise<Coupon[]> {
-  return unstable_cache(
-    async (): Promise<Coupon[]> => {
-      const supabase = createReadClient()
-      const { data: storeData } = await supabase.from('stores').select('id').eq('slug', storeSlug).single()
-      if (!storeData) return []
-      const { data, error } = await supabase
-        .from('coupons')
-        .select('id, title, slug, description, discount, code, type, affiliate_url, expiry_date, usage_count, is_verified, is_featured, is_trending, min_order_value, terms_conditions, store:stores(id, name, slug, logo, website_url, category), category:categories(name, slug)')
-        .eq('store_id', storeData.id)
-        .order('is_featured', { ascending: false })
-        .order('created_at', { ascending: false })
-      if (error) return []
-      return (data || []) as unknown as Coupon[]
-    },
-    [`coupons-by-store-${storeSlug}`],
-    { revalidate: 3600, tags: ['coupons', `store-${storeSlug}`] }
-  )()
+export async function getCouponsByStore(storeSlug: string): Promise<Coupon[]> {
+  const supabase = createReadClient()
+  const { data: storeData } = await supabase.from('stores').select('id').eq('slug', storeSlug).single()
+  if (!storeData) return []
+  const { data, error } = await supabase
+    .from('coupons')
+    .select('id, title, slug, description, discount, code, type, affiliate_url, expiry_date, usage_count, is_verified, is_featured, is_trending, min_order_value, terms_conditions, store:stores(id, name, slug, logo, website_url, category), category:categories(name, slug)')
+    .eq('store_id', storeData.id)
+    .order('is_featured', { ascending: false })
+    .order('created_at', { ascending: false })
+  if (error) return []
+  return (data || []) as unknown as Coupon[]
 }
 
 export async function getTrendingCoupons(limit = 6): Promise<Coupon[]> {
