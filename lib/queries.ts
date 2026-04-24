@@ -228,19 +228,24 @@ export async function getSiteScripts(position?: 'header' | 'footer') {
 }
 
 export async function getDealOfTheDayCoupons(): Promise<Coupon[]> {
-  // Use service role key to bypass PostgREST schema cache for deal_of_the_day_order column
   const { createClient } = await import('@supabase/supabase-js')
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
     { auth: { persistSession: false } }
   )
+  // Use RPC to get slot assignments (bypasses PostgREST schema cache)
+  const { data: slots, error: slotsError } = await supabase.rpc('exec_dotd_get_all')
+  if (slotsError || !slots?.length) { console.error('getDealOfTheDayCoupons slots:', slotsError); return [] }
+  // Get the coupon IDs from slots
+  const ids = slots.map((s: any) => s.coupon_id)
   const { data, error } = await supabase
     .from('coupons')
     .select('*, store:stores(id, name, slug, logo, website_url, category), category:categories(name, slug)')
-    .not('deal_of_the_day_order', 'is', null)
-    .order('deal_of_the_day_order', { ascending: true })
-    .limit(7)
+    .in('id', ids)
   if (error) { console.error('getDealOfTheDayCoupons:', error); return [] }
-  return (data || []) as any
+  // Attach deal_of_the_day_order from slots
+  const slotMap = Object.fromEntries(slots.map((s: any) => [s.coupon_id, s.slot]))
+  const withOrder = (data || []).map((c: any) => ({ ...c, deal_of_the_day_order: slotMap[c.id] }))
+  return withOrder.sort((a: any, b: any) => a.deal_of_the_day_order - b.deal_of_the_day_order) as any
 }
