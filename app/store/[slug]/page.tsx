@@ -20,8 +20,8 @@ function stableNum(seed: string, min: number, max: number): number {
   return min + (Math.abs(h) % (max - min + 1))
 }
 
-export const revalidate = 3600 // revalidate every 1 hour — served from CDN edge
-export const dynamicParams = true // allow on-demand generation for new stores
+export const revalidate = 1 // temporary: force fresh fetch every request
+export const dynamicParams = true
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const store = await getStoreBySlug(params.slug)
