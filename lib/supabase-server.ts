@@ -1,4 +1,5 @@
 import { createServerClient } from '@supabase/ssr'
+import { createClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
 
 export function createServerSupabaseClient() {
@@ -31,9 +32,7 @@ export function createAdminSupabaseClient() {
   )
 }
 
-// Plain read-only client — no cookies, safe to use inside unstable_cache
-// Use this for all cached data fetching functions
-import { createClient } from '@supabase/supabase-js'
+// Plain read-only client — no cookies, safe for server-side data fetching
 export function createReadClient() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
