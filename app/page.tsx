@@ -14,7 +14,7 @@ import {
   getDealOfTheDayCoupons,
 } from '@/lib/queries'
 
-export const revalidate = 60
+export const revalidate = 300
 
 export default async function HomePage() {
   const [featured, trending, recent, stores, categories, dealOfTheDayCoupons] = await Promise.all([
