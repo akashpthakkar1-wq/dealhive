@@ -89,8 +89,6 @@ const FILTER_TABS = [
 ]
 
 export default async function StorePage({ params }: Props) {
-  const filter = searchParams.filter || 'all'
-
   const store = await getStoreBySlug(params.slug)
   if (!store) notFound()
   const [allCoupons, relatedStores, categoryCoupons] = await Promise.all([
