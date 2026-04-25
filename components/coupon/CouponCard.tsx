@@ -106,7 +106,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
                   )}
                 </div>
                 {/* Right: discount badge — mobile only, always top-right */}
-                <span className="sm:hidden text-xs font-extrabold text-[#EA580C] bg-orange-50 border border-orange-200 px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0 ml-1">
+                <span className="sm:hidden text-xs font-extrabold text-[#9A3412] bg-orange-50 border border-orange-200 px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0 ml-1">
                   {coupon.discount}
                 </span>
               </div>
@@ -213,7 +213,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
               {coupon.discount && (
                 <div>
                   <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-0.5">{isCode ? 'Discount' : 'Deal type'}</p>
-                  <p className="text-xs font-semibold text-[#EA580C]">{coupon.discount}</p>
+                  <p className="text-xs font-semibold text-[#9A3412]">{coupon.discount}</p>
                 </div>
               )}
               {coupon.expiry_date && (
