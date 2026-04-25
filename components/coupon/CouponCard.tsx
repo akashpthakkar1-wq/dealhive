@@ -44,8 +44,22 @@ export default function CouponCard({ coupon }: CouponCardProps) {
         coupon_type: coupon.type,
       })
     }
-    // Open popup — user clicks Go to Store from popup (uses fresh DB data)
+    // Open popup in new tab
     window.open(popupUrl, '_blank');
+    // Fetch fresh affiliate_url from DB then navigate current tab
+    import('@supabase/supabase-js').then(({ createClient }) => {
+      const sb = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      )
+      sb.from('coupons').select('affiliate_url').eq('id', coupon.id).single()
+        .then(({ data }) => {
+          const url = data?.affiliate_url || coupon.affiliate_url
+          window.location.href = url
+        })
+    }).catch(() => {
+      window.location.href = coupon.affiliate_url
+    })
     // Update DB in background - fire and forget (no await = no delay)
     import('@supabase/supabase-js').then(({ createClient }) => {
       const sb = createClient(

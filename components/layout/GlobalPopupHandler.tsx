@@ -119,7 +119,7 @@ function CouponModal({
   }
 
   function handleGoToStore() {
-    window.open(coupon.affiliate_url, '_blank');
+    window.open(coupon.affiliate_url, '_blank', 'noopener,noreferrer');
   }
 
   return (
