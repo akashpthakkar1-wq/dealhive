@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Plus_Jakarta_Sans } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import Script from 'next/script'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -9,15 +10,14 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import GlobalPopupHandler from '@/components/layout/GlobalPopupHandler'
 import { SITE_NAME, SITE_URL } from '@/lib/utils'
-import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['400', '700', '800'],
-  display: 'optional',
-  variable: '--font-plus-jakarta-sans',
+  weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
   preload: true,
+  variable: '--font-jakarta',
   fallback: ['system-ui', '-apple-system', 'sans-serif'],
   adjustFontFallback: false,
 })
@@ -66,19 +66,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={plusJakartaSans.variable} suppressHydrationWarning>
+    <html lang="en" className={jakarta.className} suppressHydrationWarning>
       <head>
-        {/* Preload latin-extended font subset — discovered late via CSS without this */}
-        <link rel="preload" as="font" type="font/woff2"
-          href="/_next/static/media/9e7b0a821b9dfcb4.woff2"
-          crossOrigin="anonymous" />
-        {/* DNS prefetch for Supabase - data fetching */}
+        <link rel="preconnect" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
         <link rel="dns-prefetch" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        {/* Admitad site verification */}
         <meta name="verify-admitad" content="5560665c4d" />
-        {/* Google Analytics GA4 — lazyOnload so it never blocks rendering */}
-        {/* Organization schema — on every page */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'Organization',
@@ -88,7 +81,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           description: `Your trusted coupon and deals platform. Find verified coupon codes from top stores worldwide.`,
           sameAs: ['https://twitter.com/endoverpay', 'https://instagram.com/endoverpay'],
         }) }} />
-        {/* WebSite schema with SearchAction — enables Sitelinks Searchbox in Google */}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'WebSite',
@@ -101,8 +93,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           },
         }) }} />
       </head>
-      <body className={plusJakartaSans.className}>
-        {/* GA4 — loads after page is interactive, never blocks navigation */}
+      <body>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-K8ESRFKELG"
           strategy="lazyOnload"
@@ -128,13 +119,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Navbar />
         <main className="min-h-screen">{children}</main>
         <Footer />
-
-        {/*
-          ✅ GlobalPopupHandler — renders on EVERY page.
-          When any page URL contains ?popup=COUPON_ID it fetches that
-          coupon and shows the modal automatically.
-          Wrapped in Suspense because it uses useSearchParams().
-        */}
         <Suspense fallback={null}>
           <GlobalPopupHandler />
         </Suspense>
@@ -144,4 +128,3 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   )
 }
-// Wed Apr 15 02:34:36 IST 2026
