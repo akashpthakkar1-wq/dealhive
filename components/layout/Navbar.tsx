@@ -36,7 +36,7 @@ export default function Navbar() {
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap ${
                   pathname === l.href
                     ? 'bg-black/10 text-[#2A1250] font-semibold'
-                    : 'text-[#EA580C] hover:text-black hover:bg-black/10'
+                    : 'text-gray-700 hover:text-gray-900 hover:bg-black/10'
                 }`}>
                 {l.label}
               </Link>

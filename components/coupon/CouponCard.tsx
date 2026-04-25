@@ -69,7 +69,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
             {coupon.discount}
           </span>
           <span className={`mt-2 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${
-            isCode ? 'bg-blue-100 text-blue-600' : 'bg-orange-100 text-orange-600'
+            isCode ? 'bg-blue-500 text-white' : 'bg-orange-500 text-white'
           }`}>
             {coupon.type}
           </span>
@@ -144,7 +144,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
                   <span className="text-[13px] font-semibold leading-snug whitespace-nowrap">
                     {loading ? 'Opening...' : 'Get Code'}
                   </span>
-                  <span className="text-[9px] text-orange-100 font-normal leading-snug whitespace-nowrap">
+                  <span className="text-[9px] text-white/80 font-normal leading-snug whitespace-nowrap">
                     tap to reveal
                   </span>
                 </span>
@@ -156,7 +156,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
                 </span>
                 {/* Right: half-char reveal — overflow:hidden clips second-to-last char */}
                 <span className="bg-[#FFF7ED] flex items-center overflow-hidden border-l-2 border-dashed border-[#EA580C]" style={{width:'26px', paddingLeft:'4px', paddingRight:'4px'}}>
-                  <span className="font-mono text-[14px] font-semibold text-[#EA580C] tracking-wide whitespace-nowrap" style={{transform:'translateX(-7px)'}}>
+                  <span className="font-mono text-[14px] font-semibold text-[#C2410C] tracking-wide whitespace-nowrap" style={{transform:'translateX(-7px)'}}>
                     {coupon.code ? coupon.code.slice(-2) : '??'}
                   </span>
                 </span>
@@ -172,7 +172,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
                   <span className="text-[13px] font-semibold leading-snug whitespace-nowrap">
                     {loading ? 'Opening...' : 'Activate Deal'}
                   </span>
-                  <span className="text-[9px] text-green-100 font-normal leading-snug whitespace-nowrap">
+                  <span className="text-[9px] text-white/80 font-normal leading-snug whitespace-nowrap">
                     auto-applied at checkout
                   </span>
                 </span>
