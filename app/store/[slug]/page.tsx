@@ -255,7 +255,7 @@ export default async function StorePage({ params }: Props) {
 
             {/* Best Discount — always visible */}
             <div className="flex items-center justify-between sm:justify-start gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl border font-semibold bg-primary-50 border-primary-200 text-primary-700">
-              <span className="text-xs text-gray-400 font-medium leading-tight">Best Discount</span>
+              <span className="text-xs text-gray-500 font-medium leading-tight">Best Discount</span>
               <span className="text-xs sm:text-sm font-bold text-primary-600">
                 {maxDiscount > 0 ? `${maxDiscount}% OFF` : 'Great Deals'}
               </span>
@@ -269,7 +269,7 @@ export default async function StorePage({ params }: Props) {
 
             {/* Total Uses — always visible */}
             <div className="flex items-center justify-between sm:justify-start gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl border font-semibold bg-white border-gray-100 text-gray-700">
-              <span className="text-xs text-gray-400 font-medium leading-tight">Total Uses</span>
+              <span className="text-xs text-gray-500 font-medium leading-tight">Total Uses</span>
               <span className="text-xs sm:text-sm font-bold">{displayUses.toLocaleString()}</span>
             </div>
 
@@ -334,7 +334,7 @@ export default async function StorePage({ params }: Props) {
                         <tr key={c.id} className="hover:bg-primary-50/30 transition-colors">
                           <td className="px-2 py-3 font-medium text-gray-800 text-sm">{c.title.length > 40 ? c.title.slice(0, 40) + '…' : c.title}</td>
                           <td className="px-2 py-3">{c.discount && <span className="text-xs font-bold bg-primary-100 text-primary-700 px-2 py-0.5 rounded-full">{c.discount}</span>}</td>
-                          <td className="px-2 py-3 text-gray-400 text-xs whitespace-nowrap">{c.expiry_date ? formatDate(c.expiry_date) : 'No expiry'}</td>
+                          <td className="px-2 py-3 text-gray-500 text-xs whitespace-nowrap">{c.expiry_date ? formatDate(c.expiry_date) : 'No expiry'}</td>
                           <td className="px-2 py-3 font-mono text-xs font-bold text-primary-600 whitespace-nowrap">{c.code ? c.code.slice(0, 4) + '•••' : '— Auto'}</td>
                         </tr>
                       ))}
@@ -553,7 +553,7 @@ export default async function StorePage({ params }: Props) {
 
             {/* Disclaimer */}
             <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
-              <p className="text-xs text-gray-400 leading-relaxed">
+              <p className="text-xs text-gray-500 leading-relaxed">
                 <strong className="text-gray-600">Affiliate Disclosure:</strong> EndOverPay earns a commission when you click our links and make a purchase, at no extra cost to you. All coupon codes are manually verified before publishing.
               </p>
             </div>

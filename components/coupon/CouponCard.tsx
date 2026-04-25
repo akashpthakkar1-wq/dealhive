@@ -144,7 +144,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
                   <span className="text-[13px] font-semibold leading-snug whitespace-nowrap">
                     {loading ? 'Opening...' : 'Get Code'}
                   </span>
-                  <span className="text-[9px] text-orange-200 font-normal leading-snug whitespace-nowrap">
+                  <span className="text-[9px] text-orange-100 font-normal leading-snug whitespace-nowrap">
                     tap to reveal
                   </span>
                 </span>
@@ -172,7 +172,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
                   <span className="text-[13px] font-semibold leading-snug whitespace-nowrap">
                     {loading ? 'Opening...' : 'Activate Deal'}
                   </span>
-                  <span className="text-[9px] text-green-200 font-normal leading-snug whitespace-nowrap">
+                  <span className="text-[9px] text-green-100 font-normal leading-snug whitespace-nowrap">
                     auto-applied at checkout
                   </span>
                 </span>
@@ -203,7 +203,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
           </svg>
           <span>{showDetails ? 'Hide details' : 'Show details'}</span>
           <span className="w-1 h-1 rounded-full bg-gray-300 mx-0.5" />
-          <span className="text-gray-400">Offer info &amp; terms</span>
+          <span className="text-gray-500">Offer info &amp; terms</span>
         </button>
 
         {/* ── Details Panel ── */}
