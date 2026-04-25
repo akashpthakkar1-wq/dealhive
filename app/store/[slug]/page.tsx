@@ -107,23 +107,6 @@ export default async function StorePage({ params }: Props) {
   const verifiedCoupons = activeCoupons.filter((c) => c.is_verified)
   const featuredCoupons = activeCoupons.filter((c) => c.is_featured)
 
-  // Apply filter
-  const filteredCoupons =
-    filter === 'code'     ? codeCoupons :
-    filter === 'deal'     ? dealCoupons :
-    filter === 'free'     ? freeCoupons :
-    filter === 'verified' ? verifiedCoupons :
-    filter === 'featured' ? featuredCoupons :
-    activeCoupons
-
-  const counts: Record<string, number> = {
-    all: activeCoupons.length,
-    code: codeCoupons.length,
-    deal: dealCoupons.length,
-    free: freeCoupons.length,
-    verified: verifiedCoupons.length,
-    featured: featuredCoupons.length,
-  }
 
   const maxDiscount = allCoupons.reduce((max, c) => { const n = parseInt(c.discount || '0'); return n > max ? n : max }, 0)
   const totalUses   = allCoupons.reduce((a, c) => a + (c.usage_count || 0), 0)
