@@ -10,7 +10,6 @@ import { formatDate, isExpired, SITE_NAME, SITE_URL } from '@/lib/utils'
 
 interface Props {
   params: { slug: string }
-  searchParams: { filter?: string }
 }
 
 // Stable random between min-max using a string seed
@@ -89,7 +88,7 @@ const FILTER_TABS = [
   { id: 'featured', label: '⭐ Featured' },
 ]
 
-export default async function StorePage({ params, searchParams }: Props) {
+export default async function StorePage({ params }: Props) {
   const filter = searchParams.filter || 'all'
 
   const store = await getStoreBySlug(params.slug)
@@ -305,51 +304,8 @@ export default async function StorePage({ params, searchParams }: Props) {
           {/* ── LEFT ──────────────────────────────────── */}
           <div className="lg:col-span-2 space-y-6">
 
-            {/* Filter chips — horizontal scroll on mobile, wrap on desktop */}
-            <div className="relative mt-4">
-
-              {/* Scroll container */}
-              <div className="flex overflow-x-auto flex-nowrap gap-2 px-1 pb-2 md:pb-1 scroll-smooth scroll-px-4"
-                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                {FILTER_TABS.map((tab) => (
-                  <Link key={tab.id} href={`/store/${store.slug}?filter=${tab.id}`}
-                    className={`flex-shrink-0 inline-flex items-center gap-1.5 px-4 min-h-[40px] rounded-full text-sm font-semibold border whitespace-nowrap transition-all ${
-                      filter === tab.id
-                        ? 'bg-primary-500 text-white border-primary-500 shadow-sm'
-                        : 'bg-white text-gray-600 border-gray-200 hover:border-primary-300 hover:text-primary-600'
-                    }`}>
-                    {tab.label}
-                    <span className={`text-xs px-1.5 py-0.5 rounded-full font-bold ${filter === tab.id ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'}`}>
-                      {counts[tab.id]}
-                    </span>
-                  </Link>
-                ))}
-              </div>
-
-              {/* Fade overlay — mobile only, hints at horizontal scroll */}
-              <div className="md:hidden pointer-events-none absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-gray-50 to-transparent" />
-
-            </div>
-
-            {/* Coupons list — first card always visible */}
-            <div>
-              <h2 className="font-bold text-gray-900 text-lg mb-4">
-                {filter === 'all'
-                  ? `All ${activeCoupons.length} Active ${store.name} Coupons & Deals`
-                  : `${filteredCoupons.length} ${FILTER_TABS.find(t => t.id === filter)?.label} for ${store.name}`}
-              </h2>
-              {filteredCoupons.length > 0 ? (
-                <div className="space-y-3">
-                  {filteredCoupons.map((c) => <CouponCard key={c.id} coupon={c} />)}
-                </div>
-              ) : (
-                <div className="bg-white rounded-xl border border-gray-100 p-10 text-center">
-                  <AlertCircle className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-                  <p className="font-semibold text-gray-500">No {filter} offers available right now.</p>
-                  <Link href={`/store/${store.slug}`} className="text-primary-600 text-sm font-semibold mt-2 inline-block hover:underline">View all offers →</Link>
-                </div>
-              )}
-            </div>
+            {/* Filter tabs + coupon list — client-side for instant filtering */}
+            <StoreFilterTabs coupons={allCoupons} storeName={store.name} />
 
 
             {/* More category deals */}
