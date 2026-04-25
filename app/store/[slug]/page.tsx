@@ -101,6 +101,8 @@ export default async function StorePage({ params }: Props) {
 
   const activeCoupons   = allCoupons.filter((c) => !isExpired(c.expiry_date))
   const expiredCoupons  = allCoupons.filter((c) =>  isExpired(c.expiry_date))
+  const codeCoupons     = activeCoupons.filter((c) => c.type === 'code')
+  const dealCoupons     = activeCoupons.filter((c) => c.type === 'deal')
   const freeCoupons     = activeCoupons.filter((c) => (c.title + (c.description || '')).toLowerCase().includes('free ship'))
 
 
