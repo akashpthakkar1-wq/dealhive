@@ -65,7 +65,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
 
         {/* Left discount badge — desktop only */}
         <div className="hidden sm:flex flex-col items-center justify-center bg-gradient-to-b from-orange-50 to-orange-100/60 w-[88px] flex-shrink-0 text-center border-r border-orange-100 px-2">
-          <span className="text-sm font-extrabold text-[#EA580C] leading-tight break-words w-full text-center">
+          <span className="text-sm font-extrabold text-[#9A3412] leading-tight break-words w-full text-center">
             {coupon.discount}
           </span>
           <span className={`mt-2 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${
