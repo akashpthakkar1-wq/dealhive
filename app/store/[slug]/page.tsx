@@ -23,6 +23,19 @@ function stableNum(seed: string, min: number, max: number): number {
 export const revalidate = 3600 // revalidate every 1 hour — served from CDN edge
 export const dynamicParams = true
 
+export const fetchCache = 'force-cache'
+
+export async function generateStaticParams() {
+  const { createClient } = await import('@supabase/supabase-js')
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { persistSession: false } }
+  )
+  const { data } = await supabase.from('stores').select('slug')
+  return (data || []).map(s => ({ slug: s.slug }))
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const store = await getStoreBySlug(params.slug)
   if (!store) return { title: 'Store Not Found' }

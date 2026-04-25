@@ -27,7 +27,8 @@ export async function getStoreBySlug(slug: string): Promise<Store | null> {
   return data
 }
 
-export async function getPopularStores(limit = 12): Promise<Store[]> {
+export const getPopularStores = unstable_cache(
+  async (limit = 12): Promise<Store[]> => {
   const supabase = createReadClient()
   const { data, error } = await supabase
     .from('stores')
@@ -35,8 +36,11 @@ export async function getPopularStores(limit = 12): Promise<Store[]> {
     .limit(limit)
     .order('name')
   if (error) { console.error('getPopularStores:', error); return [] }
-  return data || []
-}
+    return data || []
+  },
+  ['popular-stores'],
+  { revalidate: 3600, tags: ['stores'] }
+)
 
 
 
