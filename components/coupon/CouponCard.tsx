@@ -44,9 +44,8 @@ export default function CouponCard({ coupon }: CouponCardProps) {
         coupon_type: coupon.type,
       })
     }
-    // Navigate immediately - user gets instant response
+    // Open popup — user clicks Go to Store from popup (uses fresh DB data)
     window.open(popupUrl, '_blank');
-    window.location.href = coupon.affiliate_url;
     // Update DB in background - fire and forget (no await = no delay)
     import('@supabase/supabase-js').then(({ createClient }) => {
       const sb = createClient(
