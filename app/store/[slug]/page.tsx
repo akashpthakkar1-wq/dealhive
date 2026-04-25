@@ -7,6 +7,7 @@ import Breadcrumb from '@/components/ui/Breadcrumb'
 import CouponCard from '@/components/coupon/CouponCard'
 import { getStoreBySlug, getCouponsByStore, getRelatedStores, getCouponsByCategory } from '@/lib/queries'
 import { formatDate, isExpired, SITE_NAME, SITE_URL } from '@/lib/utils'
+import StoreFilterTabs from '@/components/ui/StoreFilterTabs'
 
 interface Props {
   params: { slug: string }
