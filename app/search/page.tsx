@@ -180,7 +180,7 @@ export default function SearchPage() {
                     setGridSearch('');
                     setDropdownOpen(false);
                   }}
-                  className="px-3 text-gray-400 hover:text-gray-600 text-2xl leading-none flex-shrink-0"
+                  className="px-3 text-gray-500 hover:text-gray-600 text-2xl leading-none flex-shrink-0"
                 >×</button>
               )}
               <button
@@ -202,12 +202,12 @@ export default function SearchPage() {
                 style={{ maxHeight: '420px', overflowY: 'auto' }}
               >
                 {loading ? (
-                  <div className="px-5 py-6 text-center text-sm text-gray-400">
+                  <div className="px-5 py-6 text-center text-sm text-gray-500">
                     Loading...
                   </div>
                 ) : !hasResults ? (
                   <div className="px-5 py-8 text-center">
-                    <p className="text-gray-400 text-sm">
+                    <p className="text-gray-500 text-sm">
                       No results for{' '}
                       <strong className="text-gray-600">"{inputValue}"</strong>
                     </p>
@@ -217,7 +217,7 @@ export default function SearchPage() {
                     {/* Stores section */}
                     {dropdownStores.length > 0 && (
                       <div>
-                        <p className="px-4 pt-3 pb-1.5 text-[11px] font-extrabold text-gray-400 uppercase tracking-widest bg-gray-50 border-b border-gray-100">
+                        <p className="px-4 pt-3 pb-1.5 text-[11px] font-extrabold text-gray-500 uppercase tracking-widest bg-gray-50 border-b border-gray-100">
                           Stores
                         </p>
                         {dropdownStores.map((store) => (
@@ -240,7 +240,7 @@ export default function SearchPage() {
                                 <Highlight text={store.name} query={inputValue} />
                               </p>
                               {store.category && (
-                                <p className="text-xs text-gray-400">{store.category}</p>
+                                <p className="text-xs text-gray-500">{store.category}</p>
                               )}
                             </div>
                             <span className="text-xs text-[#EA580C] font-semibold flex-shrink-0">
@@ -254,7 +254,7 @@ export default function SearchPage() {
                     {/* Coupons & Deals section */}
                     {dropdownCoupons.length > 0 && (
                       <div>
-                        <p className="px-4 pt-3 pb-1.5 text-[11px] font-extrabold text-gray-400 uppercase tracking-widest bg-gray-50 border-b border-gray-100">
+                        <p className="px-4 pt-3 pb-1.5 text-[11px] font-extrabold text-gray-500 uppercase tracking-widest bg-gray-50 border-b border-gray-100">
                           Coupons & Deals
                         </p>
                         {dropdownCoupons.map((coupon) => (
@@ -277,7 +277,7 @@ export default function SearchPage() {
                               <p className="text-sm font-semibold text-gray-800 truncate">
                                 <Highlight text={coupon.title} query={inputValue} />
                               </p>
-                              <p className="text-xs text-gray-400 truncate">
+                              <p className="text-xs text-gray-500 truncate">
                                 {coupon.store?.name}
                                 {coupon.discount && (
                                   <span className="ml-1.5 font-semibold text-[#EA580C]">
@@ -333,12 +333,12 @@ export default function SearchPage() {
         {loading ? (
           <div className="text-center py-16">
             <div className="inline-block w-8 h-8 border-4 border-[#EA580C] border-t-transparent rounded-full animate-spin mb-3" />
-            <p className="text-gray-400 text-sm">Loading deals...</p>
+            <p className="text-gray-500 text-sm">Loading deals...</p>
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-16">
             <p className="text-gray-500 font-semibold text-lg mb-1">No deals found</p>
-            <p className="text-gray-400 text-sm">Try a different search term or filter</p>
+            <p className="text-gray-500 text-sm">Try a different search term or filter</p>
           </div>
         ) : (
           // ✅ Equal-height 2-col grid

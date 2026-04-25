@@ -80,7 +80,7 @@ export default async function StoresPage() {
                   {letter}
                 </div>
                 <div className="h-px flex-1 bg-gray-200" />
-                <span className="text-xs text-gray-400 font-medium">
+                <span className="text-xs text-gray-500 font-medium">
                   {grouped[letter].length} stores
                 </span>
               </div>
@@ -99,7 +99,7 @@ export default async function StoresPage() {
                         {store.name}
                       </div>
                       {store.category && (
-                        <div className="text-xs text-gray-400 mt-0.5">{store.category}</div>
+                        <div className="text-xs text-gray-500 mt-0.5">{store.category}</div>
                       )}
                     </div>
                   </Link>
@@ -110,7 +110,7 @@ export default async function StoresPage() {
         </div>
 
         {allStores.length === 0 && (
-          <div className="text-center py-20 text-gray-400">
+          <div className="text-center py-20 text-gray-500">
             <Tag className="w-16 h-16 mx-auto mb-4 text-gray-200" />
             <p className="text-lg font-semibold">No stores yet</p>
             <p className="text-sm mt-1">Add stores from the admin panel</p>

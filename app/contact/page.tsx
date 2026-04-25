@@ -87,7 +87,7 @@ export default function ContactPage() {
               <details key={item.q} className="group border border-gray-100 rounded-xl overflow-hidden">
                 <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-orange-50 transition-colors list-none">
                   <span className="font-semibold text-gray-900 text-sm">{item.q}</span>
-                  <span className="text-gray-400 group-open:rotate-90 transition-transform">›</span>
+                  <span className="text-gray-500 group-open:rotate-90 transition-transform">›</span>
                 </summary>
                 <div className="px-4 pb-4 text-sm text-gray-600 leading-relaxed">{item.a}</div>
               </details>

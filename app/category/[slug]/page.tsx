@@ -228,7 +228,7 @@ export default async function CategoryPage({ params }: Props) {
               <div className="bg-white rounded-xl border border-gray-100 p-12 text-center">
                 <div className="text-5xl mb-4">{cat.icon || '🏷️'}</div>
                 <p className="font-semibold text-gray-500 mb-1">No active {cat.name} offers right now</p>
-                <p className="text-sm text-gray-400 mb-4">We update deals daily — check back soon!</p>
+                <p className="text-sm text-gray-500 mb-4">We update deals daily — check back soon!</p>
                 <Link href="/search" className="btn-primary">
                   Browse All Deals <ArrowRight className="w-4 h-4" />
                 </Link>
@@ -279,7 +279,7 @@ export default async function CategoryPage({ params }: Props) {
                   <details key={i} className="group border border-gray-100 rounded-xl overflow-hidden">
                     <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-primary-50 transition-colors list-none">
                       <span className="font-semibold text-gray-900 text-sm pr-4">{faq.q}</span>
-                      <span className="text-gray-400 group-open:rotate-90 transition-transform flex-shrink-0">›</span>
+                      <span className="text-gray-500 group-open:rotate-90 transition-transform flex-shrink-0">›</span>
                     </summary>
                     <div className="px-4 pb-4 pt-2 text-sm text-gray-600 leading-relaxed border-t border-gray-50">{faq.a}</div>
                   </details>

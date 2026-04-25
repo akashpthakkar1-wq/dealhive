@@ -101,7 +101,7 @@ export default function LiveSearchBar({
           />
           {query && (
             <button onMouseDown={(e) => { e.preventDefault(); setQuery(''); setOpen(false); }}
-              className="px-3 text-gray-400 hover:text-gray-600 text-2xl leading-none flex-shrink-0">
+              className="px-3 text-gray-500 hover:text-gray-600 text-2xl leading-none flex-shrink-0">
               ×
             </button>
           )}
@@ -115,7 +115,7 @@ export default function LiveSearchBar({
       ) : (
         /* ── Navbar variant ── */
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
           <input
             type="text"
             value={query}
@@ -141,9 +141,9 @@ export default function LiveSearchBar({
           style={{ maxHeight: '400px', overflowY: 'auto' }}
         >
           {!loaded ? (
-            <div className="px-5 py-6 text-center text-sm text-gray-400">Searching...</div>
+            <div className="px-5 py-6 text-center text-sm text-gray-500">Searching...</div>
           ) : !hasResults ? (
-            <div className="px-5 py-6 text-center text-sm text-gray-400">
+            <div className="px-5 py-6 text-center text-sm text-gray-500">
               No results for <strong className="text-gray-600">"{query}"</strong>
             </div>
           ) : (
@@ -151,7 +151,7 @@ export default function LiveSearchBar({
               {/* Stores */}
               {matchStores.length > 0 && (
                 <div>
-                  <p className="px-4 pt-3 pb-1.5 text-[11px] font-extrabold text-gray-400 uppercase tracking-widest bg-gray-50 border-b border-gray-100">
+                  <p className="px-4 pt-3 pb-1.5 text-[11px] font-extrabold text-gray-500 uppercase tracking-widest bg-gray-50 border-b border-gray-100">
                     Stores
                   </p>
                   {matchStores.map((store) => (
@@ -166,7 +166,7 @@ export default function LiveSearchBar({
                         <p className="text-sm font-semibold text-gray-800 truncate">
                           <Highlight text={store.name} query={query} />
                         </p>
-                        {store.category && <p className="text-xs text-gray-400">{store.category}</p>}
+                        {store.category && <p className="text-xs text-gray-500">{store.category}</p>}
                       </div>
                       <span className="text-xs text-primary-600 font-semibold flex-shrink-0">View →</span>
                     </button>
@@ -177,7 +177,7 @@ export default function LiveSearchBar({
               {/* Coupons */}
               {matchCoupons.length > 0 && (
                 <div>
-                  <p className="px-4 pt-3 pb-1.5 text-[11px] font-extrabold text-gray-400 uppercase tracking-widest bg-gray-50 border-b border-gray-100">
+                  <p className="px-4 pt-3 pb-1.5 text-[11px] font-extrabold text-gray-500 uppercase tracking-widest bg-gray-50 border-b border-gray-100">
                     Coupons & Deals
                   </p>
                   {matchCoupons.map((coupon) => (
@@ -196,7 +196,7 @@ export default function LiveSearchBar({
                         <p className="text-sm font-semibold text-gray-800 truncate">
                           <Highlight text={coupon.title} query={query} />
                         </p>
-                        <p className="text-xs text-gray-400 truncate">
+                        <p className="text-xs text-gray-500 truncate">
                           {coupon.store?.name}
                           {coupon.discount && <span className="ml-1.5 font-semibold text-primary-600">· {coupon.discount}</span>}
                         </p>

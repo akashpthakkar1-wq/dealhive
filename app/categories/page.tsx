@@ -71,7 +71,7 @@ export default async function CategoriesPage() {
                   {letter}
                 </div>
                 <div className="h-px flex-1 bg-gray-200" />
-                <span className="text-xs text-gray-400 font-medium">{grouped[letter].length} categories</span>
+                <span className="text-xs text-gray-500 font-medium">{grouped[letter].length} categories</span>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
@@ -81,7 +81,7 @@ export default async function CategoriesPage() {
                     <div className="text-4xl">{cat.icon || '🏷️'}</div>
                     <div className="font-bold text-gray-900 text-sm group-hover:text-primary-600 transition-colors line-clamp-2 leading-tight">{cat.name}</div>
                     {cat.description && (
-                      <div className="text-xs text-gray-400 line-clamp-2 leading-relaxed">{cat.description}</div>
+                      <div className="text-xs text-gray-500 line-clamp-2 leading-relaxed">{cat.description}</div>
                     )}
                   </Link>
                 ))}
@@ -91,7 +91,7 @@ export default async function CategoriesPage() {
         </div>
 
         {allCats.length === 0 && (
-          <div className="text-center py-20 text-gray-400">
+          <div className="text-center py-20 text-gray-500">
             <div className="text-6xl mb-4">🏷️</div>
             <p className="text-lg font-semibold">No categories yet</p>
             <p className="text-sm mt-1">Add categories from the admin panel</p>

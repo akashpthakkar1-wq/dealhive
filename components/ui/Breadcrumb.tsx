@@ -6,7 +6,7 @@ interface Props { items: Crumb[] }
 
 export default function Breadcrumb({ items }: Props) {
   return (
-    <nav className="flex items-center gap-1 text-sm text-gray-400 mb-6" aria-label="Breadcrumb">
+    <nav className="flex items-center gap-1 text-sm text-gray-500 mb-6" aria-label="Breadcrumb">
       <Link href="/" className="hover:text-orange-600 transition-colors flex items-center">
         <Home className="w-3.5 h-3.5" />
       </Link>

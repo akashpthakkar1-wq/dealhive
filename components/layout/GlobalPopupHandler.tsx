@@ -68,24 +68,24 @@ function DetailsSection({ coupon }: { coupon: Coupon }) {
       <div className="grid grid-cols-2 divide-x divide-y divide-gray-100 bg-white">
         {coupon.discount && (
           <div className="px-3 py-2">
-            <p className="text-[9px] text-gray-400 uppercase tracking-wider mb-0.5">{coupon.type === 'code' ? 'Discount' : 'Deal type'}</p>
+            <p className="text-[9px] text-gray-500 uppercase tracking-wider mb-0.5">{coupon.type === 'code' ? 'Discount' : 'Deal type'}</p>
             <p className="text-xs font-semibold text-[#EA580C]">{coupon.discount}</p>
           </div>
         )}
         {coupon.expiry_date && (
           <div className="px-3 py-2">
-            <p className="text-[9px] text-gray-400 uppercase tracking-wider mb-0.5">Expiry date</p>
+            <p className="text-[9px] text-gray-500 uppercase tracking-wider mb-0.5">Expiry date</p>
             <p className="text-xs font-semibold text-gray-800">{new Date(coupon.expiry_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
           </div>
         )}
         {coupon.min_order_value && (
           <div className="px-3 py-2">
-            <p className="text-[9px] text-gray-400 uppercase tracking-wider mb-0.5">Min. order</p>
+            <p className="text-[9px] text-gray-500 uppercase tracking-wider mb-0.5">Min. order</p>
             <p className="text-xs font-semibold text-gray-800">{coupon.min_order_value}</p>
           </div>
         )}
         <div className="px-3 py-2">
-          <p className="text-[9px] text-gray-400 uppercase tracking-wider mb-0.5">Status</p>
+          <p className="text-[9px] text-gray-500 uppercase tracking-wider mb-0.5">Status</p>
           <p className="text-xs font-semibold text-green-600">✓ Active &amp; verified</p>
         </div>
       </div>
@@ -152,7 +152,7 @@ function CouponModal({
           {/* Discount */}
           <div className="text-center mb-5">
             <p className="text-3xl font-extrabold text-[#EA580C]">{coupon.discount}</p>
-            <p className="text-gray-400 text-sm mt-0.5">Best available offer</p>
+            <p className="text-gray-500 text-sm mt-0.5">Best available offer</p>
           </div>
 
           {isCode ? (
@@ -177,7 +177,7 @@ function CouponModal({
                 </div>
               )}
               {coupon.expiry_date && (
-                <p className="text-xs text-gray-400 mb-4">
+                <p className="text-xs text-gray-500 mb-4">
                   🕐 Valid until {new Date(coupon.expiry_date).toLocaleDateString('en-IN', {
                     day: 'numeric', month: 'long', year: 'numeric',
                   })}
@@ -188,7 +188,7 @@ function CouponModal({
                 🔗 Go to {coupon.store?.name} & Apply Code
               </button>
               {copied && (
-                <p className="text-center text-xs text-gray-400 mt-3">
+                <p className="text-center text-xs text-gray-500 mt-3">
                   Code copied! Paste it at checkout on the store website.
                 </p>
               )}
@@ -208,7 +208,7 @@ function CouponModal({
                 </p>
               </div>
               {coupon.expiry_date && (
-                <p className="text-xs text-gray-400 mb-4">
+                <p className="text-xs text-gray-500 mb-4">
                   🕐 Valid until {new Date(coupon.expiry_date).toLocaleDateString('en-IN', {
                     day: 'numeric', month: 'long', year: 'numeric',
                   })}

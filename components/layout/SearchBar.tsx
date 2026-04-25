@@ -73,7 +73,7 @@ export default function SearchBar({ compact }: Props) {
     <div ref={containerRef} className="relative w-full">
       <form onSubmit={handleSubmit}>
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
           <input
             ref={inputRef}
             type="text"
@@ -81,11 +81,11 @@ export default function SearchBar({ compact }: Props) {
             onChange={(e) => setQuery(e.target.value)}
             onFocus={() => setFocused(true)}
             placeholder={compact ? 'Search deals…' : 'Search stores, coupons, deals…'}
-            className="w-full bg-white border border-black/10 rounded-full pl-10 pr-10 py-2 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#EA580C]/20 focus:border-[#EA580C]/30 focus:bg-white transition-all"
+            className="w-full bg-white border border-black/10 rounded-full pl-10 pr-10 py-2 text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-[#EA580C]/20 focus:border-[#EA580C]/30 focus:bg-white transition-all"
           />
           {query && (
             <button type="button" onClick={() => { setQuery(''); setResults(null) }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-600">
               <X className="w-4 h-4" />
             </button>
           )}
@@ -113,7 +113,7 @@ export default function SearchBar({ compact }: Props) {
             <>
               {results!.stores.length > 0 && (
                 <div>
-                  <div className="px-4 py-2 text-xs font-bold text-gray-400 uppercase tracking-wider border-b border-gray-50 flex items-center gap-1.5">
+                  <div className="px-4 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-50 flex items-center gap-1.5">
                     <Store className="w-3 h-3" /> Stores
                   </div>
                   {results!.stores.map((store) => (
@@ -136,7 +136,7 @@ export default function SearchBar({ compact }: Props) {
 
               {results!.coupons.length > 0 && (
                 <div>
-                  <div className="px-4 py-2 text-xs font-bold text-gray-400 uppercase tracking-wider border-b border-gray-50 flex items-center gap-1.5">
+                  <div className="px-4 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-50 flex items-center gap-1.5">
                     <Tag className="w-3 h-3" /> Coupons
                   </div>
                   {results!.coupons.map((c) => (

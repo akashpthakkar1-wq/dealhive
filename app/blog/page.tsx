@@ -91,7 +91,7 @@ export default async function BlogPage() {
                   <h3 className="font-bold text-gray-800 text-base leading-snug">
                     {post.title}
                   </h3>
-                  <p className="text-xs text-gray-400 mt-2">{post.date}</p>
+                  <p className="text-xs text-gray-500 mt-2">{post.date}</p>
                 </div>
               ))}
             </div>
@@ -131,7 +131,7 @@ export default async function BlogPage() {
                   {post.excerpt && (
                     <p className="text-sm text-gray-500 line-clamp-2">{post.excerpt}</p>
                   )}
-                  <p className="text-xs text-gray-400 mt-3">
+                  <p className="text-xs text-gray-500 mt-3">
                     {new Date(post.created_at).toLocaleDateString('en-IN', {
                       day: 'numeric',
                       month: 'long',

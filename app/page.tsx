@@ -155,7 +155,7 @@ export default async function HomePage() {
                       </div>
                     )}
                     {store.category && (
-                      <div className="text-[10px] text-gray-400 leading-tight mt-0.5 truncate">
+                      <div className="text-[10px] text-gray-500 leading-tight mt-0.5 truncate">
                         {store.category}
                       </div>
                     )}
@@ -164,7 +164,7 @@ export default async function HomePage() {
                   {maxDiscount > 0 && (
                     <div className="text-right flex-shrink-0">
                       <div className="text-sm font-semibold text-primary-600 leading-none">{maxDiscount}%</div>
-                      <div className="text-[9px] text-gray-400 mt-0.5 whitespace-nowrap">max off</div>
+                      <div className="text-[9px] text-gray-500 mt-0.5 whitespace-nowrap">max off</div>
                     </div>
                   )}
                 </Link>
@@ -254,7 +254,7 @@ function SectionHeader({ icon, title, subtitle, href }: {
 
 function EmptyState() {
   return (
-    <div className="py-12 text-center text-gray-400">
+    <div className="py-12 text-center text-gray-500">
       <Tag className="w-10 h-10 mx-auto mb-2 text-gray-200" />
       <p className="font-semibold text-sm">No deals available right now. Check back soon!</p>
     </div>

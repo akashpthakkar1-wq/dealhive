@@ -193,7 +193,7 @@ export default async function StorePage({ params }: Props) {
               <div className="flex flex-wrap items-center gap-1.5">
                 <span className="badge-verified"><CheckCircle className="w-3 h-3" /> Verified</span>
                 {store.category && <span className="badge-type">{store.category}</span>}
-                <span className="hidden sm:inline text-xs text-gray-400">Updated today</span>
+                <span className="hidden sm:inline text-xs text-gray-500">Updated today</span>
               </div>
 
               {/* Title */}
@@ -217,7 +217,7 @@ export default async function StorePage({ params }: Props) {
               <div className="flex flex-wrap items-center gap-2 md:gap-3 mt-2">
                 <RatingStars rating={parseFloat(rating)} />
                 <span className="text-xs md:text-sm font-semibold text-gray-700">{rating}</span>
-                <span className="hidden sm:inline text-xs md:text-sm text-gray-400">
+                <span className="hidden sm:inline text-xs md:text-sm text-gray-500">
                   by {Math.max(100, (displayUses / 100) | 0).toLocaleString()}+ shoppers
                 </span>
                 {store.website_url && (
@@ -243,13 +243,13 @@ export default async function StorePage({ params }: Props) {
 
             {/* Total Offers — desktop only */}
             <div className="hidden sm:flex items-center justify-start gap-2 px-4 py-2.5 rounded-xl border font-semibold bg-white border-gray-100 text-gray-700">
-              <span className="text-xs text-gray-400 font-medium">Total Offers</span>
+              <span className="text-xs text-gray-500 font-medium">Total Offers</span>
               <span className="text-sm font-bold">{allCoupons.length}</span>
             </div>
 
             {/* Active Now — desktop only */}
             <div className="hidden sm:flex items-center justify-start gap-2 px-4 py-2.5 rounded-xl border font-semibold bg-primary-50 border-primary-200 text-primary-700">
-              <span className="text-xs text-gray-400 font-medium">Active Now</span>
+              <span className="text-xs text-gray-500 font-medium">Active Now</span>
               <span className="text-sm font-bold text-primary-600">{activeCoupons.length}</span>
             </div>
 
@@ -263,7 +263,7 @@ export default async function StorePage({ params }: Props) {
 
             {/* Codes — desktop only */}
             <div className="hidden sm:flex items-center justify-start gap-2 px-4 py-2.5 rounded-xl border font-semibold bg-white border-gray-100 text-gray-700">
-              <span className="text-xs text-gray-400 font-medium">Codes</span>
+              <span className="text-xs text-gray-500 font-medium">Codes</span>
               <span className="text-sm font-bold">{codeCoupons.length}</span>
             </div>
 
@@ -425,7 +425,7 @@ export default async function StorePage({ params }: Props) {
                   <details key={i} className="group border border-gray-100 rounded-xl overflow-hidden">
                     <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-primary-50 transition-colors list-none">
                       <span className="font-semibold text-gray-900 text-sm pr-4">{faq.q}</span>
-                      <ChevronRight className="w-4 h-4 text-gray-400 group-open:rotate-90 transition-transform flex-shrink-0" />
+                      <ChevronRight className="w-4 h-4 text-gray-500 group-open:rotate-90 transition-transform flex-shrink-0" />
                     </summary>
                     <div className="px-4 pb-4 pt-2 text-sm text-gray-600 leading-relaxed border-t border-gray-50">{faq.a}</div>
                   </details>
@@ -475,7 +475,7 @@ export default async function StorePage({ params }: Props) {
               <div className="text-center mb-3">
                 <div className="text-5xl font-extrabold text-gray-900 mb-1">{rating}</div>
                 <RatingStars rating={parseFloat(rating)} />
-                <div className="text-xs text-gray-400 mt-1">{Math.max(200, stableNum(store.id, 200, 2000)).toLocaleString()}+ verified reviews</div>
+                <div className="text-xs text-gray-500 mt-1">{Math.max(200, stableNum(store.id, 200, 2000)).toLocaleString()}+ verified reviews</div>
               </div>
               <div className="space-y-1.5">
                 {[
@@ -491,7 +491,7 @@ export default async function StorePage({ params }: Props) {
                     <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
                       <div className="h-full bg-yellow-400 rounded-full" style={{ width: `${p}%` }} />
                     </div>
-                    <span className="text-gray-400 w-7 text-right">{p}%</span>
+                    <span className="text-gray-500 w-7 text-right">{p}%</span>
                   </div>
                 ))}
               </div>
@@ -528,7 +528,7 @@ export default async function StorePage({ params }: Props) {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="font-semibold text-gray-900 text-sm group-hover:text-primary-600 transition-colors truncate">{s.name}</div>
-                        <div className="text-xs text-gray-400">{s.category}</div>
+                        <div className="text-xs text-gray-500">{s.category}</div>
                       </div>
                       <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-primary-400 flex-shrink-0" />
                     </Link>
