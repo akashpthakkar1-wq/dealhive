@@ -9,6 +9,7 @@ const Toaster = dynamic(() => import('react-hot-toast').then(m => ({ default: m.
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import GlobalPopupHandler from '@/components/layout/GlobalPopupHandler'
+import PWAInstallPrompt from '@/components/ui/PWAInstallPrompt'
 import { SITE_NAME, SITE_URL } from '@/lib/utils'
 import './globals.css'
 
@@ -69,6 +70,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={jakarta.className} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
+        {/* PWA Meta Tags */}
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="application-name" content="EndOverPay" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="EndOverPay" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="theme-color" content="#EA580C" />
+        <meta name="msapplication-TileColor" content="#EA580C" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+        <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png" />
+        <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
         <link rel="dns-prefetch" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -121,6 +135,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Suspense fallback={null}>
           <GlobalPopupHandler />
         </Suspense>
+        <PWAInstallPrompt />
         <Analytics />
         <SpeedInsights />
       </body>
