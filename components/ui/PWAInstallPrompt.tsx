@@ -36,9 +36,30 @@ export default function PWAInstallPrompt() {
     if (!deferredPrompt) return
     await deferredPrompt.prompt()
     const { outcome } = await deferredPrompt.userChoice
-    if (outcome === 'accepted') setShowBanner(false)
+    if (outcome === 'accepted') {
+      setShowBanner(false)
+      // Track install in GA4
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'pwa_install', {
+          event_category: 'PWA',
+          event_label: 'Android Install',
+        })
+      }
+    }
     setDeferredPrompt(null)
   }
+
+  // Also track when app is launched in standalone mode
+  useEffect(() => {
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'pwa_launch', {
+          event_category: 'PWA',
+          event_label: 'Standalone Launch',
+        })
+      }
+    }
+  }, [])
 
   function handleDismiss() {
     setShowBanner(false)
