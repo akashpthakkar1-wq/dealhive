@@ -10,6 +10,7 @@ import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import GlobalPopupHandler from '@/components/layout/GlobalPopupHandler'
 import PWAInstallPrompt from '@/components/ui/PWAInstallPrompt'
+import PWAWrapper from '@/components/layout/PWAWrapper'
 import { SITE_NAME, SITE_URL } from '@/lib/utils'
 import './globals.css'
 
@@ -129,9 +130,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             },
           }}
         />
-        <Navbar />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+        {/* PWAWrapper: shows PWA header+bottom nav in standalone, normal layout in browser */}
+        <PWAWrapper navbar={<Navbar />} footer={<Footer />}>
+          <main className="min-h-screen">{children}</main>
+        </PWAWrapper>
         <Suspense fallback={null}>
           <GlobalPopupHandler />
         </Suspense>
