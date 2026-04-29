@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Suspense } from 'react'
 import Image from 'next/image'
 import { ArrowRight, Tag, TrendingUp, Star, Clock, Zap, Store } from 'lucide-react'
 import LiveSavingCount from '@/components/ui/LiveSavingCount'
@@ -17,7 +18,8 @@ import {
 export const revalidate = 3600
 export const fetchCache = 'force-cache'
 
-export default async function HomePage() {
+// Async component for below-the-fold data — hero renders immediately
+async function HomePageData() {
   const [featured, trending, recent, stores, categories, dealOfTheDayCoupons] = await Promise.all([
     getFeaturedCoupons(6),
     getTrendingCoupons(6),
@@ -27,14 +29,11 @@ export default async function HomePage() {
     getDealOfTheDayCoupons(),
   ])
 
-  // Pick today's deal based on slot number matching day of week
-  // getDay(): 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
-  // Our slots: 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat, 7=Sun
   const dayOfWeek = new Date().getDay()
-  const todaySlot = dayOfWeek === 0 ? 7 : dayOfWeek // Sun=7, Mon=1...Sat=6
+  const todaySlot = dayOfWeek === 0 ? 7 : dayOfWeek
   const todaysDeal = dealOfTheDayCoupons.find((c: any) => c.deal_of_the_day_order === todaySlot)
-    ?? dealOfTheDayCoupons[0] // fallback to first set slot
-    ?? featured[0] // fallback to first featured
+    ?? dealOfTheDayCoupons[0]
+    ?? featured[0]
 
   return (
     <div>
@@ -259,5 +258,22 @@ function EmptyState() {
       <Tag className="w-10 h-10 mx-auto mb-2 text-gray-200" />
       <p className="font-semibold text-sm">No deals available right now. Check back soon!</p>
     </div>
+  )
+}
+
+export default function HomePage() {
+  return (
+    <Suspense fallback={
+      <div className="bg-gradient-to-br from-[#EA580C] via-[#C2410C] to-[#9A3412] text-white py-14 min-h-screen">
+        <div className="container-main text-center">
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
+            Best Coupon Codes, Promo Codes &amp; Voucher Codes –<br />
+            <span className="text-[#FED7AA]">Save Up to 90% Off</span>
+          </h1>
+        </div>
+      </div>
+    }>
+      <HomePageData />
+    </Suspense>
   )
 }
