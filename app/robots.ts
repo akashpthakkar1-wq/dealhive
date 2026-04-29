@@ -15,6 +15,6 @@ export default function robots(): MetadataRoute.Robots {
         ],
       },
     ],
-    sitemap: 'https://endoverpay.com/sitemap.xml',
+    sitemap: 'https://www.endoverpay.com/sitemap.xml',
   }
 }
