@@ -36,7 +36,6 @@ async function HomePageData() {
     ?? featured[0]
 
   return (
-  return (
     <div>
       {/* ── CATEGORY BAR ── */}
       <section className="bg-white border-b border-gray-100 py-4 sticky top-16 z-30 shadow-sm">
