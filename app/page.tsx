@@ -36,30 +36,8 @@ async function HomePageData() {
     ?? featured[0]
 
   return (
+  return (
     <div>
-      {/* ── HERO ── */}
-      <section className="bg-gradient-to-br from-[#EA580C] via-[#C2410C] to-[#9A3412] text-white py-14">
-        <div className="container-main text-center">
-          <LiveSavingCount />
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
-            Best Coupon Codes, Promo Codes &amp; Voucher Codes –<br />
-            <span className="text-[#FED7AA]">Save Up to 90% Off</span>
-          </h1>
-          <p className="text-white/80 text-lg mb-8 max-w-xl mx-auto">
-            Your trusted coupon platform worldwide. Verified codes, real savings, zero hassle.
-          </p>
-
-          {/* ✅ Client component — live search with dropdown */}
-          <HeroSearchBar />
-
-          <div className="flex items-center justify-center gap-6 mt-6 text-sm text-white/70">
-            <span>✅ 3,200+ Active Deals</span>
-            <span>✅ 100% Verified</span>
-            <span>✅ Updated Daily</span>
-          </div>
-        </div>
-      </section>
-
       {/* ── CATEGORY BAR ── */}
       <section className="bg-white border-b border-gray-100 py-4 sticky top-16 z-30 shadow-sm">
         <div className="container-main">
@@ -263,17 +241,33 @@ function EmptyState() {
 
 export default function HomePage() {
   return (
-    <Suspense fallback={
-      <div className="bg-gradient-to-br from-[#EA580C] via-[#C2410C] to-[#9A3412] text-white py-14 min-h-screen">
+    <div>
+      {/* ── HERO renders immediately - no data needed ── */}
+      <section className="bg-gradient-to-br from-[#EA580C] via-[#C2410C] to-[#9A3412] text-white py-14">
         <div className="container-main text-center">
+          <LiveSavingCount />
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
             Best Coupon Codes, Promo Codes &amp; Voucher Codes –<br />
             <span className="text-[#FED7AA]">Save Up to 90% Off</span>
           </h1>
+          <p className="text-white/80 text-lg mb-8 max-w-xl mx-auto">
+            Your trusted coupon platform worldwide. Verified codes, real savings, zero hassle.
+          </p>
+          <HeroSearchBar />
+          <div className="flex items-center justify-center gap-6 mt-6 text-sm text-white/70">
+            <span>✅ 3,200+ Active Deals</span>
+            <span>✅ 100% Verified</span>
+            <span>✅ Updated Daily</span>
+          </div>
         </div>
-      </div>
-    }>
-      <HomePageData />
-    </Suspense>
+      </section>
+
+      {/* ── DATA sections stream in via Suspense ── */}
+      <Suspense fallback={
+        <div className="min-h-screen bg-gray-50 animate-pulse" />
+      }>
+        <HomePageData />
+      </Suspense>
+    </div>
   )
 }
