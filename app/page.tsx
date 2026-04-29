@@ -15,6 +15,7 @@ import {
 } from '@/lib/queries'
 
 export const revalidate = 3600
+export const fetchCache = 'force-cache'
 
 export default async function HomePage() {
   const [featured, trending, recent, stores, categories, dealOfTheDayCoupons] = await Promise.all([

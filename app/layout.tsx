@@ -70,7 +70,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={jakarta.className} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
+        <link rel="dns-prefetch" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
         {/* PWA Meta Tags */}
         <link rel="manifest" href="/manifest.json" />
         <meta name="application-name" content="EndOverPay" />
