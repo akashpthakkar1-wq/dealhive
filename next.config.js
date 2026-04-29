@@ -58,7 +58,6 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
     optimizePackageImports: ['lucide-react'],
-    browsersListForSwc: true,
   },
 }
 
