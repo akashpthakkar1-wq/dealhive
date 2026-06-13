@@ -273,38 +273,38 @@ export default function HomePage() {
 
             {/* RIGHT COLUMN — floating coupon card */}
             <div className="hidden md:flex justify-center">
-              <div className="bg-white rounded-2xl p-6 w-full" style={{
-                maxWidth: "320px",
+              <div className="bg-white rounded-2xl p-7 w-full" style={{
+                maxWidth: "400px",
                 transform: "rotate(-1.4deg)",
                 boxShadow: "0 24px 64px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.2)"
               }}>
                 {/* Card top row */}
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 text-xl font-extrabold" style={{ background: "#fde8d8", color: "#EA580C" }}>
+                  <div className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 text-2xl font-extrabold" style={{ background: "#fde8d8", color: "#EA580C" }}>
                     M
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-bold text-sm text-gray-900 leading-tight">Myntra</p>
-                    <p className="text-xs font-semibold" style={{ color: "#2f7d5b" }}>✓ Verified today</p>
+                    <p className="font-bold text-base text-gray-900 leading-tight">Myntra</p>
+                    <p className="text-sm font-semibold" style={{ color: "#2f7d5b" }}>✓ Verified today</p>
                   </div>
-                  <div className="text-xs font-bold px-2.5 py-1.5 rounded-lg flex-shrink-0" style={{ background: "#fdf0d8", color: "#C0852E" }}>
+                  <div className="text-sm font-bold px-3 py-2 rounded-lg flex-shrink-0" style={{ background: "#fdf0d8", color: "#C0852E" }}>
                     25% OFF
                   </div>
                 </div>
                 {/* Card body */}
-                <p className="font-semibold text-sm text-gray-900 mb-1 leading-snug">Flat 25% off on fashion &amp; accessories</p>
-                <p className="text-xs text-gray-500 mb-4 leading-relaxed">Valid on all clothing, shoes &amp; bags. Min. order ₹999.</p>
+                <p className="font-semibold text-base text-gray-900 mb-2 leading-snug">Flat 25% off on fashion &amp; accessories</p>
+                <p className="text-sm text-gray-500 mb-5 leading-relaxed">Valid on all clothing, shoes &amp; bags. Min. order ₹999. No exclusions on sale items.</p>
                 {/* Reveal row */}
                 <div className="flex rounded-xl overflow-hidden" style={{ border: "1.5px dashed #d4c9a8" }}>
-                  <div className="flex-1 flex items-center px-3 py-2.5 font-mono text-sm font-semibold" style={{
+                  <div className="flex-1 flex items-center px-4 py-3.5 font-mono font-semibold" style={{
                     background: "repeating-linear-gradient(45deg,#faf6ec,#faf6ec 6px,#f4eddc 6px,#f4eddc 12px)",
                     color: "#C0852E",
                     letterSpacing: "1px",
-                    fontSize: "13px"
+                    fontSize: "15px"
                   }}>
                     MYNTRAFAB25
                   </div>
-                  <button className="px-4 py-2.5 text-xs font-bold text-white flex-shrink-0 transition-colors hover:bg-[#C2410C]" style={{ background: "#EA580C" }}>
+                  <button className="px-5 py-3.5 text-sm font-bold text-white flex-shrink-0 transition-colors hover:bg-[#C2410C]" style={{ background: "#EA580C" }}>
                     Copy code
                   </button>
                 </div>
