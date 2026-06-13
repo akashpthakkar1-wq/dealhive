@@ -247,7 +247,7 @@ export default function HomePage() {
         padding: "64px 0 70px"
       }}>
         <div className="container-main">
-          <div className="grid gap-11 items-center" style={{ gridTemplateColumns: "1.2fr 0.8fr", maxWidth: "1180px", margin: "0 auto" }}>
+          <div className="grid gap-11 items-center" style={{ gridTemplateColumns: "1fr 0.9fr", maxWidth: "1180px", margin: "0 auto" }}>
 
             {/* LEFT COLUMN */}
             <div>
@@ -274,7 +274,7 @@ export default function HomePage() {
             {/* RIGHT COLUMN — floating coupon card */}
             <div className="hidden md:flex justify-center">
               <div className="bg-white rounded-2xl p-7 w-full" style={{
-                maxWidth: "400px",
+                maxWidth: "460px",
                 transform: "rotate(-1.4deg)",
                 boxShadow: "0 24px 64px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.2)"
               }}>
