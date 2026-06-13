@@ -89,14 +89,14 @@ export default function CouponCard({ coupon }: CouponCardProps) {
         </div>
 
         {/* Main content */}
-        <div className="flex-1 p-4 flex flex-col gap-3 min-w-0">
+        <div className="flex-1 py-3 px-4 flex flex-col gap-2 min-w-0">
 
           {/* Logo + Store + Badges + Title */}
           <div className="flex items-start gap-3 relative">
             {/* Logo + Store name below it */}
-            <div className="flex flex-col items-center flex-shrink-0 w-14">
+            <div className="flex flex-col items-center flex-shrink-0 w-12">
               <img src={logo} alt={coupon.store?.name ?? 'Store'}
-                className="w-14 h-14 rounded-xl border border-gray-100 object-contain bg-white p-1.5" loading="lazy" fetchPriority="low" />
+                className="w-12 h-12 rounded-xl border border-gray-100 object-contain bg-white p-1.5" loading="lazy" fetchPriority="low" />
               <span className="text-[11px] font-bold text-gray-700 mt-1 text-center truncate w-full leading-tight">
                 {coupon.store?.name}
               </span>
@@ -211,7 +211,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
       <div className="border-t border-gray-100">
         <button
           onClick={() => setShowDetails(!showDetails)}
-          className="w-full flex items-center justify-center gap-1.5 px-4 py-2 text-xs text-gray-500 hover:bg-gray-50 transition-colors"
+          className="w-full flex items-center justify-center gap-1.5 px-4 py-1.5 text-xs text-gray-500 hover:bg-gray-50 transition-colors"
         >
           <svg
             className={`w-3.5 h-3.5 transition-transform duration-250 ${showDetails ? 'rotate-180' : ''}`}
