@@ -242,21 +242,75 @@ export default function HomePage() {
   return (
     <div>
       {/* ── HERO renders immediately - no data needed ── */}
-      <section className="bg-gradient-to-br from-[#EA580C] via-[#C2410C] to-[#9A3412] text-white py-14">
-        <div className="container-main text-center">
-          <LiveSavingCount />
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">
-            Best Coupon Codes, Promo Codes &amp; Voucher Codes –<br />
-            <span className="text-[#FED7AA]">Save Up to 90% Off</span>
-          </h1>
-          <p className="text-white/80 text-lg mb-8 max-w-xl mx-auto">
-            Your trusted coupon platform worldwide. Verified codes, real savings, zero hassle.
-          </p>
-          <HeroSearchBar />
-          <div className="flex items-center justify-center gap-6 mt-6 text-sm text-white/70">
-            <span>✅ 3,200+ Active Deals</span>
-            <span>✅ 100% Verified</span>
-            <span>✅ Updated Daily</span>
+      <section className="relative text-white overflow-hidden" style={{
+        background: "radial-gradient(120% 90% at 85% 0%, #b84a12 0%, transparent 58%), linear-gradient(165deg, #c2410c, #9a3412 60%, #7c2d12)",
+        padding: "64px 0 70px"
+      }}>
+        <div className="container-main">
+          <div className="grid gap-11 items-center" style={{ gridTemplateColumns: "1.2fr 0.8fr", maxWidth: "1180px", margin: "0 auto" }}>
+
+            {/* LEFT COLUMN */}
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ letterSpacing: "2.5px", color: "#FED7AA" }}>
+                3,200+ verified deals · updated daily
+              </p>
+              <h1 className="font-extrabold mb-5 leading-tight" style={{ fontSize: "clamp(36px, 4vw, 48px)", letterSpacing: "-1.2px", color: "#fff5eb" }}>
+                Stop overpaying.<br />
+                <span className="italic" style={{ color: "#FED7AA" }}>Start saving smarter.</span>
+              </h1>
+              <p className="mb-7 leading-relaxed" style={{ fontSize: "16px", color: "#f8d5b8", maxWidth: "440px" }}>
+                Hand-verified coupon codes and deals from 500+ stores. No expired codes, no hassle — just real savings up to 90% off.
+              </p>
+              <div className="mb-6" style={{ maxWidth: "480px" }}>
+                <HeroSearchBar />
+              </div>
+              <div className="flex items-center gap-6 flex-wrap">
+                <span className="text-sm font-bold" style={{ color: "#86efac" }}>✓ 3,200+ active deals</span>
+                <span className="text-sm font-bold" style={{ color: "#86efac" }}>✓ 100% verified</span>
+                <span className="text-sm font-bold" style={{ color: "#86efac" }}>✓ Updated daily</span>
+              </div>
+            </div>
+
+            {/* RIGHT COLUMN — floating coupon card */}
+            <div className="hidden md:flex justify-center">
+              <div className="bg-white rounded-2xl p-6 w-full" style={{
+                maxWidth: "320px",
+                transform: "rotate(-1.4deg)",
+                boxShadow: "0 24px 64px rgba(0,0,0,0.35), 0 4px 16px rgba(0,0,0,0.2)"
+              }}>
+                {/* Card top row */}
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 text-xl font-extrabold" style={{ background: "#fde8d8", color: "#EA580C" }}>
+                    M
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold text-sm text-gray-900 leading-tight">Myntra</p>
+                    <p className="text-xs font-semibold" style={{ color: "#2f7d5b" }}>✓ Verified today</p>
+                  </div>
+                  <div className="text-xs font-bold px-2.5 py-1.5 rounded-lg flex-shrink-0" style={{ background: "#fdf0d8", color: "#C0852E" }}>
+                    25% OFF
+                  </div>
+                </div>
+                {/* Card body */}
+                <p className="font-semibold text-sm text-gray-900 mb-1 leading-snug">Flat 25% off on fashion &amp; accessories</p>
+                <p className="text-xs text-gray-500 mb-4 leading-relaxed">Valid on all clothing, shoes &amp; bags. Min. order ₹999.</p>
+                {/* Reveal row */}
+                <div className="flex rounded-xl overflow-hidden" style={{ border: "1.5px dashed #d4c9a8" }}>
+                  <div className="flex-1 flex items-center px-3 py-2.5 font-mono text-sm font-semibold" style={{
+                    background: "repeating-linear-gradient(45deg,#faf6ec,#faf6ec 6px,#f4eddc 6px,#f4eddc 12px)",
+                    color: "#C0852E",
+                    letterSpacing: "1px",
+                    fontSize: "13px"
+                  }}>
+                    MYNTRAFAB25
+                  </div>
+                  <button className="px-4 py-2.5 text-xs font-bold text-white flex-shrink-0 transition-colors hover:bg-[#C2410C]" style={{ background: "#EA580C" }}>
+                    Copy code
+                  </button>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
