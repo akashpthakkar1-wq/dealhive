@@ -77,8 +77,8 @@ export default function CouponCard({ coupon }: CouponCardProps) {
       <div className="flex flex-1">
 
         {/* Left discount badge — desktop only */}
-        <div className="hidden sm:flex flex-col items-center justify-center bg-gradient-to-b from-orange-50 to-orange-100/60 w-[88px] flex-shrink-0 text-center border-r border-orange-100 px-2">
-          <span className="text-sm font-extrabold text-[#9A3412] leading-tight break-words w-full text-center">
+        <div className="hidden sm:flex flex-col items-center justify-center bg-gradient-to-b from-orange-50 to-orange-100/60 w-[100px] flex-shrink-0 text-center border-r border-orange-100 px-2">
+          <span className="text-lg font-extrabold text-[#9A3412] leading-tight break-words w-full text-center">
             {coupon.discount}
           </span>
           <span className={`mt-2 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase ${
@@ -93,37 +93,38 @@ export default function CouponCard({ coupon }: CouponCardProps) {
 
           {/* Logo + Store + Badges + Title */}
           <div className="flex items-start gap-3 relative">
-            <img src={logo} alt={coupon.store?.name ?? 'Store'}
-              className="w-14 h-14 rounded-xl border border-gray-100 flex-shrink-0 object-contain bg-white p-1.5" loading="lazy" fetchPriority="low" />
+            {/* Logo + Store name below it */}
+            <div className="flex flex-col items-center flex-shrink-0 w-14">
+              <img src={logo} alt={coupon.store?.name ?? 'Store'}
+                className="w-14 h-14 rounded-xl border border-gray-100 object-contain bg-white p-1.5" loading="lazy" fetchPriority="low" />
+              <span className="text-[11px] font-bold text-gray-700 mt-1 text-center truncate w-full leading-tight">
+                {coupon.store?.name}
+              </span>
+            </div>
             <div className="flex-1 min-w-0">
-              <div className="flex items-start justify-between gap-1 w-full">
-                {/* Left: store name + badges */}
-                <div className="flex items-center flex-wrap gap-1.5 min-w-0 flex-1">
-                  <span className="text-xs font-semibold text-gray-700 truncate max-w-[120px]">
-                    {coupon.store?.name}
+              {/* Badges — right aligned */}
+              <div className="flex items-center flex-wrap justify-end gap-1.5 w-full">
+                {coupon.is_verified && (
+                  <span className="text-[11px] text-green-700 bg-green-50 border border-green-200 px-1.5 py-px rounded-full font-semibold whitespace-nowrap">
+                    ✅ Verified Today
                   </span>
-                  {coupon.is_verified && (
-                    <span className="text-[11px] text-green-700 bg-green-50 border border-green-200 px-1.5 py-px rounded-full font-semibold whitespace-nowrap">
-                      ✅ Verified Today
-                    </span>
-                  )}
-                  {coupon.is_trending && (
-                    <span className="text-[11px] text-orange-800 bg-orange-100 border border-orange-300 px-1.5 py-px rounded-full font-semibold whitespace-nowrap">
-                      🔥 Trending
-                    </span>
-                  )}
-                  {coupon.is_featured && (
-                    <span className="text-[11px] text-yellow-700 bg-yellow-50 border border-yellow-200 px-1.5 py-px rounded-full font-semibold whitespace-nowrap">
-                      ⭐ Featured
-                    </span>
-                  )}
-                </div>
-                {/* Right: discount badge — mobile only, always top-right */}
-                <span className="sm:hidden text-xs font-extrabold text-[#9A3412] bg-orange-50 border border-orange-200 px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0 ml-1">
+                )}
+                {coupon.is_trending && (
+                  <span className="text-[11px] text-orange-800 bg-orange-100 border border-orange-300 px-1.5 py-px rounded-full font-semibold whitespace-nowrap">
+                    🔥 Trending
+                  </span>
+                )}
+                {coupon.is_featured && (
+                  <span className="text-[11px] text-yellow-700 bg-yellow-50 border border-yellow-200 px-1.5 py-px rounded-full font-semibold whitespace-nowrap">
+                    ⭐ Featured
+                  </span>
+                )}
+                {/* discount badge — mobile only */}
+                <span className="sm:hidden text-sm font-extrabold text-[#9A3412] bg-orange-50 border border-orange-200 px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0">
                   {coupon.discount}
                 </span>
               </div>
-              <p className="text-sm font-semibold text-gray-800 mt-1 leading-snug line-clamp-2">
+              <p className="text-sm font-semibold text-gray-800 mt-1.5 leading-snug line-clamp-2">
                 {coupon.title}
               </p>
               {coupon.description && (
