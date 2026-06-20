@@ -117,8 +117,8 @@ async function HomePageData() {
                   className="relative bg-white rounded-xl border border-gray-100 px-2 py-3.5 flex flex-col items-center text-center hover:border-primary-300 hover:shadow-md transition-all group overflow-hidden">
                   {/* Diagonal discount ribbon — main highlight */}
                   {maxDiscount > 0 && (
-                    <div className="absolute top-[9px] -right-[26px] bg-gradient-to-r from-[#EA580C] to-[#F59E0B] text-white text-[10px] font-extrabold px-7 py-0.5 rotate-45 whitespace-nowrap shadow-sm">
-                      {maxDiscount}%
+                    <div className="absolute top-[13px] -right-[30px] bg-[#EA580C] text-white text-[13px] font-extrabold px-9 py-1 rotate-45 whitespace-nowrap shadow-md" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.25)' }}>
+                      {maxDiscount}% OFF
                     </div>
                   )}
                   {/* Logo */}
