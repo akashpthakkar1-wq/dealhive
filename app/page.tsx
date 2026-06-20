@@ -115,13 +115,6 @@ async function HomePageData() {
               return (
                 <Link key={store.id} href={`/store/${store.slug}`} prefetch={false}
                   className="relative bg-white rounded-xl border border-gray-100 px-2 py-3.5 flex flex-col items-center text-center hover:border-primary-300 hover:shadow-md transition-all group overflow-hidden">
-                  {/* Folded corner discount tag — main highlight */}
-                  {maxDiscount > 0 && (
-                    <div className="absolute top-0 right-0 bg-[#EA580C] text-white text-center px-2.5 py-1.5 rounded-bl-xl leading-none shadow-sm">
-                      <div className="text-[15px] font-extrabold">{maxDiscount}%</div>
-                      <div className="text-[8px] font-semibold tracking-widest mt-0.5">OFF</div>
-                    </div>
-                  )}
                   {/* Logo */}
                   <div className="rounded-xl overflow-hidden flex items-center justify-center mb-2" style={{ width: '46px', height: '46px' }}>
                     {store.logo
