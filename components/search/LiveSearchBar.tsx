@@ -80,10 +80,10 @@ export default function LiveSearchBar({
   const isHero = variant === 'hero';
 
   return (
-    <div ref={ref} className={`relative ${isHero ? 'w-full max-w-xl mx-auto' : 'w-full'}`}>
+    <div ref={ref} className={`relative ${isHero ? 'w-full max-w-2xl' : 'w-full'}`}>
       {isHero ? (
         /* ── Hero variant ── */
-        <div className="flex items-center bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div className="flex items-stretch bg-white rounded-2xl shadow-xl overflow-hidden">
           <input
             type="text"
             value={query}
@@ -107,7 +107,7 @@ export default function LiveSearchBar({
           )}
           <button
             onMouseDown={(e) => { e.preventDefault(); setOpen(false); if (query.trim()) window.location.href = `/search?q=${encodeURIComponent(query.trim())}`; }}
-            className="bg-primary-500 hover:bg-primary-600 text-white font-bold px-6 py-3.5 text-sm transition-colors flex-shrink-0"
+            className="bg-primary-500 hover:bg-primary-600 text-white font-bold px-6 text-sm transition-colors flex-shrink-0 flex items-center justify-center"
           >
             Search
           </button>
