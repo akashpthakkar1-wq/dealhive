@@ -74,7 +74,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
       <div className="flex flex-1">
 
         {/* Ticket stub - discount, colored by type */}
-        <div className={`flex flex-col items-center justify-center flex-shrink-0 text-center px-2.5 ${isCode ? 'bg-[#EA580C]' : 'bg-[#059669]'}`} style={{ minWidth: '90px', maxWidth: '90px' }}>
+        <div className="flex flex-col items-center justify-center flex-shrink-0 text-center px-2.5 bg-[#EA580C]" style={{ minWidth: '90px', maxWidth: '90px' }}>
           <span className="text-white font-extrabold leading-tight break-words w-full" style={{ fontSize: '17px' }}>
             {coupon.discount}
           </span>
@@ -119,13 +119,28 @@ export default function CouponCard({ coupon }: CouponCardProps) {
             <span className="text-xs text-gray-500 whitespace-nowrap">👥 {displayCount.toLocaleString()} used</span>
             {isCode ? (
               <button onClick={handleCTA} disabled={loading}
-                className="bg-[#1B2433] hover:bg-[#26384f] text-white text-[13px] font-bold px-4 py-2 rounded-lg flex-shrink-0 disabled:opacity-75 active:scale-95 transition-all whitespace-nowrap">
-                {loading ? 'Opening...' : 'Get Code'}
+                className="inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#EA580C]">
+                <span className="bg-[#EA580C] text-white px-3 py-1.5 flex flex-col items-start justify-center gap-0 hover:bg-[#C2410C] transition-colors">
+                  <span className="text-[13px] font-semibold leading-snug whitespace-nowrap">{loading ? 'Opening...' : 'Get Code'}</span>
+                  <span className="text-[9px] text-white/80 font-normal leading-snug whitespace-nowrap">tap to reveal</span>
+                </span>
+                <span className="bg-[#C2410C] px-2 flex items-center justify-center border-l border-orange-700">
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </span>
+                <span className="bg-[#FFF7ED] flex items-center overflow-hidden border-l-2 border-dashed border-[#EA580C]" style={{width:"26px", paddingLeft:"4px", paddingRight:"4px"}}>
+                  <span className="font-mono text-[14px] font-semibold text-[#C2410C] tracking-wide whitespace-nowrap" style={{transform:"translateX(-7px)"}}>{coupon.code ? coupon.code.slice(-2) : "??"}</span>
+                </span>
               </button>
             ) : (
               <button onClick={handleCTA} disabled={loading}
-                className="bg-[#059669] hover:bg-[#047857] text-white text-[13px] font-bold px-4 py-2 rounded-lg flex-shrink-0 disabled:opacity-75 active:scale-95 transition-all whitespace-nowrap">
-                {loading ? 'Opening...' : 'Activate Deal'}
+                className="inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#059669]">
+                <span className="bg-[#059669] text-white px-3 py-1.5 flex flex-col items-start justify-center gap-0 hover:bg-[#047857] transition-colors">
+                  <span className="text-[13px] font-semibold leading-snug whitespace-nowrap">{loading ? 'Opening...' : 'Activate Deal'}</span>
+                  <span className="text-[9px] text-white/80 font-normal leading-snug whitespace-nowrap">auto-applied at checkout</span>
+                </span>
+                <span className="bg-[#047857] px-2 flex items-center justify-center border-l border-green-700">
+                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </span>
               </button>
             )}
           </div>
