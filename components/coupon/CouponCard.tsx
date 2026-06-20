@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import type { Coupon } from '@/types/index';
 import { getCouponLogo } from '@/lib/logos'
-// Supabase loaded lazily on click only - saves 162KB on initial page load
 
 function stableNum(seed: string, min: number, max: number): number {
   let h = 0
@@ -45,23 +44,12 @@ export default function CouponCard({ coupon }: CouponCardProps) {
     }
     window.open(popupUrl, '_blank');
     import('@supabase/supabase-js').then(({ createClient }) => {
-      const sb = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-      )
+      const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
       sb.from('coupons').select('affiliate_url').eq('id', coupon.id).single()
-        .then(({ data }) => {
-          const url = data?.affiliate_url || coupon.affiliate_url
-          window.location.href = url
-        })
-    }).catch(() => {
-      window.location.href = coupon.affiliate_url
-    })
+        .then(({ data }) => { window.location.href = data?.affiliate_url || coupon.affiliate_url })
+    }).catch(() => { window.location.href = coupon.affiliate_url })
     import('@supabase/supabase-js').then(({ createClient }) => {
-      const sb = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-      )
+      const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
       sb.from('coupons').update({ usage_count: (coupon.usage_count || 0) + 1 }).eq('id', coupon.id).then(() => {})
     }).catch(() => {})
   }
@@ -73,37 +61,27 @@ export default function CouponCard({ coupon }: CouponCardProps) {
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden h-full flex flex-col">
       <div className="flex flex-1">
 
-        {/* Ticket stub - discount, colored by type */}
         <div className="flex flex-col items-center justify-center flex-shrink-0 text-center px-2.5 bg-[#EA580C]" style={{ minWidth: '90px', maxWidth: '90px' }}>
           <span className="text-white font-extrabold leading-tight break-words w-full" style={{ fontSize: '17px' }}>
             {coupon.discount}
           </span>
         </div>
 
-        {/* Content */}
         <div className="flex-1 py-3 px-4 flex flex-col gap-2 min-w-0">
 
-          {/* Store row */}
-          <div className="flex items-center gap-2.5">
-            <img src={logo} alt={coupon.store?.name ?? 'Store'}
-              className="w-9 h-9 rounded-lg object-contain flex-shrink-0" loading="lazy" fetchPriority="low" />
-            <div className="min-w-0 flex-1">
-              <p className="text-sm font-bold text-gray-900 truncate leading-tight">{coupon.store?.name}</p>
-              {coupon.is_verified && (
-                <p className="text-[11px] font-semibold leading-tight" style={{ color: '#2f7d5b' }}>✓ Verified today</p>
-              )}
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <img src={logo} alt={coupon.store?.name ?? 'Store'} className="w-10 h-10 rounded-lg object-contain flex-shrink-0" loading="lazy" fetchPriority="low" />
+              <span className="text-[15px] font-bold text-gray-900 truncate">{coupon.store?.name}</span>
             </div>
-            <div className="flex flex-col items-end gap-1 flex-shrink-0">
-              {coupon.is_trending && (
-                <span className="text-[10px] text-orange-800 bg-orange-100 border border-orange-200 px-1.5 py-px rounded-full font-semibold whitespace-nowrap">🔥 Trending</span>
-              )}
-              {coupon.is_featured && !coupon.is_trending && (
-                <span className="text-[10px] text-yellow-700 bg-yellow-50 border border-yellow-200 px-1.5 py-px rounded-full font-semibold whitespace-nowrap">⭐ Featured</span>
-              )}
-            </div>
+            {coupon.is_trending && (
+              <span className="text-[10px] text-orange-800 bg-orange-100 border border-orange-200 px-2 py-px rounded-full font-semibold whitespace-nowrap flex-shrink-0">🔥 Trending</span>
+            )}
+            {coupon.is_featured && !coupon.is_trending && (
+              <span className="text-[10px] text-yellow-700 bg-yellow-50 border border-yellow-200 px-2 py-px rounded-full font-semibold whitespace-nowrap flex-shrink-0">⭐ Featured</span>
+            )}
           </div>
 
-          {/* Title + description */}
           <div>
             <p className="text-sm font-semibold text-gray-800 leading-snug line-clamp-2">{coupon.title}</p>
             {coupon.description && (
@@ -111,12 +89,16 @@ export default function CouponCard({ coupon }: CouponCardProps) {
             )}
           </div>
 
-          {/* Meta + CTA */}
           <div className="flex items-center justify-between gap-2 mt-auto">
-            <span className="text-xs text-gray-500 whitespace-nowrap">👥 {displayCount.toLocaleString()} used</span>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-x-3 gap-y-0.5 min-w-0">
+              <span className="text-[11px] text-gray-500 whitespace-nowrap">👥 {displayCount.toLocaleString()} used</span>
+              {coupon.is_verified && (
+                <span className="text-[11px] font-semibold whitespace-nowrap" style={{ color: '#2f7d5b' }}>✓ Verified today</span>
+              )}
+            </div>
+
             {isCode ? (
-              <button onClick={handleCTA} disabled={loading}
-                className="inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#EA580C]">
+              <button onClick={handleCTA} disabled={loading} className="inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#EA580C]">
                 <span className="bg-[#EA580C] text-white px-3 py-1.5 flex flex-col items-start justify-center gap-0 hover:bg-[#C2410C] transition-colors">
                   <span className="text-[13px] font-semibold leading-snug whitespace-nowrap">{loading ? 'Opening...' : 'Get Code'}</span>
                   <span className="text-[9px] text-white/80 font-normal leading-snug whitespace-nowrap">tap to reveal</span>
@@ -129,8 +111,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
                 </span>
               </button>
             ) : (
-              <button onClick={handleCTA} disabled={loading}
-                className="inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#059669]">
+              <button onClick={handleCTA} disabled={loading} className="inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#059669]">
                 <span className="bg-[#059669] text-white px-3 py-1.5 flex flex-col items-start justify-center gap-0 hover:bg-[#047857] transition-colors">
                   <span className="text-[13px] font-semibold leading-snug whitespace-nowrap">{loading ? 'Opening...' : 'Activate Deal'}</span>
                   <span className="text-[9px] text-white/80 font-normal leading-snug whitespace-nowrap">auto-applied at checkout</span>
@@ -145,16 +126,9 @@ export default function CouponCard({ coupon }: CouponCardProps) {
         </div>
       </div>
 
-      {/* Show Details Toggle */}
       <div className="border-t border-gray-100">
-        <button
-          onClick={() => setShowDetails(!showDetails)}
-          className="w-full flex items-center justify-center gap-1.5 px-4 py-1.5 text-xs text-gray-500 hover:bg-gray-50 transition-colors"
-        >
-          <svg
-            className={`w-3.5 h-3.5 transition-transform duration-250 ${showDetails ? 'rotate-180' : ''}`}
-            viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"
-          >
+        <button onClick={() => setShowDetails(!showDetails)} className="w-full flex items-center justify-center gap-1.5 px-4 py-1.5 text-xs text-gray-500 hover:bg-gray-50 transition-colors">
+          <svg className={`w-3.5 h-3.5 transition-transform duration-250 ${showDetails ? 'rotate-180' : ''}`} viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 5L7 9L11 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
           <span>{showDetails ? 'Hide details' : 'Show details'}</span>
@@ -190,13 +164,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
             </div>
             {coupon.terms_conditions && (
               <div className="bg-white border border-gray-200 rounded-xl p-3">
-                <p className="text-[10px] text-gray-500 uppercase tracking-wider font-medium mb-2 flex items-center gap-1.5">
-                  <svg className="w-3 h-3 text-orange-400 flex-shrink-0" viewBox="0 0 12 12" fill="none">
-                    <rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" strokeWidth="1.2"/>
-                    <path d="M3.5 4.5h5M3.5 6h5M3.5 7.5h3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-                  </svg>
-                  Terms &amp; conditions
-                </p>
+                <p className="text-[10px] text-gray-500 uppercase tracking-wider font-medium mb-2">Terms &amp; conditions</p>
                 <p className="text-xs text-gray-500 leading-relaxed">{coupon.terms_conditions}</p>
               </div>
             )}
