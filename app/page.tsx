@@ -124,7 +124,7 @@ async function HomePageData() {
                   {/* Logo */}
                   <div className="w-13 h-13 rounded-xl overflow-hidden border border-gray-100 bg-gray-50 flex items-center justify-center mb-2.5" style={{ width: '52px', height: '52px' }}>
                     {store.logo
-                      ? <Image src={store.logo} alt={`${store.name} logo`} width={52} height={52} className="object-contain p-1.5" />
+                      ? <Image src={store.logo} alt={`${store.name} logo`} width={52} height={52} className="object-contain w-full h-full" />
                       : <Tag className="w-6 h-6 text-primary-400" />}
                   </div>
                   {/* Store name */}
