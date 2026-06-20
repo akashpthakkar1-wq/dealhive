@@ -78,9 +78,6 @@ export default function CouponCard({ coupon }: CouponCardProps) {
           <span className="text-white font-extrabold leading-tight break-words w-full" style={{ fontSize: '17px' }}>
             {coupon.discount}
           </span>
-          <span className="mt-1.5 text-[9px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wide bg-white/20 text-white">
-            {coupon.type}
-          </span>
         </div>
 
         {/* Content */}
