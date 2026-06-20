@@ -110,7 +110,7 @@ async function HomePageData() {
                   {/* Offer count */}
                   {couponCount > 0 && (
                     <div className="text-xs text-primary-600 font-semibold leading-tight mt-1">
-                      {couponCount} offers
+                      {couponCount} {couponCount === 1 ? 'offer' : 'offers'}
                     </div>
                   )}
                 </Link>
