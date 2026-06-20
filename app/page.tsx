@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { ArrowRight, Tag, TrendingUp, Star, Clock, Zap, Store } from 'lucide-react'
 import LiveSavingCount from '@/components/ui/LiveSavingCount'
 import HeroSearchBar from '@/components/hero/HeroSearchBar'
+import LiveDealsTicker from '@/components/hero/LiveDealsTicker'
 import CouponCard from '@/components/coupon/CouponCard'
 import DealOfTheDay from '@/components/ui/DealOfTheDay'
 import {
@@ -233,10 +234,20 @@ export default function HomePage() {
               <div className="mb-6" style={{ maxWidth: "480px" }}>
                 <HeroSearchBar />
               </div>
-              <div className="flex items-center gap-6 flex-wrap">
-                <span className="text-sm font-bold" style={{ color: "#86efac" }}>✓ 3,200+ active deals</span>
-                <span className="text-sm font-bold" style={{ color: "#86efac" }}>✓ 100% verified</span>
-                <span className="text-sm font-bold" style={{ color: "#86efac" }}>✓ Updated daily</span>
+              {/* 3-column stats bar */}
+              <div className="flex items-stretch gap-0 max-w-[440px] border-t border-white/15 pt-5">
+                <div className="flex-1 text-center border-r border-white/15">
+                  <div className="text-2xl font-extrabold" style={{ color: "#FED7AA" }}>500+</div>
+                  <div className="text-xs mt-0.5" style={{ color: "#f8d5b8" }}>Stores</div>
+                </div>
+                <div className="flex-1 text-center border-r border-white/15">
+                  <div className="text-2xl font-extrabold" style={{ color: "#FED7AA" }}>3,200+</div>
+                  <div className="text-xs mt-0.5" style={{ color: "#f8d5b8" }}>Live deals</div>
+                </div>
+                <div className="flex-1 text-center">
+                  <div className="text-2xl font-extrabold" style={{ color: "#FED7AA" }}>90%</div>
+                  <div className="text-xs mt-0.5" style={{ color: "#f8d5b8" }}>Max savings</div>
+                </div>
               </div>
             </div>
 
@@ -280,6 +291,10 @@ export default function HomePage() {
               </div>
             </div>
 
+          </div>
+          {/* Live deals ticker — spans full width, loads after render */}
+          <div style={{ maxWidth: "1180px", margin: "0 auto" }}>
+            <LiveDealsTicker />
           </div>
         </div>
       </section>
