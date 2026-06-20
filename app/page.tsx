@@ -37,24 +37,6 @@ async function HomePageData() {
 
   return (
     <div>
-      {/* ── CATEGORY BAR ── */}
-      <section className="bg-white border-b border-gray-100 py-4 sticky top-16 z-30 shadow-sm">
-        <div className="container-main">
-          <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
-            <Link href="/search" className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full bg-primary-500 text-white text-sm font-bold">
-              All Deals
-            </Link>
-            {categories.slice(0, 10).map((cat) => (
-              <Link key={cat.id} href={`/category/${cat.slug}`}
-                className="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full bg-gray-100 hover:bg-primary-100 hover:text-primary-700 text-gray-700 text-sm font-semibold transition-all whitespace-nowrap">
-                {cat.icon && <span>{cat.icon}</span>}
-                {cat.name}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── SEO INTRO TEXT ── */}
       <section className="bg-white border-b border-gray-100 py-6">
         <div className="container-main">
