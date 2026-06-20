@@ -19,6 +19,19 @@ export default async function CategoriesPage() {
     .select('id, name, slug, icon, description')
     .order('name')
 
+  // Fetch all stores' categories to count stores per category
+  const { data: storeRows } = await supabase
+    .from('stores')
+    .select('category')
+
+  const storeCountByCategory: Record<string, number> = {}
+  ;(storeRows || []).forEach((s: any) => {
+    if (s.category) {
+      const key = s.category.toLowerCase().trim()
+      storeCountByCategory[key] = (storeCountByCategory[key] || 0) + 1
+    }
+  })
+
   const allCats = cats || []
 
   // Group alphabetically
@@ -80,9 +93,14 @@ export default async function CategoriesPage() {
                     className="bg-white rounded-xl border border-gray-100 p-5 flex flex-col items-center gap-2 hover:border-primary-300 hover:bg-primary-50 transition-colors group text-center">
                     <div className="text-4xl">{cat.icon || '🏷️'}</div>
                     <div className="font-bold text-gray-900 text-sm group-hover:text-primary-600 transition-colors line-clamp-2 leading-tight">{cat.name}</div>
-                    {cat.description && (
-                      <div className="text-xs text-gray-500 line-clamp-2 leading-relaxed">{cat.description}</div>
-                    )}
+                    {(() => {
+                      const count = storeCountByCategory[cat.name.toLowerCase().trim()] || 0
+                      return (
+                        <div className="text-xs text-primary-600 font-semibold">
+                          {count} {count === 1 ? 'store' : 'stores'}
+                        </div>
+                      )
+                    })()}
                   </Link>
                 ))}
               </div>
