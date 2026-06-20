@@ -114,34 +114,33 @@ async function HomePageData() {
                 : 0
               return (
                 <Link key={store.id} href={`/store/${store.slug}`} prefetch={false}
-                  className="bg-white rounded-xl border border-gray-100 p-3 flex items-center gap-3 hover:border-primary-300 hover:shadow-md transition-all group">
-                  {/* Logo */}
-                  <div className="w-10 h-10 rounded-xl overflow-hidden border border-gray-100 bg-gray-50 flex items-center justify-center flex-shrink-0">
-                    {store.logo
-                      ? <Image src={store.logo} alt={`${store.name} logo`} width={40} height={40} className="object-contain p-1" />
-                      : <Tag className="w-5 h-5 text-primary-400" />}
-                  </div>
-                  {/* Info — stacked: name, offers, category */}
-                  <div className="flex-1 min-w-0">
-                    <div className="text-sm font-semibold text-gray-800 group-hover:text-primary-600 transition-colors truncate leading-tight">
-                      {store.name}
-                    </div>
-                    {couponCount > 0 && (
-                      <div className="text-[11px] text-primary-500 font-medium leading-tight mt-0.5 truncate">
-                        {couponCount} offers
-                      </div>
-                    )}
-                    {store.category && (
-                      <div className="text-[10px] text-gray-500 leading-tight mt-0.5 truncate">
-                        {store.category}
-                      </div>
-                    )}
-                  </div>
-                  {/* Discount badge */}
+                  className="relative bg-white rounded-xl border border-gray-100 p-4 flex flex-col items-center text-center hover:border-primary-300 hover:shadow-md transition-all group overflow-hidden">
+                  {/* Diagonal discount ribbon */}
                   {maxDiscount > 0 && (
-                    <div className="text-right flex-shrink-0">
-                      <div className="text-sm font-semibold text-primary-600 leading-none">{maxDiscount}%</div>
-                      <div className="text-[9px] text-gray-500 mt-0.5 whitespace-nowrap">max off</div>
+                    <div className="absolute top-2 -right-7 bg-[#EA580C] text-white text-[10px] font-bold px-7 py-0.5 rotate-45 whitespace-nowrap">
+                      {maxDiscount}% OFF
+                    </div>
+                  )}
+                  {/* Logo */}
+                  <div className="w-13 h-13 rounded-xl overflow-hidden border border-gray-100 bg-gray-50 flex items-center justify-center mb-2.5" style={{ width: '52px', height: '52px' }}>
+                    {store.logo
+                      ? <Image src={store.logo} alt={`${store.name} logo`} width={52} height={52} className="object-contain p-1.5" />
+                      : <Tag className="w-6 h-6 text-primary-400" />}
+                  </div>
+                  {/* Store name */}
+                  <div className="text-sm font-bold text-gray-800 group-hover:text-primary-600 transition-colors truncate w-full leading-tight">
+                    {store.name}
+                  </div>
+                  {/* Offer count */}
+                  {couponCount > 0 && (
+                    <div className="text-[11px] text-primary-500 font-medium leading-tight mt-1">
+                      {couponCount} offers
+                    </div>
+                  )}
+                  {/* Category */}
+                  {store.category && (
+                    <div className="text-[10px] text-gray-500 leading-tight mt-0.5 truncate w-full">
+                      {store.category}
                     </div>
                   )}
                 </Link>
