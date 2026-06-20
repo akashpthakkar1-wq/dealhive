@@ -85,23 +85,21 @@ export default async function StoresPage() {
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+              <div className="grid grid-cols-3 md:grid-cols-6 gap-2.5">
                 {grouped[letter].map((store) => (
                   <Link key={store.id} href={`/store/${store.slug}`}
-                    className="bg-white rounded-xl border border-gray-100 p-4 flex flex-col items-center gap-2.5 hover:border-primary-300 hover:shadow-md hover:bg-primary-50 transition-all group text-center">
-                    <div className="w-12 h-12 rounded-xl overflow-hidden flex items-center justify-center flex-shrink-0">
+                    className="bg-white rounded-xl border border-gray-100 px-2 py-3.5 flex flex-col items-center text-center hover:border-primary-300 hover:shadow-md transition-all group overflow-hidden">
+                    <div className="rounded-xl overflow-hidden flex items-center justify-center mb-2" style={{ width: '46px', height: '46px' }}>
                       {store.logo
                         ? <img src={store.logo} alt={`${store.name} logo`} className="w-full h-full object-contain" />
-                        : <Tag className="w-7 h-7 text-primary-300" />}
+                        : <Tag className="w-6 h-6 text-primary-300" />}
                     </div>
-                    <div>
-                      <div className="font-bold text-gray-900 text-xs group-hover:text-primary-600 transition-colors line-clamp-2 leading-tight">
-                        {store.name}
-                      </div>
-                      {store.category && (
-                        <div className="text-xs text-gray-500 mt-0.5">{store.category}</div>
-                      )}
+                    <div className="text-sm font-bold text-gray-900 group-hover:text-primary-600 transition-colors truncate w-full leading-tight">
+                      {store.name}
                     </div>
+                    {store.category && (
+                      <div className="text-xs text-gray-500 leading-tight mt-1 truncate w-full">{store.category}</div>
+                    )}
                   </Link>
                 ))}
               </div>
