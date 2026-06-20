@@ -102,7 +102,7 @@ async function HomePageData() {
           <SectionHeader icon={<Store className="w-5 h-5 text-primary-500" />}
             title="Popular Stores with Coupon Codes" subtitle="Find coupon codes & promo codes from 500+ global stores"
             href="/stores" />
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-2.5">
             {stores.map((store) => {
               const rawCoupons = (store as any).coupons as any[]
               const couponCount = Array.isArray(rawCoupons) ? rawCoupons.length : 0
