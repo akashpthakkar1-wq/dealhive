@@ -6,6 +6,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Suspense } from 'react'
 import dynamic from 'next/dynamic'
 const Toaster = dynamic(() => import('react-hot-toast').then(m => ({ default: m.Toaster })), { ssr: false })
+const ChatWidget = dynamic(() => import('@/components/chat/ChatWidget'), { ssr: false })
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import GlobalPopupHandler from '@/components/layout/GlobalPopupHandler'
@@ -137,6 +138,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Suspense fallback={null}>
           <GlobalPopupHandler />
         </Suspense>
+        <ChatWidget />
         <PWAInstallPrompt />
         <Analytics />
         <SpeedInsights />
