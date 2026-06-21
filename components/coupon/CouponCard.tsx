@@ -89,8 +89,8 @@ export default function CouponCard({ coupon }: CouponCardProps) {
             )}
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mt-auto">
-            <div className="flex flex-col gap-y-0.5 min-w-0">
+          <div className="flex flex-col items-start gap-2 mt-auto sm:flex-row-reverse sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-y-0.5 min-w-0 sm:items-end sm:text-right">
               <span className="text-[11px] text-gray-500 whitespace-nowrap">👥 {displayCount.toLocaleString()} used</span>
               {coupon.is_verified && (
                 <span className="text-[11px] font-semibold whitespace-nowrap" style={{ color: '#2f7d5b' }}>✓ Verified today</span>
