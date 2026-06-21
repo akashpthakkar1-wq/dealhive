@@ -98,7 +98,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
             </div>
 
             {isCode ? (
-              <button onClick={handleCTA} disabled={loading} className="inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#EA580C]">
+              <button onClick={handleCTA} disabled={loading} className="self-start min-[420px]:self-auto inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#EA580C]">
                 <span className="bg-[#EA580C] text-white px-3 py-1.5 flex flex-col items-start justify-center gap-0 hover:bg-[#C2410C] transition-colors">
                   <span className="text-[13px] font-semibold leading-snug whitespace-nowrap">{loading ? 'Opening...' : 'Get Code'}</span>
                   <span className="text-[9px] text-white/80 font-normal leading-snug whitespace-nowrap">tap to reveal</span>
@@ -111,7 +111,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
                 </span>
               </button>
             ) : (
-              <button onClick={handleCTA} disabled={loading} className="inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#059669]">
+              <button onClick={handleCTA} disabled={loading} className="self-start min-[420px]:self-auto inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#059669]">
                 <span className="bg-[#059669] text-white px-3 py-1.5 flex flex-col items-start justify-center gap-0 hover:bg-[#047857] transition-colors">
                   <span className="text-[13px] font-semibold leading-snug whitespace-nowrap">{loading ? 'Opening...' : 'Activate Deal'}</span>
                   <span className="text-[9px] text-white/80 font-normal leading-snug whitespace-nowrap">auto-applied at checkout</span>
