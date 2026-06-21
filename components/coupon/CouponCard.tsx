@@ -61,8 +61,8 @@ export default function CouponCard({ coupon }: CouponCardProps) {
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden h-full flex flex-col">
       <div className="flex flex-1">
 
-        <div className="flex flex-col items-center justify-center flex-shrink-0 text-center px-2.5 bg-[#1B2433]" style={{ minWidth: '90px', maxWidth: '90px' }}>
-          <span className="font-extrabold leading-tight break-words w-full" style={{ fontSize: '17px', color: '#FDBA74' }}>
+        <div className="relative flex flex-col items-center justify-center flex-shrink-0 text-center px-2.5 bg-[#EA580C]" style={{ minWidth: '90px', maxWidth: '90px', borderRight: '3px dotted #ffffff' }}>
+          <span className="text-white font-extrabold leading-tight break-words w-full" style={{ fontSize: '17px' }}>
             {coupon.discount}
           </span>
         </div>
