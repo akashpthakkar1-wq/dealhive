@@ -89,8 +89,8 @@ export default function CouponCard({ coupon }: CouponCardProps) {
             )}
           </div>
 
-          <div className="flex flex-col items-start gap-2 mt-auto sm:flex-row-reverse sm:items-center sm:justify-between">
-            <div className="flex flex-col gap-y-0.5 min-w-0 sm:items-end sm:text-right">
+          <div className="flex flex-col gap-2 mt-auto sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-y-0.5 min-w-0">
               <span className="text-[11px] text-gray-500 whitespace-nowrap">👥 {displayCount.toLocaleString()} used</span>
               {coupon.is_verified && (
                 <span className="text-[11px] font-semibold whitespace-nowrap" style={{ color: '#2f7d5b' }}>✓ Verified today</span>
@@ -98,7 +98,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
             </div>
 
             {isCode ? (
-              <button onClick={handleCTA} disabled={loading} className="self-start sm:self-auto inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#EA580C]">
+              <button onClick={handleCTA} disabled={loading} className="self-end sm:self-auto inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#EA580C]">
                 <span className="bg-[#EA580C] text-white px-3 py-1.5 flex flex-col items-start justify-center gap-0 hover:bg-[#C2410C] transition-colors">
                   <span className="text-[13px] font-semibold leading-snug whitespace-nowrap">{loading ? 'Opening...' : 'Get Code'}</span>
                   <span className="text-[9px] text-white/80 font-normal leading-snug whitespace-nowrap">tap to reveal</span>
@@ -111,7 +111,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
                 </span>
               </button>
             ) : (
-              <button onClick={handleCTA} disabled={loading} className="self-start sm:self-auto inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#059669]">
+              <button onClick={handleCTA} disabled={loading} className="self-end sm:self-auto inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#059669]">
                 <span className="bg-[#059669] text-white px-3 py-1.5 flex flex-col items-start justify-center gap-0 hover:bg-[#047857] transition-colors">
                   <span className="text-[13px] font-semibold leading-snug whitespace-nowrap">{loading ? 'Opening...' : 'Activate Deal'}</span>
                   <span className="text-[9px] text-white/80 font-normal leading-snug whitespace-nowrap">auto-applied at checkout</span>
