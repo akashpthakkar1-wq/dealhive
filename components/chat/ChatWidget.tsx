@@ -33,6 +33,7 @@ export default function ChatWidget() {
   const [sending, setSending] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const userRef = useRef<string>("");
+  const catalogRef = useRef<Deal[]>([]);
 
   useEffect(() => {
     if (!userRef.current) userRef.current = "u_" + Math.random().toString(36).slice(2, 10);
@@ -42,8 +43,8 @@ export default function ChatWidget() {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
   }, [msgs, open]);
 
-  async function loadCatalog() {
-    if (loaded) return;
+  async function loadCatalog(): Promise<Deal[]> {
+    if (loaded && catalogRef.current.length) return catalogRef.current;
     try {
       const { createClient } = await import("@supabase/supabase-js");
       const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
@@ -57,9 +58,19 @@ export default function ChatWidget() {
         affiliate_url: c.affiliate_url, store: c.store?.name || "", storeSlug: c.store?.slug || "",
         category: c.store?.category || "", _trending: c.is_trending,
       }));
+      catalogRef.current = mapped as Deal[];
       setCatalog(mapped as Deal[]);
-    } catch { setCatalog([]); }
-    setLoaded(true);
+      setLoaded(true);
+      return mapped as Deal[];
+    } catch {
+      setLoaded(true);
+      return [];
+    }
+  }
+
+  async function ensureCatalog(): Promise<Deal[]> {
+    if (catalogRef.current.length) return catalogRef.current;
+    return await loadCatalog();
   }
 
   function pushBot(m: Msg) { setMsgs((prev) => [...prev, m]); }
@@ -80,23 +91,26 @@ export default function ChatWidget() {
     if (msgs.length === 0) greeting();
   }
 
+  function getCat(): Deal[] { return catalogRef.current.length ? catalogRef.current : catalog; }
   function dealsForCategory(cat: string): Deal[] {
-    return catalog.filter((d) => (d.category || "").toLowerCase() === cat.toLowerCase()).slice(0, 5);
+    return getCat().filter((d) => (d.category || "").toLowerCase() === cat.toLowerCase()).slice(0, 5);
   }
   function topDeals(): Deal[] {
-    const t = catalog.filter((d: any) => d._trending);
-    return (t.length ? t : catalog).slice(0, 5);
+    const list = getCat();
+    const t = list.filter((d: any) => d._trending);
+    return (t.length ? t : list).slice(0, 5);
   }
   function popularStores(): string[] {
     const seen: string[] = [];
-    for (const d of catalog) { if (d.store && !seen.includes(d.store)) seen.push(d.store); if (seen.length >= 6) break; }
+    for (const d of getCat()) { if (d.store && !seen.includes(d.store)) seen.push(d.store); if (seen.length >= 6) break; }
     return seen;
   }
   function dealsForStore(name: string): Deal[] {
-    return catalog.filter((d) => d.store.toLowerCase() === name.toLowerCase()).slice(0, 6);
+    return getCat().filter((d) => d.store.toLowerCase() === name.toLowerCase()).slice(0, 6);
   }
 
-  function handleChip(action: string, value?: string) {
+  async function handleChip(action: string, value?: string) {
+    await ensureCatalog();
     if (action === "find_store") {
       pushBot({ role: "user", kind: "text", text: "Find by store" });
       const chips = popularStores().map((s) => ({ label: s, action: "store_pick", value: s }));
@@ -142,7 +156,7 @@ export default function ChatWidget() {
   }
 
   const storeMatches = storeMode && input.trim().length >= 2
-    ? Array.from(new Set(catalog.map((d) => d.store))).filter((s) => s.toLowerCase().includes(input.trim().toLowerCase())).slice(0, 5)
+    ? Array.from(new Set(getCat().map((d) => d.store))).filter((s) => s.toLowerCase().includes(input.trim().toLowerCase())).slice(0, 5)
     : [];
 
   async function handleSend() {
@@ -161,7 +175,7 @@ export default function ChatWidget() {
       const res = await fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message: text }) });
       const data = await res.json();
       setMsgs((prev) => prev.slice(0, -1));
-      const deals = (data.dealIds || []).map((id: string) => catalog.find((d) => d.id === id)).filter(Boolean) as Deal[];
+      const deals = (data.dealIds || []).map((id: string) => getCat().find((d) => d.id === id)).filter(Boolean) as Deal[];
       if (deals.length) {
         pushBot({ role: "bot", kind: "deals", text: data.reply, deals });
       } else if (data.action === "show_alerts") {
