@@ -75,6 +75,12 @@ export default function ChatWidget() {
 
   function pushBot(m: Msg) { setMsgs((prev) => [...prev, m]); }
 
+  function pushDeals(text: string, deals: Deal[]) {
+    pushBot({ role: "bot", kind: "deals", text, deals });
+    pushBot({ role: "bot", kind: "text", text: "You can pick a coupon from above to reveal its code." });
+    pushBot({ role: "bot", kind: "chips", chips: [{ label: "Start over", action: "menu" }]});
+  }
+
   function greeting() {
     pushBot({ role: "bot", kind: "text", text: "Hi! I'm your EndOverPay deal finder. How can I help you save today?" });
     pushBot({ role: "bot", kind: "chips", chips: [
@@ -127,11 +133,11 @@ export default function ChatWidget() {
     } else if (action === "category_pick" && value) {
       pushBot({ role: "user", kind: "text", text: value });
       const deals = dealsForCategory(value);
-      if (deals.length) pushBot({ role: "bot", kind: "deals", text: `Top ${value} deals:`, deals });
+      if (deals.length) pushDeals(`Top ${value} deals:`, deals);
       else pushBot({ role: "bot", kind: "text", text: `No live ${value} deals right now â try another category.` });
     } else if (action === "top_deals") {
       pushBot({ role: "user", kind: "text", text: "Today's top deals" });
-      pushBot({ role: "bot", kind: "deals", text: "Today's trending deals:", deals: topDeals() });
+      pushDeals("Today's trending deals:", topDeals());
     } else if (action === "alerts") {
       pushBot({ role: "user", kind: "text", text: "Get deal alerts" });
       setAlertPicks([]);
@@ -146,7 +152,7 @@ export default function ChatWidget() {
     setStoreMode(false);
     const deals = dealsForStore(name);
     if (deals.length) {
-      pushBot({ role: "bot", kind: "deals", text: `${name} deals:`, deals });
+      pushDeals(`${name} deals:`, deals);
     } else {
       pushBot({ role: "bot", kind: "text", text: `We don't have deals for "${name}" yet.` });
       const chips = popularStores().map((s) => ({ label: s, action: "store_pick", value: s }));
@@ -177,7 +183,7 @@ export default function ChatWidget() {
       setMsgs((prev) => prev.slice(0, -1));
       const deals = (data.dealIds || []).map((id: string) => getCat().find((d) => d.id === id)).filter(Boolean) as Deal[];
       if (deals.length) {
-        pushBot({ role: "bot", kind: "deals", text: data.reply, deals });
+        pushDeals(data.reply, deals);
       } else if (data.action === "show_alerts") {
         setAlertPicks([]); pushBot({ role: "bot", kind: "alerts", text: data.reply });
       } else {
