@@ -108,15 +108,11 @@ export default async function StorePage({ params }: Props) {
 
 
   const maxDiscount = allCoupons.reduce((max, c) => { const n = parseInt(c.discount || '0'); return n > max ? n : max }, 0)
-  const totalUses   = allCoupons.reduce((a, c) => a + (c.usage_count || 0), 0)
-  const displayUses = totalUses > 0 ? totalUses : stableNum(store.id + 'uses', 5000, 50000)
 
   // Stable random rating per store: 4.0 – 4.9
   const ratingRaw = 40 + stableNum(store.id + 'rating', 0, 9)
   const rating = (ratingRaw / 10).toFixed(1)
-  // Shared, logically-consistent counts: shoppers >= reviews (only some shoppers review)
   const reviewCount = Math.max(200, stableNum(store.id, 200, 2000))
-  const shopperCount = reviewCount * stableNum(store.id + 'mult', 6, 12)
 
   const sidebarStores = relatedStores.slice(0, 5)
   const month = new Date().toLocaleString('en-IN', { month: 'long', year: 'numeric' })
@@ -220,9 +216,6 @@ export default async function StorePage({ params }: Props) {
               <div className="flex flex-wrap items-center gap-2 md:gap-3 mt-2">
                 <RatingStars rating={parseFloat(rating)} />
                 <span className="text-xs md:text-sm font-semibold text-gray-700">{rating}</span>
-                <span className="hidden sm:inline text-xs md:text-sm text-gray-500">
-                  by {shopperCount.toLocaleString()}+ shoppers
-                </span>
                 {store.website_url && (
                   <a href={store.website_url} target="_blank" rel="noopener noreferrer"
                     className="btn-primary btn-sm flex items-center gap-1 text-xs px-2.5 py-1.5 md:px-4 md:py-2 md:text-sm md:gap-1.5">
@@ -262,18 +255,6 @@ export default async function StorePage({ params }: Props) {
               <span className="text-xs sm:text-sm font-bold text-primary-600">
                 {maxDiscount > 0 ? `${maxDiscount}% OFF` : 'Great Deals'}
               </span>
-            </div>
-
-            {/* Codes — desktop only */}
-            <div className="hidden sm:flex items-center justify-start gap-2 px-4 py-2.5 rounded-xl border font-semibold bg-white border-gray-100 text-gray-700">
-              <span className="text-xs text-gray-500 font-medium">Codes</span>
-              <span className="text-sm font-bold">{codeCoupons.length}</span>
-            </div>
-
-            {/* Total Uses — always visible */}
-            <div className="flex items-center justify-between sm:justify-start gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl border font-semibold bg-white border-gray-100 text-gray-700">
-              <span className="text-xs text-gray-500 font-medium leading-tight">Total Uses</span>
-              <span className="text-xs sm:text-sm font-bold">{displayUses.toLocaleString()}</span>
             </div>
 
           </div>
@@ -462,7 +443,6 @@ export default async function StorePage({ params }: Props) {
                   { l: 'Total Offers', v: allCoupons.length, I: Tag },
                   { l: 'Active Codes', v: activeCoupons.length, I: CheckCircle },
                   { l: 'Best Discount', v: maxDiscount > 0 ? `${maxDiscount}% OFF` : 'N/A', I: TrendingUp },
-                  { l: 'Total Uses', v: displayUses.toLocaleString(), I: Users },
                 ].map(({ l, v, I }) => (
                   <div key={l} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
                     <div className="flex items-center gap-2 text-sm text-gray-500"><I className="w-4 h-4 text-primary-400" />{l}</div>
