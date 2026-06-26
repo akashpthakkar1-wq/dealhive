@@ -114,6 +114,9 @@ export default async function StorePage({ params }: Props) {
   // Stable random rating per store: 4.0 – 4.9
   const ratingRaw = 40 + stableNum(store.id + 'rating', 0, 9)
   const rating = (ratingRaw / 10).toFixed(1)
+  // Shared, logically-consistent counts: shoppers >= reviews (only some shoppers review)
+  const reviewCount = Math.max(200, stableNum(store.id, 200, 2000))
+  const shopperCount = reviewCount * stableNum(store.id + 'mult', 6, 12)
 
   const sidebarStores = relatedStores.slice(0, 5)
   const month = new Date().toLocaleString('en-IN', { month: 'long', year: 'numeric' })
@@ -166,7 +169,7 @@ export default async function StorePage({ params }: Props) {
         // 5. AggregateRating — may unlock star ratings in search results
         { '@context': 'https://schema.org', '@type': 'Organization', name: store.name,
           aggregateRating: { '@type': 'AggregateRating', ratingValue: rating, bestRating: '5', worstRating: '1',
-            ratingCount: Math.max(200, stableNum(store.id, 200, 2000)),
+            ratingCount: reviewCount,
           },
         }] : []),
       ])}} />
@@ -218,7 +221,7 @@ export default async function StorePage({ params }: Props) {
                 <RatingStars rating={parseFloat(rating)} />
                 <span className="text-xs md:text-sm font-semibold text-gray-700">{rating}</span>
                 <span className="hidden sm:inline text-xs md:text-sm text-gray-500">
-                  by {Math.max(100, (displayUses / 100) | 0).toLocaleString()}+ shoppers
+                  by {shopperCount.toLocaleString()}+ shoppers
                 </span>
                 {store.website_url && (
                   <a href={store.website_url} target="_blank" rel="noopener noreferrer"
@@ -475,7 +478,7 @@ export default async function StorePage({ params }: Props) {
               <div className="text-center mb-3">
                 <div className="text-5xl font-extrabold text-gray-900 mb-1">{rating}</div>
                 <RatingStars rating={parseFloat(rating)} />
-                <div className="text-xs text-gray-500 mt-1">{Math.max(200, stableNum(store.id, 200, 2000)).toLocaleString()}+ verified reviews</div>
+                <div className="text-xs text-gray-500 mt-1">{reviewCount.toLocaleString()}+ verified reviews</div>
               </div>
               <div className="space-y-1.5">
                 {[
