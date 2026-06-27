@@ -62,12 +62,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const rawMeta = `${countText} ${store.name} coupon codes for ${month}. Save up to 90% off on ${store.name} deals. All codes manually tested & updated daily. Get your ${store.name} promo code now.`
   const autoDesc = rawMeta.length > 155 ? rawMeta.slice(0, 152) + '…' : rawMeta
   const description = store.meta_description ? applyDateTokens(store.meta_description) : autoDesc
+  const finalTitle = store.meta_title ? applyDateTokens(store.meta_title) : `${store.name} Coupons – Get Verified Promo Codes & Deals | Up to 90% Off`
   return {
-    title: store.meta_title ? applyDateTokens(store.meta_title) : `${store.name} Coupons – Get Verified Promo Codes & Deals | Up to 90% Off`,
+    title: finalTitle,
     description,
     alternates: { canonical: `${SITE_URL}/store/${store.slug}` },
     openGraph: {
-      title: `${store.name} Coupons & Promo Codes ${month} – Up to 90% Off | ${SITE_NAME}`,
+      title: store.meta_title ? finalTitle : `${store.name} Coupons & Promo Codes ${month} – Up to 90% Off | ${SITE_NAME}`,
       description,
       url: `${SITE_URL}/store/${store.slug}`,
       siteName: SITE_NAME,
@@ -77,7 +78,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${store.name} Discount Codes & Voucher Codes – Up to 90% Off | ${SITE_NAME}`,
+      title: store.meta_title ? finalTitle : `${store.name} Discount Codes & Voucher Codes – Up to 90% Off | ${SITE_NAME}`,
       description,
       images: [logoUrl],
     },
