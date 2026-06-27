@@ -7,7 +7,7 @@ import { createClient } from '@/lib/supabase'
 import { slugify } from '@/lib/utils'
 import type { Store as StoreType } from '@/types'
 
-const empty = { name: '', slug: '', logo: '', description: '', website_url: '', category: '', about_content: '', how_to_use_content: '', saving_tips_content: '', faq_content: '', content_reviewed: false }
+const empty = { name: '', slug: '', logo: '', description: '', website_url: '', category: '', meta_title: '', meta_description: '', h1: '', about_content: '', how_to_use_content: '', saving_tips_content: '', faq_content: '', content_reviewed: false }
 const cats = ['Fashion', 'Electronics', 'Food', 'Travel', 'Beauty', 'Home', 'Gaming', 'Health', 'Other']
 
 export default function AdminStores() {
@@ -33,7 +33,7 @@ export default function AdminStores() {
 
   function openAdd() { setForm(empty); setEditId(null); setShowForm(true) }
   function openEdit(s: StoreType) {
-    setForm({ name: s.name, slug: s.slug, logo: s.logo || '', description: s.description || '', website_url: s.website_url || '', category: s.category || '', about_content: s.about_content || '', how_to_use_content: s.how_to_use_content || '', saving_tips_content: s.saving_tips_content || '', faq_content: s.faq_content ? JSON.stringify(s.faq_content, null, 2) : '', content_reviewed: s.content_reviewed || false })
+    setForm({ name: s.name, slug: s.slug, logo: s.logo || '', description: s.description || '', website_url: s.website_url || '', category: s.category || '', meta_title: s.meta_title || '', meta_description: s.meta_description || '', h1: s.h1 || '', about_content: s.about_content || '', how_to_use_content: s.how_to_use_content || '', saving_tips_content: s.saving_tips_content || '', faq_content: s.faq_content ? JSON.stringify(s.faq_content, null, 2) : '', content_reviewed: s.content_reviewed || false })
     setEditId(s.id)
     setShowForm(true)
   }
@@ -117,6 +117,24 @@ export default function AdminStores() {
               <input value={form.website_url} onChange={(e) => setForm({ ...form, website_url: e.target.value })}
                 className="input-base" placeholder="https://amazon.in" />
             </div>
+
+            <div className="border-t border-gray-200 pt-4 mt-2">
+              <p className="text-sm font-semibold text-gray-700 mb-1">SEO Overrides (optional)</p>
+              <p className="text-xs text-gray-500 mb-3">Leave blank to auto-generate. Use {'{month}'} and {'{year}'} for the live date — e.g. "Mr Button Coupon Codes – 40% OFF, {'{month}'} {'{year}'}".</p>
+
+              <label className="label-base">Meta Title</label>
+              <input value={form.meta_title} onChange={(e) => setForm({ ...form, meta_title: e.target.value })}
+                className="input-base" placeholder="Mr Button Coupon Codes – 40% OFF, {month} {year}" />
+
+              <label className="label-base mt-3">H1 Heading</label>
+              <input value={form.h1} onChange={(e) => setForm({ ...form, h1: e.target.value })}
+                className="input-base" placeholder="Mr Button Coupon Codes & Offers" />
+
+              <label className="label-base mt-3">Meta Description</label>
+              <textarea value={form.meta_description} onChange={(e) => setForm({ ...form, meta_description: e.target.value })}
+                className="input-base" rows={2} placeholder="Verified Mr Button coupon codes for {month} {year}. Save on shirts, blazers & suits. Checked daily by EndOverPay." />
+            </div>
+
             <ContentGenerator
               storeName={form.name}
               category={form.category}

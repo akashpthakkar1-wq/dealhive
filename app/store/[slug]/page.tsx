@@ -36,6 +36,19 @@ export async function generateStaticParams() {
   return (data || []).map(s => ({ slug: s.slug }))
 }
 
+// Replaces {month}, {year}, {month_short} placeholders with the live date.
+// Used so manually-written titles/H1s can auto-update their month every month.
+function applyDateTokens(text: string): string {
+  const now = new Date()
+  const monthLong = now.toLocaleString('en-IN', { month: 'long' })
+  const monthShort = now.toLocaleString('en-IN', { month: 'short' })
+  const year = now.getFullYear().toString()
+  return text
+    .replace(/\{month\}/g, monthLong)
+    .replace(/\{month_short\}/g, monthShort)
+    .replace(/\{year\}/g, year)
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const store = await getStoreBySlug(params.slug)
   if (!store) return { title: 'Store Not Found' }
@@ -47,9 +60,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const couponCount = couponsForMeta?.length || 0
   const countText = couponCount > 0 ? `${couponCount} verified` : 'Verified'
   const rawMeta = `${countText} ${store.name} coupon codes for ${month}. Save up to 90% off on ${store.name} deals. All codes manually tested & updated daily. Get your ${store.name} promo code now.`
-  const description = rawMeta.length > 155 ? rawMeta.slice(0, 152) + '…' : rawMeta
+  const autoDesc = rawMeta.length > 155 ? rawMeta.slice(0, 152) + '…' : rawMeta
+  const description = store.meta_description ? applyDateTokens(store.meta_description) : autoDesc
   return {
-    title: `${store.name} Coupons – Get Verified Promo Codes & Deals | Up to 90% Off`,
+    title: store.meta_title ? applyDateTokens(store.meta_title) : `${store.name} Coupons – Get Verified Promo Codes & Deals | Up to 90% Off`,
     description,
     alternates: { canonical: `${SITE_URL}/store/${store.slug}` },
     openGraph: {
@@ -197,8 +211,12 @@ export default async function StorePage({ params }: Props) {
 
               {/* Title */}
               <h1 className="text-lg leading-tight md:text-3xl font-extrabold text-gray-900">
-                {store.name} Coupons, Promo Codes &amp; Voucher Codes
-                <span className="hidden md:inline"> – {month}</span>
+                {store.h1 ? applyDateTokens(store.h1) : (
+                  <>
+                    {store.name} Coupons, Promo Codes &amp; Voucher Codes
+                    <span className="hidden md:inline"> – {month}</span>
+                  </>
+                )}
               </h1>
 
               {/* Byline */}

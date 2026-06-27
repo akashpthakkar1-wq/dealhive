@@ -14,6 +14,9 @@ export interface Store {
   faq_content?: any | null
   content_reviewed?: boolean
   content_generated_at?: string | null
+  meta_title?: string | null
+  meta_description?: string | null
+  h1?: string | null
 }
 
 export interface Category {
