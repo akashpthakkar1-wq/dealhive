@@ -20,6 +20,13 @@ Password: Riva@2016
 ## Current Stores (10)
 AliExpress, Amazon, Flipkart, MakeMyTrip, Myntra, Nykaa, SHEIN, Swiggy, Temu, Zomato
 
+## SEO Compliance Rules (standing)
+- All outbound merchant links must carry rel="sponsored nofollow". Store-page template links are already compliant; verify any NEWLY-added outbound `<a href>` link to a merchant.
+- Store title/H1/meta_description support manual overrides via admin "SEO Overrides" fields. Blank = auto-generated fallback. Use {month}, {year}, {month_short} tokens for auto-updating dates.
+- Every store needs UNIQUE about/how-to/tips/FAQ content (swap test: if you can swap the store name and it still reads fine, it's too generic).
+- Rollout pace: max 5-10 new stores/week (avoids scaled-content-abuse flag).
+- KNOWN RISK: AggregateRating JSON-LD on store pages uses fabricated rating/review numbers — manual-action risk; replace with real vote widget.
+
 ## Pending Tasks
 1. Add 30+ new stores (India + Global)
 2. Set Deal of Day Slots 4 and 5
