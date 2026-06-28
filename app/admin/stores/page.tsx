@@ -183,7 +183,7 @@ export default function AdminStores() {
                       </div>
                     </td>
                     <td className="px-5 py-3"><span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full font-medium">{s.category || '—'}</span></td>
-                    <td className="px-5 py-3"><a href={s.website_url || '#'} target="_blank" className="text-xs text-blue-500 hover:underline truncate max-w-[120px] block">{s.website_url?.replace('https://', '') || '—'}</a></td>
+                    <td className="px-5 py-3"><a href={s.website_url || '#'} target="_blank" rel="sponsored nofollow noopener noreferrer" className="text-xs text-blue-500 hover:underline truncate max-w-[120px] block">{s.website_url?.replace('https://', '') || '—'}</a></td>
                     <td className="px-5 py-3 font-mono text-xs text-gray-400">{s.slug}</td>
                     <td className="px-5 py-3">
                       <div className="flex gap-2">
