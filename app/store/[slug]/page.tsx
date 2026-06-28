@@ -124,10 +124,6 @@ export default async function StorePage({ params }: Props) {
 
   const maxDiscount = allCoupons.reduce((max, c) => { const n = parseInt(c.discount || '0'); return n > max ? n : max }, 0)
 
-  // Stable random rating per store: 4.0 – 4.9
-  const ratingRaw = 40 + stableNum(store.id + 'rating', 0, 9)
-  const rating = (ratingRaw / 10).toFixed(1)
-  const reviewCount = Math.max(200, stableNum(store.id, 200, 2000))
 
   const sidebarStores = relatedStores.slice(0, 5)
   const month = new Date().toLocaleString('en-IN', { month: 'long', year: 'numeric' })
@@ -155,7 +151,7 @@ export default async function StorePage({ params }: Props) {
   return (
     <div className="min-h-screen bg-gray-50">
 
-      {/* JSON-LD — Store + BreadcrumbList + FAQPage + ItemList + AggregateRating */}
+      {/* JSON-LD — Store + BreadcrumbList + FAQPage + ItemList */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([
         // 1. Store entity
         { '@context': 'https://schema.org', '@type': 'Organization', name: store.name, url: store.website_url, logo: store.logo, description: store.description || `Find ${store.name} coupon codes on ${SITE_NAME}.` },
@@ -177,12 +173,7 @@ export default async function StorePage({ params }: Props) {
             },
           }))
         },
-        // 5. AggregateRating — may unlock star ratings in search results
-        { '@context': 'https://schema.org', '@type': 'Organization', name: store.name,
-          aggregateRating: { '@type': 'AggregateRating', ratingValue: rating, bestRating: '5', worstRating: '1',
-            ratingCount: reviewCount,
-          },
-        }] : []),
+        ] : []),
       ])}} />
 
       {/* ── HERO ────────────────────────────────────── */}
@@ -231,10 +222,8 @@ export default async function StorePage({ params }: Props) {
                 {store.description || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
               </p>
 
-              {/* Rating + Visit button */}
+              {/* Visit button */}
               <div className="flex flex-wrap items-center gap-2 md:gap-3 mt-2">
-                <RatingStars rating={parseFloat(rating)} />
-                <span className="text-xs md:text-sm font-semibold text-gray-700">{rating}</span>
                 {store.website_url && (
                   <a href={store.website_url} target="_blank" rel="sponsored nofollow noopener noreferrer"
                     className="btn-primary btn-sm flex items-center gap-1 text-xs px-2.5 py-1.5 md:px-4 md:py-2 md:text-sm md:gap-1.5">
@@ -471,33 +460,6 @@ export default async function StorePage({ params }: Props) {
               </div>
             </div>
 
-            {/* Rating */}
-            <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
-              <h3 className="font-bold text-gray-900 text-sm uppercase tracking-wider mb-4">Shopper Rating</h3>
-              <div className="text-center mb-3">
-                <div className="text-5xl font-extrabold text-gray-900 mb-1">{rating}</div>
-                <RatingStars rating={parseFloat(rating)} />
-                <div className="text-xs text-gray-500 mt-1">{reviewCount.toLocaleString()}+ verified reviews</div>
-              </div>
-              <div className="space-y-1.5">
-                {[
-                  { s: 5, p: stableNum(store.id + '5', 50, 70) },
-                  { s: 4, p: stableNum(store.id + '4', 15, 30) },
-                  { s: 3, p: stableNum(store.id + '3', 5, 15) },
-                  { s: 2, p: stableNum(store.id + '2', 2, 8) },
-                  { s: 1, p: stableNum(store.id + '1', 1, 4) },
-                ].map(({ s, p }) => (
-                  <div key={s} className="flex items-center gap-2 text-xs">
-                    <span className="text-gray-500 w-4 text-right">{s}</span>
-                    <Star className="w-3 h-3 text-yellow-400 fill-yellow-400 flex-shrink-0" />
-                    <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-                      <div className="h-full bg-yellow-400 rounded-full" style={{ width: `${p}%` }} />
-                    </div>
-                    <span className="text-gray-500 w-7 text-right">{p}%</span>
-                  </div>
-                ))}
-              </div>
-            </div>
 
             {/* Today's best */}
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
