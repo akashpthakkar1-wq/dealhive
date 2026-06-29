@@ -8,6 +8,7 @@ import CouponCard from '@/components/coupon/CouponCard'
 import { getStoreBySlug, getCouponsByStore, getRelatedStores, getCouponsByCategory } from '@/lib/queries'
 import { formatDate, isExpired, SITE_NAME, SITE_URL } from '@/lib/utils'
 import StoreFilterTabs from '@/components/ui/StoreFilterTabs'
+import StoreRating from '@/components/store/StoreRating'
 
 interface Props {
   params: { slug: string }
@@ -123,6 +124,10 @@ export default async function StorePage({ params }: Props) {
 
 
   const maxDiscount = allCoupons.reduce((max, c) => { const n = parseInt(c.discount || '0'); return n > max ? n : max }, 0)
+  // Real ratings from DB (rating_sum / rating_count). Avg only meaningful at >= 3 votes (widget enforces display threshold).
+  const ratingCount = store.rating_count || 0
+  const ratingAvg = ratingCount > 0 ? Math.round((store.rating_sum || 0) / ratingCount * 10) / 10 : 0
+  const showRatingSchema = ratingCount >= 3
 
 
   const sidebarStores = relatedStores.slice(0, 5)
@@ -174,6 +179,16 @@ export default async function StorePage({ params }: Props) {
           }))
         },
         ] : []),
+        // AggregateRating — emitted ONLY when backed by >= 3 real votes
+        ...(showRatingSchema ? [{
+          '@context': 'https://schema.org', '@type': 'Organization', name: store.name,
+          aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: ratingAvg.toFixed(1),
+            bestRating: '5', worstRating: '1',
+            ratingCount: ratingCount,
+          },
+        }] : []),
       ])}} />
 
       {/* ── HERO ────────────────────────────────────── */}
@@ -460,6 +475,9 @@ export default async function StorePage({ params }: Props) {
               </div>
             </div>
 
+
+            {/* Real store rating widget (shows public avg only at >= 3 votes) */}
+            <StoreRating storeId={store.id} storeName={store.name} initialCount={ratingCount} initialAverage={ratingAvg} />
 
             {/* Today's best */}
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">

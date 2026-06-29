@@ -17,6 +17,8 @@ export interface Store {
   meta_title?: string | null
   meta_description?: string | null
   h1?: string | null
+  rating_sum?: number
+  rating_count?: number
 }
 
 export interface Category {
