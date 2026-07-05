@@ -83,9 +83,9 @@ export default function CouponCard({ coupon }: CouponCardProps) {
           </div>
 
           <div>
-            <p className="text-sm font-semibold text-gray-800 leading-snug line-clamp-2">{coupon.title}</p>
+            <p className="text-[15px] font-semibold text-gray-800 leading-snug line-clamp-2">{coupon.title}</p>
             {coupon.description && (
-              <p className="text-xs text-gray-500 mt-1 leading-snug line-clamp-1">{coupon.description}</p>
+              <p className="text-sm text-gray-500 mt-1 leading-snug line-clamp-1">{coupon.description}</p>
             )}
           </div>
 
