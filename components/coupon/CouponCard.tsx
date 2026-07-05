@@ -75,10 +75,10 @@ export default function CouponCard({ coupon }: CouponCardProps) {
               <span className="text-[15px] font-bold text-gray-900 truncate">{coupon.store?.name}</span>
             </div>
             {coupon.is_trending && (
-              <span className="text-[10px] text-orange-800 bg-orange-100 border border-orange-200 px-2 py-px rounded-full font-semibold whitespace-nowrap flex-shrink-0">🔥 Trending</span>
+              <span className="text-[12px] text-orange-800 bg-orange-100 border border-orange-200 px-2 py-px rounded-full font-semibold whitespace-nowrap flex-shrink-0">🔥 Trending</span>
             )}
             {coupon.is_featured && !coupon.is_trending && (
-              <span className="text-[10px] text-yellow-700 bg-yellow-50 border border-yellow-200 px-2 py-px rounded-full font-semibold whitespace-nowrap flex-shrink-0">⭐ Featured</span>
+              <span className="text-[12px] text-yellow-700 bg-yellow-50 border border-yellow-200 px-2 py-px rounded-full font-semibold whitespace-nowrap flex-shrink-0">⭐ Featured</span>
             )}
           </div>
 
@@ -91,9 +91,9 @@ export default function CouponCard({ coupon }: CouponCardProps) {
 
           <div className="flex flex-col gap-2 mt-auto sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col gap-y-0.5 min-w-0">
-              <span className="text-[11px] text-gray-500 whitespace-nowrap">👥 {displayCount.toLocaleString()} used</span>
+              <span className="text-[12px] text-gray-500 whitespace-nowrap">👥 {displayCount.toLocaleString()} used</span>
               {coupon.is_verified && (
-                <span className="text-[11px] font-semibold whitespace-nowrap" style={{ color: '#2f7d5b' }}>✓ Verified today</span>
+                <span className="text-[12px] font-semibold whitespace-nowrap" style={{ color: '#2f7d5b' }}>✓ Verified today</span>
               )}
             </div>
 
@@ -101,7 +101,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
               <button onClick={handleCTA} disabled={loading} className="self-end sm:self-auto inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#EA580C]">
                 <span className="bg-[#EA580C] text-white px-3 py-1.5 flex flex-col items-start justify-center gap-0 hover:bg-[#C2410C] transition-colors">
                   <span className="text-[13px] font-semibold leading-snug whitespace-nowrap">{loading ? 'Opening...' : 'Get Code'}</span>
-                  <span className="text-[9px] text-white/80 font-normal leading-snug whitespace-nowrap">tap to reveal</span>
+                  <span className="text-[11px] text-white/80 font-normal leading-snug whitespace-nowrap">tap to reveal</span>
                 </span>
                 <span className="bg-[#C2410C] px-2 flex items-center justify-center border-l border-orange-700">
                   <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -114,7 +114,7 @@ export default function CouponCard({ coupon }: CouponCardProps) {
               <button onClick={handleCTA} disabled={loading} className="self-end sm:self-auto inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#059669]">
                 <span className="bg-[#059669] text-white px-3 py-1.5 flex flex-col items-start justify-center gap-0 hover:bg-[#047857] transition-colors">
                   <span className="text-[13px] font-semibold leading-snug whitespace-nowrap">{loading ? 'Opening...' : 'Activate Deal'}</span>
-                  <span className="text-[9px] text-white/80 font-normal leading-snug whitespace-nowrap">auto-applied at checkout</span>
+                  <span className="text-[11px] text-white/80 font-normal leading-snug whitespace-nowrap">auto-applied at checkout</span>
                 </span>
                 <span className="bg-[#047857] px-2 flex items-center justify-center border-l border-green-700">
                   <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -141,30 +141,30 @@ export default function CouponCard({ coupon }: CouponCardProps) {
             <div className="grid grid-cols-2 gap-x-4 gap-y-3 mb-4">
               {coupon.discount && (
                 <div>
-                  <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-0.5">{isCode ? 'Discount' : 'Deal type'}</p>
+                  <p className="text-[12px] text-gray-500 uppercase tracking-wider mb-0.5">{isCode ? 'Discount' : 'Deal type'}</p>
                   <p className="text-xs font-semibold text-[#9A3412]">{coupon.discount}</p>
                 </div>
               )}
               {coupon.expiry_date && (
                 <div>
-                  <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-0.5">Expiry date</p>
+                  <p className="text-[12px] text-gray-500 uppercase tracking-wider mb-0.5">Expiry date</p>
                   <p className="text-xs font-semibold text-gray-800">{new Date(coupon.expiry_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
                 </div>
               )}
               {coupon.min_order_value && (
                 <div>
-                  <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-0.5">Min. order</p>
+                  <p className="text-[12px] text-gray-500 uppercase tracking-wider mb-0.5">Min. order</p>
                   <p className="text-xs font-semibold text-gray-800">{coupon.min_order_value}</p>
                 </div>
               )}
               <div>
-                <p className="text-[10px] text-gray-500 uppercase tracking-wider mb-0.5">Status</p>
+                <p className="text-[12px] text-gray-500 uppercase tracking-wider mb-0.5">Status</p>
                 <p className="text-xs font-semibold text-green-600">✓ Active &amp; verified</p>
               </div>
             </div>
             {coupon.terms_conditions && (
               <div className="bg-white border border-gray-200 rounded-xl p-3">
-                <p className="text-[10px] text-gray-500 uppercase tracking-wider font-medium mb-2">Terms &amp; conditions</p>
+                <p className="text-[12px] text-gray-500 uppercase tracking-wider font-medium mb-2">Terms &amp; conditions</p>
                 <p className="text-xs text-gray-500 leading-relaxed">{coupon.terms_conditions}</p>
               </div>
             )}
