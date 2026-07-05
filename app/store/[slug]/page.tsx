@@ -251,7 +251,7 @@ export default async function StorePage({ params }: Props) {
           </div>
 
           {/* Description — mobile only, shown below the logo row */}
-          <p className="md:hidden text-gray-500 text-xs leading-relaxed mb-3">
+          <p className="md:hidden text-gray-500 text-sm leading-relaxed mb-3">
             {store.description || `Find the best ${store.name} coupon codes and deals verified by our team.`}
             Save big with <strong>{activeCoupons.length} active offers</strong>
             {maxDiscount > 0 && <>, up to <strong>{maxDiscount}% off</strong></>}.
@@ -355,7 +355,7 @@ export default async function StorePage({ params }: Props) {
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-2">About {store.name} Coupon Codes & Deals</h2>
               <h3 className="text-sm font-semibold text-primary-600 mb-3">Why shop at {store.name} with EndOverPay?</h3>
-              <div className="text-sm text-gray-600 leading-relaxed space-y-3">
+              <div className="text-base text-gray-600 leading-relaxed space-y-3">
                 <p>{store.about_content || store.description || `${store.name} is a trusted online store. Shop the latest deals and save with verified ${store.name} coupon codes on ${SITE_NAME}.`}</p>
                 {!store.about_content && <><p className="mt-3">We track all {store.name} promotions, flash sales, and exclusive discount codes daily so you never miss a saving opportunity. Our team manually verifies every code before publishing.</p>
                 <p className="mt-3">{store.name} regularly runs seasonal sales and clearance events. Bookmark this page and check back often.</p></>}
@@ -382,7 +382,7 @@ export default async function StorePage({ params }: Props) {
             <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-5">How to Use a {store.name} Coupon Code or Promo Code</h2>
               {store.how_to_use_content ? (
-                <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line">{store.how_to_use_content}</p>
+                <p className="text-gray-600 text-base leading-relaxed whitespace-pre-line">{store.how_to_use_content}</p>
               ) : (
               <ol className="space-y-4">
                 {[
@@ -396,7 +396,7 @@ export default async function StorePage({ params }: Props) {
                     <div className="w-8 h-8 rounded-full bg-primary-500 text-white text-sm font-bold flex items-center justify-center flex-shrink-0">{item.n}</div>
                     <div>
                       <div className="font-bold text-gray-900 mb-0.5">{item.t}</div>
-                      <div className="text-sm text-gray-500 leading-relaxed">{item.d}</div>
+                      <div className="text-base text-gray-500 leading-relaxed">{item.d}</div>
                     </div>
                   </li>
                 ))}
@@ -409,7 +409,7 @@ export default async function StorePage({ params }: Props) {
               <h2 className="text-xl font-bold text-gray-900 mb-2">How to Save More at {store.name} – Tips & Tricks</h2>
               <h3 className="text-sm font-semibold text-primary-600 mb-3">Top money-saving strategies for {store.name} shoppers</h3>
               {store.saving_tips_content ? (
-                <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line">{store.saving_tips_content}</p>
+                <p className="text-gray-600 text-base leading-relaxed whitespace-pre-line">{store.saving_tips_content}</p>
               ) : (
                 <ul className="space-y-3">
                   {savingTips.map((tip, i) => (
@@ -417,7 +417,7 @@ export default async function StorePage({ params }: Props) {
                       <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <CheckCircle className="w-3 h-3 text-green-600" />
                       </div>
-                      <span className="text-sm text-gray-600 leading-relaxed">{tip}</span>
+                      <span className="text-base text-gray-600 leading-relaxed">{tip}</span>
                     </li>
                   ))}
                 </ul>
@@ -431,10 +431,10 @@ export default async function StorePage({ params }: Props) {
                 {faqs.map((faq, i) => (
                   <details key={i} className="group border border-gray-100 rounded-xl overflow-hidden">
                     <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-primary-50 transition-colors list-none">
-                      <span className="font-semibold text-gray-900 text-sm pr-4">{faq.q}</span>
+                      <span className="font-semibold text-gray-900 text-base pr-4">{faq.q}</span>
                       <ChevronRight className="w-4 h-4 text-gray-500 group-open:rotate-90 transition-transform flex-shrink-0" />
                     </summary>
-                    <div className="px-4 pb-4 pt-2 text-sm text-gray-600 leading-relaxed border-t border-gray-50">{faq.a}</div>
+                    <div className="px-4 pb-4 pt-2 text-base text-gray-600 leading-relaxed border-t border-gray-50">{faq.a}</div>
                   </details>
                 ))}
               </div>
