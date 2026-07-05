@@ -37,11 +37,6 @@ export const metadata: Metadata = {
     google: 'eN_E2NyrvrNTuKG5Zkd7V93ZdD_M_Vr3rAN0cPcV1eA',
   },
   keywords: 'coupons, promo codes, voucher codes, discount codes, deals, SHEIN, Amazon, Myntra, Flipkart, Swiggy',
-  icons: {
-    icon: '/favicon.svg',
-    shortcut: '/favicon.svg',
-    apple: '/favicon.svg',
-  },
   openGraph: {
     type: 'website',
     locale: 'en_IN',
@@ -82,11 +77,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="theme-color" content="#EA580C" />
         <meta name="msapplication-TileColor" content="#EA580C" />
         <meta name="msapplication-tap-highlight" content="no" />
-        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-        <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png" />
-        <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png" />
         <link rel="dns-prefetch" href="https://tgotmpnebrqqfbxucdax.supabase.co" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'Organization',

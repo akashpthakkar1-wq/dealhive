@@ -1,6 +1,0 @@
-<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="64" height="64" rx="14" fill="#EA580C"/>
-  <path d="M32 6 L54 14 L54 36 C54 50 32 58 32 58 C32 58 10 50 10 36 L10 14 Z" fill="white" opacity="0.15"/>
-  <path d="M32 8 L52 15 L52 34 C52 46 32 56 32 56 C32 56 12 46 12 34 L12 15 Z" fill="white"/>
-  <text x="32" y="38" font-family="system-ui,sans-serif" font-weight="900" font-size="22" fill="#EA580C" text-anchor="middle">E</text>
-</svg>
