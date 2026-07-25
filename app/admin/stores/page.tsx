@@ -91,7 +91,7 @@ export default function AdminStores() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="label-base">Store Name *</label>
-              <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value, slug: slugify(e.target.value) })}
+              <input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value, ...(editId ? {} : { slug: slugify(e.target.value) }) })}
                 className="input-base" placeholder="e.g. Amazon India" />
             </div>
             <div>
