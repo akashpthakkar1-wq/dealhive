@@ -60,16 +60,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const couponsForMeta = await getCouponsByStore(params.slug)
   const couponCount = couponsForMeta?.length || 0
   const countText = couponCount > 0 ? `${couponCount} verified` : 'Verified'
-  const rawMeta = `${countText} ${store.name} coupon codes for ${month}. Save up to 90% off on ${store.name} deals. All codes manually tested & updated daily. Get your ${store.name} promo code now.`
+  // Real max discount from this store's coupons (mirrors body logic at maxDiscount).
+  // parseInt('60% OFF')=60, parseInt('FREE SHIPPING')=0, parseInt('$15 OFF')=0 -> 0 means no % discount.
+  const metaMaxDiscount = (couponsForMeta || []).reduce((max, c: any) => { const n = parseInt(c.discount || '0'); return n > max ? n : max }, 0)
+  const discountPhrase = metaMaxDiscount > 0 ? `Up to ${metaMaxDiscount}% Off` : 'Verified Coupons & Deals'
+  const discountPhraseLower = metaMaxDiscount > 0 ? `up to ${metaMaxDiscount}% off` : 'verified deals'
+  const rawMeta = `${countText} ${store.name} coupon codes for ${month}. Save with ${discountPhraseLower} on ${store.name} deals. Codes verified before publishing. Get your ${store.name} promo code now.`
   const autoDesc = rawMeta.length > 155 ? rawMeta.slice(0, 152) + '…' : rawMeta
   const description = store.meta_description ? applyDateTokens(store.meta_description) : autoDesc
-  const finalTitle = store.meta_title ? applyDateTokens(store.meta_title) : `${store.name} Coupons – Get Verified Promo Codes & Deals | Up to 90% Off`
+  const finalTitle = store.meta_title ? applyDateTokens(store.meta_title) : `${store.name} Coupons – Get Verified Promo Codes & Deals | ${discountPhrase}`
   return {
     title: finalTitle,
     description,
     alternates: { canonical: `${SITE_URL}/store/${store.slug}` },
     openGraph: {
-      title: store.meta_title ? finalTitle : `${store.name} Coupons & Promo Codes ${month} – Up to 90% Off | ${SITE_NAME}`,
+      title: store.meta_title ? finalTitle : `${store.name} Coupons & Promo Codes ${month} – ${discountPhrase} | ${SITE_NAME}`,
       description,
       url: `${SITE_URL}/store/${store.slug}`,
       siteName: SITE_NAME,
@@ -79,7 +84,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: store.meta_title ? finalTitle : `${store.name} Discount Codes & Voucher Codes – Up to 90% Off | ${SITE_NAME}`,
+      title: store.meta_title ? finalTitle : `${store.name} Discount Codes & Voucher Codes – ${discountPhrase} | ${SITE_NAME}`,
       description,
       images: [logoUrl],
     },

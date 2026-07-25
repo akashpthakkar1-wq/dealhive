@@ -120,11 +120,11 @@ export default function AdminStores() {
 
             <div className="border-t border-gray-200 pt-4 mt-2">
               <p className="text-sm font-semibold text-gray-700 mb-1">SEO Overrides (optional)</p>
-              <p className="text-xs text-gray-500 mb-3">Leave blank to auto-generate. Use {'{month}'} and {'{year}'} for the live date — e.g. "Mr Button Coupon Codes – 40% OFF, {'{month}'} {'{year}'}".</p>
+              <p className="text-xs text-gray-500 mb-3">Leave blank to auto-generate. Use {'{month}'} and {'{year}'} for the live date — e.g. "Mr Button Coupon Codes & Offers – {'{month}'} {'{year}'}".</p>
 
               <label className="label-base">Meta Title</label>
               <input value={form.meta_title} onChange={(e) => setForm({ ...form, meta_title: e.target.value })}
-                className="input-base" placeholder="Mr Button Coupon Codes – 40% OFF, {month} {year}" />
+                className="input-base" placeholder="Mr Button Coupon Codes & Offers – {month} {year}" />
 
               <label className="label-base mt-3">H1 Heading</label>
               <input value={form.h1} onChange={(e) => setForm({ ...form, h1: e.target.value })}
@@ -132,7 +132,7 @@ export default function AdminStores() {
 
               <label className="label-base mt-3">Meta Description</label>
               <textarea value={form.meta_description} onChange={(e) => setForm({ ...form, meta_description: e.target.value })}
-                className="input-base" rows={2} placeholder="Verified Mr Button coupon codes for {month} {year}. Save on shirts, blazers & suits. Checked daily by EndOverPay." />
+                className="input-base" rows={2} placeholder="Verified Mr Button coupon codes for {month} {year}. Save on shirts, blazers & suits." />
             </div>
 
             <ContentGenerator
