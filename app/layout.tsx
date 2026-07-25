@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   alternates: { canonical: SITE_URL },
   title: {
     default: `${SITE_NAME} – Best Coupon Codes, Promo Codes & Voucher Codes 2026`,
-    template: `%s | ${SITE_NAME}`,
+    template: '%s',
   },
   description: `Find verified coupon codes, promo codes and voucher codes from 500+ top stores worldwide. Save on fashion, electronics, food, travel and more with ${SITE_NAME}.`,
   verification: {

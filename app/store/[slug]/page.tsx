@@ -68,13 +68,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const rawMeta = `${countText} ${store.name} coupon codes for ${month}. Save with ${discountPhraseLower} on ${store.name} deals. Codes verified before publishing. Get your ${store.name} promo code now.`
   const autoDesc = rawMeta.length > 155 ? rawMeta.slice(0, 152) + '…' : rawMeta
   const description = store.meta_description ? applyDateTokens(store.meta_description) : autoDesc
-  const finalTitle = store.meta_title ? applyDateTokens(store.meta_title) : `${store.name} Coupons – Get Verified Promo Codes & Deals | ${discountPhrase}`
+  const finalTitle = store.meta_title ? applyDateTokens(store.meta_title) : (metaMaxDiscount > 0 ? `${store.name} Coupons & Promo Codes ${month} – ${discountPhrase}` : `${store.name} Coupons & Promo Codes ${month}`)
   return {
     title: finalTitle,
     description,
     alternates: { canonical: `${SITE_URL}/store/${store.slug}` },
     openGraph: {
-      title: store.meta_title ? finalTitle : `${store.name} Coupons & Promo Codes ${month} – ${discountPhrase} | ${SITE_NAME}`,
+      title: store.meta_title ? finalTitle : (metaMaxDiscount > 0 ? `${store.name} Coupons & Promo Codes ${month} – ${discountPhrase}` : `${store.name} Coupons & Promo Codes ${month}`),
       description,
       url: `${SITE_URL}/store/${store.slug}`,
       siteName: SITE_NAME,
@@ -84,7 +84,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     },
     twitter: {
       card: 'summary_large_image',
-      title: store.meta_title ? finalTitle : `${store.name} Discount Codes & Voucher Codes – ${discountPhrase} | ${SITE_NAME}`,
+      title: store.meta_title ? finalTitle : (metaMaxDiscount > 0 ? `${store.name} Coupons & Promo Codes ${month} – ${discountPhrase}` : `${store.name} Coupons & Promo Codes ${month}`),
       description,
       images: [logoUrl],
     },
