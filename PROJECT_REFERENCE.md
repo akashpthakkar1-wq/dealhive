@@ -76,6 +76,9 @@ curl -s -X POST "https://www.endoverpay.com/api/revalidate" -H "Content-Type: ap
 - **Fabricated discounts REMOVED:** store meta/title no longer hard-codes "90% off"; computes real max discount from coupons, honest "Verified Coupons & Deals" fallback when none. Admin placeholders de-fabricated. (Replaces old fabricated-rating/discount RISK notes — those are resolved.)
 - **Slug-on-edit bug fixed:** editing a store no longer changes its ranked URL.
 - **Expired coupons excluded from headline discounts:** `metaMaxDiscount` (meta) filters `!isExpired`; body `maxDiscount` uses `activeCoupons`. An expired coupon can no longer drive the meta title, hero "Best Discount", "Best Coupon", or "Today's Best" on any store. "Recently Expired" section still lists them (fine).
+- **Title fixes:** removed global `| EndOverPay` suffix from every page title (freed keyword space, no double-suffix); shortened store fallback titles to `[Store] Coupons & Promo Codes {month} – Up to X% Off` pattern, all under 60 chars. Homepage keeps its full default title.
+- **Canonicals fixed:** removed global homepage canonical from `app/layout.tsx` (was forcing all pages to canonicalize to homepage); added self-referencing canonicals to homepage + 9 static pages (`/about`, `/contact`, `/categories`, `/stores`, `/blog`, `/disclaimer`, `/privacy-policy`, `/terms`, `/submit-coupon`), matching sitemap format (www, https, no trailing slash). Store pages already self-referenced — untouched. Clears the 9 SEMrush canonical errors.
+- **Local env moved out of iCloud:** project relocated from `~/Desktop/dealhive` (iCloud-synced, caused repeated ` 2`-duplicate files + SWC binary eviction breaking local builds) to `~/dev/dealhive`. Builds now stable. GitHub is the backup.
 - **stores.country column** added (TEXT NOT NULL DEFAULT 'in'; all 10 = 'in') — multi-country hedge.
 - **Repo hygiene:** single clean repo at `~/dev/dealhive`; `.DS_Store` gitignored; stale duplicate folder archived.
 
