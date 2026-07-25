@@ -120,15 +120,7 @@ export default function AdminCoupons() {
       })
     }
 
-    // Revalidate the store page cache so changes appear immediately
-    const storeObj = stores?.find((s: any) => s.id === form.store_id)
-    if (storeObj?.slug) {
-      fetch('/api/revalidate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-revalidate-secret': 'endoverpay_revalidate_2026' },
-        body: JSON.stringify({ storeSlug: storeObj.slug, tag: 'coupons' })
-      }).catch(() => {})
-    }
+    // Store pages auto-refresh via hourly ISR; use manual server-side revalidate (curl) for instant updates when needed.
     setShowForm(false); setEditId(null); setSaving(false); load()
   }
 
