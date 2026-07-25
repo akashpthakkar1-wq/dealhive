@@ -77,7 +77,7 @@ curl -s -X POST "https://www.endoverpay.com/api/revalidate" -H "Content-Type: ap
 - **Slug-on-edit bug fixed:** editing a store no longer changes its ranked URL.
 - **Expired coupons excluded from headline discounts:** `metaMaxDiscount` (meta) filters `!isExpired`; body `maxDiscount` uses `activeCoupons`. An expired coupon can no longer drive the meta title, hero "Best Discount", "Best Coupon", or "Today's Best" on any store. "Recently Expired" section still lists them (fine).
 - **stores.country column** added (TEXT NOT NULL DEFAULT 'in'; all 10 = 'in') — multi-country hedge.
-- **Repo hygiene:** single clean repo at `~/Desktop/dealhive`; `.DS_Store` gitignored; stale duplicate folder archived.
+- **Repo hygiene:** single clean repo at `~/dev/dealhive`; `.DS_Store` gitignored; stale duplicate folder archived.
 
 ## Security
 - **REVALIDATE_SECRET rotated** — old value (`endoverpay_revalidate_2026`, was committed in client code + shared in chat) is DEAD. New secret stored in Vercel env + locally in `.zshrc` as `$EOP_REVAL_SECRET`. Client-side hardcoded secret removed from `app/admin/coupons/page.tsx` (now relies on ISR + manual server-side revalidate).
