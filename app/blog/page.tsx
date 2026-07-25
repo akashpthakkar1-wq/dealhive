@@ -22,6 +22,7 @@ async function getBlogPosts() {
 }
 
 export const metadata = {
+  alternates: { canonical: 'https://www.endoverpay.com/blog' },
   robots: { index: false, follow: false },
   title: 'Blog – Saving Tips & Coupon Guides | EndOverPay',
   description:

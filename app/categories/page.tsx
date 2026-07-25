@@ -4,6 +4,7 @@ import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { SITE_NAME } from '@/lib/utils'
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://www.endoverpay.com/categories' },
   title: `All Categories`,
   description: `Browse all deal categories on ${SITE_NAME}. Find coupons and deals by category.`,
 }

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Suspense } from 'react'
 import Image from 'next/image'
@@ -15,6 +16,10 @@ import {
   getCategories,
   getDealOfTheDayCoupons,
 } from '@/lib/queries'
+
+export const metadata: Metadata = {
+  alternates: { canonical: 'https://www.endoverpay.com' },
+}
 
 export const revalidate = 3600
 export const fetchCache = 'force-cache'

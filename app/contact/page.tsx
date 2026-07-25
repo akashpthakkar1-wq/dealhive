@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://www.endoverpay.com/contact' },
   title: 'Contact EndOverPay – Get in Touch',
   description: 'Contact EndOverPay for coupon submissions, partnership inquiries, expired code reports or general feedback. We respond within 24-48 hours.',
 }

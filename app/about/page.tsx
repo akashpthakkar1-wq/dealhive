@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://www.endoverpay.com/about' },
   title: 'About EndOverPay – Our Story, Mission & How We Verify Coupons',
   description: 'EndOverPay was founded by Akash Thakkar, a marketing professional with 18+ years of experience at Vodafone, Spice Digital and OnMobile, to solve one frustrating problem — coupon codes that never work.',
 }

@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://www.endoverpay.com/privacy-policy' },
   title: 'Privacy Policy | EndOverPay',
   description: 'Read the EndOverPay Privacy Policy to understand how we collect, use and protect your data.',
 }

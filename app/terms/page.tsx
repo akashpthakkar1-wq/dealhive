@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 const SITE_NAME = 'EndOverPay'
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://www.endoverpay.com/terms' },
   title: `Terms of Service | ${SITE_NAME}`,
   description: `Terms of Service for ${SITE_NAME}.`,
 }

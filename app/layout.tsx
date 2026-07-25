@@ -27,7 +27,6 @@ const jakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  alternates: { canonical: SITE_URL },
   title: {
     default: `${SITE_NAME} – Best Coupon Codes, Promo Codes & Voucher Codes 2026`,
     template: '%s',

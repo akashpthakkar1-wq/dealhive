@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 const SITE_NAME = 'EndOverPay'
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://www.endoverpay.com/submit-coupon' },
   title: `Submit a Coupon | ${SITE_NAME}`,
   description: `Submit a coupon code or deal to ${SITE_NAME}.`,
 }
