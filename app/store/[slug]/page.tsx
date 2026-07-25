@@ -62,7 +62,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const countText = couponCount > 0 ? `${couponCount} verified` : 'Verified'
   // Real max discount from this store's coupons (mirrors body logic at maxDiscount).
   // parseInt('60% OFF')=60, parseInt('FREE SHIPPING')=0, parseInt('$15 OFF')=0 -> 0 means no % discount.
-  const metaMaxDiscount = (couponsForMeta || []).reduce((max, c: any) => { const n = parseInt(c.discount || '0'); return n > max ? n : max }, 0)
+  const metaMaxDiscount = (couponsForMeta || []).filter((c: any) => !isExpired(c.expiry_date)).reduce((max, c: any) => { const n = parseInt(c.discount || '0'); return n > max ? n : max }, 0)
   const discountPhrase = metaMaxDiscount > 0 ? `Up to ${metaMaxDiscount}% Off` : 'Verified Coupons & Deals'
   const discountPhraseLower = metaMaxDiscount > 0 ? `up to ${metaMaxDiscount}% off` : 'verified deals'
   const rawMeta = `${countText} ${store.name} coupon codes for ${month}. Save with ${discountPhraseLower} on ${store.name} deals. Codes verified before publishing. Get your ${store.name} promo code now.`
@@ -128,7 +128,7 @@ export default async function StorePage({ params }: Props) {
   const freeCoupons     = activeCoupons.filter((c) => (c.title + (c.description || '')).toLowerCase().includes('free ship'))
 
 
-  const maxDiscount = allCoupons.reduce((max, c) => { const n = parseInt(c.discount || '0'); return n > max ? n : max }, 0)
+  const maxDiscount = activeCoupons.reduce((max, c) => { const n = parseInt(c.discount || '0'); return n > max ? n : max }, 0)
   // Real ratings from DB (rating_sum / rating_count). Avg only meaningful at >= 3 votes (widget enforces display threshold).
   const ratingCount = store.rating_count || 0
   const ratingAvg = ratingCount > 0 ? Math.round((store.rating_sum || 0) / ratingCount * 10) / 10 : 0
