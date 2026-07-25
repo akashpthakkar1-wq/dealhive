@@ -17,6 +17,7 @@ export interface Store {
   meta_title?: string | null
   meta_description?: string | null
   h1?: string | null
+  brand_facts?: string | null
   rating_sum?: number
   rating_count?: number
 }
