@@ -238,6 +238,12 @@ export default async function StorePage({ params }: Props) {
                 <span className="text-xs text-gray-500">Curated & verified by the <strong className="text-gray-700 font-semibold">EndOverPay team</strong></span>
               </div>
 
+              {/* Freshness / coupon-context line — reinforces coupon intent */}
+              <p className="text-xs md:text-sm text-gray-600 mb-1">
+                <strong className="text-gray-900">{activeCoupons.length}</strong> verified {store.name} {activeCoupons.length === 1 ? 'coupon' : 'coupons'} — updated {month}
+                {maxDiscount > 0 && <> · today&apos;s best: <strong className="text-primary-600">{maxDiscount}% off</strong></>}
+              </p>
+
               {/* Description — desktop only inside row */}
               <p className="hidden md:block text-gray-500 text-sm max-w-2xl">
                 {store.description || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
@@ -362,7 +368,11 @@ export default async function StorePage({ params }: Props) {
               <h2 className="text-xl font-bold text-gray-900 mb-2">About {store.name} Coupon Codes & Deals</h2>
               <h3 className="text-sm font-semibold text-primary-600 mb-3">Why shop at {store.name} with EndOverPay?</h3>
               <div className="text-base text-gray-600 leading-relaxed space-y-3">
-                <p>{store.about_content || store.description || `${store.name} is a trusted online store. Shop the latest deals and save with verified ${store.name} coupon codes on ${SITE_NAME}.`}</p>
+                {store.about_content
+                  ? store.about_content.split(/\n\n+/).map((para: string, i: number) => (
+                      <p key={i} className={i > 0 ? 'mt-3' : ''}>{para.trim()}</p>
+                    ))
+                  : <p>{store.description || `${store.name} is a trusted online store. Shop the latest deals and save with verified ${store.name} coupon codes on ${SITE_NAME}.`}</p>}
                 {!store.about_content && <><p className="mt-3">We track all {store.name} promotions, flash sales, and exclusive discount codes daily so you never miss a saving opportunity. Our team manually verifies every code before publishing.</p>
                 <p className="mt-3">{store.name} regularly runs seasonal sales and clearance events. Bookmark this page and check back often.</p></>}
               </div>
