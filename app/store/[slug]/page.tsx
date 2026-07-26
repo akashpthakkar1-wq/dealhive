@@ -169,7 +169,8 @@ export default async function StorePage({ params }: Props) {
         { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Home',   item: SITE_URL },
           { '@type': 'ListItem', position: 2, name: 'Stores', item: `${SITE_URL}/stores` },
-          { '@type': 'ListItem', position: 3, name: `${store.name} Coupons`, item: `${SITE_URL}/store/${store.slug}` },
+          ...(store.category ? [{ '@type': 'ListItem', position: 3, name: store.category, item: `${SITE_URL}/categories` }] : []),
+          { '@type': 'ListItem', position: store.category ? 4 : 3, name: `${store.name} Coupons`, item: `${SITE_URL}/store/${store.slug}` },
         ]},
         // 3. FAQPage — enables FAQ rich results
         { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
@@ -199,7 +200,7 @@ export default async function StorePage({ params }: Props) {
       {/* ── HERO ────────────────────────────────────── */}
       <div className="bg-white border-b border-gray-100">
         <div className="container-main py-4 md:py-6">
-          <Breadcrumb items={[{ label: 'Stores', href: '/stores' }, { label: `${store.name} Coupons` }]} />
+          <Breadcrumb items={[{ label: 'Stores', href: '/stores' }, ...(store.category ? [{ label: store.category, href: '/categories' }] : []), { label: `${store.name} Coupons` }]} />
 
           {/* Logo + Content — side by side on both mobile and desktop */}
           <div className="flex flex-row items-start gap-3 md:gap-5 mt-3 mb-3 md:mb-4">
