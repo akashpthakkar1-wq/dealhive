@@ -15,6 +15,7 @@ interface CouponCardProps {
   copiedId?: string | null;
   onGetCode?: (coupon: Coupon) => void;
   onCopy?: (coupon: Coupon) => void;
+  hideStore?: boolean;
 }
 
 function getLogo(coupon: Coupon): string {
@@ -24,7 +25,7 @@ function getLogo(coupon: Coupon): string {
   return '/logo.svg';
 }
 
-export default function CouponCard({ coupon }: CouponCardProps) {
+export default function CouponCard({ coupon, hideStore = false }: CouponCardProps) {
   const logo = getLogo(coupon);
   const [loading, setLoading] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
@@ -61,19 +62,25 @@ export default function CouponCard({ coupon }: CouponCardProps) {
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden h-full flex flex-col">
       <div className="flex flex-1">
 
-        <div className="relative flex flex-col items-center justify-center flex-shrink-0 text-center px-2.5 bg-[#EA580C]" style={{ minWidth: '90px', maxWidth: '90px', borderRight: '3px dotted #ffffff' }}>
-          <span className="text-white font-extrabold leading-tight break-words w-full" style={{ fontSize: '17px' }}>
-            {coupon.discount}
-          </span>
+        <div className="relative flex flex-col items-center justify-center flex-shrink-0 text-center px-2.5 bg-white" style={{ minWidth: '90px', maxWidth: '90px', borderRight: '3px dotted #E5E7EB' }}>
+          {hideStore ? (
+            <span className="font-extrabold leading-tight break-words w-full" style={{ fontSize: '18px', color: '#EA580C' }}>
+              {coupon.discount}
+            </span>
+          ) : (
+            <div className="flex flex-col items-center gap-1 w-full py-2">
+              <img src={logo} alt={coupon.store?.name ?? 'Store'} className="w-11 h-11 rounded-lg object-contain" loading="lazy" fetchPriority="low" />
+              <span className="text-[13px] font-bold text-gray-800 leading-tight break-words w-full">{coupon.store?.name}</span>
+            </div>
+          )}
         </div>
 
         <div className="flex-1 py-3 px-4 flex flex-col gap-2 min-w-0">
 
           <div className="flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <img src={logo} alt={coupon.store?.name ?? 'Store'} className="w-10 h-10 rounded-lg object-contain flex-shrink-0" loading="lazy" fetchPriority="low" />
-              <span className="text-[15px] font-bold text-gray-900 truncate">{coupon.store?.name}</span>
-            </div>
+            {!hideStore && coupon.discount ? (
+              <span className="text-[13px] font-bold text-[#EA580C] bg-orange-50 border border-orange-100 px-2 py-0.5 rounded-md whitespace-nowrap flex-shrink-0">{coupon.discount}</span>
+            ) : <span />}
             {coupon.is_trending && (
               <span className="text-[12px] text-orange-800 bg-orange-100 border border-orange-200 px-2 py-px rounded-full font-semibold whitespace-nowrap flex-shrink-0">🔥 Trending</span>
             )}
@@ -83,9 +90,9 @@ export default function CouponCard({ coupon }: CouponCardProps) {
           </div>
 
           <div>
-            <p className="text-[15px] font-semibold text-gray-800 leading-snug line-clamp-2">{coupon.title}</p>
+            <p className="text-[16px] font-semibold text-gray-800 leading-snug line-clamp-2">{coupon.title}</p>
             {coupon.description && (
-              <p className="text-sm text-gray-500 mt-1 leading-snug line-clamp-1">{coupon.description}</p>
+              <p className="text-[16px] text-gray-500 mt-1 leading-snug line-clamp-1">{coupon.description}</p>
             )}
           </div>
 

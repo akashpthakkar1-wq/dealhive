@@ -307,27 +307,6 @@ export default async function StorePage({ params }: Props) {
             <StoreFilterTabs coupons={allCoupons} storeName={store.name} />
 
 
-            {/* More category deals */}
-            {categoryCoupons.length > 0 && (
-              <div className="mt-6">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-bold text-gray-900">
-                    More {store.category} Deals
-                  </h2>
-                  {store.category && (
-                    <Link href={`/category/${store.category?.toLowerCase()}`} className="text-sm text-primary-600 font-semibold hover:underline flex items-center gap-1">
-                      View all <ChevronRight className="w-4 h-4" />
-                    </Link>
-                  )}
-                </div>
-                <div className="space-y-3">
-                  {categoryCoupons.map((coupon: any) => (
-                    <CouponCard key={coupon.id} coupon={coupon} />
-                  ))}
-                </div>
-              </div>
-            )}
-
             {/* ── Quick summary table ── */}
             {activeCoupons.length > 0 && (
               <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
@@ -465,7 +444,7 @@ export default async function StorePage({ params }: Props) {
                   <ChevronRight className="w-4 h-4 ml-auto" />
                 </summary>
                 <div className="mt-4 opacity-60 space-y-3">
-                  {expiredCoupons.slice(0, 4).map(c => <CouponCard key={c.id} coupon={c} />)}
+                  {expiredCoupons.slice(0, 4).map(c => <CouponCard key={c.id} coupon={c} hideStore />)}
                 </div>
               </details>
             )}

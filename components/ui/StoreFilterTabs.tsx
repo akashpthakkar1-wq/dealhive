@@ -78,7 +78,7 @@ export default function StoreFilterTabs({ coupons, storeName }: Props) {
         {filteredCoupons.length > 0 ? (
           <div className="space-y-4">
             {filteredCoupons.map((coupon) => (
-              <CouponCard key={coupon.id} coupon={coupon} />
+              <CouponCard key={coupon.id} coupon={coupon} hideStore />
             ))}
           </div>
         ) : (
