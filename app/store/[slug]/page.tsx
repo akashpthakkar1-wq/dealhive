@@ -241,7 +241,6 @@ export default async function StorePage({ params }: Props) {
               {/* Freshness / coupon-context line — reinforces coupon intent */}
               <p className="text-xs md:text-sm text-gray-600 mb-1">
                 <strong className="text-gray-900">{activeCoupons.length}</strong> verified {store.name} {activeCoupons.length === 1 ? 'coupon' : 'coupons'} — updated {month}
-                {maxDiscount > 0 && <> · today&apos;s best: <strong className="text-primary-600">{maxDiscount}% off</strong></>}
               </p>
 
               {/* Description — desktop only inside row */}
@@ -265,8 +264,6 @@ export default async function StorePage({ params }: Props) {
           {/* Description — mobile only, shown below the logo row */}
           <p className="md:hidden text-gray-500 text-sm leading-relaxed mb-3">
             {store.description || `Find the best ${store.name} coupon codes and deals verified by our team.`}
-            Save big with <strong>{activeCoupons.length} active offers</strong>
-            {maxDiscount > 0 && <>, up to <strong>{maxDiscount}% off</strong></>}.
           </p>
 
           {/* Stats pills — mobile: 2 cards only | desktop: all 5 */}
