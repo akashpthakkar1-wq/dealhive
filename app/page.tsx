@@ -152,7 +152,7 @@ async function HomePageData() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
             {categories.map((cat) => (
               <Link key={cat.id} href={`/category/${cat.slug}`}
-                className="bg-white rounded-xl border border-gray-100 p-5 flex flex-col items-center gap-2 hover:border-primary-300 hover:shadow-md hover:bg-primary-50 transition-all group text-center">
+                className="bg-white rounded-xl border border-gray-100 p-5 flex flex-col items-center gap-2 hover:border-primary-300 hover:shadow-lg hover:-translate-y-1 hover:bg-primary-50 transition-all duration-200 group text-center">
                 <div className="text-4xl">{cat.icon || '🏷️'}</div>
                 <div className="font-bold text-gray-800 text-sm group-hover:text-primary-600 transition-colors">
                   {cat.name}
@@ -191,13 +191,17 @@ function SectionHeader({ icon, title, subtitle, href }: {
 }) {
   return (
     <div className="flex items-center justify-between mb-5">
-      <div>
-        <h2 className="text-xl font-extrabold text-gray-900 flex items-center gap-2 mb-0.5">
-          {icon} {title}
-        </h2>
-        <h3 className="text-sm text-gray-600 font-normal">{subtitle}</h3>
+      <div className="flex items-start gap-3">
+        <span className="flex-shrink-0 w-10 h-10 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center shadow-sm">
+          {icon}
+        </span>
+        <div>
+          <h2 className="text-xl font-extrabold text-gray-900 mb-1">{title}</h2>
+          <div className="h-0.5 w-8 bg-primary-500 rounded-full mb-1.5" />
+          <h3 className="text-sm text-gray-600 font-normal">{subtitle}</h3>
+        </div>
       </div>
-      <Link href={href} className="text-primary-600 hover:text-primary-700 font-semibold text-sm flex items-center gap-1 whitespace-nowrap">
+      <Link href={href} className="text-primary-600 hover:text-primary-700 font-semibold text-sm flex items-center gap-1 whitespace-nowrap self-start mt-1">
         View All <ArrowRight className="w-3.5 h-3.5" />
       </Link>
     </div>
