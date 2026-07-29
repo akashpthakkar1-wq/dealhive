@@ -40,7 +40,7 @@ export default function Navbar() {
 
           {/* Logo — larger */}
           <Link href="/" className="flex items-center gap-3 flex-shrink-0">
-            <img src="/logo.svg" alt="EndOverPay" className="h-14 w-auto" width="200" height="56" fetchPriority="high" />
+            <img src="/logo.svg" alt="EndOverPay" className="h-12 w-auto" width="180" height="48" fetchPriority="high" />
           </Link>
 
           {/* Desktop nav — underline-on-active (tab style) */}
