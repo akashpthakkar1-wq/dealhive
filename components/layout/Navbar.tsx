@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
@@ -15,35 +15,52 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
+
+  // Shadow-on-scroll: lifts the bar off the page once you scroll down
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
     <header
-      className="sticky top-0 z-50 border-b border-black/10 shadow-sm"
-      style={{ backgroundColor: '#FFFFFF' }}>
-      <div className="container-main">
-        <div className="flex items-center gap-3 h-14">
+      className={`sticky top-0 z-50 bg-white transition-shadow duration-200 ${
+        scrolled ? 'shadow-md' : 'shadow-sm'
+      }`}>
 
-          {/* Logo */}
+      {/* Accent strip — Option C signature */}
+      <div className="h-[3px] w-full" style={{ backgroundColor: '#EA580C' }} />
+
+      <div className="container-main">
+        <div className="flex items-center gap-3 h-16">
+
+          {/* Logo — larger */}
           <Link href="/" className="flex items-center gap-3 flex-shrink-0">
-            <img src="/logo.svg" alt="EndOverPay" className="h-11 w-auto" width="160" height="44" fetchPriority="low" />
+            <img src="/logo.svg" alt="EndOverPay" className="h-14 w-auto" width="200" height="56" fetchPriority="high" />
           </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-1 ml-3">
-            {NAV_LINKS.map((l) => (
-              <Link key={l.href} href={l.href} prefetch={true}
-                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap ${
-                  pathname === l.href
-                    ? 'bg-black/10 text-[#2A1250] font-semibold'
-                    : 'text-gray-700 hover:text-gray-900 hover:bg-black/10'
-                }`}>
-                {l.label}
-              </Link>
-            ))}
+          {/* Desktop nav — underline-on-active (tab style) */}
+          <nav className="hidden lg:flex items-stretch gap-1 ml-4 h-16">
+            {NAV_LINKS.map((l) => {
+              const active = pathname === l.href
+              return (
+                <Link key={l.href} href={l.href} prefetch={true}
+                  className={`relative flex items-center px-3 text-sm transition-colors duration-200 whitespace-nowrap border-b-[3px] ${
+                    active
+                      ? 'text-[#EA580C] font-bold border-[#EA580C]'
+                      : 'text-gray-700 font-medium border-transparent hover:text-[#EA580C] hover:border-orange-200'
+                  }`}>
+                  {l.label}
+                </Link>
+              )
+            })}
           </nav>
 
-          {/* Search bar — desktop (uses SearchBar with dropdown) */}
+          {/* Search bar — desktop */}
           <div className="flex-1 max-w-sm ml-auto hidden md:block">
             <SearchBar compact />
           </div>
@@ -51,38 +68,39 @@ export default function Navbar() {
           {/* Mobile hamburger */}
           <button
             onClick={() => setOpen(!open)}
-            className="lg:hidden ml-auto p-2 rounded-lg transition-colors hover:bg-black/10" aria-label="Open menu"
+            className="lg:hidden ml-auto p-2 rounded-lg transition-colors hover:bg-orange-50" aria-label="Open menu"
             style={{ color: '#EA580C' }}>
-            {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
 
       {/* Mobile menu */}
       {open && (
-        <div
-          className="lg:hidden border-t border-black/10 pb-3"
-          style={{ backgroundColor: '#FFFFFF' }}>
+        <div className="lg:hidden border-t border-gray-100 pb-3 bg-white">
           <div className="container-main pt-3">
 
-            {/* Mobile search — also uses SearchBar with dropdown */}
+            {/* Mobile search */}
             <div className="mb-3">
               <SearchBar />
             </div>
 
             {/* Mobile nav links */}
             <nav className="flex flex-col gap-0.5">
-              {NAV_LINKS.map((l) => (
-                <Link key={l.href} href={l.href} prefetch={true}
-                  onClick={() => setOpen(false)}
-                  className={`px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    pathname === l.href
-                      ? 'bg-black/10 text-[#2A1250] font-semibold'
-                      : 'text-[#EA580C] hover:bg-black/10 hover:text-black'
-                  }`}>
-                  {l.label}
-                </Link>
-              ))}
+              {NAV_LINKS.map((l) => {
+                const active = pathname === l.href
+                return (
+                  <Link key={l.href} href={l.href} prefetch={true}
+                    onClick={() => setOpen(false)}
+                    className={`px-3 py-2.5 rounded-lg text-sm transition-all duration-200 border-l-[3px] ${
+                      active
+                        ? 'text-[#EA580C] font-bold border-[#EA580C] bg-orange-50'
+                        : 'text-gray-700 font-medium border-transparent hover:bg-orange-50 hover:text-[#EA580C]'
+                    }`}>
+                    {l.label}
+                  </Link>
+                )
+              })}
             </nav>
           </div>
         </div>
