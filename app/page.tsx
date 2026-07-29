@@ -71,7 +71,7 @@ async function HomePageData() {
 
       {/* ── DEAL OF THE DAY ── */}
       {todaysDeal && (
-        <section className="section-white">
+        <section className="section-gray">
           <div className="container-main">
             <SectionHeader
               icon={<Zap className="w-5 h-5 text-[#EA580C]" />}
@@ -130,7 +130,7 @@ async function HomePageData() {
       </section>
 
       {/* ── TRENDING NOW ── */}
-      <section className="section-white">
+      <section className="section-gray">
         <div className="container-main">
           <SectionHeader icon={<TrendingUp className="w-5 h-5 text-red-500" />}
             title="Trending Promo Codes This Week" subtitle="Most used coupon codes and promo codes today"
@@ -144,7 +144,7 @@ async function HomePageData() {
       </section>
 
       {/* ── BROWSE BY CATEGORY ── */}
-      <section className="section-gray">
+      <section className="section-white">
         <div className="container-main">
           <SectionHeader icon={<Tag className="w-5 h-5 text-primary-500" />}
             title="Browse Coupons by Category" subtitle="Coupon codes by category — fashion, electronics, food & more"
@@ -167,7 +167,7 @@ async function HomePageData() {
       </section>
 
       {/* ── RECENTLY ADDED ── */}
-      <section className="section-white">
+      <section className="section-gray">
         <div className="container-main">
           <SectionHeader icon={<Clock className="w-5 h-5 text-blue-500" />}
             title="Recently Added Coupon Codes" subtitle="Latest verified coupon codes added today"
