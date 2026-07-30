@@ -51,7 +51,7 @@ export default async function CategoriesPage() {
       {/* Header */}
       <div className="bg-gradient-to-br from-primary-600 to-primary-700 text-white py-12">
         <div className="container-main text-center">
-          <h1 className="text-3xl md:text-4xl font-extrabold mb-3">All Categories</h1>
+          <h1 className="text-3xl md:text-4xl font-extrabold mb-3">Browse Coupons by Category</h1>
           <p className="text-white/80 text-lg">Browse deals by your favourite category</p>
         </div>
       </div>
