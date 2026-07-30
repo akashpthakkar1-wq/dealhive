@@ -220,13 +220,17 @@ export default async function StorePage({ params }: Props) {
                   Visit {store.name}
                 </a>
               )}
+              {/* Freshness line — under logo + Visit button */}
+              <p className="text-xs text-gray-600 text-center leading-snug w-28 md:w-32">
+                <strong className="text-gray-900">{activeCoupons.length}</strong> verified {store.name} {activeCoupons.length === 1 ? 'coupon' : 'coupons'} — updated for {month}
+              </p>
             </div>
 
             {/* Content */}
-            <div className="flex-1 min-w-0 space-y-1.5 md:space-y-2">
+            <div className="flex-1 min-w-0">
 
               {/* Title */}
-              <h1 className="text-lg leading-tight md:text-3xl font-extrabold text-gray-900">
+              <h1 className="text-lg leading-tight md:text-3xl font-extrabold text-gray-900 mb-2">
                 {store.h1 ? applyDateTokens(store.h1) : (
                   <>
                     {store.name} Coupons, Promo Codes &amp; Voucher Codes
@@ -236,21 +240,33 @@ export default async function StorePage({ params }: Props) {
               </h1>
 
               {/* Byline */}
-              <div className="flex items-start gap-1.5 mb-1">
-                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" className="flex-shrink-0 mt-0.5"><circle cx="6.5" cy="6.5" r="6.5" fill="#EA580C"/><path d="M3.8 6.5L5.8 8.5L9.2 4.5" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <div className="flex items-start gap-1.5 mb-3">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" className="flex-shrink-0 mt-0.5"><circle cx="6.5" cy="6.5" r="6.5" fill="#16A34A"/><path d="M3.8 6.5L5.8 8.5L9.2 4.5" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 <span className="text-xs text-gray-500">Curated & verified by the <strong className="text-gray-700 font-semibold">EndOverPay team</strong></span>
               </div>
 
-              {/* Freshness / coupon-context line — reinforces coupon intent */}
-              <p className="text-xs md:text-sm text-gray-600 mb-1">
-                <strong className="text-gray-900">{activeCoupons.length}</strong> verified {store.name} {activeCoupons.length === 1 ? 'coupon' : 'coupons'} — updated for {month}
-              </p>
 
               {/* Description — desktop, 2-line clamp with more/less */}
               <ExpandableText
-                className="hidden md:block max-w-2xl"
+                className="hidden md:block max-w-2xl mb-1"
                 text={store.description || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
               />
+
+              {/* Stats badges — below description */}
+              <div className="grid grid-cols-2 sm:flex sm:flex-wrap sm:gap-2 gap-2 pt-2 mt-1">
+                <div className="hidden sm:flex items-center justify-start gap-2 px-4 py-2 rounded-xl border font-semibold bg-white border-gray-100 text-gray-700">
+                  <span className="text-xs text-gray-500 font-medium">Total Offers</span>
+                  <span className="text-sm font-bold">{allCoupons.length}</span>
+                </div>
+                <div className="flex items-center justify-between sm:justify-start gap-2 px-3 py-2 sm:px-4 rounded-xl border font-semibold bg-primary-50 border-primary-200 text-primary-700">
+                  <span className="text-xs text-gray-500 font-medium">Active Now</span>
+                  <span className="text-sm font-bold text-primary-600">{activeCoupons.length}</span>
+                </div>
+                <div className="flex items-center justify-between sm:justify-start gap-2 px-3 py-2 sm:px-4 rounded-xl border font-semibold bg-primary-50 border-primary-200 text-primary-700">
+                  <span className="text-xs text-gray-500 font-medium leading-tight">Best Discount</span>
+                  <span className="text-xs sm:text-sm font-bold text-primary-600">{maxDiscount > 0 ? `${maxDiscount}% OFF` : 'Great Deals'}</span>
+                </div>
+              </div>
 
             </div>
           </div>
@@ -261,30 +277,6 @@ export default async function StorePage({ params }: Props) {
             text={store.description || `Find the best ${store.name} coupon codes and deals verified by our team.`}
           />
 
-          {/* Stats pills — mobile: 2 cards only | desktop: all 5 */}
-          <div className="grid grid-cols-2 sm:flex sm:flex-nowrap sm:overflow-x-auto sm:gap-2 gap-2 mb-1 pb-1">
-
-            {/* Total Offers — desktop only */}
-            <div className="hidden sm:flex items-center justify-start gap-2 px-4 py-2.5 rounded-xl border font-semibold bg-white border-gray-100 text-gray-700">
-              <span className="text-xs text-gray-500 font-medium">Total Offers</span>
-              <span className="text-sm font-bold">{allCoupons.length}</span>
-            </div>
-
-            {/* Active Now — desktop only */}
-            <div className="hidden sm:flex items-center justify-start gap-2 px-4 py-2.5 rounded-xl border font-semibold bg-primary-50 border-primary-200 text-primary-700">
-              <span className="text-xs text-gray-500 font-medium">Active Now</span>
-              <span className="text-sm font-bold text-primary-600">{activeCoupons.length}</span>
-            </div>
-
-            {/* Best Discount — always visible */}
-            <div className="flex items-center justify-between sm:justify-start gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl border font-semibold bg-primary-50 border-primary-200 text-primary-700">
-              <span className="text-xs text-gray-500 font-medium leading-tight">Best Discount</span>
-              <span className="text-xs sm:text-sm font-bold text-primary-600">
-                {maxDiscount > 0 ? `${maxDiscount}% OFF` : 'Great Deals'}
-              </span>
-            </div>
-
-          </div>
         </div>
       </div>
 
