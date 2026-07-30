@@ -16,7 +16,7 @@ export default function SubmitCouponPage() {
         </div>
       </div>
       <div className="container-main py-12 max-w-3xl mx-auto">
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 space-y-6">
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 space-y-6">
           <p className="text-gray-600 leading-relaxed">Found a great deal or coupon code that is not listed on EndOverPay? Share it with our community and help thousands of shoppers save money.</p>
           <div className="bg-primary-50 rounded-xl p-6">
             <h2 className="text-lg font-bold text-gray-900 mb-4">How to Submit</h2>

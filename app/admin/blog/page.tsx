@@ -122,8 +122,8 @@ export default function AdminBlog() {
         </div>
       )}
 
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        <div className="px-5 py-3.5 border-b border-gray-100">
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="px-5 py-3.5 border-b border-gray-200">
           <h3 className="font-bold text-gray-900">All Posts <span className="text-gray-400 font-normal text-sm">({posts.length})</span></h3>
         </div>
         {loading ? (
@@ -132,7 +132,7 @@ export default function AdminBlog() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-gray-50 border-b border-gray-100">
+                <tr className="bg-gray-50 border-b border-gray-200">
                   {['Title', 'Category', 'Author', 'Status', 'Date', 'Actions'].map((h) => (
                     <th key={h} className="text-left px-5 py-3 text-xs font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">{h}</th>
                   ))}

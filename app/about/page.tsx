@@ -19,7 +19,7 @@ export default function AboutPage() {
 
       <div className="container-main py-12 max-w-4xl mx-auto space-y-8">
 
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Our Story</h2>
           <div className="flex items-start gap-5 mb-6">
             <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#EA580C] to-[#9A3412] flex items-center justify-center text-white text-2xl font-extrabold flex-shrink-0">A</div>
@@ -44,14 +44,14 @@ export default function AboutPage() {
           <p className="text-gray-600 leading-relaxed">We manually verify every single coupon before it goes live. We test the code at checkout. We check the minimum order value. We confirm the expiry date. If it does not work, it does not get published. Period.</p>
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Who We Are</h2>
           <p className="text-gray-600 leading-relaxed mb-4">EndOverPay was founded by Akash Thakkar, a marketing professional with 18+ years of experience working with leading companies including Vodafone, Spice Digital and OnMobile Pvt Ltd. That background gives us a unique advantage — we understand how brands design their promotions, which means we know exactly where to find genuine deals and how to verify them properly.</p>
           <p className="text-gray-600 leading-relaxed mb-4">We are a lean, focused team. No automated scrapers. No bots pulling codes from other websites. Every coupon on EndOverPay is sourced and verified by real people who understand affiliate marketing from the inside.</p>
           <p className="text-gray-600 leading-relaxed">We are based in Ahmedabad, India, and we cover both Indian stores — Myntra, Flipkart, Swiggy, Nykaa and more — as well as global brands. Our goal is to be the most trusted coupon platform for Indian shoppers, and the most reliable one for anyone shopping online worldwide.</p>
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">How We Find &amp; Verify Coupons</h2>
           <p className="text-gray-600 leading-relaxed mb-6">Our coupon discovery process is built around accuracy, not volume. Here is how it works:</p>
           <ol className="space-y-4">
@@ -72,7 +72,7 @@ export default function AboutPage() {
           </ol>
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Our Core Values</h2>
           <div className="space-y-5">
             {[
@@ -91,12 +91,12 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Our Vision</h2>
           <p className="text-gray-600 leading-relaxed mb-4">I started EndOverPay with a clear vision — to build the most trusted coupon platform in India.</p>
           <p className="text-gray-600 leading-relaxed mb-4">Not the biggest. Not the one with the most codes. The most trusted. The one where every deal you click actually works.</p>
           <p className="text-gray-600 leading-relaxed mb-6">As we grow, we will expand our store coverage, add more categories, build a community of deal hunters and create tools that automatically alert you when a working deal goes live for stores you love. My 18 years of marketing experience gives me a clear roadmap for how to build something that genuinely serves shoppers — and I am committed to doing exactly that.</p>
-          <div className="border-t border-gray-100 pt-6">
+          <div className="border-t border-gray-200 pt-6">
             <p className="text-gray-700 font-medium italic mb-1">&quot;We are just getting started. And if you have made it this far, I would love for you to be part of this journey.&quot;</p>
             <p className="text-gray-500 text-sm">— Akash Thakkar, Founder · EndOverPay · Ahmedabad, India · April 2026</p>
           </div>
@@ -108,7 +108,7 @@ export default function AboutPage() {
           <p className="text-gray-600 leading-relaxed">This commission is how we keep the platform free and fund our work to verify deals daily. It never influences which coupons we list or how we rank them. We do not accept payment to feature specific deals and we do not list coupons we have not verified ourselves.</p>
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Why Choose EndOverPay?</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[

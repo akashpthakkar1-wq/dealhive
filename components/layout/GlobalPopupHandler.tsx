@@ -91,7 +91,7 @@ function DetailsSection({ coupon }: { coupon: Coupon }) {
       </div>
       {/* Terms */}
       {coupon.terms_conditions && (
-        <div className="px-3 py-2.5 bg-orange-50 border-t border-gray-100">
+        <div className="px-3 py-2.5 bg-orange-50 border-t border-gray-200">
           <p className="text-[9px] text-orange-700 uppercase tracking-wider font-semibold mb-1">Terms &amp; conditions</p>
           <p className="text-xs text-gray-500 leading-relaxed">{coupon.terms_conditions}</p>
         </div>

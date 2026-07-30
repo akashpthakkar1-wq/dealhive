@@ -15,7 +15,7 @@ export default function DisclaimerPage() {
         </div>
       </div>
       <div className="container-main py-12 max-w-3xl mx-auto">
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 space-y-6 text-gray-600 leading-relaxed">
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 space-y-6 text-gray-600 leading-relaxed">
           <div><h2 className="text-xl font-bold text-gray-900 mb-3">Affiliate Disclaimer</h2>
           <p>EndOverPay participates in various affiliate marketing programs. This means we may earn a commission when you click on links to products or services and make a purchase. This comes at no additional cost to you.</p></div>
           <div><h2 className="text-xl font-bold text-gray-900 mb-3">Coupon Accuracy</h2>

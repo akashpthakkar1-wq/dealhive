@@ -49,15 +49,15 @@
 
   /* ── Cards ── */
   .card {
-    @apply bg-white rounded-xl border border-gray-100 shadow-sm;
+    @apply bg-white rounded-xl border border-gray-200 shadow-sm;
   }
   .card-p {
-    @apply bg-white rounded-xl border border-gray-100 shadow-sm p-5;
+    @apply bg-white rounded-xl border border-gray-200 shadow-sm p-5;
   }
 
   /* ── Coupon list card ── */
   .coupon-list-card {
-    @apply bg-white rounded-xl border border-gray-100 shadow-sm hover:border-primary-200 transition-colors;
+    @apply bg-white rounded-xl border border-gray-200 shadow-sm hover:border-primary-200 transition-colors;
   }
 
   /* ── Badges ── */

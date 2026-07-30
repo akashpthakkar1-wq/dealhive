@@ -24,7 +24,7 @@ export default function AdminSidebar() {
   return (
     <aside className="w-60 bg-white border-r border-gray-200 flex flex-col flex-shrink-0">
       {/* Logo */}
-      <div className="px-5 py-4 border-b border-gray-100">
+      <div className="px-5 py-4 border-b border-gray-200">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center shadow-sm">
             <Tag className="w-4 h-4 text-white" />
@@ -57,7 +57,7 @@ export default function AdminSidebar() {
       </nav>
 
       {/* Bottom — Back to site + Logout */}
-      <div className="p-3 border-t border-gray-100 space-y-1">
+      <div className="p-3 border-t border-gray-200 space-y-1">
         <Link href="/"
           className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold text-gray-500 hover:bg-gray-50 hover:text-orange-600 transition-all">
           <ArrowLeft className="w-4 h-4" />

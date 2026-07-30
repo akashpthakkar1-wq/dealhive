@@ -26,7 +26,7 @@ export default function ContactPage() {
             { icon: '🤝', title: 'Partnerships', desc: 'For retailers, brands and affiliate partnerships.', email: 'partners@endoverpay.com' },
             { icon: '🎟️', title: 'Submit a Coupon', desc: 'Found a deal we are missing? Share it with us.', email: 'submit@endoverpay.com' },
           ].map((item) => (
-            <div key={item.title} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 text-center">
+            <div key={item.title} className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 text-center">
               <div className="text-4xl mb-3">{item.icon}</div>
               <h3 className="font-bold text-gray-900 mb-2">{item.title}</h3>
               <p className="text-sm text-gray-500 mb-3 leading-relaxed">{item.desc}</p>
@@ -36,7 +36,7 @@ export default function ContactPage() {
         </div>
 
         {/* What to Include */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">What Can You Contact Us About?</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
@@ -76,7 +76,7 @@ export default function ContactPage() {
         </div>
 
         {/* Quick Help */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Quick Help</h2>
           <div className="space-y-3">
             {[
@@ -85,7 +85,7 @@ export default function ContactPage() {
               { q: 'How do I submit a coupon I found?', a: 'Email submit@endoverpay.com with the store name, coupon code, discount amount and expiry date. Our team will verify and publish it.' },
               { q: 'Does EndOverPay have a mobile app?', a: 'We do not have a dedicated app yet, but our website is fully optimised for mobile browsers on iOS and Android.' },
             ].map((item) => (
-              <details key={item.q} className="group border border-gray-100 rounded-xl overflow-hidden">
+              <details key={item.q} className="group border border-gray-200 rounded-xl overflow-hidden">
                 <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-orange-50 transition-colors list-none">
                   <span className="font-semibold text-gray-900 text-sm">{item.q}</span>
                   <span className="text-gray-500 group-open:rotate-90 transition-transform">›</span>

@@ -54,7 +54,7 @@ export default async function StoresPage() {
 
       <div className="container-main py-8">
         {/* Alphabet quick nav */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 mb-8 sticky top-[73px] z-20">
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 mb-8 sticky top-[73px] z-20">
           <div className="flex flex-wrap gap-1 justify-center">
             {ALPHABET.map((letter) => (
               availableLetters.has(letter) ? (
@@ -89,7 +89,7 @@ export default async function StoresPage() {
               <div className="grid grid-cols-3 md:grid-cols-6 gap-2.5">
                 {grouped[letter].map((store) => (
                   <Link key={store.id} href={`/store/${store.slug}`}
-                    className="bg-white rounded-xl border border-gray-100 px-2 py-3.5 flex flex-col items-center text-center hover:border-primary-300 hover:shadow-md transition-all group overflow-hidden">
+                    className="bg-white rounded-xl border border-gray-200 px-2 py-3.5 flex flex-col items-center text-center hover:border-primary-300 hover:shadow-md transition-all group overflow-hidden">
                     <div className="rounded-xl overflow-hidden flex items-center justify-center mb-2" style={{ width: '46px', height: '46px' }}>
                       {store.logo
                         ? <img src={store.logo} alt={`${store.name} logo`} className="w-full h-full object-contain" />

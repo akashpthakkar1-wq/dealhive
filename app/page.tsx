@@ -44,7 +44,7 @@ async function HomePageData() {
   return (
     <div>
       {/* ── SEO INTRO TEXT ── */}
-      <section className="bg-white border-b border-gray-100 py-6">
+      <section className="bg-white border-b border-gray-200 py-6">
         <div className="container-main">
           <p className="text-sm text-gray-500 leading-relaxed">
               Welcome to <strong>EndOverPay</strong> — your trusted source for verified <strong>coupon codes</strong>, <strong>promo codes</strong>, <strong>voucher codes</strong> and <strong>discount codes</strong> from hundreds of top online stores worldwide. 
@@ -102,7 +102,7 @@ async function HomePageData() {
                 : 0
               return (
                 <Link key={store.id} href={`/store/${store.slug}`} prefetch={false}
-                  className="relative bg-white rounded-xl border border-gray-100 px-2 py-3.5 flex flex-col items-center text-center hover:border-primary-300 hover:shadow-md transition-all group overflow-hidden">
+                  className="relative bg-white rounded-xl border border-gray-200 px-2 py-3.5 flex flex-col items-center text-center hover:border-primary-300 hover:shadow-md transition-all group overflow-hidden">
                   {/* Logo */}
                   <div className="rounded-xl overflow-hidden flex items-center justify-center mb-2" style={{ width: '46px', height: '46px' }}>
                     {store.logo
@@ -152,7 +152,7 @@ async function HomePageData() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
             {categories.map((cat) => (
               <Link key={cat.id} href={`/category/${cat.slug}`}
-                className="bg-white rounded-xl border border-gray-100 p-5 flex flex-col items-center gap-2 hover:border-primary-300 hover:shadow-lg hover:-translate-y-1 hover:bg-primary-50 transition-all duration-200 group text-center">
+                className="bg-white rounded-xl border border-gray-200 p-5 flex flex-col items-center gap-2 hover:border-primary-300 hover:shadow-lg hover:-translate-y-1 hover:bg-primary-50 transition-all duration-200 group text-center">
                 <div className="text-4xl">{cat.icon || '🏷️'}</div>
                 <div className="font-bold text-gray-800 text-sm group-hover:text-primary-600 transition-colors">
                   {cat.name}
@@ -192,7 +192,7 @@ function SectionHeader({ icon, title, subtitle, href }: {
   return (
     <div className="flex items-center justify-between mb-5">
       <div className="flex items-start gap-3">
-        <span className="flex-shrink-0 w-10 h-10 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center shadow-sm">
+        <span className="flex-shrink-0 w-10 h-10 rounded-xl bg-gray-50 border border-gray-200 flex items-center justify-center shadow-sm">
           {icon}
         </span>
         <div>

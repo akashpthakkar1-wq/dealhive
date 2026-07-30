@@ -15,7 +15,7 @@ export default function TermsPage() {
         </div>
       </div>
       <div className="container-main py-12 max-w-3xl mx-auto">
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 space-y-6 text-gray-600 leading-relaxed">
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 space-y-6 text-gray-600 leading-relaxed">
           <p>By using EndOverPay, you agree to these terms. Please read them carefully.</p>
           <div><h2 className="text-xl font-bold text-gray-900 mb-3">Use of Website</h2>
           <p>EndOverPay provides coupon codes and deals for personal, non-commercial use. You may not use this site for any illegal purpose or in violation of any regulations.</p></div>

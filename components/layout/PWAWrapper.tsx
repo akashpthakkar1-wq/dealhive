@@ -33,7 +33,7 @@ export default function PWAWrapper({ children, navbar, footer }: Props) {
   return (
     <>
       {/* PWA Top Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100 shadow-sm"
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 shadow-sm"
         style={{ paddingTop: 'env(safe-area-inset-top)' }}>
         <div className="flex items-center justify-between px-4 h-14">
           <div className="flex items-center gap-2">

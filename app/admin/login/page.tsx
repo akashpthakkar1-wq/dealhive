@@ -35,7 +35,7 @@ export default function AdminLoginPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl border border-gray-100 w-full max-w-sm overflow-hidden">
+      <div className="bg-white rounded-2xl shadow-xl border border-gray-200 w-full max-w-sm overflow-hidden">
 
         {/* Header */}
         <div className="bg-primary-500 px-8 py-8 text-center">

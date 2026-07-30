@@ -186,7 +186,7 @@ export default async function CategoryPage({ params }: Props) {
       </div>
 
       {/* Breadcrumbs */}
-      <div className="bg-white border-b border-gray-100">
+      <div className="bg-white border-b border-gray-200">
         <div className="container-main py-2">
           <nav className="flex items-center gap-2 text-xs text-gray-500">
             <Link href="/" className="hover:text-primary-600">Home</Link>
@@ -225,7 +225,7 @@ export default async function CategoryPage({ params }: Props) {
                 ))}
               </div>
             ) : (
-              <div className="bg-white rounded-xl border border-gray-100 p-12 text-center">
+              <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
                 <div className="text-5xl mb-4">{cat.icon || '🏷️'}</div>
                 <p className="font-semibold text-gray-500 mb-1">No active {cat.name} offers right now</p>
                 <p className="text-sm text-gray-500 mb-4">We update deals daily — check back soon!</p>
@@ -236,7 +236,7 @@ export default async function CategoryPage({ params }: Props) {
             )}
 
             {expiredCoupons.length > 0 && (
-              <details className="bg-white rounded-xl border border-gray-100 p-4">
+              <details className="bg-white rounded-xl border border-gray-200 p-4">
                 <summary className="cursor-pointer font-semibold text-gray-500 text-sm list-none flex items-center gap-2">
                   Show {expiredCoupons.length} expired offers
                 </summary>
@@ -250,15 +250,15 @@ export default async function CategoryPage({ params }: Props) {
 
             {/* Top Stores in Category */}
             {storesByCategory && storesByCategory.length > 0 && (
-              <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+              <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
                 <h2 className="text-lg font-bold text-gray-900 mb-4">
                   Top {cat.name} Stores
                 </h2>
                 <div className="flex flex-wrap gap-2">
                   {storesByCategory.slice(0, 6).map((s: any) => (
                     <Link key={s.id} href={`/store/${s.slug}`}
-                      className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-gray-100 hover:border-primary-300 hover:bg-primary-50 transition-all">
-                      <div className="w-7 h-7 rounded-lg border border-gray-100 bg-white overflow-hidden flex items-center justify-center flex-shrink-0">
+                      className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-gray-200 hover:border-primary-300 hover:bg-primary-50 transition-all">
+                      <div className="w-7 h-7 rounded-lg border border-gray-200 bg-white overflow-hidden flex items-center justify-center flex-shrink-0">
                         {s.logo ? <img src={s.logo} alt={s.name} className="w-full h-full object-contain" /> : <span className="text-xs font-bold text-primary-400">{s.name[0]}</span>}
                       </div>
                       <span className="text-xs font-semibold text-gray-700 whitespace-nowrap">{s.name}</span>
@@ -269,19 +269,19 @@ export default async function CategoryPage({ params }: Props) {
             )}
 
             {/* FAQ Section */}
-            <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
               <h2 className="text-lg font-bold text-gray-900 mb-2">
                 {cat.name} Coupons — Frequently Asked Questions
               </h2>
               <h3 className="text-sm font-semibold text-primary-600 mb-4">Common questions about {cat.name} coupon codes &amp; deals</h3>
               <div className="space-y-3">
                 {faqs.map((faq: {q: string, a: string}, i: number) => (
-                  <details key={i} className="group border border-gray-100 rounded-xl overflow-hidden">
+                  <details key={i} className="group border border-gray-200 rounded-xl overflow-hidden">
                     <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-primary-50 transition-colors list-none">
                       <span className="font-semibold text-gray-900 text-sm pr-4">{faq.q}</span>
                       <span className="text-gray-500 group-open:rotate-90 transition-transform flex-shrink-0">›</span>
                     </summary>
-                    <div className="px-4 pb-4 pt-2 text-sm text-gray-600 leading-relaxed border-t border-gray-50">{faq.a}</div>
+                    <div className="px-4 pb-4 pt-2 text-sm text-gray-600 leading-relaxed border-t border-gray-200">{faq.a}</div>
                   </details>
                 ))}
               </div>
@@ -291,7 +291,7 @@ export default async function CategoryPage({ params }: Props) {
 
           {/* ── Sidebar ── */}
           <div className="space-y-5">
-            <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
               <h3 className="font-bold text-gray-900 text-sm uppercase tracking-wider mb-4">
                 All Categories
               </h3>

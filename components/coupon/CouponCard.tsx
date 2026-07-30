@@ -59,7 +59,7 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
   const displayCount = (coupon.usage_count || 0) + stableNum(String(coupon.id), 15, 199)
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden h-full flex flex-col">
+    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden h-full flex flex-col">
       <div className="flex flex-1">
 
         <div className="relative flex flex-col items-center justify-center flex-shrink-0 text-center px-2.5 bg-white" style={{ minWidth: '90px', maxWidth: '90px', borderRight: '3px dotted #E5E7EB' }}>
@@ -133,7 +133,7 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
         </div>
       </div>
 
-      <div className="border-t border-gray-100">
+      <div className="border-t border-gray-200">
         <button onClick={() => setShowDetails(!showDetails)} className="w-full flex items-center justify-center gap-1.5 px-4 py-1.5 text-xs text-gray-500 hover:bg-gray-50 transition-colors">
           <svg className={`w-3.5 h-3.5 transition-transform duration-250 ${showDetails ? 'rotate-180' : ''}`} viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 5L7 9L11 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -144,7 +144,7 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
         </button>
 
         <div className={`overflow-hidden transition-all duration-300 ease-in-out ${showDetails ? 'max-h-[400px]' : 'max-h-0'}`}>
-          <div className="bg-gray-50 border-t border-gray-100 p-4">
+          <div className="bg-gray-50 border-t border-gray-200 p-4">
             <div className="grid grid-cols-2 gap-x-4 gap-y-3 mb-4">
               {coupon.discount && (
                 <div>

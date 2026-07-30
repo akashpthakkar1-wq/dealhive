@@ -153,8 +153,8 @@ export default function AdminStores() {
       )}
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        <div className="px-5 py-3.5 border-b border-gray-100 flex items-center justify-between">
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="px-5 py-3.5 border-b border-gray-200 flex items-center justify-between">
           <h3 className="font-bold text-gray-900">All Stores <span className="text-gray-400 font-normal text-sm">({filtered.length})</span></h3>
         </div>
         {loading ? (
@@ -163,7 +163,7 @@ export default function AdminStores() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-gray-50 border-b border-gray-100">
+                <tr className="bg-gray-50 border-b border-gray-200">
                   {['Store', 'Category', 'Website', 'Slug', 'Actions'].map((h) => (
                     <th key={h} className="text-left px-5 py-3 text-xs font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">{h}</th>
                   ))}
@@ -175,7 +175,7 @@ export default function AdminStores() {
                     <td className="px-5 py-3">
                       <div className="flex items-center gap-3">
                         {s.logo ? (
-                          <img src={s.logo} alt={`${s.name} logo`} className="w-8 h-8 rounded-lg object-contain border border-gray-100 bg-white" onError={(e: any) => e.target.style.display = 'none'} />
+                          <img src={s.logo} alt={`${s.name} logo`} className="w-8 h-8 rounded-lg object-contain border border-gray-200 bg-white" onError={(e: any) => e.target.style.display = 'none'} />
                         ) : (
                           <div className="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center"><Store className="w-4 h-4 text-orange-400" /></div>
                         )}

@@ -137,7 +137,7 @@ export default function LiveSearchBar({
       {/* ── Dropdown ── */}
       {open && query.trim().length > 0 && (
         <div
-          className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-100 z-50 text-left overflow-hidden"
+          className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-200 z-50 text-left overflow-hidden"
           style={{ maxHeight: '400px', overflowY: 'auto' }}
         >
           {!loaded ? (
@@ -151,17 +151,17 @@ export default function LiveSearchBar({
               {/* Stores */}
               {matchStores.length > 0 && (
                 <div>
-                  <p className="px-4 pt-3 pb-1.5 text-[11px] font-extrabold text-gray-500 uppercase tracking-widest bg-gray-50 border-b border-gray-100">
+                  <p className="px-4 pt-3 pb-1.5 text-[11px] font-extrabold text-gray-500 uppercase tracking-widest bg-gray-50 border-b border-gray-200">
                     Stores
                   </p>
                   {matchStores.map((store) => (
                     <button
                       key={store.id}
                       onMouseDown={(e) => { e.preventDefault(); setOpen(false); window.location.href = `/store/${store.slug}`; }}
-                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-orange-50 transition-colors border-b border-gray-50 last:border-0 text-left"
+                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-orange-50 transition-colors border-b border-gray-200 last:border-0 text-left"
                     >
                       <img src={getStoreLogo(store.website_url)} alt={`${store.name} logo`}
-                        className="w-8 h-8 rounded-lg border border-gray-100 object-contain bg-white flex-shrink-0" />
+                        className="w-8 h-8 rounded-lg border border-gray-200 object-contain bg-white flex-shrink-0" />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-semibold text-gray-800 truncate">
                           <Highlight text={store.name} query={query} />
@@ -177,7 +177,7 @@ export default function LiveSearchBar({
               {/* Coupons */}
               {matchCoupons.length > 0 && (
                 <div>
-                  <p className="px-4 pt-3 pb-1.5 text-[11px] font-extrabold text-gray-500 uppercase tracking-widest bg-gray-50 border-b border-gray-100">
+                  <p className="px-4 pt-3 pb-1.5 text-[11px] font-extrabold text-gray-500 uppercase tracking-widest bg-gray-50 border-b border-gray-200">
                     Coupons & Deals
                   </p>
                   {matchCoupons.map((coupon) => (
@@ -188,10 +188,10 @@ export default function LiveSearchBar({
                         setOpen(false);
                         window.location.href = `/search?q=${encodeURIComponent(coupon.title)}`;
                       }}
-                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-orange-50 transition-colors border-b border-gray-50 last:border-0 text-left"
+                      className="w-full flex items-center gap-3 px-4 py-3 hover:bg-orange-50 transition-colors border-b border-gray-200 last:border-0 text-left"
                     >
                       <img src={getCouponLogo(coupon)} alt={coupon.store?.name ?? 'Store'}
-                        className="w-8 h-8 rounded-lg border border-gray-100 object-contain bg-white flex-shrink-0" />
+                        className="w-8 h-8 rounded-lg border border-gray-200 object-contain bg-white flex-shrink-0" />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-semibold text-gray-800 truncate">
                           <Highlight text={coupon.title} query={query} />

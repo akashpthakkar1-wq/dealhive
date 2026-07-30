@@ -199,7 +199,7 @@ export default async function StorePage({ params }: Props) {
       ])}} />
 
       {/* ── HERO ────────────────────────────────────── */}
-      <div className="bg-white border-b border-gray-100">
+      <div className="bg-white border-b border-gray-200">
         <div className="container-main py-4 md:py-6">
           <Breadcrumb items={[{ label: 'Stores', href: '/stores' }, ...(store.category ? [{ label: store.category, href: '/categories' }] : []), { label: `${store.name} Coupons` }]} />
 
@@ -258,11 +258,11 @@ export default async function StorePage({ params }: Props) {
                   text={store.description || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
                 />
                 <div className="grid grid-cols-3 gap-3 max-w-md">
-                  <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-100 bg-white">
+                  <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-200 bg-white">
                     <span className="text-lg font-extrabold text-gray-900 leading-none">{allCoupons.length}</span>
                     <span className="text-[11px] text-gray-500 font-medium mt-1">Total Offers</span>
                   </div>
-                  <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-100 bg-white">
+                  <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-200 bg-white">
                     <span className="text-lg font-extrabold text-gray-900 leading-none">{activeCoupons.length}</span>
                     <span className="text-[11px] text-gray-500 font-medium mt-1">Active Now</span>
                   </div>
@@ -283,11 +283,11 @@ export default async function StorePage({ params }: Props) {
                 text={store.description || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
               />
               <div className="grid grid-cols-3 gap-2 max-w-md">
-                <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-100 bg-white">
+                <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-200 bg-white">
                   <span className="text-lg font-extrabold text-gray-900 leading-none">{allCoupons.length}</span>
                   <span className="text-[11px] text-gray-500 font-medium mt-1">Total Offers</span>
                 </div>
-                <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-100 bg-white">
+                <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-200 bg-white">
                   <span className="text-lg font-extrabold text-gray-900 leading-none">{activeCoupons.length}</span>
                   <span className="text-[11px] text-gray-500 font-medium mt-1">Active Now</span>
                 </div>
@@ -322,14 +322,14 @@ export default async function StorePage({ params }: Props) {
 
             {/* ── Quick summary table ── */}
             {activeCoupons.length > 0 && (
-              <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+              <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                 <div className="bg-primary-50 px-5 py-3 border-b border-primary-100">
                   <h2 className="font-bold text-gray-900">Today's Best {store.name} Deals & Coupon Codes – {month}</h2>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="bg-gray-50 border-b border-gray-100">
+                      <tr className="bg-gray-50 border-b border-gray-200">
                         {[
                           { label: 'Offer', cls: 'w-[45%]' },
                           { label: 'Discount', cls: 'w-[15%]' },
@@ -356,7 +356,7 @@ export default async function StorePage({ params }: Props) {
             )}
 
             {/* About store */}
-            <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-2">About {store.name} Coupon Codes & Deals</h2>
               <h3 className="text-sm font-semibold text-primary-600 mb-3">Why shop at {store.name} with EndOverPay?</h3>
               <div className="text-base text-gray-600 leading-relaxed space-y-3">
@@ -370,7 +370,7 @@ export default async function StorePage({ params }: Props) {
               </div>
               {/* Internal link to category page — improves crawl graph */}
               {store.category && (
-                <div className="mt-4 pt-4 border-t border-gray-100 flex items-center gap-2 text-sm">
+                <div className="mt-4 pt-4 border-t border-gray-200 flex items-center gap-2 text-sm">
                   <span className="text-gray-500">Browse more</span>
                   <Link href={`/category/${store.category.toLowerCase()}`} className="text-primary-600 font-semibold hover:underline">
                     {store.category} coupons →
@@ -387,7 +387,7 @@ export default async function StorePage({ params }: Props) {
             </div>
 
             {/* How to use */}
-            <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-5">How to Use a {store.name} Coupon Code or Promo Code</h2>
               {store.how_to_use_content ? (
                 <p className="text-gray-600 text-base leading-relaxed whitespace-pre-line">{store.how_to_use_content}</p>
@@ -413,7 +413,7 @@ export default async function StorePage({ params }: Props) {
             </div>
 
             {/* Saving tips */}
-            <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-2">How to Save More at {store.name} – Tips & Tricks</h2>
               <h3 className="text-sm font-semibold text-primary-600 mb-3">Top money-saving strategies for {store.name} shoppers</h3>
               {store.saving_tips_content ? (
@@ -433,16 +433,16 @@ export default async function StorePage({ params }: Props) {
             </div>
 
             {/* FAQs */}
-            <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-5">{store.name} Coupon Codes – Frequently Asked Questions</h2>
               <div className="space-y-3">
                 {faqs.map((faq, i) => (
-                  <details key={i} className="group border border-gray-100 rounded-xl overflow-hidden">
+                  <details key={i} className="group border border-gray-200 rounded-xl overflow-hidden">
                     <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-primary-50 transition-colors list-none">
                       <span className="font-semibold text-gray-900 text-base pr-4">{faq.q}</span>
                       <ChevronRight className="w-4 h-4 text-gray-500 group-open:rotate-90 transition-transform flex-shrink-0" />
                     </summary>
-                    <div className="px-4 pb-4 pt-2 text-base text-gray-600 leading-relaxed border-t border-gray-50">{faq.a}</div>
+                    <div className="px-4 pb-4 pt-2 text-base text-gray-600 leading-relaxed border-t border-gray-200">{faq.a}</div>
                   </details>
                 ))}
               </div>
@@ -450,7 +450,7 @@ export default async function StorePage({ params }: Props) {
 
             {/* Expired coupons */}
             {expiredCoupons.length > 0 && (
-              <details className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+              <details className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
                 <summary className="cursor-pointer font-semibold text-gray-500 hover:text-gray-700 flex items-center gap-2 list-none">
                   <Clock className="w-4 h-4" />
                   Show {expiredCoupons.length} Recently Expired Coupons
@@ -467,7 +467,7 @@ export default async function StorePage({ params }: Props) {
           <div className="space-y-5 lg:order-1">
 
             {/* Stats */}
-            <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
               <h3 className="font-bold text-gray-900 text-sm uppercase tracking-wider mb-4">{store.name} Stats</h3>
               <div className="space-y-3">
                 {[
@@ -475,7 +475,7 @@ export default async function StorePage({ params }: Props) {
                   { l: 'Active Codes', v: activeCoupons.length, I: CheckCircle },
                   { l: 'Best Discount', v: maxDiscount > 0 ? `${maxDiscount}% OFF` : 'N/A', I: TrendingUp },
                 ].map(({ l, v, I }) => (
-                  <div key={l} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+                  <div key={l} className="flex items-center justify-between py-2 border-b border-gray-200 last:border-0">
                     <div className="flex items-center gap-2 text-sm text-gray-500"><I className="w-4 h-4 text-primary-400" />{l}</div>
                     <span className="font-bold text-gray-900 text-sm">{v}</span>
                   </div>
@@ -488,7 +488,7 @@ export default async function StorePage({ params }: Props) {
             <StoreRating storeId={store.id} storeName={store.name} initialCount={ratingCount} initialAverage={ratingAvg} />
 
             {/* Today's best */}
-            <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
               <h3 className="font-bold text-gray-900 text-sm uppercase tracking-wider mb-4">Today&apos;s Best</h3>
               <div className="space-y-2">
                 {[
@@ -498,7 +498,7 @@ export default async function StorePage({ params }: Props) {
                   { l: 'Free Shipping', v: freeCoupons.length > 0 ? `${freeCoupons.length} offer(s)` : 'Check page' },
                   { l: 'Total Active', v: `${activeCoupons.length} offers` },
                 ].map(({ l, v }) => (
-                  <div key={l} className="flex items-center justify-between text-sm py-1.5 border-b border-gray-50 last:border-0">
+                  <div key={l} className="flex items-center justify-between text-sm py-1.5 border-b border-gray-200 last:border-0">
                     <span className="text-gray-500">{l}</span>
                     <span className="font-bold text-primary-600">{v}</span>
                   </div>
@@ -508,12 +508,12 @@ export default async function StorePage({ params }: Props) {
 
             {/* Similar stores */}
             {sidebarStores.length > 0 && (
-              <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+              <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
                 <h3 className="font-bold text-gray-900 text-sm uppercase tracking-wider mb-4">Similar Stores</h3>
                 <div className="space-y-1">
                   {sidebarStores.map(s => (
                     <Link key={s.id} href={`/store/${s.slug}`} className="flex items-center gap-3 p-2 rounded-lg hover:bg-primary-50 transition-colors group">
-                      <div className="w-10 h-10 rounded-xl border border-gray-100 bg-white overflow-hidden flex items-center justify-center flex-shrink-0">
+                      <div className="w-10 h-10 rounded-xl border border-gray-200 bg-white overflow-hidden flex items-center justify-center flex-shrink-0">
                         {s.logo ? <Image src={s.logo} alt={`${s.name} logo`} width={40} height={40} className="object-contain w-full h-full" /> : <Tag className="w-4 h-4 text-primary-400" />}
                       </div>
                       <div className="flex-1 min-w-0">

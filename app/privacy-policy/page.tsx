@@ -17,7 +17,7 @@ export default function PrivacyPolicyPage() {
       </div>
 
       <div className="container-main py-12 max-w-4xl mx-auto">
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-8 space-y-8 text-gray-600 leading-relaxed">
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 space-y-8 text-gray-600 leading-relaxed">
 
           <div>
             <p>This Privacy Policy explains how EndOverPay ("we", "us" or "our"), operating at <strong>www.endoverpay.com</strong>, collects, uses, stores and protects information about you when you use our website. By using EndOverPay, you agree to the practices described in this policy.</p>

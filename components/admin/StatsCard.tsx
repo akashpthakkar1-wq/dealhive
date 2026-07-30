@@ -19,7 +19,7 @@ const colors = {
 
 export default function StatsCard({ title, value, subtitle, icon, color = 'orange', trend }: Props) {
   return (
-    <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5 flex items-start gap-4">
+    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5 flex items-start gap-4">
       <div className={cn('w-11 h-11 rounded-xl flex items-center justify-center border flex-shrink-0', colors[color])}>
         {icon}
       </div>

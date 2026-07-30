@@ -171,8 +171,8 @@ export default function AdminCategories() {
         </div>
       )}
 
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        <div className="px-5 py-3.5 border-b border-gray-100">
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="px-5 py-3.5 border-b border-gray-200">
           <h3 className="font-bold text-gray-900">All Categories <span className="text-gray-400 font-normal text-sm">({cats.length})</span></h3>
         </div>
         {loading ? (

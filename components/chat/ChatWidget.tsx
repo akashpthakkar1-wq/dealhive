@@ -247,14 +247,14 @@ export default function ChatWidget() {
           )}
 
           {storeMatches.length > 0 && (
-            <div className="px-3 py-2 bg-white border-t border-gray-100 flex flex-wrap gap-1.5">
+            <div className="px-3 py-2 bg-white border-t border-gray-200 flex flex-wrap gap-1.5">
               {storeMatches.map((s) => (
                 <button key={s} onClick={() => { setInput(""); showStoreDeals(s); }} className="text-xs bg-primary-50 text-primary-700 border border-primary-200 px-2.5 py-1 rounded-full hover:bg-primary-100">{s}</button>
               ))}
             </div>
           )}
 
-          <div className="p-3 border-t border-gray-100 bg-white rounded-b-2xl flex items-center gap-2">
+          <div className="p-3 border-t border-gray-200 bg-white rounded-b-2xl flex items-center gap-2">
             <input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") handleSend(); }}
               placeholder={storeMode ? "Type a store name…" : "Ask me anything…"} aria-label="Type your message"
               className="flex-1 text-sm px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-300 bg-gray-50" />
@@ -274,14 +274,14 @@ function MessageBubble({ m, userRef, alertPicks, onChip, onToggleAlert, onSubscr
     const isUser = m.role === "user";
     return (
       <div className={`flex ${isUser ? "justify-end" : "justify-start"}`}>
-        <div className={`max-w-[80%] px-3 py-2 rounded-2xl text-sm leading-snug ${isUser ? "bg-[#EA580C] text-white rounded-br-sm" : "bg-white border border-gray-100 text-gray-800 rounded-bl-sm"}`}>{m.text}</div>
+        <div className={`max-w-[80%] px-3 py-2 rounded-2xl text-sm leading-snug ${isUser ? "bg-[#EA580C] text-white rounded-br-sm" : "bg-white border border-gray-200 text-gray-800 rounded-bl-sm"}`}>{m.text}</div>
       </div>
     );
   }
   if (m.kind === "chips") {
     return (
       <div className="flex flex-col items-start gap-2">
-        {m.text && <div className="max-w-[80%] px-3 py-2 rounded-2xl rounded-bl-sm text-sm bg-white border border-gray-100 text-gray-800">{m.text}</div>}
+        {m.text && <div className="max-w-[80%] px-3 py-2 rounded-2xl rounded-bl-sm text-sm bg-white border border-gray-200 text-gray-800">{m.text}</div>}
         <div className="flex flex-wrap gap-1.5">
           {m.chips.map((c: any, i: number) => (
             <button key={i} onClick={() => onChip(c.action, c.value)} className="text-xs font-semibold bg-white border border-primary-200 text-primary-700 px-3 py-1.5 rounded-full hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-primary-300">{c.label}</button>
@@ -293,7 +293,7 @@ function MessageBubble({ m, userRef, alertPicks, onChip, onToggleAlert, onSubscr
   if (m.kind === "deals") {
     return (
       <div className="flex flex-col gap-2">
-        {m.text && <div className="max-w-[80%] px-3 py-2 rounded-2xl rounded-bl-sm text-sm bg-white border border-gray-100 text-gray-800">{m.text}</div>}
+        {m.text && <div className="max-w-[80%] px-3 py-2 rounded-2xl rounded-bl-sm text-sm bg-white border border-gray-200 text-gray-800">{m.text}</div>}
         {m.deals.map((d: Deal) => <DealCard key={d.id} deal={d} userRef={userRef} />)}
       </div>
     );
@@ -301,7 +301,7 @@ function MessageBubble({ m, userRef, alertPicks, onChip, onToggleAlert, onSubscr
   if (m.kind === "alerts") {
     return (
       <div className="flex flex-col items-start gap-2">
-        {m.text && <div className="max-w-[85%] px-3 py-2 rounded-2xl rounded-bl-sm text-sm bg-white border border-gray-100 text-gray-800">{m.text}</div>}
+        {m.text && <div className="max-w-[85%] px-3 py-2 rounded-2xl rounded-bl-sm text-sm bg-white border border-gray-200 text-gray-800">{m.text}</div>}
         <div className="flex flex-wrap gap-1.5">
           {CATEGORIES.map((c) => {
             const picked = alertPicks.includes(c);
@@ -329,7 +329,7 @@ function DealCard({ deal, userRef }: { deal: Deal; userRef: string }) {
     if (deal.code) { navigator.clipboard.writeText(deal.code).then(() => { setCopied(true); setTimeout(() => setCopied(false), 1500); }); }
   }
   return (
-    <div className="bg-white border border-gray-100 rounded-xl p-3 shadow-sm">
+    <div className="bg-white border border-gray-200 rounded-xl p-3 shadow-sm">
       <div className="flex items-center justify-between gap-2 mb-1">
         <span className="text-xs font-bold text-gray-900 truncate">{deal.store}</span>
         {deal.discount && <span className="text-[11px] font-extrabold text-[#9A3412] bg-orange-50 border border-orange-200 px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0">{deal.discount}</span>}

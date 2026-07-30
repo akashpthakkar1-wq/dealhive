@@ -70,7 +70,7 @@ export default function PWAInstallPrompt() {
 
   return (
     <div className="fixed bottom-4 left-4 right-4 z-[9999] md:left-auto md:right-4 md:w-96">
-      <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 flex items-center gap-3">
+      <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 p-4 flex items-center gap-3">
         <img src="/icons/icon-96x96.png" alt="EndOverPay" className="w-12 h-12 rounded-xl flex-shrink-0" />
         <div className="flex-1 min-w-0">
           <p className="font-bold text-gray-900 text-sm">Install EndOverPay App</p>

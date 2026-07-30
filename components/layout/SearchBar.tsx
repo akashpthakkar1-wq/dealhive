@@ -113,7 +113,7 @@ export default function SearchBar({ compact }: Props) {
             <>
               {results!.stores.length > 0 && (
                 <div>
-                  <div className="px-4 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-50 flex items-center gap-1.5">
+                  <div className="px-4 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 flex items-center gap-1.5">
                     <Store className="w-3 h-3" /> Stores
                   </div>
                   {results!.stores.map((store) => (
@@ -121,7 +121,7 @@ export default function SearchBar({ compact }: Props) {
                       onClick={() => setFocused(false)}
                       className="flex items-center gap-3 px-4 py-2.5 hover:bg-primary-50 transition-colors">
                       {store.logo && (
-                        <div className="w-7 h-7 rounded-lg overflow-hidden border border-gray-100 flex-shrink-0">
+                        <div className="w-7 h-7 rounded-lg overflow-hidden border border-gray-200 flex-shrink-0">
                           <Image src={store.logo} alt={`${store.name} logo`} width={28} height={28} className="object-contain" />
                         </div>
                       )}
@@ -136,7 +136,7 @@ export default function SearchBar({ compact }: Props) {
 
               {results!.coupons.length > 0 && (
                 <div>
-                  <div className="px-4 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-50 flex items-center gap-1.5">
+                  <div className="px-4 py-2 text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 flex items-center gap-1.5">
                     <Tag className="w-3 h-3" /> Coupons
                   </div>
                   {results!.coupons.map((c) => (
@@ -157,7 +157,7 @@ export default function SearchBar({ compact }: Props) {
                 </div>
               )}
 
-              <div className="px-4 py-2.5 border-t border-gray-100">
+              <div className="px-4 py-2.5 border-t border-gray-200">
                 <button onClick={handleSubmit as any}
                   className="w-full text-sm text-primary-600 font-semibold hover:text-orange-700 flex items-center gap-1.5 justify-center">
                   <TrendingUp className="w-3.5 h-3.5" />

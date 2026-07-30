@@ -136,7 +136,7 @@ export default function AdminImport() {
   return (
     <div className="space-y-6 max-w-4xl">
       {/* Import section */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
         <h2 className="font-bold text-gray-900 text-base mb-1 flex items-center gap-2">
           <Upload className="w-5 h-5 text-orange-500" /> Bulk Import Coupons (CSV)
         </h2>
@@ -166,7 +166,7 @@ export default function AdminImport() {
         {parsed.length > 0 && (
           <div className="mt-5">
             <p className="text-sm font-bold text-gray-700 mb-3">Preview ({parsed.length} rows)</p>
-            <div className="overflow-x-auto max-h-48 overflow-y-auto rounded-lg border border-gray-100">
+            <div className="overflow-x-auto max-h-48 overflow-y-auto rounded-lg border border-gray-200">
               <table className="w-full text-xs">
                 <thead className="bg-gray-50 sticky top-0">
                   <tr>
@@ -226,7 +226,7 @@ export default function AdminImport() {
       </div>
 
       {/* Export section */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
         <h2 className="font-bold text-gray-900 text-base mb-1 flex items-center gap-2">
           <Download className="w-5 h-5 text-blue-500" /> Export Data
         </h2>

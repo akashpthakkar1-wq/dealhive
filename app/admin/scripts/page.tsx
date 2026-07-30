@@ -128,12 +128,12 @@ export default function AdminScripts() {
 
 function ScriptList({ scripts, onDelete, onToggle }: { scripts: SiteScript[]; onDelete: (id: string) => void; onToggle: (s: SiteScript) => void }) {
   if (!scripts.length) {
-    return <div className="bg-white rounded-xl border border-gray-100 py-8 text-center text-gray-400 text-sm">No scripts added yet.</div>
+    return <div className="bg-white rounded-xl border border-gray-200 py-8 text-center text-gray-400 text-sm">No scripts added yet.</div>
   }
   return (
     <div className="space-y-3">
       {scripts.map((s) => (
-        <div key={s.id} className={`bg-white rounded-xl border shadow-sm p-4 ${s.is_active ? 'border-gray-100' : 'border-dashed border-gray-200 opacity-60'}`}>
+        <div key={s.id} className={`bg-white rounded-xl border shadow-sm p-4 ${s.is_active ? 'border-gray-200' : 'border-dashed border-gray-200 opacity-60'}`}>
           <div className="flex items-start justify-between gap-3 mb-3">
             <div>
               <div className="font-bold text-gray-900 text-sm">{s.label}</div>

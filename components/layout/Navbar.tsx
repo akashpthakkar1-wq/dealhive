@@ -77,7 +77,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div className="lg:hidden border-t border-gray-100 pb-3 bg-white">
+        <div className="lg:hidden border-t border-gray-200 pb-3 bg-white">
           <div className="container-main pt-3">
 
             {/* Mobile search */}

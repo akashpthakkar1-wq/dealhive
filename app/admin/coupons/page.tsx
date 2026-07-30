@@ -238,7 +238,7 @@ export default function AdminCoupons() {
           </div>
 
           {/* Toggles */}
-          <div className="flex flex-wrap gap-4 mt-5 pt-4 border-t border-gray-100">
+          <div className="flex flex-wrap gap-4 mt-5 pt-4 border-t border-gray-200">
             {[
               { key: 'is_verified', label: 'Verified', color: 'green' },
               { key: 'is_featured', label: 'Featured', color: 'yellow' },
@@ -253,7 +253,7 @@ export default function AdminCoupons() {
               </label>
             ))}
             {/* Deal of the Day slot selector */}
-            <div className="w-full mt-3 pt-3 border-t border-gray-100">
+            <div className="w-full mt-3 pt-3 border-t border-gray-200">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-sm font-semibold text-gray-700">⚡ Deal of the Day Slot</span>
                 <span className="text-xs text-gray-400">1=Mon · 2=Tue · 3=Wed · 4=Thu · 5=Fri · 6=Sat · 7=Sun</span>
@@ -300,8 +300,8 @@ export default function AdminCoupons() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        <div className="px-5 py-3.5 border-b border-gray-100 flex items-center justify-between">
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="px-5 py-3.5 border-b border-gray-200 flex items-center justify-between">
           <h3 className="font-bold text-gray-900">Coupons & Deals <span className="text-gray-400 font-normal text-sm">({filtered.length})</span></h3>
         </div>
         {loading ? (
@@ -310,7 +310,7 @@ export default function AdminCoupons() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-gray-50 border-b border-gray-100">
+                <tr className="bg-gray-50 border-b border-gray-200">
                   {['Title', 'Store', 'Type', 'Code', 'Discount', 'Expiry', 'Flags', 'Actions'].map((h) => (
                     <th key={h} className="text-left px-4 py-3 text-xs font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">{h}</th>
                   ))}

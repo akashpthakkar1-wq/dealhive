@@ -52,7 +52,7 @@ export default function StoreRating({ storeId, storeName, initialCount, initialA
   const showPublicRating = count >= THRESHOLD
 
   return (
-    <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-5">
+    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
       <h3 className="font-bold text-gray-900 text-sm uppercase tracking-wider mb-4">
         {showPublicRating ? `${storeName} Rating` : 'Rate This Store'}
       </h3>

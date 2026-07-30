@@ -58,7 +58,7 @@ export default async function CategoriesPage() {
 
       <div className="container-main py-8">
         {/* Alphabet quick nav */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 mb-8 md:sticky md:top-[73px] md:z-20">
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-4 mb-8 md:sticky md:top-[73px] md:z-20">
           <div className="flex flex-wrap gap-1 justify-center">
             {ALPHABET.map((letter) => (
               availableLetters.has(letter) ? (
@@ -91,7 +91,7 @@ export default async function CategoriesPage() {
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
                 {grouped[letter].map((cat) => (
                   <Link key={cat.id} href={`/category/${cat.slug}`}
-                    className="bg-white rounded-xl border border-gray-100 p-5 flex flex-col items-center gap-2 hover:border-primary-300 hover:bg-primary-50 transition-colors group text-center">
+                    className="bg-white rounded-xl border border-gray-200 p-5 flex flex-col items-center gap-2 hover:border-primary-300 hover:bg-primary-50 transition-colors group text-center">
                     <div className="text-4xl">{cat.icon || '🏷️'}</div>
                     <div className="font-bold text-gray-900 text-sm group-hover:text-primary-600 transition-colors line-clamp-2 leading-tight">{cat.name}</div>
                     {(() => {

@@ -83,7 +83,7 @@ export default async function BlogPage() {
               ].map((post, i) => (
                 <div
                   key={i}
-                  className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5"
+                  className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5"
                 >
                   <span className="text-xs font-semibold bg-orange-100 text-[#EA580C] px-2 py-0.5 rounded-full">
                     {post.tag}
@@ -111,7 +111,7 @@ export default async function BlogPage() {
               <Link
                 key={post.id}
                 href={`/blog/${post.slug}`}
-                className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden group"
+                className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden group"
               >
                 {post.cover_image && (
                   <img

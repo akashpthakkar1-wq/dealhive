@@ -46,7 +46,7 @@ export default async function AdminDashboard() {
           { href: '/admin/import',  label: 'Bulk Import', icon: '📥', color: 'bg-green-500' },
         ].map((a) => (
           <Link key={a.href} href={a.href}
-            className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 flex items-center gap-3 hover:shadow-md transition-shadow group">
+            className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 flex items-center gap-3 hover:shadow-md transition-shadow group">
             <div className={`w-9 h-9 ${a.color} rounded-lg flex items-center justify-center text-lg flex-shrink-0`}>
               {a.icon}
             </div>
@@ -56,15 +56,15 @@ export default async function AdminDashboard() {
       </div>
 
       {/* Recent coupons */}
-      <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
-        <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between">
           <h3 className="font-bold text-gray-900">Recently Added Coupons</h3>
           <Link href="/admin/coupons" className="text-sm font-semibold text-orange-600 hover:text-orange-700">View All →</Link>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="bg-gray-50 border-b border-gray-100">
+              <tr className="bg-gray-50 border-b border-gray-200">
                 {['Title', 'Store', 'Discount', 'Added', 'Action'].map((h) => (
                   <th key={h} className="text-left px-5 py-3 text-xs font-bold text-gray-400 uppercase tracking-wider">{h}</th>
                 ))}
