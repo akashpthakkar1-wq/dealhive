@@ -102,6 +102,32 @@ curl -s -X POST "https://www.endoverpay.com/api/revalidate" -H "Content-Type: ap
 - **DONE:** `stores.country` column (hedge).
 - **DEFERRED to expansion:** slug uniqueness → `unique(country, slug)`; composite index; routing; hreflang (en-in root, en-ph/my/us, x-default); self-canonicals; currency; localized content. Categories/search filter through `stores.country` automatically. Universal evergreen `/blog/*` stays at root (authority play).
 
+## Design & UX Overhaul (shipped this session — all live)
+A large batch of visual/UX polish across the site. Store page template is now well-built — verified against live code (breadcrumbs, related-store links, ISR, etc. were already present; several competitor-teardown "rebuild" prompts were correctly rejected as premature for a 10-store site).
+
+**Global / chrome:**
+- **Navbar redesigned** (`components/layout/Navbar.tsx`): Option C style — thin orange accent strip on top, active-link orange underline (tab style), bigger logo (h-12), scroll-shadow (deepens past 8px scroll), brand-orange active state (was dark purple), still sticky. White bar so colorful content pops.
+- **Homepage section rhythm** (`app/page.tsx`): alternating white/gray section backgrounds (was 4 whites in a row) — white/gray/white/gray/white/gray.
+- **Section headers**: icon chips (icon in soft rounded square), short orange accent bar under each H2 title, category-card hover lift (translate-y + shadow).
+- **Borders app-wide**: bumped faint `border-gray-100`/`border-gray-50` → `border-gray-200` across 34 files + globals.css base classes (`.card`, `.card-p`, `.coupon-list-card`). gray-100 was near-invisible on white; gray-200 gives clear card/button/section definition. Colored borders left untouched.
+
+**Coupon cards** (`components/coupon/CouponCard.tsx`):
+- **Context-aware left panel** via `hideStore` prop: on the store page (hideStore) the panel shows the **discount badge** (white bg, brand-orange number — replaced the solid-orange badge); everywhere else (homepage/category/search — mixed stores) it shows **store logo + name**, with the discount as a small orange label near the title. Store page passes `hideStore` (also in `StoreFilterTabs.tsx`).
+- Fonts bumped to 16px (title + description) per Google readability.
+
+**Store page** (`app/store/[slug]/page.tsx`):
+- **Hero fully rebuilt, responsive**: separate mobile + desktop layouts. Desktop = logo + Visit button in a left column (button under logo, natural width so the ExternalLink icon never clips), content (H1, byline, freshness, description, badges) on the right. Mobile = logo + H1 top row, then freshness/description/badges/full-width Visit button stacked below.
+- Removed repetitive Verified/category/"Updated today" badges. Byline check icon now **green** (#16A34A) to signal verification (was orange).
+- Freshness line: "N verified [store] coupons — updated for [month]" (added "for"); discount de-duplicated (shows once in the stat badges, not repeated in freshness line + mobile desc + pills).
+- **Stat badges** rebuilt: 3 equal-width cards (number-on-top/label-below), "Best Discount" accented in brand orange.
+- **Visit button**: white bg, black text, subtle border (was solid orange btn-primary).
+- Description: `ExpandableText` component (`components/ui/ExpandableText.tsx`) — 2-line clamp with a "…more"/"less" toggle; full-width, aligned to H1.
+- **Breadcrumb**: added category level (Home › Stores › [Category] › [Store] Coupons) in both visible + JSON-LD, conditional on store.category.
+- **Store page columns swapped**: sidebar narrow-LEFT, main content wide-RIGHT on desktop (via `lg:order`); coupons still come first on mobile.
+- Removed the "More {category} Deals" section (categoryCoupons still fetched — harmless).
+
+**Deferred design items (discussed, not done — premature for 10 stores):** coupon grouping by user_type (needs `user_type` column + admin + backfill; too few coupons/store now), multi-category join-table refactor, moving About into the sidebar (SEO cost — keeps keyword-rich body content in main column), search_volume/sale-calendar sections (templating risk / manual data).
+
 ## Pending Tasks
 - **[Highest value] India low-KD store expansion** — pull SEMrush list, run pipeline at 2-3/day.
 - **Cookie consent + Google Consent Mode v2** — not legally urgent (India DPDP substantive obligations hit ~May 2027) but recommended before expansion / any EU traffic. GA4 currently loads unconditionally, no banner.
