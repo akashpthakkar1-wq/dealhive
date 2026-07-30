@@ -215,15 +215,11 @@ export default async function StorePage({ params }: Props) {
               </div>
               {store.website_url && (
                 <a href={store.website_url} target="_blank" rel="sponsored nofollow noopener noreferrer"
-                  className="btn-primary btn-sm flex items-center justify-center gap-1 text-xs px-2.5 py-1.5 md:px-4 md:py-2 md:text-sm w-full whitespace-nowrap">
+                  className="flex items-center justify-center gap-1 text-xs px-2.5 py-1.5 md:px-4 md:py-2 md:text-sm w-full whitespace-nowrap rounded-lg bg-white text-gray-900 border border-gray-300 font-semibold hover:bg-gray-50 transition-colors">
                   <ExternalLink className="w-3 h-3 md:w-3.5 md:h-3.5" />
                   Visit {store.name}
                 </a>
               )}
-              {/* Freshness line — under logo + Visit button */}
-              <p className="text-xs text-gray-600 text-center leading-snug w-28 md:w-32">
-                <strong className="text-gray-900">{activeCoupons.length}</strong> verified {store.name} {activeCoupons.length === 1 ? 'coupon' : 'coupons'} — updated for {month}
-              </p>
             </div>
 
             {/* Content */}
@@ -245,6 +241,11 @@ export default async function StorePage({ params }: Props) {
                 <span className="text-xs text-gray-500">Curated & verified by the <strong className="text-gray-700 font-semibold">EndOverPay team</strong></span>
               </div>
 
+              {/* Freshness / coupon-context line */}
+              <p className="text-xs md:text-sm text-gray-600 mb-3">
+                <strong className="text-gray-900">{activeCoupons.length}</strong> verified {store.name} {activeCoupons.length === 1 ? 'coupon' : 'coupons'} — updated for {month}
+              </p>
+
 
               {/* Description — desktop, 2-line clamp with more/less */}
               <ExpandableText
@@ -252,19 +253,19 @@ export default async function StorePage({ params }: Props) {
                 text={store.description || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
               />
 
-              {/* Stats badges — below description */}
-              <div className="grid grid-cols-2 sm:flex sm:flex-wrap sm:gap-2 gap-2 pt-2 mt-1">
-                <div className="hidden sm:flex items-center justify-start gap-2 px-4 py-2 rounded-xl border font-semibold bg-white border-gray-100 text-gray-700">
-                  <span className="text-xs text-gray-500 font-medium">Total Offers</span>
-                  <span className="text-sm font-bold">{allCoupons.length}</span>
+              {/* Stats badges — equal-width cards, stacked label/value */}
+              <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-2 mt-1 max-w-md">
+                <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-100 bg-white">
+                  <span className="text-lg font-extrabold text-gray-900 leading-none">{allCoupons.length}</span>
+                  <span className="text-[11px] text-gray-500 font-medium mt-1">Total Offers</span>
                 </div>
-                <div className="flex items-center justify-between sm:justify-start gap-2 px-3 py-2 sm:px-4 rounded-xl border font-semibold bg-primary-50 border-primary-200 text-primary-700">
-                  <span className="text-xs text-gray-500 font-medium">Active Now</span>
-                  <span className="text-sm font-bold text-primary-600">{activeCoupons.length}</span>
+                <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-100 bg-white">
+                  <span className="text-lg font-extrabold text-gray-900 leading-none">{activeCoupons.length}</span>
+                  <span className="text-[11px] text-gray-500 font-medium mt-1">Active Now</span>
                 </div>
-                <div className="flex items-center justify-between sm:justify-start gap-2 px-3 py-2 sm:px-4 rounded-xl border font-semibold bg-primary-50 border-primary-200 text-primary-700">
-                  <span className="text-xs text-gray-500 font-medium leading-tight">Best Discount</span>
-                  <span className="text-xs sm:text-sm font-bold text-primary-600">{maxDiscount > 0 ? `${maxDiscount}% OFF` : 'Great Deals'}</span>
+                <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-primary-200 bg-primary-50">
+                  <span className="text-lg font-extrabold text-primary-600 leading-none">{maxDiscount > 0 ? `${maxDiscount}%` : '—'}</span>
+                  <span className="text-[11px] text-primary-700 font-semibold mt-1">Best Discount</span>
                 </div>
               </div>
 
