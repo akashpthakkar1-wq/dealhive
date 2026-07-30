@@ -203,30 +203,19 @@ export default async function StorePage({ params }: Props) {
         <div className="container-main py-4 md:py-6">
           <Breadcrumb items={[{ label: 'Stores', href: '/stores' }, ...(store.category ? [{ label: store.category, href: '/categories' }] : []), { label: `${store.name} Coupons` }]} />
 
-          {/* Logo + Content — side by side on both mobile and desktop */}
-          <div className="flex flex-row items-start gap-3 md:gap-5 mt-3 mb-3 md:mb-4">
+          {/* Logo + H1 row — side by side */}
+          <div className="flex flex-row items-center gap-3 md:gap-5 mt-3 mb-3 md:mb-4">
 
-            {/* Logo + Visit button stacked */}
-            <div className="flex flex-col items-center gap-2 flex-shrink-0">
-              <div className="w-20 h-20 md:w-28 md:h-28 rounded-xl md:rounded-2xl overflow-hidden flex items-center justify-center">
-                {store.logo
-                  ? <img src={store.logo} alt={`${store.name} logo`} className="w-full h-full object-contain" />
-                  : <Tag className="w-8 h-8 md:w-10 md:h-10 text-primary-400" />}
-              </div>
-              {store.website_url && (
-                <a href={store.website_url} target="_blank" rel="sponsored nofollow noopener noreferrer"
-                  className="flex items-center justify-center gap-1 text-xs px-2.5 py-1.5 md:px-4 md:py-2 md:text-sm w-full whitespace-nowrap rounded-lg bg-white text-gray-900 border border-gray-300 font-semibold hover:bg-gray-50 transition-colors">
-                  <ExternalLink className="w-3 h-3 md:w-3.5 md:h-3.5" />
-                  Visit {store.name}
-                </a>
-              )}
+            {/* Logo */}
+            <div className="w-20 h-20 md:w-28 md:h-28 rounded-xl md:rounded-2xl overflow-hidden flex items-center justify-center flex-shrink-0">
+              {store.logo
+                ? <img src={store.logo} alt={`${store.name} logo`} className="w-full h-full object-contain" />
+                : <Tag className="w-8 h-8 md:w-10 md:h-10 text-primary-400" />}
             </div>
 
-            {/* Content */}
+            {/* Title + byline beside logo */}
             <div className="flex-1 min-w-0">
-
-              {/* Title */}
-              <h1 className="text-lg leading-tight md:text-3xl font-extrabold text-gray-900 mb-2">
+              <h1 className="text-lg leading-tight md:text-3xl font-extrabold text-gray-900 mb-1.5 md:mb-2">
                 {store.h1 ? applyDateTokens(store.h1) : (
                   <>
                     {store.name} Coupons, Promo Codes &amp; Voucher Codes
@@ -234,49 +223,52 @@ export default async function StorePage({ params }: Props) {
                   </>
                 )}
               </h1>
-
               {/* Byline */}
-              <div className="flex items-start gap-1.5 mb-3">
+              <div className="flex items-start gap-1.5">
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none" className="flex-shrink-0 mt-0.5"><circle cx="6.5" cy="6.5" r="6.5" fill="#16A34A"/><path d="M3.8 6.5L5.8 8.5L9.2 4.5" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 <span className="text-xs text-gray-500">Curated & verified by the <strong className="text-gray-700 font-semibold">EndOverPay team</strong></span>
               </div>
-
-              {/* Freshness / coupon-context line */}
-              <p className="text-xs md:text-sm text-gray-600 mb-3">
-                <strong className="text-gray-900">{activeCoupons.length}</strong> verified {store.name} {activeCoupons.length === 1 ? 'coupon' : 'coupons'} — updated for {month}
-              </p>
-
-
-              {/* Description — desktop, 2-line clamp with more/less */}
-              <ExpandableText
-                className="hidden md:block max-w-2xl mb-1"
-                text={store.description || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
-              />
-
-              {/* Stats badges — equal-width cards, stacked label/value */}
-              <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-2 mt-1 max-w-md">
-                <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-100 bg-white">
-                  <span className="text-lg font-extrabold text-gray-900 leading-none">{allCoupons.length}</span>
-                  <span className="text-[11px] text-gray-500 font-medium mt-1">Total Offers</span>
-                </div>
-                <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-100 bg-white">
-                  <span className="text-lg font-extrabold text-gray-900 leading-none">{activeCoupons.length}</span>
-                  <span className="text-[11px] text-gray-500 font-medium mt-1">Active Now</span>
-                </div>
-                <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-primary-200 bg-primary-50">
-                  <span className="text-lg font-extrabold text-primary-600 leading-none">{maxDiscount > 0 ? `${maxDiscount}%` : '—'}</span>
-                  <span className="text-[11px] text-primary-700 font-semibold mt-1">Best Discount</span>
-                </div>
-              </div>
-
             </div>
           </div>
 
-          {/* Description — mobile, 2-line clamp with more/less */}
-          <ExpandableText
-            className="md:hidden mb-3"
-            text={store.description || `Find the best ${store.name} coupon codes and deals verified by our team.`}
-          />
+          {/* Full-width row below: freshness + description + badges + visit button */}
+          <div className="space-y-3 mb-3 md:mb-4">
+
+            {/* Freshness / coupon-context line */}
+            <p className="text-xs md:text-sm text-gray-600">
+              <strong className="text-gray-900">{activeCoupons.length}</strong> verified {store.name} {activeCoupons.length === 1 ? 'coupon' : 'coupons'} — updated for {month}
+            </p>
+
+            {/* Description — full width, 2-line clamp with more/less */}
+            <ExpandableText
+              text={store.description || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
+            />
+
+            {/* Stats badges — equal-width cards */}
+            <div className="grid grid-cols-3 gap-2 sm:gap-3 max-w-md">
+              <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-100 bg-white">
+                <span className="text-lg font-extrabold text-gray-900 leading-none">{allCoupons.length}</span>
+                <span className="text-[11px] text-gray-500 font-medium mt-1">Total Offers</span>
+              </div>
+              <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-100 bg-white">
+                <span className="text-lg font-extrabold text-gray-900 leading-none">{activeCoupons.length}</span>
+                <span className="text-[11px] text-gray-500 font-medium mt-1">Active Now</span>
+              </div>
+              <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-primary-200 bg-primary-50">
+                <span className="text-lg font-extrabold text-primary-600 leading-none">{maxDiscount > 0 ? `${maxDiscount}%` : '—'}</span>
+                <span className="text-[11px] text-primary-700 font-semibold mt-1">Best Discount</span>
+              </div>
+            </div>
+
+            {/* Visit button — full width on mobile, auto on desktop */}
+            {store.website_url && (
+              <a href={store.website_url} target="_blank" rel="sponsored nofollow noopener noreferrer"
+                className="flex md:inline-flex items-center justify-center gap-1.5 text-sm px-4 py-2.5 rounded-lg bg-white text-gray-900 border border-gray-300 font-semibold hover:bg-gray-50 transition-colors w-full md:w-auto">
+                <ExternalLink className="w-4 h-4" />
+                Visit {store.name}
+              </a>
+            )}
+          </div>
 
         </div>
       </div>
