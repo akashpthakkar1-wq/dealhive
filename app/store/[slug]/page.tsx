@@ -9,6 +9,7 @@ import { getStoreBySlug, getCouponsByStore, getRelatedStores, getCouponsByCatego
 import { formatDate, isExpired, SITE_NAME, SITE_URL } from '@/lib/utils'
 import StoreFilterTabs from '@/components/ui/StoreFilterTabs'
 import StoreRating from '@/components/store/StoreRating'
+import ExpandableText from '@/components/ui/ExpandableText'
 
 interface Props {
   params: { slug: string }
@@ -205,22 +206,24 @@ export default async function StorePage({ params }: Props) {
           {/* Logo + Content — side by side on both mobile and desktop */}
           <div className="flex flex-row items-start gap-3 md:gap-5 mt-3 mb-3 md:mb-4">
 
-            {/* Logo — smaller on mobile */}
-            <div className="w-20 h-20 md:w-28 md:h-28 rounded-xl md:rounded-2xl overflow-hidden flex-shrink-0 flex items-center justify-center">
-              {store.logo
-                ? <img src={store.logo} alt={`${store.name} logo`} className="w-full h-full object-contain" />
-                : <Tag className="w-8 h-8 md:w-10 md:h-10 text-primary-400" />}
+            {/* Logo + Visit button stacked */}
+            <div className="flex flex-col items-center gap-2 flex-shrink-0">
+              <div className="w-20 h-20 md:w-28 md:h-28 rounded-xl md:rounded-2xl overflow-hidden flex items-center justify-center">
+                {store.logo
+                  ? <img src={store.logo} alt={`${store.name} logo`} className="w-full h-full object-contain" />
+                  : <Tag className="w-8 h-8 md:w-10 md:h-10 text-primary-400" />}
+              </div>
+              {store.website_url && (
+                <a href={store.website_url} target="_blank" rel="sponsored nofollow noopener noreferrer"
+                  className="btn-primary btn-sm flex items-center justify-center gap-1 text-xs px-2.5 py-1.5 md:px-4 md:py-2 md:text-sm w-full whitespace-nowrap">
+                  <ExternalLink className="w-3 h-3 md:w-3.5 md:h-3.5" />
+                  Visit {store.name}
+                </a>
+              )}
             </div>
 
             {/* Content */}
             <div className="flex-1 min-w-0 space-y-1.5 md:space-y-2">
-
-              {/* Badges */}
-              <div className="flex flex-wrap items-center gap-1.5">
-                <span className="badge-verified"><CheckCircle className="w-3 h-3" /> Verified</span>
-                {store.category && <span className="badge-type">{store.category}</span>}
-                <span className="hidden sm:inline text-xs text-gray-500">Updated today</span>
-              </div>
 
               {/* Title */}
               <h1 className="text-lg leading-tight md:text-3xl font-extrabold text-gray-900">
@@ -240,31 +243,23 @@ export default async function StorePage({ params }: Props) {
 
               {/* Freshness / coupon-context line — reinforces coupon intent */}
               <p className="text-xs md:text-sm text-gray-600 mb-1">
-                <strong className="text-gray-900">{activeCoupons.length}</strong> verified {store.name} {activeCoupons.length === 1 ? 'coupon' : 'coupons'} — updated {month}
+                <strong className="text-gray-900">{activeCoupons.length}</strong> verified {store.name} {activeCoupons.length === 1 ? 'coupon' : 'coupons'} — updated for {month}
               </p>
 
-              {/* Description — desktop only inside row */}
-              <p className="hidden md:block text-gray-500 text-sm max-w-2xl">
-                {store.description || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
-              </p>
+              {/* Description — desktop, 2-line clamp with more/less */}
+              <ExpandableText
+                className="hidden md:block max-w-2xl"
+                text={store.description || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
+              />
 
-              {/* Visit button */}
-              <div className="flex flex-wrap items-center gap-2 md:gap-3 mt-2">
-                {store.website_url && (
-                  <a href={store.website_url} target="_blank" rel="sponsored nofollow noopener noreferrer"
-                    className="btn-primary btn-sm flex items-center gap-1 text-xs px-2.5 py-1.5 md:px-4 md:py-2 md:text-sm md:gap-1.5">
-                    <ExternalLink className="w-3 h-3 md:w-3.5 md:h-3.5" />
-                    Visit {store.name}
-                  </a>
-                )}
-              </div>
             </div>
           </div>
 
-          {/* Description — mobile only, shown below the logo row */}
-          <p className="md:hidden text-gray-500 text-sm leading-relaxed mb-3">
-            {store.description || `Find the best ${store.name} coupon codes and deals verified by our team.`}
-          </p>
+          {/* Description — mobile, 2-line clamp with more/less */}
+          <ExpandableText
+            className="md:hidden mb-3"
+            text={store.description || `Find the best ${store.name} coupon codes and deals verified by our team.`}
+          />
 
           {/* Stats pills — mobile: 2 cards only | desktop: all 5 */}
           <div className="grid grid-cols-2 sm:flex sm:flex-nowrap sm:overflow-x-auto sm:gap-2 gap-2 mb-1 pb-1">
