@@ -214,9 +214,9 @@ export default async function StorePage({ params }: Props) {
                   : <Tag className="w-8 h-8 text-primary-400" />}
               </div>
               <div className="flex-1 min-w-0">
-                <h1 className="text-lg leading-tight font-extrabold text-gray-900 mb-1.5">
+                <div className="text-lg leading-tight font-extrabold text-gray-900 mb-1.5">
                   {store.h1 ? applyDateTokens(store.h1) : <>{store.name} Coupons, Promo Codes &amp; Voucher Codes</>}
-                </h1>
+                </div>
                 <div className="flex items-start gap-1.5">
                   <svg width="13" height="13" viewBox="0 0 13 13" fill="none" className="flex-shrink-0 mt-0.5"><circle cx="6.5" cy="6.5" r="6.5" fill="#16A34A"/><path d="M3.8 6.5L5.8 8.5L9.2 4.5" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
                   <span className="text-xs text-gray-500">Curated & verified by the <strong className="text-gray-700 font-semibold">EndOverPay team</strong></span>
