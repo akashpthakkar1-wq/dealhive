@@ -227,7 +227,7 @@ export default async function StorePage({ params }: Props) {
             {/* DESKTOP: logo+button column (left) + content column (right) */}
             <div className="hidden md:flex flex-row items-start gap-5">
               {/* Logo + Visit button */}
-              <div className="flex flex-col items-center gap-2 flex-shrink-0 w-28">
+              <div className="flex flex-col items-center gap-2 flex-shrink-0">
                 <div className="w-28 h-28 rounded-2xl overflow-hidden flex items-center justify-center">
                   {store.logo
                     ? <img src={store.logo} alt={`${store.name} logo`} className="w-full h-full object-contain" />
@@ -235,8 +235,8 @@ export default async function StorePage({ params }: Props) {
                 </div>
                 {store.website_url && (
                   <a href={store.website_url} target="_blank" rel="sponsored nofollow noopener noreferrer"
-                    className="flex items-center justify-center gap-1.5 text-sm px-4 py-2 rounded-lg bg-white text-gray-900 border border-gray-300 font-semibold hover:bg-gray-50 transition-colors w-full whitespace-nowrap">
-                    <ExternalLink className="w-3.5 h-3.5" />
+                    className="inline-flex items-center justify-center gap-1.5 text-sm px-4 py-2 rounded-lg bg-white text-gray-900 border border-gray-300 font-semibold hover:bg-gray-50 transition-colors whitespace-nowrap">
+                    <ExternalLink className="w-3.5 h-3.5 flex-shrink-0" />
                     Visit {store.name}
                   </a>
                 )}
