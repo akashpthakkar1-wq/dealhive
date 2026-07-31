@@ -25,6 +25,7 @@ LENGTH LIMITS (stay within, do not exceed):
 Sit at the top of each range for very large marketplaces, never above.
 
 OUTPUT — return ONLY the JSON object. Your entire response must start with { and end with } — no preamble, no explanation, no markdown code fences, no other characters. Do not append the site name to meta_title.
+PLAIN PROSE ONLY — the text inside every content field (about_content, how_to_use_content, saving_tips_content, and all FAQ answers) must be clean, natural prose. Never use markdown or formatting symbols anywhere in field values: no #, ##, ### headings, no ** or __ for bold, no * or - or • bullet markers, no backticks, no markdown links. Write in flowing sentences and paragraphs only. These fields are rendered directly as HTML, so any stray symbol would appear as literal text on the page.
 {
   "meta_title": "<=60 chars once rendered. Pattern: [Store] Coupon Code + Offers, {month} {year}. No site-name suffix.",
   "meta_description": "<=155 chars. Open with a trust/freshness cue (e.g. 'Verified'), include the primary keyword, store-specific benefits, and the date written as '{month} {year}'.",
