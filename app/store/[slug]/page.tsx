@@ -311,10 +311,10 @@ export default async function StorePage({ params }: Props) {
 
       {/* ── MAIN ─────────────────────────────────────── */}
       <div className="container-main py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
 
           {/* ── MAIN CONTENT (wide) — right on desktop, first on mobile ─────────── */}
-          <div className="lg:col-span-2 space-y-6 lg:order-2">
+          <div className="lg:col-span-3 space-y-6 lg:order-2">
 
             {/* Filter tabs + coupon list — client-side for instant filtering */}
             <StoreFilterTabs coupons={allCoupons} storeName={store.name} />
@@ -464,7 +464,7 @@ export default async function StorePage({ params }: Props) {
           </div>
 
           {/* ── SIDEBAR (narrow) — left on desktop, below content on mobile ─────── */}
-          <div className="space-y-5 lg:order-1">
+          <div className="lg:col-span-1 space-y-5 lg:order-1">
 
             {/* Stats */}
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
