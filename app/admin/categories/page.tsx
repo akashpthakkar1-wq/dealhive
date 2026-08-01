@@ -18,39 +18,42 @@ export default function AdminCategories() {
   const [saving, setSaving] = useState(false)
   const [generating, setGenerating] = useState(false)
 
-  async function generateFaq() {
+  async function generateCategoryContent(enhance: boolean) {
     if (!form.name) return alert('Please enter a category name first')
     setGenerating(true)
     try {
-      const res = await fetch('/api/generate-store-content', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ storeName: form.name, section: 'faq' }),
-      })
-      const data = await res.json()
-      if (data.faq) setForm((f: any) => ({ ...f, faq_content: JSON.stringify(data.faq, null, 2) }))
-      else alert('Failed: ' + (data.error || 'Unknown error'))
-    } catch (e) {
-      alert('Error generating FAQ')
-    } finally {
-      setGenerating(false)
-    }
-  }
+      // Pull the REAL stores in this category so content is accurate/specific.
+      // NOTE: uses the single `category` field today. After the multi-category (join-table)
+      // refactor, change ONLY this query to the join-table lookup; the route + design stay the same.
+      const { data: catStores } = await supabase
+        .from('stores')
+        .select('name')
+        .ilike('category', form.name)
+      const storeNames = (catStores || []).map((s: any) => s.name).filter(Boolean)
 
-  async function generateDescription() {
-    if (!form.name) return alert('Please enter a category name first')
-    setGenerating(true)
-    try {
-      const res = await fetch('/api/generate-store-content', {
+      // In enhance mode, pass the current content so the AI improves it rather than starting fresh.
+      const existingContent = enhance
+        ? [form.description ? `DESCRIPTION:\n${form.description}` : '', form.faq_content ? `FAQ:\n${form.faq_content}` : ''].filter(Boolean).join('\n\n')
+        : ''
+
+      const res = await fetch('/api/generate-category-content', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ storeName: form.name, section: 'category' }),
+        body: JSON.stringify({ categoryName: form.name, stores: storeNames, existingContent }),
       })
       const data = await res.json()
-      if (data.content) setForm(f => ({ ...f, description: data.content }))
-      else alert('Failed: ' + (data.error || 'Unknown error'))
+      if (!res.ok || !data.page) {
+        alert('Failed: ' + (data.error || 'Unknown error'))
+        return
+      }
+      const p = data.page
+      setForm((f: any) => ({
+        ...f,
+        description: p.description ?? f.description,
+        faq_content: p.faq_content ? JSON.stringify(p.faq_content, null, 2) : f.faq_content,
+      }))
     } catch (e) {
-      alert('Error generating content')
+      alert('Error generating category content')
     } finally {
       setGenerating(false)
     }
@@ -138,9 +141,13 @@ export default function AdminCategories() {
               <label className="label-base">Description</label>
               <div className="flex items-center justify-between mb-1">
                 <span className="text-xs text-gray-400">Category description for SEO</span>
-                <button type="button" onClick={generateDescription} disabled={generating}
+                <button type="button" onClick={() => generateCategoryContent(false)} disabled={generating}
                   className="text-xs px-3 py-1 bg-primary-50 text-primary-700 border border-primary-200 rounded-lg hover:bg-primary-100 disabled:opacity-50">
-                  {generating ? '⏳ Generating…' : '✨ Generate with AI'}
+                  {generating ? '⏳ Generating…' : '✨ Generate Fresh'}
+                </button>
+                <button type="button" onClick={() => generateCategoryContent(true)} disabled={generating || (!form.description && !form.faq_content)}
+                  className="text-xs px-3 py-1 bg-white text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-40 ml-2">
+                  {generating ? '⏳ …' : '♻️ Enhance Existing'}
                 </button>
               </div>
               <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })}
@@ -152,10 +159,7 @@ export default function AdminCategories() {
                   <label className="label-base">FAQ Content</label>
                   <span className="text-xs text-gray-400 ml-2">5 Q&As shown on category page</span>
                 </div>
-                <button type="button" onClick={generateFaq} disabled={generating}
-                  className="text-xs px-3 py-1 bg-primary-50 text-primary-700 border border-primary-200 rounded-lg hover:bg-primary-100 disabled:opacity-50">
-                  {generating ? '⏳ Generating…' : '✨ Generate FAQ'}
-                </button>
+                
               </div>
               <textarea value={form.faq_content || ''} onChange={(e) => setForm({ ...form, faq_content: e.target.value })}
                 className="input-base font-mono text-xs" rows={8} placeholder="Click Generate FAQ or paste JSON array…" />
