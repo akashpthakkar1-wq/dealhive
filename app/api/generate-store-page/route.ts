@@ -29,6 +29,7 @@ PLAIN PROSE ONLY — the text inside every content field (about_content, how_to_
 {
   "meta_title": "<=60 chars once rendered. Pattern: [Store] Coupon Code + Offers, {month} {year}. No site-name suffix.",
   "meta_description": "<=155 chars. Open with a trust/freshness cue (e.g. 'Verified'), include the primary keyword, store-specific benefits, and the date written as '{month} {year}'.",
+  "hero_summary": "A rich, COUPON/DEALS-FOCUSED summary for the top of the page (2-3 sentences, 45-70 words). LEAD with savings intent — coupons, promo codes, offers, deals for this store. Weave in the PRIMARY target keyword and 1-2 high-value variations naturally. Reference real product categories/lines and honest offer TYPES (new-user, first-order, seasonal — hedged, never a fabricated number). India-first (INR, UPI/COD where relevant). This is the deals-first hook, DISTINCT from about_content (which is brand story). Durable — no live discount numbers, no 'sale live now', no literal dates. Plain prose.",
   "about_content": "Original brand story + what they sell + India positioning + why coupons and sale timing matter. No literal dates.",
   "how_to_use_content": "Step-by-step redemption via EndOverPay to the store site, plus 1-2 store-specific caveats.",
   "saving_tips_content": "5-6 store-specific saving tactics: sale timing, first-order/segment offers, marketplace comparison, bank/UPI offers, category-specific tips.",

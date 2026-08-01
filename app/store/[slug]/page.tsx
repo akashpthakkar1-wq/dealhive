@@ -255,7 +255,7 @@ export default async function StorePage({ params }: Props) {
                 </p>
                 <ExpandableText
                   className="mb-3"
-                  text={store.description || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
+                  text={store.hero_summary || store.description || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
                 />
                 <div className="grid grid-cols-3 gap-3 max-w-md">
                   <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-200 bg-white">
@@ -280,7 +280,7 @@ export default async function StorePage({ params }: Props) {
                 <strong className="text-gray-900">{activeCoupons.length}</strong> verified {store.name} {activeCoupons.length === 1 ? 'coupon' : 'coupons'} — updated for {month}
               </p>
               <ExpandableText
-                text={store.description || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
+                text={store.hero_summary || store.description || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
               />
               <div className="grid grid-cols-3 gap-2 max-w-md">
                 <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-200 bg-white">
