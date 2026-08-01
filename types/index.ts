@@ -18,6 +18,8 @@ export interface Store {
   meta_description?: string | null
   h1?: string | null
   brand_facts?: string | null
+  target_keywords?: string | null
+  offer_facts?: string | null
   rating_sum?: number
   rating_count?: number
 }

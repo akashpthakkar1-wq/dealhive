@@ -7,7 +7,7 @@ import { createClient } from '@/lib/supabase'
 import { slugify } from '@/lib/utils'
 import type { Store as StoreType } from '@/types'
 
-const empty = { name: '', slug: '', logo: '', description: '', website_url: '', category: '', meta_title: '', meta_description: '', h1: '', brand_facts: '', about_content: '', how_to_use_content: '', saving_tips_content: '', faq_content: '', content_reviewed: false }
+const empty = { name: '', slug: '', logo: '', description: '', website_url: '', category: '', meta_title: '', meta_description: '', h1: '', brand_facts: '', target_keywords: '', offer_facts: '', about_content: '', how_to_use_content: '', saving_tips_content: '', faq_content: '', content_reviewed: false }
 const cats = ['Fashion', 'Electronics', 'Food', 'Travel', 'Beauty', 'Home', 'Gaming', 'Health', 'Other']
 
 export default function AdminStores() {
@@ -33,7 +33,7 @@ export default function AdminStores() {
 
   function openAdd() { setForm(empty); setEditId(null); setShowForm(true) }
   function openEdit(s: StoreType) {
-    setForm({ name: s.name, slug: s.slug, logo: s.logo || '', description: s.description || '', website_url: s.website_url || '', category: s.category || '', meta_title: s.meta_title || '', meta_description: s.meta_description || '', h1: s.h1 || '', brand_facts: s.brand_facts || '', about_content: s.about_content || '', how_to_use_content: s.how_to_use_content || '', saving_tips_content: s.saving_tips_content || '', faq_content: s.faq_content ? JSON.stringify(s.faq_content, null, 2) : '', content_reviewed: s.content_reviewed || false })
+    setForm({ name: s.name, slug: s.slug, logo: s.logo || '', description: s.description || '', website_url: s.website_url || '', category: s.category || '', meta_title: s.meta_title || '', meta_description: s.meta_description || '', h1: s.h1 || '', brand_facts: s.brand_facts || '', target_keywords: s.target_keywords || '', offer_facts: s.offer_facts || '', about_content: s.about_content || '', how_to_use_content: s.how_to_use_content || '', saving_tips_content: s.saving_tips_content || '', faq_content: s.faq_content ? JSON.stringify(s.faq_content, null, 2) : '', content_reviewed: s.content_reviewed || false })
     setEditId(s.id)
     setShowForm(true)
   }

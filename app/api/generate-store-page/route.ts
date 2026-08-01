@@ -36,7 +36,7 @@ PLAIN PROSE ONLY — the text inside every content field (about_content, how_to_
 }`
 
 export async function POST(req: NextRequest) {
-  const { storeName, websiteUrl, brandFacts } = await req.json()
+  const { storeName, websiteUrl, brandFacts, targetKeywords, offerFacts } = await req.json()
 
   if (!storeName) {
     return NextResponse.json({ error: 'Store name required' }, { status: 400 })
@@ -49,8 +49,11 @@ export async function POST(req: NextRequest) {
 
   const s = storeName.toLowerCase()
   const userMessage = `Store: ${storeName}${websiteUrl ? ` (${websiteUrl})` : ''}
-Primary keyword: ${s} coupon code
-Secondary keywords (weave naturally): ${s} coupons, ${s} offers, ${s} discount code, ${s} promo code, ${s} sale
+${targetKeywords && targetKeywords.trim() ? `TARGET KEYWORDS (use these exact, data-driven targets — do NOT invent your own):
+${targetKeywords.trim()}
+
+Weave the PRIMARY keyword into the H1 and lead heading. Rotate the HIGH-VALUE variations across section headings and body (never repeat the same phrase twice in a row). Build dedicated sections for SEGMENT long-tails. Turn FAQ SEEDS into FAQ questions. Do NOT target anything in the IGNORE list.` : `Primary keyword: ${s} coupon code
+Secondary keywords (weave naturally): ${s} coupons, ${s} offers, ${s} discount code, ${s} promo code, ${s} sale`}
 DISCOUNT RULE: No live discount figure is available. Do NOT state any specific percentage or amount anywhere. Use offer-led framing instead. Any invented number is a failure.
 DATE RULE: In meta_title and meta_description, write the date as the literal tokens {month} {year}. Use no other dates anywhere.
 
@@ -58,6 +61,11 @@ Brand facts (use as facts, in your own words):
 ${brandFacts.trim()}
 
 Real coupons/conditions (include only if provided; otherwise write around offers generically):
+${offerFacts && offerFacts.trim() ? `
+OFFER FACTS — HONESTY GUARDRAIL (follow strictly):
+${offerFacts.trim()}
+
+Rules: Only present an offer as a real, specific coupon/discount if it is listed under REAL above. For PUBLIC OFFER items, describe them honestly and generally (no invented codes). For HEDGE items, mention them ONLY in the FAQ with hedged language ("may occasionally offer", "check their site") and NEVER state a specific discount or code. Never fabricate a code, percentage, or amount for any offer not explicitly listed as REAL.` : ''}
 `
 
   try {

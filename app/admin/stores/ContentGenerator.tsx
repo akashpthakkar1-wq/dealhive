@@ -76,7 +76,7 @@ export default function ContentGenerator({ storeName, category, websiteUrl, form
       const res = await fetch('/api/generate-store-page', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ storeName, websiteUrl, brandFacts }),
+        body: JSON.stringify({ storeName, websiteUrl, brandFacts, targetKeywords: form.target_keywords || '', offerFacts: form.offer_facts || '' }),
       })
       const data = await res.json()
       if (!res.ok || !data.page) {
@@ -130,6 +130,30 @@ export default function ContentGenerator({ storeName, category, websiteUrl, form
             {brandFacts.trim().length} chars {factsTooShort ? '(need at least 40 to generate)' : '✓'}
           </span>
           <span className="text-xs text-gray-400">Fills meta, about, how-to, tips & FAQ in one call. Does not touch H1.</span>
+        </div>
+
+        <div className="pt-3 mt-3 border-t border-gray-200">
+          <label className="text-sm font-semibold text-gray-700">Target Keywords <span className="font-normal text-gray-400">(distilled from keyword analysis)</span></label>
+          <p className="text-xs text-gray-500 mt-0.5 mb-1">Primary / high-value variations / segment sections / FAQ seeds / ignore. Guides which keywords the page targets in headings + content.</p>
+          <textarea
+            value={form.target_keywords || ''}
+            onChange={(e) => setForm((f: any) => ({ ...f, target_keywords: e.target.value }))}
+            className="input-base"
+            rows={8}
+            placeholder={`PRIMARY (H1 + lead): ${storeName || 'store'} coupon code\nHIGH-VALUE (weave into headings): discount code, promo code, offer code\nSEGMENT SECTIONS: first order / new user; product-specific; student\nFAQ SEEDS: first-order discount, student discount\nIGNORE: (off-brand / wrong-intent terms)`}
+          />
+        </div>
+
+        <div className="pt-3 mt-3 border-t border-gray-200">
+          <label className="text-sm font-semibold text-gray-700">Offer Facts <span className="font-normal text-gray-400">(honesty guardrail)</span></label>
+          <p className="text-xs text-gray-500 mt-0.5 mb-1">What is REAL vs. must be HEDGED. Keeps content honest: real codes listed as coupons, unconfirmed offers hedged in FAQ (never fabricated).</p>
+          <textarea
+            value={form.offer_facts || ''}
+            onChange={(e) => setForm((f: any) => ({ ...f, offer_facts: e.target.value }))}
+            className="input-base"
+            rows={6}
+            placeholder={`REAL (list as coupons): [actual codes from affiliate feed, e.g. "CODE500 — Rs 500 off first order, verified"]\nPUBLIC OFFER (describe honestly): brand runs new-user first-order discount on their app\nHEDGE (FAQ only, no fake code): student / bulk discounts — "may occasionally offer, check site"`}
+          />
         </div>
         {fullPageError && (
           <div className="p-2 bg-red-50 border border-red-200 rounded-lg text-xs text-red-600">{fullPageError}</div>
