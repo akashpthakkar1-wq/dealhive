@@ -20,6 +20,10 @@ export default function AdminCategories() {
 
   async function generateCategoryContent(enhance: boolean) {
     if (!form.name) return alert('Please enter a category name first')
+    const warn = enhance
+      ? '\u26A0\uFE0F This will rewrite this category\u2019s content based on the existing version.\n\nIf this page is already ranking in Google, changing its content can affect those rankings.\n\nThink twice before changing a ranked page. Continue?'
+      : '\u26A0\uFE0F This will REPLACE this category\u2019s description and FAQ from scratch.\n\nIf this page is already ranking in Google, changing its content can affect those rankings.\n\nThink twice before overwriting a ranked page. Continue?'
+    if (!confirm(warn)) return
     setGenerating(true)
     try {
       // Pull the REAL stores in this category so content is accurate/specific.

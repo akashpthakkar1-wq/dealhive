@@ -36,6 +36,7 @@ export default function ContentGenerator({ storeName, category, websiteUrl, form
   async function generateFullPage() {
     if (!storeName) return alert('Please enter a store name first')
     if (factsTooShort) return
+    if (!confirm('\u26A0\uFE0F This will REPLACE all generated content for this store (meta, hero summary, about, how-to, tips, FAQ).\n\nIf this page is already ranking in Google, changing its content can affect those rankings.\n\nThink twice before overwriting a ranked page. Continue?')) return
     setFullPageError(null)
     setGenerating('full_page')
     try {
