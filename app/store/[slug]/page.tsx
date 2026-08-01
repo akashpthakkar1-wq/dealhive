@@ -165,7 +165,7 @@ export default async function StorePage({ params }: Props) {
       {/* JSON-LD — Store + BreadcrumbList + FAQPage + ItemList */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([
         // 1. Store entity
-        { '@context': 'https://schema.org', '@type': 'Organization', name: store.name, url: store.website_url, logo: store.logo, description: store.description || `Find ${store.name} coupon codes on ${SITE_NAME}.` },
+        { '@context': 'https://schema.org', '@type': 'Organization', name: store.name, url: store.website_url, logo: store.logo, description: store.hero_summary || `Find ${store.name} coupon codes on ${SITE_NAME}.` },
         // 2. BreadcrumbList — enables breadcrumb display in Google search results
         { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Home',   item: SITE_URL },
@@ -255,7 +255,7 @@ export default async function StorePage({ params }: Props) {
                 </p>
                 <ExpandableText
                   className="mb-3"
-                  text={store.hero_summary || store.description || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
+                  text={store.hero_summary || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
                 />
                 <div className="grid grid-cols-3 gap-3 max-w-md">
                   <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-200 bg-white">
@@ -280,7 +280,7 @@ export default async function StorePage({ params }: Props) {
                 <strong className="text-gray-900">{activeCoupons.length}</strong> verified {store.name} {activeCoupons.length === 1 ? 'coupon' : 'coupons'} — updated for {month}
               </p>
               <ExpandableText
-                text={store.hero_summary || store.description || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
+                text={store.hero_summary || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
               />
               <div className="grid grid-cols-3 gap-2 max-w-md">
                 <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-200 bg-white">
@@ -364,7 +364,7 @@ export default async function StorePage({ params }: Props) {
                   ? store.about_content.split(/\n\n+/).map((para: string, i: number) => (
                       <p key={i} className={i > 0 ? 'mt-3' : ''}>{para.trim()}</p>
                     ))
-                  : <p>{store.description || `${store.name} is a trusted online store. Shop the latest deals and save with verified ${store.name} coupon codes on ${SITE_NAME}.`}</p>}
+                  : <p>{store.hero_summary || `${store.name} is a trusted online store. Shop the latest deals and save with verified ${store.name} coupon codes on ${SITE_NAME}.`}</p>}
                 {!store.about_content && <><p className="mt-3">We track all {store.name} promotions, flash sales, and exclusive discount codes daily so you never miss a saving opportunity. Our team manually verifies every code before publishing.</p>
                 <p className="mt-3">{store.name} regularly runs seasonal sales and clearance events. Bookmark this page and check back often.</p></>}
               </div>
