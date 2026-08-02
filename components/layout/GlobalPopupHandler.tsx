@@ -52,55 +52,6 @@ export default function GlobalPopupHandler() {
 }
 
 
-// ─── Inline Details & Terms Section ──────────────────────────────────────────
-function DetailsSection({ coupon }: { coupon: Coupon }) {
-  if (!coupon.discount && !coupon.expiry_date && !coupon.description) return null;
-  return (
-    <div className="mt-4 border border-gray-200 rounded-xl overflow-hidden">
-      {/* Header */}
-      <div className="flex items-center gap-2 px-3 py-2 bg-gray-50 border-b border-gray-200">
-        <svg className="w-3.5 h-3.5 text-orange-400 flex-shrink-0" viewBox="0 0 12 12" fill="none">
-          <rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" strokeWidth="1.2"/>
-          <path d="M3.5 4.5h5M3.5 6h5M3.5 7.5h3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-        </svg>
-        <p className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">Offer details &amp; terms</p>
-      </div>
-      {/* Info grid */}
-      <div className="grid grid-cols-2 divide-x divide-y divide-gray-100 bg-white">
-        {coupon.discount && (
-          <div className="px-3 py-2">
-            <p className="text-[9px] text-gray-500 uppercase tracking-wider mb-0.5">{coupon.type === 'code' ? 'Discount' : 'Deal type'}</p>
-            <p className="text-xs font-semibold text-[#EA580C]">{coupon.discount}</p>
-          </div>
-        )}
-        {coupon.expiry_date && (
-          <div className="px-3 py-2">
-            <p className="text-[9px] text-gray-500 uppercase tracking-wider mb-0.5">Expiry date</p>
-            <p className="text-xs font-semibold text-gray-800">{new Date(coupon.expiry_date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
-          </div>
-        )}
-        {coupon.min_order_value && (
-          <div className="px-3 py-2">
-            <p className="text-[9px] text-gray-500 uppercase tracking-wider mb-0.5">Min. order</p>
-            <p className="text-xs font-semibold text-gray-800">{coupon.min_order_value}</p>
-          </div>
-        )}
-        <div className="px-3 py-2">
-          <p className="text-[9px] text-gray-500 uppercase tracking-wider mb-0.5">Status</p>
-          <p className="text-xs font-semibold text-green-600">✓ Active &amp; verified</p>
-        </div>
-      </div>
-      {/* Terms */}
-      {coupon.terms_conditions && (
-        <div className="px-3 py-2.5 bg-orange-50 border-t border-gray-200">
-          <p className="text-[9px] text-orange-700 uppercase tracking-wider font-semibold mb-1">Terms &amp; conditions</p>
-          <p className="text-xs text-gray-500 leading-relaxed">{coupon.terms_conditions}</p>
-        </div>
-      )}
-    </div>
-  );
-}
-
 // ─── Modal ────────────────────────────────────────────────────────────────────
 function CouponModal({
   coupon, logo, onClose,
@@ -153,7 +104,6 @@ function CouponModal({
           {/* Discount */}
           <div className="text-center mb-5">
             <p className="text-3xl font-extrabold text-[#EA580C]">{coupon.discount}</p>
-            <p className="text-gray-500 text-sm mt-0.5">Best available offer</p>
           </div>
 
           {isCode ? (
@@ -193,7 +143,6 @@ function CouponModal({
                   Code copied! Paste it at checkout on the store website.
                 </p>
               )}
-              <DetailsSection coupon={coupon} />
               <CouponRating couponId={coupon.id} storeName={coupon.store?.name} />
             </>
           ) : (
@@ -220,7 +169,6 @@ function CouponModal({
                 className="w-full text-center bg-[#EA580C] text-white py-3 rounded-xl font-semibold text-sm hover:bg-[#C2410C] transition-colors">
                 🛒 Go to {coupon.store?.name}
               </button>
-              <DetailsSection coupon={coupon} />
               <CouponRating couponId={coupon.id} storeName={coupon.store?.name} />
             </>
           )}
