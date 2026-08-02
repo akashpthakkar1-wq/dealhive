@@ -113,14 +113,13 @@ export default function CouponRating({ couponId, storeName }: { couponId: string
 
   if (stage === 'reason') {
     return (
-      <div className="mt-4 border-t border-gray-200 pt-4">
-        <p className="text-sm font-semibold text-orange-800 text-center mb-1">Sorry it didn&apos;t work</p>
-        <p className="text-xs text-gray-500 text-center mb-3">What went wrong? Your feedback helps us fix it fast.</p>
-        <div className="flex flex-col gap-1.5 mb-3">
+      <div className="mt-3 border-t border-gray-200 pt-3">
+        <p className="text-xs font-semibold text-gray-700 text-center mb-2">Sorry it didn&apos;t work — what went wrong?</p>
+        <div className="flex flex-col gap-1 mb-2">
           {REASONS.map((r) => (
-            <label key={r.key} className={`flex items-center gap-2.5 px-3 py-2 border rounded-lg text-sm cursor-pointer transition-colors ${reason === r.key ? 'border-[#EA580C] bg-orange-50 text-gray-900' : 'border-gray-200 text-gray-700 hover:bg-gray-50'}`}>
+            <label key={r.key} className={`flex items-center gap-2 px-2.5 py-1.5 border rounded-lg text-[13px] cursor-pointer transition-colors ${reason === r.key ? 'border-[#EA580C] bg-orange-50 text-gray-900' : 'border-gray-200 text-gray-700 hover:bg-gray-50'}`}>
               <input type="radio" name="reason" checked={reason === r.key} onChange={() => setReason(r.key)}
-                className="w-4 h-4 accent-[#EA580C]" />
+                className="w-3.5 h-3.5 accent-[#EA580C] flex-shrink-0" />
               {r.label}
             </label>
           ))}
@@ -128,12 +127,12 @@ export default function CouponRating({ couponId, storeName }: { couponId: string
         <textarea
           value={details}
           onChange={(e) => setDetails(e.target.value)}
-          placeholder="Add any details (optional)…"
-          rows={2}
-          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:border-[#EA580C] mb-3"
+          placeholder="Add details (optional)…"
+          rows={1}
+          className="w-full border border-gray-200 rounded-lg px-2.5 py-1.5 text-[13px] resize-none focus:outline-none focus:border-[#EA580C] mb-2"
         />
         <button onClick={submitReason} disabled={busy}
-          className="w-full bg-[#EA580C] text-white py-2.5 rounded-lg font-semibold text-sm hover:bg-[#C2410C] transition-colors disabled:opacity-50">
+          className="w-full bg-[#EA580C] text-white py-2 rounded-lg font-semibold text-sm hover:bg-[#C2410C] transition-colors disabled:opacity-50">
           {busy ? 'Submitting…' : 'Submit feedback'}
         </button>
       </div>
