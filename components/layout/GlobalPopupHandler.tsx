@@ -5,6 +5,7 @@ import { getCouponLogo, getStoreLogo } from '@/lib/logos'
 import { useSearchParams } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
 import type { Coupon } from '@/types/index';
+import CouponRating from '@/components/coupon/CouponRating';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -193,6 +194,7 @@ function CouponModal({
                 </p>
               )}
               <DetailsSection coupon={coupon} />
+              <CouponRating couponId={coupon.id} storeName={coupon.store?.name} />
             </>
           ) : (
             <>
@@ -219,6 +221,7 @@ function CouponModal({
                 🛒 Go to {coupon.store?.name}
               </button>
               <DetailsSection coupon={coupon} />
+              <CouponRating couponId={coupon.id} storeName={coupon.store?.name} />
             </>
           )}
         </div>
