@@ -3,12 +3,8 @@
 import { useState } from 'react';
 import type { Coupon } from '@/types/index';
 import { getCouponLogo } from '@/lib/logos'
-
-function stableNum(seed: string, min: number, max: number): number {
-  let h = 0
-  for (let i = 0; i < seed.length; i++) { h = ((h << 5) - h) + seed.charCodeAt(i); h |= 0 }
-  return min + (Math.abs(h) % (max - min + 1))
-}
+import { trustDisplay } from '@/lib/couponRanking'
+import type { RankedCoupon } from '@/lib/couponRanking'
 
 interface CouponCardProps {
   coupon: Coupon;
@@ -56,10 +52,17 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
   }
 
   const isCode = coupon.type === 'code';
-  const displayCount = (coupon.usage_count || 0) + stableNum(String(coupon.id), 15, 199)
+  const trust = trustDisplay(coupon);
+  const recentlyAdded = (coupon as RankedCoupon)._recentlyAdded === true;
+  const fmtDate = (d: Date) => d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden h-full flex flex-col">
+    <div className={`bg-white rounded-2xl border shadow-sm hover:shadow-md transition-shadow overflow-hidden h-full flex flex-col ${recentlyAdded ? 'border-[#EA580C] border-2' : 'border-gray-200'}`}>
+      {recentlyAdded && (
+        <div className="bg-orange-50 text-[#C2410C] text-[11px] font-semibold px-3 py-1 text-center border-b border-orange-100">
+          ✨ Recently added — likely working
+        </div>
+      )}
       <div className="flex flex-1">
 
         <div className="relative flex flex-col items-center justify-center flex-shrink-0 text-center px-2.5 bg-white" style={{ minWidth: '90px', maxWidth: '90px', borderRight: '3px dotted #E5E7EB' }}>
@@ -98,9 +101,14 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
 
           <div className="flex flex-col gap-2 mt-auto sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col gap-y-0.5 min-w-0">
-              <span className="text-[12px] text-gray-500 whitespace-nowrap">👥 {displayCount.toLocaleString()} used</span>
-              {coupon.is_verified && (
-                <span className="text-[12px] font-semibold whitespace-nowrap" style={{ color: '#2f7d5b' }}>✓ Verified today</span>
+              {trust.mode === 'confirmed' && (
+                <>
+                  <span className="text-[12px] font-semibold whitespace-nowrap" style={{ color: '#2f7d5b' }}>👍 {trust.workedCount} confirmed working</span>
+                  <span className="text-[12px] text-gray-400 whitespace-nowrap">Verified {fmtDate(trust.date)}</span>
+                </>
+              )}
+              {trust.mode === 'verified' && (
+                <span className="text-[12px] font-semibold whitespace-nowrap" style={{ color: '#2f7d5b' }}>✓ Verified {fmtDate(trust.date)}</span>
               )}
             </div>
 

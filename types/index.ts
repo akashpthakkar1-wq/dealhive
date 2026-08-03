@@ -55,6 +55,12 @@ export interface Coupon {
   terms_conditions: string | null
   slug: string
   created_at: string
+  worked_count?: number
+  didnt_work_count?: number
+  vote_count?: number
+  verified_at?: string | null
+  last_user_confirmed_at?: string | null
+  manual_priority?: number | null
   store?: Store
   category?: Category
 }

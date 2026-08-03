@@ -1,3 +1,4 @@
+import { rankCoupons } from '@/lib/couponRanking'
 import { unstable_cache } from 'next/cache'
 import { createServerSupabaseClient, createReadClient } from './supabase-server'
 import type { Coupon, Store, Category, BlogPost } from '@/types'
@@ -146,10 +147,27 @@ export async function getCouponsByStore(storeSlug: string): Promise<Coupon[]> {
     .from('coupons')
     .select('*, store:stores(id, name, slug, logo, website_url, category), category:categories(name, slug)')
     .eq('store_id', storeData.id)
-    .order('is_featured', { ascending: false })
     .order('created_at', { ascending: false })
   if (error) return []
-  return data || []
+  const coupons = data || []
+  if (coupons.length === 0) return coupons
+
+  // Fetch recent yes/no votes for these coupons (for the last-10 ranking window).
+  const ids = coupons.map((c: any) => c.id)
+  const { data: fb } = await supabase
+    .from('coupon_feedback')
+    .select('coupon_id, vote, created_at')
+    .in('coupon_id', ids)
+    .in('vote', ['worked', 'didnt_work'])
+    .order('created_at', { ascending: false })
+    .limit(500)
+  const recentVotes: Record<string, boolean[]> = {}
+  for (const row of (fb || [])) {
+    const arr = recentVotes[row.coupon_id] || (recentVotes[row.coupon_id] = [])
+    if (arr.length < 10) arr.push(row.vote === 'worked')
+  }
+
+  return rankCoupons(coupons, recentVotes)
 }
 
 export async function getTrendingCoupons(limit = 6): Promise<Coupon[]> {
