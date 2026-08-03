@@ -13,6 +13,7 @@ const emptyForm = {
   is_verified: true, type: 'code' as 'code' | 'deal',
   is_featured: false, is_trending: false, usage_count: 0,
   deal_of_the_day_order: null as number | null,
+  manual_priority: null as number | null,
 }
 
 export default function AdminCoupons() {
@@ -77,6 +78,7 @@ export default function AdminCoupons() {
       is_verified: c.is_verified, type: c.type, is_featured: c.is_featured,
       is_trending: c.is_trending, usage_count: c.usage_count,
       deal_of_the_day_order: dotdSlots[c.id] ?? null,
+      manual_priority: c.manual_priority ?? null,
     })
     setEditId(c.id); setShowForm(true); window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -103,6 +105,7 @@ export default function AdminCoupons() {
       is_trending: form.is_trending,
       usage_count: form.usage_count,
       deal_of_the_day_order: (form as any).deal_of_the_day_order ?? null,
+      manual_priority: (form as any).manual_priority === '' || (form as any).manual_priority == null ? null : Number((form as any).manual_priority),
     }
     const { error, data } = editId
       ? await supabase.from('coupons').update(payload).eq('id', editId).select()
@@ -122,6 +125,12 @@ export default function AdminCoupons() {
 
     // Store pages auto-refresh via hourly ISR; use manual server-side revalidate (curl) for instant updates when needed.
     setShowForm(false); setEditId(null); setSaving(false); load()
+  }
+
+  async function handleVerifyNow(id: string) {
+    const { error } = await supabase.from('coupons').update({ verified_at: new Date().toISOString() }).eq('id', id)
+    if (error) { toast.error(error.message || 'Verify failed'); return }
+    toast.success('Marked verified just now'); load()
   }
 
   async function handleDelete(id: string) {
@@ -235,6 +244,10 @@ export default function AdminCoupons() {
               <label className="label-base">Usage Count (fake/real)</label>
               <input type="number" value={form.usage_count} onChange={(e) => f('usage_count', parseInt(e.target.value) || 0)} className="input-base" />
             </div>
+            <div>
+              <label className="label-base">Manual Priority (pin to top)</label>
+              <input type="number" value={(form as any).manual_priority ?? ''} onChange={(e) => f('manual_priority', e.target.value === '' ? null : parseInt(e.target.value))} className="input-base" placeholder="blank = auto rank; higher = higher" />
+            </div>
           </div>
 
           {/* Toggles */}
@@ -345,6 +358,7 @@ export default function AdminCoupons() {
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex gap-1.5">
+                          <button onClick={() => handleVerifyNow(c.id)} title="Verify now (set verified date to now)" className="w-8 h-8 rounded-lg bg-green-50 text-green-600 flex items-center justify-center hover:bg-green-100 transition-colors text-sm">✓</button>
                           <button onClick={() => openEdit(c)} className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-100 transition-colors"><Pencil className="w-3.5 h-3.5" /></button>
                           <button onClick={() => setDeleteId(c.id)} className="w-8 h-8 rounded-lg bg-red-50 text-red-500 flex items-center justify-center hover:bg-red-100 transition-colors"><Trash2 className="w-3.5 h-3.5" /></button>
                         </div>
