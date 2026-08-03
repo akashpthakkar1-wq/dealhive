@@ -299,3 +299,87 @@ Native `confirm()` popup on EVERY generate click (store "Generate Full Page"; ca
 - `about_content` → About section (primary). `meta_description` → meta tag (its own field, unaffected by consolidation). `meta_title` → title. `h1` → set manually. `faq_content` → FAQ. `how_to_use_content`/`saving_tips_content` → their sections.
 - INPUTS (not rendered): `brand_facts`, `target_keywords`, `offer_facts`.
 - DORMANT: `description` (retired, read nowhere for stores).
+
+---
+
+## Coupon Rating / Verification System (BUILT & LIVE — the proprietary first-party trust engine)
+Biggest build of this session. A user-powered "did this code work?" system that captures real verification signals, ranks coupons by them, displays honest trust signals, and gives admin a full review→expire workflow. This is the proprietary first-party data that (per the March 2026 core update, below) now PROTECTS coupon-site rankings — competitors can't fake it.
+Commits: `7cea555` (popup + APIs), `47db348` (popup slim), `84f5b25` (mobile reason step), `9259327` (ranking + trust display), `21b6c17` (auto Featured/Trending + admin relabel), `7b39f28` (admin manual_priority + Verify-now), `7ca79a0` (Last Verified column + feedback modal + Set Expired), `776b6ab` (auto-revalidation).
+
+### Two rating systems — INDEPENDENT (confirmed, no conflict)
+1. **STORE rating** (⭐ 1-5) — EXISTING. `StoreRating.tsx`, `/api/rate-store`, `stores.rating_sum`/`rating_count`, sidebar, AggregateRating schema at ≥3 votes. Rates the STORE.
+2. **COUPON rating** (👍/👎 "did this work") — NEW this session. `coupons.worked_count` etc., popup. Verifies each CODE. Separate fields/files/objects. Coupon ranking is INDEPENDENT of store stars.
+
+### Stage 1 — DB
+- `coupons` new cols: `worked_count` int, `didnt_work_count` int (INTERNAL — never shown publicly), `vote_count` int (unique voters, drives the 5+ ranking threshold), `verified_at` timestamptz (owner/team), `last_user_confirmed_at` timestamptz (auto: latest user "worked"), `manual_priority` int nullable (pin; higher = higher, null = algorithm).
+- `coupon_feedback` table: id, coupon_id (FK cascade), vote ('worked'|'didnt_work'|'reason'), reason ('expired'|'not_applicable'|'min_order'|'invalid'|'other'), details text, created_at. Index `idx_feedback_coupon_time (coupon_id, created_at DESC)`. RLS: anon insert + select.
+- `record_vote(cid, did_work, vote_reason, vote_details)` SQL fn: inserts feedback row + updates counters + sets `last_user_confirmed_at` on worked. Existing coupons seeded `verified_at = now()`.
+
+### Stage 2 — APIs
+- `app/api/coupon-vote/route.ts` — POST `{couponId, didWork, reason?, details?}`. Records worked/didnt_work instantly via `record_vote`. Yes ignores reason. Sanitizes.
+- `app/api/coupon-reason/route.ts` — POST `{couponId, reason, details?}`. Logs a SEPARATE `vote='reason'` row (does NOT re-count; filtered out of counts + last-10 window).
+- **Flow (no double-count):** Yes → coupon-vote(worked). No → coupon-vote(didnt_work) INSTANT (counts immediately) → reason step → Submit → coupon-reason(reason row). Vote never lost if they abandon reason; reason attaches if given. VERIFIED in DB: each No = 2 rows (didnt_work + reason); Yes = 1 worked row.
+
+### Stage 3 — Popup (`components/coupon/CouponRating.tsx` → `GlobalPopupHandler.tsx`)
+- Flow: "Best of luck with your purchase from {store}! Once you're done, let us know — did the code work?" → **Yes** (record instantly → thank-you) / **No** (record instantly → reason capture: Code expired / Not valid on my product / Minimum order not met / Code invalid / Something else + optional text → Submit → "sorry, try another deal" + "See other {store} deals" button).
+- **Animation:** hand 👆 taps "Yes" + soft pulse, after 1.6s, plays twice (finite). CSS `eopTap`/`eopPulse`.
+- **Spam guard:** one vote per coupon per browser via `localStorage` `eop_voted_<couponId>` → "already shared feedback" state.
+- Popup also SLIMMED (47db348): removed "Best available offer" line + entire `DetailsSection` (redundant w/ header/description/expiry) → mobile fit. Reason step compressed (84f5b25) so Submit visible without scroll.
+
+### Stage 4 — Ranking + trust display (`lib/couponRanking.ts`)
+- **`rankCoupons(coupons, recentVotes)`** sort (top→bottom): (1) `manual_priority` pins (higher first) → (2) the 2 most-recently-added, BOOSTED to top + highlighted "✨ Recently added — likely working" → (3) 5+ `vote_count` coupons by LAST-10-votes worked ratio → (4) <5-vote by verified date then recency. Constants: VOTE_THRESHOLD=5, RECENT_HIGHLIGHT_COUNT=2, VERIFIED_FRESH_DAYS=90.
+- **`verifiedDate(c)`** = GREATEST(`verified_at`, `last_user_confirmed_at`).
+- **`trustDisplay(c)`** → PUBLIC signal: `worked_count>=5` → "👍 N confirmed working" + "Verified {date}" + badge; `<5` AND verifiedDate ≤90d → "✓ Verified {date}" + badge; `<5` AND >90d (or none) → show NOTHING. **NEVER public:** failure rate, didnt_work_count, success %. Only positive worked_count + verified date ever shown.
+- **`getCouponsByStore`** (`lib/queries.ts`) fetches recent worked/didnt_work votes (limit 500, map capped 10/coupon), applies `rankCoupons`.
+- **CouponCard**: renders trust signal via `trustDisplay`; **REMOVED** the fabricated "used" count (`stableNum`/`displayCount`) + hardcoded always-on "✓ Verified today" (was a fabricated-freshness signal = March-2026 liability). Recently-added highlight = orange border + banner.
+
+### Stage 4b — Auto Featured/Trending (store page only — Option 1)
+- Computed per store in `rankCoupons` (`_autoTrending`/`_autoFeatured`): **Trending** = single highest-discount coupon (parses number from `discount`), always. **Featured** = single latest-verified coupon that is NOT the trending one (Trending wins if same → next latest-verified is Featured). NO verified coupons → no Featured. One each per store, never same card.
+- **CouponCard** uses `showTrending`/`showFeatured`: auto flags when ranked (store page), else falls back to DB `is_trending`/`is_featured` (homepage/search/chat UNCHANGED — still use manual booleans).
+- **Admin toggles relabeled** "Featured (Home/Search)" / "Trending (Home/Search)" + tooltips — the manual booleans now only affect homepage/search (store page is auto). Unifying homepage Trending to auto = deferred, bigger job.
+
+### Stage 5 — Admin (`app/admin/coupons/page.tsx`)
+- **`manual_priority`** field: "Manual Priority (pin to top)" number input (blank = auto; higher = higher). Wired into form state/edit-load/save.
+- **"Verify now"** green ✓ button per row → `handleVerifyNow` sets `verified_at = now()`. REPLACES old `is_verified` toggle CONCEPT (one verified concept = the timestamp). Old `is_verified` col/toggle still exists but superseded for display/ranking; cleanup-later.
+- **"Last Verified" column** — shows green `verifiedDate` (or "not verified"). So clicking Verify-now gives VISIBLE confirmation (fixes earlier "nothing happened" confusion — verify WAS working, just wasn't shown).
+- **"Feedback" column** — clickable 👍N / 👎N per coupon → opens a DETAIL MODAL showing all `coupon_feedback` rows (every worked/failed vote + reasons + typed details + timestamps) with worked/failed/total summary. **"Set as Expired"** button in the modal → sets `expiry_date` to yesterday (pulls a dead code after reviewing real failure data). This is the owner's review→expire workflow (manual, owner stays in control — no auto-hide).
+
+### Auto-revalidation (fixes ISR staleness on admin actions) — commit 776b6ab
+- **Problem:** store pages use ISR (`revalidate=3600`) → expiring/verifying a coupon updated the DB (admin showed it) but the LIVE store page served the stale pre-baked version for up to an hour.
+- **Fix:** new route `app/api/admin-revalidate/route.ts` — auth = the `admin_auth` cookie (same one middleware checks for /admin), holds nothing client-side, calls `revalidatePath(/store/{slug})` + `/` + `/stores`. `handleSetExpired` + `handleVerifyNow` call it (via `revalidateStore(slug)` helper) after their DB write → store page refreshes in SECONDS, no manual curl. (Manual curl to `/api/revalidate` with `$EOP_REVAL_SECRET` still works for one-offs — used once this session to clear a pre-fix stale AliExpress coupon.)
+
+### Internal-only (owner review / future auto-flagging)
+`didnt_work_count`, reason rows, ratio → NEVER public; power the admin feedback modal + expire decisions. Auto-hide-on-threshold discussed but NOT built (deferred until traffic).
+
+---
+
+## March 2026 Google Core Update — Resilience Findings (researched this session — REAL)
+Full plan at `/mnt/user-data/outputs/march2026-resilience-plan.md`. Key points:
+- **Affiliate/coupon sites hardest-hit** (71% of affiliate sites negative). Named high-casualty: thin review aggregation, dynamic comparison tables, **coupon/deals pages with no original editorial content**, **"coupon aggregators relying on programmatic generation."** "Aggregating what others already know is no longer enough."
+- **Independently validated:** (1) scrape-reword-publish = exactly what got de-indexed (so declining to build it was the SEO-correct call too, not only ethics); (2) the user-rating system = the proprietary first-party signal that now PROTECTS rankings.
+- **Winners:** proprietary data, first-hand testing/verification, real E-E-A-T, original value/page. Our About page (founder's 18 yrs brand-side marketing) is a genuine E-E-A-T asset. Pipeline (swap test, anti-template, India-first, no fabrication) is on the right side.
+- **NEW — site-wide CWV:** Core Web Vitals now scored HOLISTICALLY across the whole domain — heavy/slow templates or ad-heavy layouts can suppress the ENTIRE site. → AdSense-on-non-affiliate-brands idea = HIGHER risk now (whole-domain liability); raises priority of Vercel cold-start fix.
+- **AI Overviews:** top-result CTR −34% when an AIO shows, but being CITED = +35% brand clicks. Clean schema + FAQ + llms.txt help us be citable.
+- **Direct-traffic resilience:** CashKaro-style (73% direct) is structurally safer than organic-dependent aggregators → WhatsApp/opt-in-audience ideas become a RESILIENCE play, not just growth.
+
+### ⚠️ RISK 1 (highest-impact SEO fix, UNFIXED) — hardcoded templated FAQ + saving-tips
+`app/store/[slug]/page.tsx` has hardcoded `faqs` + `savingTips` arrays where the ONLY variable is `${store.name}` ("How do I use a {store} coupon code? Click Get Code…" — identical across all stores). EXACT swap-test failure the March 2026 update de-indexed ("skeletal framework" variations). The PIPELINE already generates unique `faq_content` per store, but the page ALSO renders these hardcoded ones, undoing it. **FIX: render ONLY pipeline `faq_content`; remove/hard-gate the hardcoded arrays.** Single most important SEO-resilience change. Still TODO.
+
+---
+
+## Strategic Discussions This Session (decisions, no code)
+- **WhatsApp discovery bot:** user-initiated "service" model = cheapest tier; needs WhatsApp Business API + BSP (AiSensy/WATI/Gupshup/Interakt). ⚠️ FREE service-window ends **Oct 1, 2026** (Meta starts charging non-template replies inside 24h window) — budget per-message cost after. Build once traffic exists to convert to opt-ins. Phase 2.
+- **Audience/brand-campaign monetization:** segmented first-party DB → brand campaigns/sponsorships/featured placements/negotiated exclusives (how GrabOn/CouponDunia monetize beyond affiliate). Needs SCALE + engagement + DPDP consent. Phase 3. Start capturing category-interest opt-ins early so the DB compounds. Chain: traffic → opt-in → scale → monetize.
+- **AdSense math:** ~₹50-75K/mo at 500K India visitors (coupon = low RPM ~₹40-120). Affiliate = FAR more per high-intent visitor (~₹150-300K+ same traffic) → affiliate primary; AdSense only sensible on NO-affiliate brand pages (Uber/Rapido — real coupon demand + real public offers, no affiliate click to cannibalize). But site-wide CWV risk makes heavy ads a whole-domain liability. Verify per-brand coupon demand before building.
+- **Market viability (zero-click / AI Overviews / incumbents):** honest verdict — hard but NOT doomed. Transactional "[brand] coupon code" intent is unusually zero-click-RESISTANT (must click to get + use code). couponsly proved low-KD works RECENTLY, in this environment. Strategy correctly avoids incumbents' strengths. Success = execution + time-in-market, validated via GSC. Answer to "is it winnable": publish 15-20 low-KD stores, watch GSC, let data decide — not more strategizing.
+- **Coupon sourcing / scraping (firm line held across many reframings):** Claude will NOT build/improve competitor-scraping, auto-checkout-testing (risks the affiliate accounts that ARE the revenue), or be the reword step for competitor-scraped codes — in this or any window; the objection is the nature of the task, not the risk level. Legit path: real codes from feeds / brand relationships / public offers + the user-rating verification system. Owner's decision: **hire someone to fetch/test codes manually.** Team expansion planned once revenue justifies (first hire = content/coupon ops).
+
+---
+
+## Pending / Next (updated end of session)
+- **[SEO, highest impact] RISK 1 fix** — remove hardcoded templated FAQ + saving-tips from `app/store/[slug]/page.tsx`; render only pipeline `faq_content`.
+- **boAt store** — first via new pipeline. Keyword analysis DONE (PRIMARY "boat coupon code" ~3,600-4,400/KD23; "boat ed" MIRAGE excluded; segments first-order/₹500-off, product-specific earbuds/headphones, student-discount hedge; freshness emphasis). Needs owner to gather real coupons + confirm affiliate network + public offer → target_keywords + offer_facts → generate → publish.
+- **Coupon rating follow-ups:** optional admin "flagged codes" dashboard (auto-surface high-failure coupons); optional auto-hide on failure threshold (deferred until traffic); cleanup old `is_verified` toggle + "Usage Count (fake/real)" admin field (now unused in display).
+- **Design wrap:** sidebar reorder; FAQ questions → `<h3>`; reword off-keyword "Why shop at {store}" heading; SHEIN logo black-bg fix.
+- **Standing:** rotate ADMIN_PASSWORD; delete placeholder/expired seed coupons; GA4 Key Events; submit sitemap to GSC; Deal-of-Day slots 4 & 5; blog posts; cookie consent (DPDP ~2027); Next.js 14.2.5 security bump.
+- **Deferred/horizon:** WhatsApp discovery bot (Phase 2, post-traffic); audience/brand-campaign monetization (Phase 3); AdSense on no-affiliate brands (verify demand + CWV caution); Vercel Pro (cold start); multi-geo (India not tapped out); unify homepage Trending to auto.
