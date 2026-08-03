@@ -7,6 +7,8 @@ const VERIFIED_FRESH_DAYS = 90        // below 5 worked votes, show verified dat
 export type RankedCoupon = Coupon & {
   _recentlyAdded?: boolean            // one of the 2 newest -> highlight + boost
   _last10Score?: number               // worked ratio over last 10 votes (only when 5+ votes)
+  _autoTrending?: boolean             // store's single highest-discount coupon
+  _autoFeatured?: boolean             // store's single latest-verified coupon (not the trending one)
 }
 
 // The public "verified" date = most recent of manual verified_at OR latest user "worked" confirmation.
@@ -48,8 +50,31 @@ export function rankCoupons(coupons: Coupon[], recentVotes: Record<string, boole
     (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   )
   const recentIds = new Set(byNewest.slice(0, RECENT_HIGHLIGHT_COUNT).map((c) => c.id))
+
+  // Auto Trending = single highest-discount coupon. Auto Featured = single latest-verified
+  // coupon that is NOT the trending one (Trending wins if same). Featured = none if no verified.
+  const parseDiscount = (c: Coupon): number => {
+    const m = (c.discount || '').match(/(\d+(?:\.\d+)?)/)
+    return m ? parseFloat(m[1]) : -1
+  }
+  let trendingId: string | null = null
+  let bestDisc = -1
+  for (const c of list) {
+    const d = parseDiscount(c)
+    if (d > bestDisc) { bestDisc = d; trendingId = c.id }
+  }
+  let featuredId: string | null = null
+  let bestVer = 0
+  for (const c of list) {
+    if (c.id === trendingId) continue
+    const vd = verifiedDate(c)
+    if (vd && vd.getTime() > bestVer) { bestVer = vd.getTime(); featuredId = c.id }
+  }
+
   for (const c of list) {
     if (recentIds.has(c.id)) c._recentlyAdded = true
+    if (c.id === trendingId) c._autoTrending = true
+    if (c.id === featuredId) c._autoFeatured = true
     // last-10 worked ratio, only meaningful at threshold
     const votes = recentVotes[c.id] || []
     if ((c.vote_count || 0) >= VOTE_THRESHOLD && votes.length > 0) {

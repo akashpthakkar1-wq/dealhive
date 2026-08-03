@@ -241,8 +241,8 @@ export default function AdminCoupons() {
           <div className="flex flex-wrap gap-4 mt-5 pt-4 border-t border-gray-200">
             {[
               { key: 'is_verified', label: 'Verified', color: 'green' },
-              { key: 'is_featured', label: 'Featured', color: 'yellow' },
-              { key: 'is_trending', label: 'Trending', color: 'red' },
+              { key: 'is_featured', label: 'Featured (Home/Search)', color: 'yellow' },
+              { key: 'is_trending', label: 'Trending (Home/Search)', color: 'red' },
             ].map(({ key, label, color }) => (
               <label key={key} className="flex items-center gap-2 cursor-pointer select-none">
                 <div onClick={() => f(key, !(form as any)[key])}
@@ -339,8 +339,8 @@ export default function AdminCoupons() {
                       <td className="px-4 py-3">
                         <div className="flex gap-1">
                           {c.is_verified && <span title="Verified" className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center text-xs">✓</span>}
-                          {c.is_featured && <span title="Featured" className="w-5 h-5 bg-yellow-100 rounded-full flex items-center justify-center text-xs">⭐</span>}
-                          {c.is_trending && <span title="Trending" className="w-5 h-5 bg-red-100 rounded-full flex items-center justify-center text-xs">🔥</span>}
+                          {c.is_featured && <span title="Featured (Home/Search only)" className="w-5 h-5 bg-yellow-100 rounded-full flex items-center justify-center text-xs">⭐</span>}
+                          {c.is_trending && <span title="Trending (Home/Search only)" className="w-5 h-5 bg-red-100 rounded-full flex items-center justify-center text-xs">🔥</span>}
                         </div>
                       </td>
                       <td className="px-4 py-3">

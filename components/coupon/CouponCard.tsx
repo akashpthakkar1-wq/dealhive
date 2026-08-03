@@ -53,7 +53,11 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
 
   const isCode = coupon.type === 'code';
   const trust = trustDisplay(coupon);
-  const recentlyAdded = (coupon as RankedCoupon)._recentlyAdded === true;
+  const rc = coupon as RankedCoupon;
+  const recentlyAdded = rc._recentlyAdded === true;
+  const isRanked = rc._autoTrending !== undefined || rc._autoFeatured !== undefined || rc._recentlyAdded !== undefined;
+  const showTrending = isRanked ? rc._autoTrending === true : coupon.is_trending;
+  const showFeatured = isRanked ? rc._autoFeatured === true : coupon.is_featured;
   const fmtDate = (d: Date) => d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 
   return (
@@ -84,10 +88,10 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
             {!hideStore && coupon.discount ? (
               <span className="text-[13px] font-bold text-[#EA580C] bg-orange-50 border border-orange-100 px-2 py-0.5 rounded-md whitespace-nowrap flex-shrink-0">{coupon.discount}</span>
             ) : <span />}
-            {coupon.is_trending && (
+            {showTrending && (
               <span className="text-[12px] text-orange-800 bg-orange-100 border border-orange-200 px-2 py-px rounded-full font-semibold whitespace-nowrap flex-shrink-0">🔥 Trending</span>
             )}
-            {coupon.is_featured && !coupon.is_trending && (
+            {showFeatured && !showTrending && (
               <span className="text-[12px] text-yellow-700 bg-yellow-50 border border-yellow-200 px-2 py-px rounded-full font-semibold whitespace-nowrap flex-shrink-0">⭐ Featured</span>
             )}
           </div>
