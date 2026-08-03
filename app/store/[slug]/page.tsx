@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ExternalLink, Star, Clock, Tag, CheckCircle, TrendingUp, Users, ChevronRight, Info, AlertCircle } from 'lucide-react'
+import { ExternalLink, Star, Clock, Tag, CheckCircle, TrendingUp, Users, ChevronRight, AlertCircle } from 'lucide-react'
 import Breadcrumb from '@/components/ui/Breadcrumb'
 import CouponCard from '@/components/coupon/CouponCard'
 import { getStoreBySlug, getCouponsByStore, getRelatedStores, getCouponsByCategory } from '@/lib/queries'
@@ -139,25 +139,12 @@ export default async function StorePage({ params }: Props) {
   const sidebarStores = relatedStores.slice(0, 5)
   const month = new Date().toLocaleString('en-IN', { month: 'long', year: 'numeric' })
 
+  // Pipeline-generated FAQ only (unique per store). No templated fallback — if a store
+  // has no generated faq_content, the FAQ section simply does not render (fail-safe:
+  // better to show nothing than swap-test-failing templated content).
   const faqs = store.faq_content && Array.isArray(store.faq_content) && store.faq_content.length > 0
     ? store.faq_content.map((f: any) => ({ q: f.q, a: f.a }))
-    : [
-    { q: `How do I use a ${store.name} coupon code?`, a: `Click "Get Code" to reveal the code. You will be redirected to ${store.name}'s website. Add items to your cart, proceed to checkout, paste the coupon code in the promo code box, and click Apply.` },
-    { q: `How many ${store.name} coupons are available today?`, a: `There are currently ${activeCoupons.length} active ${store.name} coupon codes and deals on ${SITE_NAME}. We update our offers daily.` },
-    { q: `What is the best ${store.name} coupon code right now?`, a: `The best ${store.name} coupon right now offers${maxDiscount > 0 ? ` up to ${maxDiscount}% off` : ' great discounts'}. Check our verified offers above.` },
-    { q: `Does ${store.name} offer free shipping?`, a: `${freeCoupons.length > 0 ? `Yes! We have ${freeCoupons.length} free shipping offer(s) for ${store.name}. Click the Free Shipping filter to see them.` : `Check ${store.name}'s website for current shipping policies.`}` },
-    { q: `Are these ${store.name} coupon codes verified?`, a: `Yes, all coupon codes on ${SITE_NAME} are manually verified before publishing. Codes with the green Verified badge have been confirmed working.` },
-    { q: `Can I use multiple ${store.name} coupons on one order?`, a: `Generally, ${store.name} allows only one coupon code per order. Combine it with ongoing sale prices for maximum savings.` },
-  ]
-
-  const savingTips = [
-    `Stack coupon codes with ${store.name} sale prices for extra savings`,
-    `New user codes offer the highest discounts — great for first-time shoppers`,
-    `Check ${store.name}'s app for app-exclusive discounts`,
-    `Subscribe to ${store.name}'s newsletter for inbox-exclusive promo codes`,
-    `Bookmark ${SITE_NAME} — we update ${store.name} deals daily`,
-    `Shop during seasonal sales for the biggest discounts`,
-  ]
+    : []
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -174,7 +161,7 @@ export default async function StorePage({ params }: Props) {
           { '@type': 'ListItem', position: store.category ? 4 : 3, name: `${store.name} Coupons`, item: `${SITE_URL}/store/${store.slug}` },
         ]},
         // 3. FAQPage — enables FAQ rich results
-        { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+        ...(faqs.length > 0 ? [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }] : []),
         // 4. ItemList of coupons
         ...(activeCoupons.length > 0 ? [{ '@context': 'https://schema.org', '@type': 'ItemList', name: `${store.name} Coupon Codes ${month}`, numberOfItems: activeCoupons.length,
           itemListElement: activeCoupons.slice(0, 10).map((c, i) => ({
@@ -412,27 +399,17 @@ export default async function StorePage({ params }: Props) {
               )}
             </div>
 
-            {/* Saving tips */}
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-2">How to Save More at {store.name} – Tips & Tricks</h2>
-              <h3 className="text-sm font-semibold text-primary-600 mb-3">Top money-saving strategies for {store.name} shoppers</h3>
-              {store.saving_tips_content ? (
+            {/* Saving tips — pipeline content only; section hidden if none */}
+            {store.saving_tips_content && (
+              <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+                <h2 className="text-xl font-bold text-gray-900 mb-2">How to Save More at {store.name} – Tips & Tricks</h2>
+                <h3 className="text-sm font-semibold text-primary-600 mb-3">Top money-saving strategies for {store.name} shoppers</h3>
                 <p className="text-gray-600 text-base leading-relaxed whitespace-pre-line">{store.saving_tips_content}</p>
-              ) : (
-                <ul className="space-y-3">
-                  {savingTips.map((tip, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <CheckCircle className="w-3 h-3 text-green-600" />
-                      </div>
-                      <span className="text-base text-gray-600 leading-relaxed">{tip}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+              </div>
+            )}
 
-            {/* FAQs */}
+            {/* FAQs — pipeline content only; section hidden if none */}
+            {faqs.length > 0 && (
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-5">{store.name} Coupon Codes – Frequently Asked Questions</h2>
               <div className="space-y-3">
@@ -447,6 +424,7 @@ export default async function StorePage({ params }: Props) {
                 ))}
               </div>
             </div>
+            )}
 
             {/* Expired coupons */}
             {expiredCoupons.length > 0 && (
@@ -526,20 +504,6 @@ export default async function StorePage({ params }: Props) {
                 </div>
               </div>
             )}
-
-            {/* Saving tips */}
-            <div className="bg-primary-50 border border-primary-100 rounded-xl p-5">
-              <h3 className="font-bold text-primary-800 text-sm uppercase tracking-wider mb-3 flex items-center gap-2">
-                <Info className="w-4 h-4" /> Useful Tips
-              </h3>
-              <ul className="space-y-2">
-                {savingTips.slice(0, 4).map((tip, i) => (
-                  <li key={i} className="flex items-start gap-2 text-xs text-primary-800">
-                    <span className="text-primary-500 font-bold mt-0.5">→</span>{tip}
-                  </li>
-                ))}
-              </ul>
-            </div>
 
             {/* Disclaimer */}
             <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
