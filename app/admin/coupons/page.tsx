@@ -4,6 +4,7 @@ import { Plus, Pencil, Trash2, X, Save, Search, Filter, CheckCircle } from 'luci
 import toast from 'react-hot-toast'
 import { createClient } from '@/lib/supabase'
 import { slugify, formatDate, isExpired } from '@/lib/utils'
+import { verifiedDate } from '@/lib/couponRanking'
 import type { Coupon, Store, Category } from '@/types'
 
 const emptyForm = {
@@ -26,6 +27,9 @@ export default function AdminCoupons() {
   const [editId, setEditId] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
   const [deleteId, setDeleteId] = useState<string | null>(null)
+  const [feedbackFor, setFeedbackFor] = useState<Coupon | null>(null)
+  const [feedbackRows, setFeedbackRows] = useState<any[]>([])
+  const [feedbackLoading, setFeedbackLoading] = useState(false)
   const [search, setSearch] = useState('')
   const [filterStore, setFilterStore] = useState('')
   const [filterType, setFilterType] = useState('')
@@ -125,6 +129,23 @@ export default function AdminCoupons() {
 
     // Store pages auto-refresh via hourly ISR; use manual server-side revalidate (curl) for instant updates when needed.
     setShowForm(false); setEditId(null); setSaving(false); load()
+  }
+
+  async function openFeedback(c: Coupon) {
+    setFeedbackFor(c); setFeedbackRows([]); setFeedbackLoading(true)
+    const { data } = await supabase
+      .from('coupon_feedback')
+      .select('vote, reason, details, created_at')
+      .eq('coupon_id', c.id)
+      .order('created_at', { ascending: false })
+    setFeedbackRows(data || []); setFeedbackLoading(false)
+  }
+
+  async function handleSetExpired(id: string) {
+    const yesterday = new Date(Date.now() - 86400000).toISOString()
+    const { error } = await supabase.from('coupons').update({ expiry_date: yesterday }).eq('id', id)
+    if (error) { toast.error(error.message || 'Failed'); return }
+    toast.success('Coupon set as expired'); setFeedbackFor(null); load()
   }
 
   async function handleVerifyNow(id: string) {
@@ -324,7 +345,7 @@ export default function AdminCoupons() {
             <table className="w-full">
               <thead>
                 <tr className="bg-gray-50 border-b border-gray-200">
-                  {['Title', 'Store', 'Type', 'Code', 'Discount', 'Expiry', 'Flags', 'Actions'].map((h) => (
+                  {['Title', 'Store', 'Type', 'Code', 'Discount', 'Expiry', 'Last Verified', 'Feedback', 'Flags', 'Actions'].map((h) => (
                     <th key={h} className="text-left px-4 py-3 text-xs font-bold text-gray-400 uppercase tracking-wider whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
@@ -349,6 +370,20 @@ export default function AdminCoupons() {
                         {c.discount && <span className="text-xs font-bold bg-orange-50 text-orange-600 px-2 py-0.5 rounded-full border border-orange-100">{c.discount}</span>}
                       </td>
                       <td className="px-4 py-3 text-xs text-gray-400 whitespace-nowrap">{c.expiry_date ? formatDate(c.expiry_date) : '—'}</td>
+                      <td className="px-4 py-3 text-xs whitespace-nowrap">
+                        {(() => {
+                          const vd = verifiedDate(c)
+                          return vd
+                            ? <span className="text-green-600 font-medium">{formatDate(vd.toISOString())}</span>
+                            : <span className="text-gray-300">not verified</span>
+                        })()}
+                      </td>
+                      <td className="px-4 py-3 whitespace-nowrap">
+                        <button onClick={() => openFeedback(c)} className="text-xs flex items-center gap-2 hover:underline" title="View user feedback">
+                          <span className="text-green-600 font-semibold">👍 {(c as any).worked_count || 0}</span>
+                          <span className="text-red-500 font-semibold">👎 {(c as any).didnt_work_count || 0}</span>
+                        </button>
+                      </td>
                       <td className="px-4 py-3">
                         <div className="flex gap-1">
                           {c.is_verified && <span title="Verified" className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center text-xs">✓</span>}
@@ -367,13 +402,58 @@ export default function AdminCoupons() {
                   )
                 })}
                 {filtered.length === 0 && (
-                  <tr><td colSpan={8} className="px-5 py-10 text-center text-gray-400 text-sm">No coupons found.</td></tr>
+                  <tr><td colSpan={10} className="px-5 py-10 text-center text-gray-400 text-sm">No coupons found.</td></tr>
                 )}
               </tbody>
             </table>
           </div>
         )}
       </div>
+
+      {feedbackFor && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4" onClick={() => setFeedbackFor(null)}>
+          <div className="bg-white rounded-xl max-w-lg w-full max-h-[80vh] overflow-hidden flex flex-col" onClick={(e) => e.stopPropagation()}>
+            <div className="px-5 py-4 border-b border-gray-200 flex items-start justify-between">
+              <div>
+                <h3 className="font-bold text-gray-900 text-sm">User Feedback</h3>
+                <p className="text-xs text-gray-500 mt-0.5 truncate max-w-xs">{feedbackFor.title}</p>
+              </div>
+              <button onClick={() => setFeedbackFor(null)}><X className="w-5 h-5 text-gray-400 hover:text-gray-600" /></button>
+            </div>
+            <div className="px-5 py-3 border-b border-gray-100 flex gap-4 text-sm">
+              <span className="text-green-600 font-semibold">👍 {(feedbackFor as any).worked_count || 0} worked</span>
+              <span className="text-red-500 font-semibold">👎 {(feedbackFor as any).didnt_work_count || 0} failed</span>
+              <span className="text-gray-400">{(feedbackFor as any).vote_count || 0} total</span>
+            </div>
+            <div className="overflow-y-auto flex-1 px-5 py-3">
+              {feedbackLoading ? (
+                <p className="text-sm text-gray-400 text-center py-6">Loading...</p>
+              ) : feedbackRows.length === 0 ? (
+                <p className="text-sm text-gray-400 text-center py-6">No feedback yet.</p>
+              ) : (
+                <div className="space-y-2">
+                  {feedbackRows.map((r, i) => (
+                    <div key={i} className="flex items-start gap-3 text-xs border-b border-gray-50 pb-2">
+                      <span className={`font-semibold whitespace-nowrap ${r.vote === 'worked' ? 'text-green-600' : r.vote === 'didnt_work' ? 'text-red-500' : 'text-gray-500'}`}>
+                        {r.vote === 'worked' ? '👍 Worked' : r.vote === 'didnt_work' ? '👎 Failed' : '📝 Reason'}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        {r.reason && <span className="text-gray-700">{r.reason.replace('_', ' ')}</span>}
+                        {r.details && <p className="text-gray-500 italic mt-0.5">{r.details}</p>}
+                      </div>
+                      <span className="text-gray-300 whitespace-nowrap">{formatDate(r.created_at)}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div className="px-5 py-4 border-t border-gray-200 flex gap-2">
+              <button onClick={() => handleSetExpired(feedbackFor.id)} className="flex-1 bg-red-500 text-white font-bold py-2.5 rounded-lg text-sm hover:bg-red-600">Set as Expired</button>
+              <button onClick={() => setFeedbackFor(null)} className="flex-1 btn-secondary">Close</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {deleteId && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
