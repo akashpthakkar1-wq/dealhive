@@ -131,6 +131,16 @@ export default function AdminCoupons() {
     setShowForm(false); setEditId(null); setSaving(false); load()
   }
 
+  async function revalidateStore(storeSlug?: string) {
+    try {
+      await fetch('/api/admin-revalidate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ storeSlug: storeSlug || null }),
+      })
+    } catch { /* non-blocking */ }
+  }
+
   async function openFeedback(c: Coupon) {
     setFeedbackFor(c); setFeedbackRows([]); setFeedbackLoading(true)
     const { data } = await supabase
@@ -145,13 +155,16 @@ export default function AdminCoupons() {
     const yesterday = new Date(Date.now() - 86400000).toISOString()
     const { error } = await supabase.from('coupons').update({ expiry_date: yesterday }).eq('id', id)
     if (error) { toast.error(error.message || 'Failed'); return }
-    toast.success('Coupon set as expired'); setFeedbackFor(null); load()
+    await revalidateStore((feedbackFor?.store as any)?.slug)
+    toast.success('Coupon set as expired — store page refreshed'); setFeedbackFor(null); load()
   }
 
   async function handleVerifyNow(id: string) {
     const { error } = await supabase.from('coupons').update({ verified_at: new Date().toISOString() }).eq('id', id)
     if (error) { toast.error(error.message || 'Verify failed'); return }
-    toast.success('Marked verified just now'); load()
+    const vc = coupons.find((x) => x.id === id)
+    await revalidateStore((vc?.store as any)?.slug)
+    toast.success('Marked verified just now — store page refreshed'); load()
   }
 
   async function handleDelete(id: string) {
