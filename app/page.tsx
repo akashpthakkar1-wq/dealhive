@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import CollapsibleIntro from '@/components/ui/CollapsibleIntro'
 import Link from 'next/link'
 import { Suspense } from 'react'
 import Image from 'next/image'
@@ -46,12 +47,7 @@ async function HomePageData() {
       {/* ── SEO INTRO TEXT ── */}
       <section className="bg-white border-b border-gray-200 py-6">
         <div className="container-main">
-          <p className="text-sm text-gray-500 leading-relaxed">
-              Welcome to <strong>EndOverPay</strong> — your trusted source for verified <strong>coupon codes</strong>, <strong>promo codes</strong>, <strong>voucher codes</strong> and <strong>discount codes</strong> from hundreds of top online stores worldwide. 
-              We manually verify every deal before publishing so you never waste time on expired codes. 
-              From fashion and electronics to food delivery and travel, find the best deals updated daily across all categories. 
-              Stop overpaying — start saving smarter with EndOverPay.
-          </p>
+          <CollapsibleIntro />
         </div>
       </section>
 
@@ -190,8 +186,8 @@ function SectionHeader({ icon, title, subtitle, href }: {
   icon: React.ReactNode; title: string; subtitle: string; href: string
 }) {
   return (
-    <div className="flex items-center justify-between mb-5">
-      <div className="flex items-start gap-3">
+    <div className="flex items-center justify-between gap-3 mb-5">
+      <div className="flex items-start gap-3 min-w-0">
         <span className="flex-shrink-0 w-10 h-10 rounded-xl bg-gray-50 border border-gray-200 flex items-center justify-center shadow-sm">
           {icon}
         </span>
