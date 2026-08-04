@@ -244,6 +244,7 @@ export default async function StorePage({ params }: Props) {
                   className="mb-3"
                   text={store.hero_summary || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
                 />
+                {allCoupons.length > 0 && (
                 <div className={`grid ${maxDiscount > 0 ? 'grid-cols-3' : 'grid-cols-2'} gap-3 max-w-md`}>
                   <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-200 bg-white">
                     <span className="text-lg font-extrabold text-gray-900 leading-none">{allCoupons.length}</span>
@@ -260,6 +261,7 @@ export default async function StorePage({ params }: Props) {
                   </div>
                   )}
                 </div>
+                )}
               </div>
             </div>
 
@@ -271,6 +273,7 @@ export default async function StorePage({ params }: Props) {
               <ExpandableText
                 text={store.hero_summary || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
               />
+              {allCoupons.length > 0 && (
               <div className={`grid ${maxDiscount > 0 ? 'grid-cols-3' : 'grid-cols-2'} gap-2 max-w-md`}>
                 <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-200 bg-white">
                   <span className="text-lg font-extrabold text-gray-900 leading-none">{allCoupons.length}</span>
@@ -287,6 +290,7 @@ export default async function StorePage({ params }: Props) {
                 </div>
                 )}
               </div>
+              )}
               {store.website_url && (
                 <a href={store.website_url} target="_blank" rel="sponsored nofollow noopener noreferrer"
                   className="flex items-center justify-center gap-1.5 text-sm px-4 py-2.5 rounded-lg bg-white text-gray-900 border border-gray-300 font-semibold hover:bg-gray-50 transition-colors w-full">
