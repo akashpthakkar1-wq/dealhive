@@ -186,12 +186,12 @@ export default async function StorePage({ params }: Props) {
       ])}} />
 
       {/* ── HERO ────────────────────────────────────── */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="container-main py-4 md:py-6">
+      <div className="bg-gray-100 border-b border-gray-200">
+        <div className="container-main py-3 md:py-4">
           <Breadcrumb items={[{ label: 'Stores', href: '/stores' }, ...(store.category ? [{ label: store.category, href: '/categories' }] : []), { label: `${store.name} Coupons` }]} />
 
           {/* Hero: stacks on mobile, logo-left/content-right on desktop */}
-          <div className="mt-3 mb-3 md:mb-4">
+          <div className="mt-2 mb-2 md:mb-3">
 
             {/* MOBILE: logo + H1 row */}
             <div className="flex md:hidden flex-row items-center gap-3 mb-3">
