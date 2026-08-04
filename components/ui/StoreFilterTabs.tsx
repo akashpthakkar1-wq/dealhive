@@ -50,7 +50,7 @@ export default function StoreFilterTabs({ coupons, storeName }: Props) {
       <div className="relative mt-4">
         <div className="flex overflow-x-auto flex-nowrap gap-2 px-1 pb-2 md:pb-1 scroll-smooth scroll-px-4"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-          {FILTER_TABS.map((tab) => (
+          {FILTER_TABS.filter((tab) => tab.id === 'all' || counts[tab.id] > 0).map((tab) => (
             <button key={tab.id}
               onClick={() => setFilter(tab.id)}
               className={`flex-shrink-0 inline-flex items-center gap-1.5 px-4 min-h-[40px] rounded-full text-sm font-semibold border whitespace-nowrap transition-all ${
