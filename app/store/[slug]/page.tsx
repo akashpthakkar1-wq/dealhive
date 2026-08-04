@@ -353,7 +353,7 @@ export default async function StorePage({ params }: Props) {
             {/* About store */}
             <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-2">About {store.name} Coupon Codes & Deals</h2>
-              <h3 className="text-sm font-semibold text-primary-600 mb-3">Why shop at {store.name} with EndOverPay?</h3>
+              <h3 className="text-sm font-semibold text-primary-600 mb-3">How to Use {store.name} Promo Codes & Offers</h3>
               <div className="text-base text-gray-600 leading-relaxed space-y-3">
                 {store.about_content
                   ? store.about_content.split(/\n\n+/).map((para: string, i: number) => (
