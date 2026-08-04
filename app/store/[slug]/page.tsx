@@ -442,10 +442,10 @@ export default async function StorePage({ params }: Props) {
           </div>
 
           {/* ── SIDEBAR (narrow) — left on desktop, below content on mobile ─────── */}
-          <div className="lg:col-span-1 space-y-5 lg:order-1">
+          <div className="lg:col-span-1 lg:order-1 divide-y divide-gray-200 border-t border-gray-200 lg:border-t-0">
 
             {/* Stats */}
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+            <div className="py-5">
               <h3 className="font-bold text-gray-900 text-sm uppercase tracking-wider mb-4">{store.name} Stats</h3>
               <div className="space-y-3">
                 {[
@@ -466,7 +466,7 @@ export default async function StorePage({ params }: Props) {
             <StoreRating storeId={store.id} storeName={store.name} initialCount={ratingCount} initialAverage={ratingAvg} />
 
             {/* Today's best */}
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+            <div className="py-5">
               <h3 className="font-bold text-gray-900 text-sm uppercase tracking-wider mb-4">Today&apos;s Best</h3>
               <div className="space-y-2">
                 {[
@@ -486,7 +486,7 @@ export default async function StorePage({ params }: Props) {
 
             {/* Similar stores */}
             {sidebarStores.length > 0 && (
-              <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+              <div className="py-5">
                 <h3 className="font-bold text-gray-900 text-sm uppercase tracking-wider mb-4">Similar Stores</h3>
                 <div className="space-y-1">
                   {sidebarStores.map(s => (
@@ -506,7 +506,7 @@ export default async function StorePage({ params }: Props) {
             )}
 
             {/* Disclaimer */}
-            <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+            <div className="py-5">
               <p className="text-xs text-gray-500 leading-relaxed">
                 <strong className="text-gray-600">Affiliate Disclosure:</strong> EndOverPay earns a commission when you click our links and make a purchase, at no extra cost to you. All coupon codes are manually verified before publishing.
               </p>
