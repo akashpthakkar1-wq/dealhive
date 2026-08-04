@@ -244,7 +244,7 @@ export default async function StorePage({ params }: Props) {
                   className="mb-3"
                   text={store.hero_summary || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
                 />
-                <div className="grid grid-cols-3 gap-3 max-w-md">
+                <div className={`grid ${maxDiscount > 0 ? 'grid-cols-3' : 'grid-cols-2'} gap-3 max-w-md`}>
                   <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-200 bg-white">
                     <span className="text-lg font-extrabold text-gray-900 leading-none">{allCoupons.length}</span>
                     <span className="text-[11px] text-gray-500 font-medium mt-1">Total Offers</span>
@@ -253,10 +253,12 @@ export default async function StorePage({ params }: Props) {
                     <span className="text-lg font-extrabold text-gray-900 leading-none">{activeCoupons.length}</span>
                     <span className="text-[11px] text-gray-500 font-medium mt-1">Active Now</span>
                   </div>
+                  {maxDiscount > 0 && (
                   <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-primary-200 bg-primary-50">
-                    <span className="text-lg font-extrabold text-primary-600 leading-none">{maxDiscount > 0 ? `${maxDiscount}%` : '—'}</span>
+                    <span className="text-lg font-extrabold text-primary-600 leading-none">{`${maxDiscount}%`}</span>
                     <span className="text-[11px] text-primary-700 font-semibold mt-1">Best Discount</span>
                   </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -269,7 +271,7 @@ export default async function StorePage({ params }: Props) {
               <ExpandableText
                 text={store.hero_summary || `Find the best ${store.name} coupon codes, promo codes and voucher codes verified by our team.`}
               />
-              <div className="grid grid-cols-3 gap-2 max-w-md">
+              <div className={`grid ${maxDiscount > 0 ? 'grid-cols-3' : 'grid-cols-2'} gap-2 max-w-md`}>
                 <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-gray-200 bg-white">
                   <span className="text-lg font-extrabold text-gray-900 leading-none">{allCoupons.length}</span>
                   <span className="text-[11px] text-gray-500 font-medium mt-1">Total Offers</span>
@@ -278,10 +280,12 @@ export default async function StorePage({ params }: Props) {
                   <span className="text-lg font-extrabold text-gray-900 leading-none">{activeCoupons.length}</span>
                   <span className="text-[11px] text-gray-500 font-medium mt-1">Active Now</span>
                 </div>
+                {maxDiscount > 0 && (
                 <div className="flex flex-col items-center justify-center text-center px-2 py-2.5 rounded-xl border border-primary-200 bg-primary-50">
-                  <span className="text-lg font-extrabold text-primary-600 leading-none">{maxDiscount > 0 ? `${maxDiscount}%` : '—'}</span>
+                  <span className="text-lg font-extrabold text-primary-600 leading-none">{`${maxDiscount}%`}</span>
                   <span className="text-[11px] text-primary-700 font-semibold mt-1">Best Discount</span>
                 </div>
+                )}
               </div>
               {store.website_url && (
                 <a href={store.website_url} target="_blank" rel="sponsored nofollow noopener noreferrer"
@@ -451,7 +455,7 @@ export default async function StorePage({ params }: Props) {
                 {[
                   { l: 'Total Offers', v: allCoupons.length, I: Tag },
                   { l: 'Active Codes', v: activeCoupons.length, I: CheckCircle },
-                  { l: 'Best Discount', v: maxDiscount > 0 ? `${maxDiscount}% OFF` : 'N/A', I: TrendingUp },
+                  ...(maxDiscount > 0 ? [{ l: 'Best Discount', v: `${maxDiscount}% OFF`, I: TrendingUp }] : []),
                 ].map(({ l, v, I }) => (
                   <div key={l} className="flex items-center justify-between py-2 border-b border-gray-200 last:border-0">
                     <div className="flex items-center gap-2 text-sm text-gray-500"><I className="w-4 h-4 text-primary-400" />{l}</div>
@@ -470,11 +474,11 @@ export default async function StorePage({ params }: Props) {
               <h3 className="font-bold text-gray-900 text-sm uppercase tracking-wider mb-4">Today&apos;s Best</h3>
               <div className="space-y-2">
                 {[
-                  { l: 'Best Coupon', v: maxDiscount > 0 ? `${maxDiscount}% OFF` : 'See Deals' },
-                  { l: 'Coupon Codes', v: `${codeCoupons.length} codes` },
-                  { l: 'No-Code Deals', v: `${dealCoupons.length} deals` },
-                  { l: 'Free Shipping', v: freeCoupons.length > 0 ? `${freeCoupons.length} offer(s)` : 'Check page' },
-                  { l: 'Total Active', v: `${activeCoupons.length} offers` },
+                  ...(maxDiscount > 0 ? [{ l: 'Best Coupon', v: `${maxDiscount}% OFF` }] : []),
+                  ...(codeCoupons.length > 0 ? [{ l: 'Coupon Codes', v: `${codeCoupons.length} ${codeCoupons.length === 1 ? 'code' : 'codes'}` }] : []),
+                  ...(dealCoupons.length > 0 ? [{ l: 'No-Code Deals', v: `${dealCoupons.length} ${dealCoupons.length === 1 ? 'deal' : 'deals'}` }] : []),
+                  ...(freeCoupons.length > 0 ? [{ l: 'Free Shipping', v: `${freeCoupons.length} offer(s)` }] : []),
+                  { l: 'Total Active', v: `${activeCoupons.length} ${activeCoupons.length === 1 ? 'offer' : 'offers'}` },
                 ].map(({ l, v }) => (
                   <div key={l} className="flex items-center justify-between text-sm py-1.5 border-b border-gray-200 last:border-0">
                     <span className="text-gray-500">{l}</span>
