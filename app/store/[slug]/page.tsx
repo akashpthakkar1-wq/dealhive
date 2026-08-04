@@ -197,7 +197,7 @@ export default async function StorePage({ params }: Props) {
             <div className="flex md:hidden flex-row items-center gap-3 mb-3">
               <div className="w-20 h-20 rounded-xl overflow-hidden flex items-center justify-center flex-shrink-0 bg-white border border-gray-200 p-1.5">
                 {store.logo
-                  ? <Image src={store.logo} alt={`${store.name} logo`} width={80} height={80} className="w-full h-full object-contain" />
+                  ? <Image src={store.logo} alt={`${store.name} logo`} width={160} height={160} className="w-full h-full object-contain" />
                   : <Tag className="w-8 h-8 text-primary-400" />}
               </div>
               <div className="flex-1 min-w-0">
@@ -217,7 +217,7 @@ export default async function StorePage({ params }: Props) {
               <div className="flex flex-col items-center gap-2 flex-shrink-0">
                 <div className="w-28 h-28 rounded-2xl overflow-hidden flex items-center justify-center bg-white border border-gray-200 p-2">
                   {store.logo
-                    ? <Image src={store.logo} alt={`${store.name} logo`} width={112} height={112} priority className="w-full h-full object-contain" />
+                    ? <Image src={store.logo} alt={`${store.name} logo`} width={224} height={224} priority className="w-full h-full object-contain" />
                     : <Tag className="w-10 h-10 text-primary-400" />}
                 </div>
                 {store.website_url && (
@@ -500,7 +500,7 @@ export default async function StorePage({ params }: Props) {
                   {sidebarStores.map(s => (
                     <Link key={s.id} href={`/store/${s.slug}`} className="flex items-center gap-3 p-2 rounded-lg hover:bg-primary-50 transition-colors group">
                       <div className="w-10 h-10 rounded-xl border border-gray-200 bg-white overflow-hidden flex items-center justify-center flex-shrink-0">
-                        {s.logo ? <Image src={s.logo} alt={`${s.name} logo`} width={40} height={40} className="object-contain w-full h-full" /> : <Tag className="w-4 h-4 text-primary-400" />}
+                        {s.logo ? <Image src={s.logo} alt={`${s.name} logo`} width={80} height={80} className="object-contain w-full h-full" /> : <Tag className="w-4 h-4 text-primary-400" />}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="font-semibold text-gray-900 text-sm group-hover:text-primary-600 transition-colors truncate">{s.name}</div>
