@@ -59,9 +59,9 @@ export default function StoreRating({ storeId, storeName, initialCount, initialA
 
       {/* Public average — only when >= THRESHOLD real votes */}
       {showPublicRating && (
-        <div className="text-center mb-4">
+        <div className="mb-4">
           <div className="text-5xl font-extrabold text-gray-900 mb-1">{average.toFixed(1)}</div>
-          <div className="flex items-center justify-center gap-0.5">
+          <div className="flex items-center gap-0.5">
             {[1, 2, 3, 4, 5].map((s) => (
               <Star
                 key={s}
@@ -77,18 +77,18 @@ export default function StoreRating({ storeId, storeName, initialCount, initialA
 
       {/* Interactive vote row */}
       {voted ? (
-        <p className="text-center text-sm text-green-600 font-medium">
+        <p className="text-sm text-green-600 font-medium">
           Thanks for rating {storeName}!
         </p>
       ) : (
-        <div className="text-center">
+        <div>
           <p className="text-xs text-gray-500 mb-2">
             {showPublicRating
               ? `Did these ${storeName} coupons work for you?`
               : `Be the first to rate these ${storeName} coupons`}
           </p>
           <div
-            className="flex items-center justify-center gap-1"
+            className="flex items-center gap-1"
             onMouseLeave={() => setHovered(0)}
           >
             {[1, 2, 3, 4, 5].map((s) => (
