@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { getCouponLogo, getStoreLogo } from '@/lib/logos'
 import { createClient } from '@supabase/supabase-js';
 import type { Coupon, Store } from '@/types/index';
+import { verifiedDate } from '@/lib/couponRanking';
 import SharedCouponCard from '@/components/coupon/CouponCard';
 
 
@@ -135,7 +136,7 @@ export default function SearchPage() {
       filter === 'all' ||
       (filter === 'code' && c.type === 'code') ||
       (filter === 'deal' && c.type === 'deal') ||
-      (filter === 'verified' && c.is_verified) ||
+      (filter === 'verified' && verifiedDate(c) !== null) ||
       (filter === 'featured' && c.is_featured) ||
       (filter === 'trending' && c.is_trending);
     return matchSearch && matchFilter;

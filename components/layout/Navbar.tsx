@@ -92,10 +92,10 @@ export default function Navbar() {
                 return (
                   <Link key={l.href} href={l.href} prefetch={true}
                     onClick={() => setOpen(false)}
-                    className={`px-3 py-2.5 rounded-lg text-sm transition-all duration-200 border-l-[3px] ${
+                    className={`px-3 py-2.5 rounded-lg text-sm transition-all duration-200 ${
                       active
-                        ? 'text-[#EA580C] font-bold border-[#EA580C] bg-orange-50'
-                        : 'text-gray-700 font-medium border-transparent hover:bg-orange-50 hover:text-[#EA580C]'
+                        ? 'text-[#EA580C] font-semibold bg-orange-50/60'
+                        : 'text-gray-700 font-medium hover:bg-gray-50 hover:text-[#EA580C]'
                     }`}>
                     {l.label}
                   </Link>

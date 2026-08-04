@@ -8,7 +8,7 @@ import { slugify } from '@/lib/utils'
 interface ParsedRow {
   title: string; store_name: string; type: string; discount: string; usage_count: string; min_order_value: string; terms_conditions: string;
   code: string; description: string; expiry_date: string; rate: string;
-  affiliate_url: string; is_verified: string; is_featured: string; is_trending: string
+  affiliate_url: string; is_featured: string; is_trending: string
 }
 
 export default function AdminImport() {
@@ -73,7 +73,7 @@ export default function AdminImport() {
           store_id: storeId,
           type: row.type === 'deal' ? 'deal' : 'code',
           expiry_date: row.expiry_date ? new Date(row.expiry_date).toISOString() : null,
-          is_verified: row.is_verified !== 'false',
+          verified_at: new Date().toISOString(),
           is_featured: row.is_featured === 'true',
           is_trending: row.is_trending === 'true',
           usage_count: parseInt(row.usage_count) || 0,
@@ -107,9 +107,9 @@ export default function AdminImport() {
       ).join('\n')
       filename = 'dealhive_stores.csv'
     } else if (exportType === 'coupons') {
-      csv = 'title,store_name,type,discount,code,description,affiliate_url,expiry_date,is_verified,is_featured,is_trending,usage_count,min_order_value,terms_conditions\n'
+      csv = 'title,store_name,type,discount,code,description,affiliate_url,expiry_date,is_featured,is_trending,usage_count,min_order_value,terms_conditions\n'
       csv += (coupons || []).map((c: any) =>
-        `"${c.title}","${c.store?.name || ''}","${c.type}","${c.discount || ''}","${c.code || ''}","${(c.description || '').replace(/"/g, '""')}","${c.affiliate_url || ''}","${c.expiry_date ? c.expiry_date.slice(0, 10) : ''}","${c.is_verified}","${c.is_featured}","${c.is_trending}","${c.usage_count}","${(c.min_order_value || '').replace(/"/g, '""')}","${(c.terms_conditions || '').replace(/"/g, '""')}"`
+        `"${c.title}","${c.store?.name || ''}","${c.type}","${c.discount || ''}","${c.code || ''}","${(c.description || '').replace(/"/g, '""')}","${c.affiliate_url || ''}","${c.expiry_date ? c.expiry_date.slice(0, 10) : ''}","${c.is_featured}","${c.is_trending}","${c.usage_count}","${(c.min_order_value || '').replace(/"/g, '""')}","${(c.terms_conditions || '').replace(/"/g, '""')}"`
       ).join('\n')
       filename = 'dealhive_coupons.csv'
     } else {
@@ -126,7 +126,7 @@ export default function AdminImport() {
   }
 
   function downloadTemplate() {
-    const csv = `title,store_name,type,discount,code,description,affiliate_url,expiry_date,is_verified,is_featured,is_trending,usage_count,min_order_value,terms_conditions
+    const csv = `title,store_name,type,discount,code,description,affiliate_url,expiry_date,is_featured,is_trending,usage_count,min_order_value,terms_conditions
 "Flat 70% Off on All Clothing",SHEIN,code,"70% OFF",SHEIN70,"Get flat 70% off on all clothing styles","https://shein.com",2026-12-31,true,true,false,8420,"No minimum order","Valid on 50000+ styles. Cannot be combined with other offers. One use per account."
 "Electronics Flash Sale Up to 60% Off",Amazon,deal,"60% OFF",,"Huge discounts on mobiles and laptops","https://amazon.in",2026-12-31,true,false,true,0,"₹999","Valid on selected products only. While stocks last. Discount auto-applied at checkout."`
     const blob = new Blob([csv], { type: 'text/csv' })
@@ -155,7 +155,7 @@ export default function AdminImport() {
         <div className="mt-4 p-4 bg-gray-50 rounded-xl">
           <p className="text-xs font-bold text-gray-600 mb-2">📋 Required CSV columns:</p>
           <code className="text-xs text-gray-500 block font-mono leading-relaxed">
-            title, store_name, type (code/deal), discount, code, description, affiliate_url, expiry_date (YYYY-MM-DD), is_verified, is_featured, is_trending, usage_count, min_order_value, terms_conditions
+            title, store_name, type (code/deal), discount, code, description, affiliate_url, expiry_date (YYYY-MM-DD), is_featured, is_trending, usage_count, min_order_value, terms_conditions
           </code>
           <button onClick={downloadTemplate} className="btn-secondary mt-3 text-xs py-1.5 px-3 h-auto">
             <Download className="w-3.5 h-3.5" /> Download Template CSV

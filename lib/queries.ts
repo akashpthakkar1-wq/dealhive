@@ -55,7 +55,7 @@ export function getCouponsByCategory(categorySlug: string, excludeStoreId: strin
     const ids = storeIds.map((s: any) => s.id)
     const { data, error } = await supabase
       .from('coupons')
-      .select('id, title, slug, description, discount, code, type, affiliate_url, expiry_date, usage_count, is_verified, is_featured, is_trending, min_order_value, terms_conditions, store:stores(id, name, slug, logo, website_url)')
+      .select('id, title, slug, description, discount, code, type, affiliate_url, expiry_date, usage_count, is_featured, is_trending, min_order_value, terms_conditions, store:stores(id, name, slug, logo, website_url)')
       .in('store_id', ids)
       .order('created_at', { ascending: false })
       .limit(limit)

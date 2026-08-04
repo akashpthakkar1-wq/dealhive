@@ -17,12 +17,12 @@
 
 @layer base {
   html {
-    overflow-x: hidden;
+    overflow-x: clip;
     max-width: 100vw;
   }
   body {
     @apply font-sans text-gray-800 bg-[#FFFBF7];
-    overflow-x: hidden;
+    overflow-x: clip;
     max-width: 100vw;
     position: relative;
   }

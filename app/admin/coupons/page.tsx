@@ -11,7 +11,7 @@ const emptyForm = {
   title: '', slug: '', description: '', code: '', discount: '',
   affiliate_url: '', store_id: '', category_id: '', expiry_date: '',
   min_order_value: '', terms_conditions: '',
-  is_verified: true, type: 'code' as 'code' | 'deal',
+  type: 'code' as 'code' | 'deal',
   is_featured: false, is_trending: false, usage_count: 0,
   deal_of_the_day_order: null as number | null,
   manual_priority: null as number | null,
@@ -79,7 +79,7 @@ export default function AdminCoupons() {
       discount: c.discount || '', affiliate_url: c.affiliate_url, store_id: c.store_id || '',
       category_id: c.category_id || '', expiry_date: c.expiry_date ? c.expiry_date.slice(0, 10) : '',
       min_order_value: c.min_order_value || '', terms_conditions: c.terms_conditions || '',
-      is_verified: c.is_verified, type: c.type, is_featured: c.is_featured,
+      type: c.type, is_featured: c.is_featured,
       is_trending: c.is_trending, usage_count: c.usage_count,
       deal_of_the_day_order: dotdSlots[c.id] ?? null,
       manual_priority: c.manual_priority ?? null,
@@ -104,7 +104,6 @@ export default function AdminCoupons() {
       expiry_date: form.expiry_date || null,
       min_order_value: form.min_order_value || null,
       terms_conditions: form.terms_conditions || null,
-      is_verified: form.is_verified,
       is_featured: form.is_featured,
       is_trending: form.is_trending,
       usage_count: form.usage_count,
@@ -287,7 +286,6 @@ export default function AdminCoupons() {
           {/* Toggles */}
           <div className="flex flex-wrap gap-4 mt-5 pt-4 border-t border-gray-200">
             {[
-              { key: 'is_verified', label: 'Verified', color: 'green' },
               { key: 'is_featured', label: 'Featured (Home/Search)', color: 'yellow' },
               { key: 'is_trending', label: 'Trending (Home/Search)', color: 'red' },
             ].map(({ key, label, color }) => (
@@ -399,7 +397,6 @@ export default function AdminCoupons() {
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex gap-1">
-                          {c.is_verified && <span title="Verified" className="w-5 h-5 bg-green-100 rounded-full flex items-center justify-center text-xs">✓</span>}
                           {c.is_featured && <span title="Featured (Home/Search only)" className="w-5 h-5 bg-yellow-100 rounded-full flex items-center justify-center text-xs">⭐</span>}
                           {c.is_trending && <span title="Trending (Home/Search only)" className="w-5 h-5 bg-red-100 rounded-full flex items-center justify-center text-xs">🔥</span>}
                         </div>

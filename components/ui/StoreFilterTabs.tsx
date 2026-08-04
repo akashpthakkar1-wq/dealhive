@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import CouponCard from '@/components/coupon/CouponCard'
+import { verifiedDate } from '@/lib/couponRanking'
 
 const FILTER_TABS = [
   { id: 'all',      label: 'All Offers' },
@@ -25,7 +26,7 @@ export default function StoreFilterTabs({ coupons, storeName }: Props) {
     const code = active.filter(c => c.type === 'code')
     const deal = active.filter(c => c.type === 'deal')
     const free = active.filter(c => (c.title + (c.description || '')).toLowerCase().includes('free ship'))
-    const verified = active.filter(c => c.is_verified)
+    const verified = active.filter(c => verifiedDate(c) !== null)
     const featured = active.filter(c => c.is_featured)
 
     const counts: Record<string, number> = {
