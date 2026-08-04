@@ -183,7 +183,7 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
               </div>
             </div>
             {coupon.terms_conditions && (
-              <div className="bg-white border border-gray-200 rounded-xl p-3">
+              <div className="bg-white border border-gray-300 rounded-xl p-3">
                 <p className="text-[12px] text-gray-500 uppercase tracking-wider font-medium mb-2">Terms &amp; conditions</p>
                 <p className="text-xs text-gray-500 leading-relaxed">{coupon.terms_conditions}</p>
               </div>

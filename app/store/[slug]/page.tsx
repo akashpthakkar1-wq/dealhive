@@ -317,7 +317,7 @@ export default async function StorePage({ params }: Props) {
 
             {/* ── Quick summary table ── */}
             {activeCoupons.length > 0 && (
-              <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+              <div className="bg-white rounded-xl border border-gray-300 shadow-sm overflow-hidden">
                 <div className="bg-primary-50 px-5 py-3 border-b border-primary-100">
                   <h2 className="font-bold text-gray-900">Today's Best {store.name} Deals & Coupon Codes – {month}</h2>
                 </div>
@@ -351,7 +351,7 @@ export default async function StorePage({ params }: Props) {
             )}
 
             {/* About store */}
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+            <div className="bg-white rounded-xl border border-gray-300 shadow-sm p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-2">About {store.name} Coupon Codes & Deals</h2>
               <h3 className="text-sm font-semibold text-primary-600 mb-3">How to Use {store.name} Promo Codes & Offers</h3>
               <div className="text-base text-gray-600 leading-relaxed space-y-3">
@@ -382,7 +382,7 @@ export default async function StorePage({ params }: Props) {
             </div>
 
             {/* How to use */}
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+            <div className="bg-white rounded-xl border border-gray-300 shadow-sm p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-5">How to Use a {store.name} Coupon Code or Promo Code</h2>
               {store.how_to_use_content ? (
                 <p className="text-gray-600 text-base leading-relaxed whitespace-pre-line">{store.how_to_use_content}</p>
@@ -409,7 +409,7 @@ export default async function StorePage({ params }: Props) {
 
             {/* Saving tips — pipeline content only; section hidden if none */}
             {store.saving_tips_content && (
-              <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+              <div className="bg-white rounded-xl border border-gray-300 shadow-sm p-6">
                 <h2 className="text-xl font-bold text-gray-900 mb-2">How to Save More at {store.name} – Tips & Tricks</h2>
                 <h3 className="text-sm font-semibold text-primary-600 mb-3">Top money-saving strategies for {store.name} shoppers</h3>
                 <p className="text-gray-600 text-base leading-relaxed whitespace-pre-line">{store.saving_tips_content}</p>
@@ -418,13 +418,13 @@ export default async function StorePage({ params }: Props) {
 
             {/* FAQs — pipeline content only; section hidden if none */}
             {faqs.length > 0 && (
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+            <div className="bg-white rounded-xl border border-gray-300 shadow-sm p-6">
               <h2 className="text-xl font-bold text-gray-900 mb-5">{store.name} Coupon Codes – Frequently Asked Questions</h2>
               <div className="space-y-3">
                 {faqs.map((faq, i) => (
                   <details key={i} className="group border border-gray-200 rounded-xl overflow-hidden">
                     <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-primary-50 transition-colors list-none">
-                      <span className="font-semibold text-gray-900 text-base pr-4">{faq.q}</span>
+                      <h3 className="font-semibold text-gray-900 text-base pr-4 m-0">{faq.q}</h3>
                       <ChevronRight className="w-4 h-4 text-gray-500 group-open:rotate-90 transition-transform flex-shrink-0" />
                     </summary>
                     <div className="px-4 pb-4 pt-2 text-base text-gray-600 leading-relaxed border-t border-gray-200">{faq.a}</div>
@@ -436,7 +436,7 @@ export default async function StorePage({ params }: Props) {
 
             {/* Expired coupons */}
             {expiredCoupons.length > 0 && (
-              <details className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+              <details className="bg-white rounded-xl border border-gray-300 shadow-sm p-5">
                 <summary className="cursor-pointer font-semibold text-gray-500 hover:text-gray-700 flex items-center gap-2 list-none">
                   <Clock className="w-4 h-4" />
                   Show {expiredCoupons.length} Recently Expired Coupons

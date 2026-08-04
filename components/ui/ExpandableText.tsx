@@ -31,7 +31,7 @@ export default function ExpandableText({ text, className = '' }: { text: string;
         <button
           type="button"
           onClick={() => setExpanded(true)}
-          className="text-primary-600 hover:text-primary-700 text-sm font-semibold -mt-5 float-right bg-white pl-1 relative z-10">
+          className="text-primary-600 hover:text-primary-700 text-sm font-semibold -mt-5 float-right bg-gray-100 pl-1 relative z-10">
           …more
         </button>
       )}
