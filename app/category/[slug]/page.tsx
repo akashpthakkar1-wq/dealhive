@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -259,7 +260,7 @@ export default async function CategoryPage({ params }: Props) {
                     <Link key={s.id} href={`/store/${s.slug}`}
                       className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-gray-200 hover:border-primary-300 hover:bg-primary-50 transition-all">
                       <div className="w-7 h-7 rounded-lg border border-gray-200 bg-white overflow-hidden flex items-center justify-center flex-shrink-0">
-                        {s.logo ? <img src={s.logo} alt={s.name} className="w-full h-full object-contain" /> : <span className="text-xs font-bold text-primary-400">{s.name[0]}</span>}
+                        {s.logo ? <Image src={s.logo} alt={s.name} width={28} height={28} className="w-full h-full object-contain" /> : <span className="text-xs font-bold text-primary-400">{s.name[0]}</span>}
                       </div>
                       <span className="text-xs font-semibold text-gray-700 whitespace-nowrap">{s.name}</span>
                     </Link>

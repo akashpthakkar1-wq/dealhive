@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import type { Coupon } from '@/types/index';
+import Image from 'next/image'
 import { getCouponLogo } from '@/lib/logos'
 import { trustDisplay } from '@/lib/couponRanking'
 import type { RankedCoupon } from '@/lib/couponRanking'
@@ -76,7 +77,7 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
             </span>
           ) : (
             <div className="flex flex-col items-center gap-1 w-full py-2">
-              <img src={logo} alt={coupon.store?.name ?? 'Store'} className="w-11 h-11 rounded-lg object-contain" loading="lazy" fetchPriority="low" />
+              <Image src={logo} alt={coupon.store?.name ?? 'Store'} width={44} height={44} className="w-11 h-11 rounded-lg object-contain" loading="lazy" />
               <span className="text-[13px] font-bold text-gray-800 leading-tight break-words w-full">{coupon.store?.name}</span>
             </div>
           )}

@@ -92,7 +92,7 @@ export default async function StoresPage() {
                     className="bg-white rounded-xl border border-gray-200 px-2 py-3.5 flex flex-col items-center text-center hover:border-primary-300 hover:shadow-md transition-all group overflow-hidden">
                     <div className="rounded-xl overflow-hidden flex items-center justify-center mb-2" style={{ width: '46px', height: '46px' }}>
                       {store.logo
-                        ? <img src={store.logo} alt={`${store.name} logo`} className="w-full h-full object-contain" />
+                        ? <Image src={store.logo} alt={`${store.name} logo`} width={46} height={46} className="w-full h-full object-contain" />
                         : <Tag className="w-6 h-6 text-primary-300" />}
                     </div>
                     <div className="text-sm font-bold text-gray-900 group-hover:text-primary-600 transition-colors truncate w-full leading-tight">
