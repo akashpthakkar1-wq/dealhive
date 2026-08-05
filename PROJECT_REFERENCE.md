@@ -383,3 +383,125 @@ Full plan at `/mnt/user-data/outputs/march2026-resilience-plan.md`. Key points:
 - **Design wrap:** sidebar reorder; FAQ questions → `<h3>`; reword off-keyword "Why shop at {store}" heading; SHEIN logo black-bg fix.
 - **Standing:** rotate ADMIN_PASSWORD; delete placeholder/expired seed coupons; GA4 Key Events; submit sitemap to GSC; Deal-of-Day slots 4 & 5; blog posts; cookie consent (DPDP ~2027); Next.js 14.2.5 security bump.
 - **Deferred/horizon:** WhatsApp discovery bot (Phase 2, post-traffic); audience/brand-campaign monetization (Phase 3); AdSense on no-affiliate brands (verify demand + CWV caution); Vercel Pro (cold start); multi-geo (India not tapped out); unify homepage Trending to auto.
+
+---
+
+# ═══════════════════════════════════════════════════════════
+# SESSION UPDATE — Design polish, Performance, SEO audit, Backlink strategy
+# (This session came AFTER the rating-system + March-2026 sections above.
+#  Where this section conflicts with earlier "pending/unfixed" notes, THIS WINS.)
+# ═══════════════════════════════════════════════════════════
+
+## ✅ RISK 1 — NOW FIXED (was flagged UNFIXED above) — commit 8a21ee8
+The hardcoded templated FAQ + saving-tips arrays in `app/store/[slug]/page.tsx` have been REMOVED. The page now renders ONLY pipeline-generated `faq_content` / `saving_tips_content`; if a store has none, the section (and its schema) is hidden — fail-safe, no templated filler ever renders. SQL confirmed all 10 stores have real content, so nothing disappeared. Also guarded the FAQPage JSON-LD against empty faqs and removed the now-unused `Info` import. **The single most important SEO-resilience item from the March 2026 findings is done.**
+
+## ✅ is_verified → verified_at cleanup (fuller migration)
+`is_verified` is fully retired from CODE (DB column kept, dormant). Migrated the two "verified" filter usages (`app/search/page.tsx`, `components/ui/StoreFilterTabs.tsx`) to `verifiedDate(c) !== null`. Bulk import (`app/admin/import/page.tsx`) no longer uses `is_verified` in the CSV format and now auto-sets `verified_at = now()` on imported rows (imported = verified by default). Removed `is_verified` from admin coupons (state/load/save/toggle/badge) and the `lib/queries.ts` select. One unified "verified" concept now = the `verified_at` timestamp. NOTE: bulk-upload CSV no longer needs the `is_verified` column (old CSVs still import — column ignored).
+
+---
+
+## Design Batch (this session — all live). Store page + homepage + navbar polish.
+
+### Navbar — commit 35b4a90
+- **Sticky header FIXED (root cause found):** `overflow-x: hidden` on html/body in `app/globals.css` was silently breaking `position: sticky` (any non-visible overflow value makes sticky attach to that container). Fix: `overflow-x: hidden` → `overflow-x: clip` on both html + body. `clip` prevents horizontal scroll the same way but does NOT create a scroll container, so the sticky navbar now stays fixed on scroll across ALL pages (desktop + mobile). **Remember this gotcha.**
+- **Mobile menu active state** softened: removed heavy `bg-orange-50` + bold + thick left border → `bg-orange-50/60` + `font-semibold`, no border. User confirmed prefers lighter.
+
+### Homepage — commits 5a8c233, 1e2b433
+- **Welcome/SEO intro paragraph:** KEPT for SEO (keyword-rich) but COLLAPSED. New `components/ui/CollapsibleIntro.tsx` — `line-clamp-3` + a "…more" toggle that sits INLINE at the end of the 3rd line (absolute bottom-right, white mask), keeps the `<strong>` keywords. Full text stays in DOM for crawlers.
+- **Section header spacing:** added `gap-3` + `min-w-0` so long titles (e.g. "Featured Coupon Codes & Deals Today") don't cram against "View All →" on mobile.
+- "View All" links: kept as-is (user's call).
+
+### Store page — commits 605fe75, bbd94ab, 7d96ca9, 24c315a, 9f8440e, 9f2282e
+- **Hero background = Option B (gray band, white page below):** hero `bg-gray-100 border-b border-gray-200` (distinct band, no reliance on a faint line — old thin border was invisible on mobile). Page background flipped `bg-gray-50` → **`bg-white`** (true "gray hero, white content below").
+- **Logo tiles:** hero logo containers (mobile w-20, desktop w-28) got `bg-white border p-1.5/p-2` → clean white tile, works for all logo backgrounds (white/transparent/black-bg like SHEIN). Fixes the "odd white box on gray" look.
+- **Hero spacing tightened** (`py-3 md:py-4`, smaller margins) so the first coupon shows sooner on load.
+- **Sidebar FLATTENED (DontPayFull-style):** removed boxes from all sidebar sections (Stats, Rate This Store, Today's Best, Similar Stores, Affiliate Disclosure) → flat `py-5` sections separated by `divide-y divide-gray-200` horizontal lines. `StoreRating.tsx` box also flattened (`bg-white rounded-xl border shadow-sm p-5` → `py-5`). StoreRating block also LEFT-ALIGNED (was center — the 4.5/stars/vote-row were `text-center`/`justify-center` while the header was left-aligned → mismatch fixed).
+- **"…more" mask** in `ExpandableText.tsx` changed `bg-white` → `bg-gray-100` to match the gray hero (was a white patch on gray).
+- **Content card borders** strengthened `border-gray-200` → `border-gray-300` (the 6 boxed content cards + coupon card only — NOT dividers/tiles/table-rows) for definition now that page is white-on-white.
+
+### Hide empty / zero states (store page) — commits d000c11, 6710b75
+- **Filter tabs:** hide any tab with count 0 (`FILTER_TABS.filter(tab => tab.id === 'all' || counts[tab.id] > 0)`) — no more "Codes 0" / "Verified 0". "All Offers" always shows.
+- **Best Discount:** hidden entirely when `maxDiscount === 0` (was showing "N/A"). Applies to sidebar Stats row AND the hero stat boxes (hero grid switches `grid-cols-3` → `grid-cols-2` when no % discount, dropping the empty box). NOTE: `maxDiscount` parses a % from `discount` — so `$10 OFF` / fixed-amount coupons (e.g. AliExpress) yield 0 and correctly hide the % box.
+- **Today's Best** sidebar rows: zero rows dropped (no "No-Code Deals: 0 deals"); grammar fixed ("1 code" not "1 codes").
+- **Whole hero stat grid** hidden when `allCoupons.length === 0` (graceful empty state — no bare "0 Total Offers / 0 Active Now"). Discovered **Flipkart has 0 coupons in DB** (SQL-confirmed) → this is a real thin-content page. Owner will ADD real Flipkart coupons (the actual fix; hiding the zeros is just defensive hygiene). ⚠️ Worth running a quick SQL to check if OTHER stores are also empty (thin-content liability).
+
+---
+
+## Performance work (this session — measured, not guessed)
+
+**Measured first via PageSpeed Insights (professional approach).** Results:
+- **Homepage (mobile): 96** — FCP 0.9s, LCP 2.4s, TBT 60ms, CLS 0.015. Excellent.
+- **Store page /store/myntra (mobile): 84** — FCP 1.2s, **LCP 1.8s**, TBT 620ms, **CLS 0**. Lower score is TBT-driven (more interactive client JS: rating popup, filter tabs, etc.).
+
+**Key learning:** the site was ALREADY well-architected (SSG/ISR, next/font, lazyOnload GA4, immutable cache headers, compression, no dynamic-forcing on public routes, middleware scoped to /admin only). Most standard "make it fast" advice was already done.
+
+**What was actually fixed — commit 6385309, 25c952d:**
+- **Logos → `next/image`** on user-facing pages (store hero [desktop has `priority` = LCP element], /stores listing, category page, CouponCard, related-store). Addresses PageSpeed "improve image delivery" (WebP/AVIF, proper sizing). LEFT AS-IS: SVG logos (Navbar/Footer — next/image can't optimize SVG), local PWA icons, admin img. Rendered at **2x width/height** (e.g. 44px box → width={88}) with CSS class controlling display size = sharp on retina/high-DPI (initial 1x sizing looked blurry).
+- Result: store-page **LCP 2.4s → 1.8s**, CLS → 0.
+
+**⚠️ browserslist BROKE the build (reverted — commit acb18db area):** adding a `browserslist` field to package.json to drop legacy-JS polyfills (12 KiB) broke `cssnano`/CSS minification (`setBrowserScope` error). REMOVED it. Do NOT re-add browserslist to package.json in this Next 14 + next-pwa setup — it breaks the build. The 12 KiB legacy-JS saving is not worth it.
+
+**Decisions (professional verdict — do NOT chase these):**
+- **894ms server response** ("Document request latency") = Vercel Hobby COLD START, not code. Pages are already fully static/ISR, no dynamic-forcing, middleware scoped to /admin. Not code-fixable. Vercel Pro is the fix — DEFER until traffic justifies (cold starts also naturally decrease as traffic warms functions). 
+- **TBT 620ms** on store page = interactive client JS. **TBT is a LAB metric, NOT a Core Web Vital, does NOT affect ranking.** LCP + CLS (the ranking-relevant CWV) are green (1.8s / 0). Decision: STOP — chasing TBT risks breaking the interactive rating features for zero ranking gain.
+- Render-blocking CSS (150ms), GTM unused JS (Google's own script) — minor/not-fixable. Skipped.
+- **Verdict: site is fast where it matters (LCP/CLS green). Performance is DONE. Bottleneck is content/traffic, not speed.**
+
+**BUILD DISCIPLINE REMINDER:** always confirm `npm run build` SUCCEEDS before `git push` (main auto-deploys). This session a failing build got pushed once (browserslist) — caught + fixed fast, but the rule stands: build green → then push.
+
+---
+
+## Senior SEO Audit (this session — full site review, coupon vertical)
+
+**Verdict: technical/on-page SEO is top ~10% for a coupon site. No meaningful technical debt.** Already excellent: self-referencing canonicals, dynamic keyword-rich <60char titles, `{month}` tokens, complete schema (Organization + BreadcrumbList + FAQPage + ItemList + conditional AggregateRating at ≥3 real votes), dynamic DB sitemap w/ sensible priorities, robots disallowing filter-param/admin/api, clean heading hierarchy w/ keyword-variant rotation, honest content (no fabrication).
+
+**Fixes made this session:**
+- **FAQ questions `<span>` → `<h3>`** (commit ~9f2282e area) — questions now carry heading weight for long-tail question searches + AI Overview citability. `m-0` keeps styling pixel-identical. (Was a backlog item.)
+- **Heading cannibalization FIXED** — commit e361e69. Two sections had near-identical "How to Use...Promo Code" headings. Root cause: an earlier reword of the About-section H3 to "How to Use {store} Promo Codes & Offers" (a) collided with the dedicated How-to H2, and (b) didn't match the About section's actual BRAND content. Fixed: About H3 → **"Verified {store} Discount Codes & Voucher Codes"** (matches brand content + adds voucher/discount variants used nowhere else).
+- **Current store-page heading map (all match content, full variant spread, no repeats):**
+  - H2 "About {store} Coupon Codes & Deals" + H3 "Verified {store} Discount Codes & Voucher Codes" → brand content (about_content)
+  - H2 "How to Use a {store} Coupon Code or Promo Code" → step-by-step (how_to_use_content)
+  - H2 "How to Save More at {store} – Tips & Tricks" + H3 "Top money-saving strategies..." → saving_tips_content
+  - H2 "{store} Coupon Codes – Frequently Asked Questions" → faq_content (questions now h3)
+  - H2 "Today's Best {store} Deals & Coupon Codes – {month}" → coupon table
+
+**SEO items NOTED but not done (low priority):** enrich coupon Offer schema with discount value/priceSpecification (modest SERP-snippet gain); per-store og:image; richer internal-linking mesh (matters at 50+ stores). 
+
+**Consultant sign-off:** on-page/technical SEO is COMPLETE. Further tweaking = diminishing returns. The entire game from here = publish winnable low-KD stores + time-in-market. Stop optimizing, start publishing.
+
+---
+
+## Backlink Strategy (this session — playbook produced)
+Full playbook saved to `/mnt/user-data/outputs/EndOverPay_Backlink_Playbook.md` (re-generate/re-read as needed). Core logic (grounded in own research: couponsly 180 ref domains → 255K/mo vs thegoodfinds 203 domains → 174/mo = keyword selection beats links).
+- **Golden rules:** NEVER buy links (SpamBrain penalty); relevance > volume; natural anchors; sequence matters (foundation now, then STOP and publish); EndOverPay is a NATIONAL web business (skip local "near me" directories).
+- **Tier 1 (now, ~3-4hr, free):** social/brand profiles (Instagram, X, FB, LinkedIn, **Pinterest** [strong for India deals], YouTube) + ~8-10 high-authority NATIONAL directories only (Google Business, Crunchbase, JustDial, Sulekha, IndiaMART, Hotfrog/Grotal/Yelp — pick a few) + affiliate-network publisher profiles. Then STOP link-building.
+- **Tier 2 (months 2-3+):** brand/merchant relationships — official coupon-partner listings + exclusive codes (how GrabOn/CouponDunia got authority). Target mid-tier D2C (more likely to say yes than Amazon/Flipkart). Outreach template in playbook.
+- **Tier 3 (month 3-4):** ONE link-magnet = India shopping DATA/STATS page (journalists cite data). Use REAL cited sources (RedSeer/Bain/Statista) — never fabricate. Later add own first-party "% coupons confirmed working" data (unique, un-copyable). Blogs are ~0% traffic → this is a LINK earner, not traffic.
+- **Tier 4 (month 6+):** HARO/journalist requests (founder's 18yr marketing = credibility), guest posts on real Indian finance/shopping blogs, broken-link building, Ahrefs Webmaster Tools (free) for monitoring.
+- **NEVER:** buy links, mass junk-directory submit, exact-match anchors everywhere, prioritize links over content now.
+
+---
+
+## Pending / Next (updated THIS session — supersedes earlier pending lists)
+- **[THE priority] Publish stores + add coupons** (starting next session):
+  1. **Flipkart coupons** — has 0 coupons (empty page = thin-content liability). Owner has real coupons to add via /admin/coupons.
+  2. **boAt** — first new-pipeline store, keyword analysis DONE.
+  3. **5 ready stores** — Rapido, Souled Store, Smytten, Cashify, Decathlon (content generated earlier).
+  4. Then low-KD expansion toward 30+; Diwali prep in September.
+- **Re-upload PROJECT_REFERENCE.md to project knowledge base** after each doc update (repo push doesn't sync the /mnt/project copy a fresh chat reads).
+- **Quick SQL: check which other stores have 0 coupons** (like Flipkart) — thin-content audit.
+- **Tier 1 backlinks** (social/brand profiles — ~1hr, do soon, real E-E-A-T signal).
+- **Standing (unchanged):** rotate ADMIN_PASSWORD (shared in chat); delete placeholder/expired seed coupons; GA4 Key Events; submit sitemap to GSC; Deal-of-Day slots 4 & 5; blog/authority content; cookie consent (DPDP ~2027); Next.js 14.2.5 security bump.
+- **Coupon-rating follow-ups (deferred until traffic):** admin flagged-codes dashboard; auto-hide on failure threshold; remove usage_count admin input + "(fake/real)" label.
+- **SEO low-priority:** enrich Offer schema w/ discount value; per-store og:image; internal-linking mesh (at 50+ stores).
+- **Deferred/horizon:** search-volume-per-store feature (DECIDED-DEFERRED — no clean auto-fetch [SEMrush API paid, Google Trends = relative only, sandbox can't reach them]; manual 12-mo data = staleness risk; revisit if scaling + SEMrush API budget); Vercel Pro (cold start); WhatsApp bot (Phase 2, free window ends Oct 1 2026); audience/brand-campaign monetization (Phase 3); AdSense on no-affiliate brands (CWV caution); multi-geo.
+
+## Key learnings added this session
+- **`overflow-x: hidden` on html/body BREAKS `position: sticky`** → use `overflow-x: clip`.
+- **`browserslist` in package.json BREAKS the build** (cssnano/next-pwa in this setup) → don't add it.
+- **next/image needs 2x width/height** for retina sharpness (CSS class controls display size); SVGs don't benefit from next/image.
+- **TBT is a lab metric, NOT a ranking factor** — LCP + CLS + INP are the CWV that rank. Don't degrade features to chase TBT.
+- **894ms doc-latency = Vercel Hobby cold start**, not code — hosting-tier, defer to Pro.
+- **Always `npm run build` green BEFORE `git push`** (main auto-deploys).
+- **Heading-to-content fit matters** — a heading must describe the content below it (the About H3 "how to use" over brand content was both a collision AND a mismatch).
+- **Empty coupon pages (Flipkart 0 coupons) = thin-content liability** — real fix is adding coupons, not just hiding the zero UI.
