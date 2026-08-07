@@ -62,7 +62,7 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
   const fmtDate = (d: Date) => d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 
   return (
-    <div className={`bg-white rounded-2xl border shadow-sm hover:shadow-md transition-shadow overflow-hidden h-full flex flex-col ${recentlyAdded ? 'border-[#EA580C] border-2' : 'border-gray-200'}`}>
+    <div className={`bg-white rounded-2xl border shadow-md hover:shadow-lg transition-shadow overflow-hidden h-full flex flex-col ${recentlyAdded ? 'border-[#EA580C] border-2' : 'border-gray-300'}`}>
       <div className="flex flex-1">
 
         <div className="relative flex flex-col items-center justify-center flex-shrink-0 text-center px-2.5 pt-4 bg-white" style={{ minWidth: '90px', maxWidth: '90px', borderRight: '3px dotted #E5E7EB' }}>
