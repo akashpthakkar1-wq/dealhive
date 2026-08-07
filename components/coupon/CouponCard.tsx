@@ -90,18 +90,28 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
 
         <div className="flex-1 py-2.5 px-4 flex flex-col justify-center gap-1.5 min-w-0">
 
-          {!hideStore && coupon.discount && (
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-[13px] font-bold text-[#EA580C] bg-orange-50 border border-orange-100 px-2 py-0.5 rounded-md whitespace-nowrap flex-shrink-0">{coupon.discount}</span>
+          {/* HOMEPAGE variant: discount LEFT + trending/featured RIGHT on one line */}
+          {!hideStore && (coupon.discount || showTrending || showFeatured) && (
+            <div className="flex items-center justify-between gap-2 mb-1">
+              {coupon.discount ? (
+                <span className="text-[13px] font-bold text-[#EA580C] bg-orange-50 border border-orange-100 px-2 py-0.5 rounded-md whitespace-nowrap flex-shrink-0">{coupon.discount}</span>
+              ) : <span />}
+              {showTrending && (
+                <span className="text-[12px] text-orange-800 bg-orange-100 border border-orange-200 px-2 py-px rounded-full font-semibold whitespace-nowrap flex-shrink-0">🔥 Trending</span>
+              )}
+              {showFeatured && !showTrending && (
+                <span className="text-[12px] text-yellow-700 bg-yellow-50 border border-yellow-200 px-2 py-px rounded-full font-semibold whitespace-nowrap flex-shrink-0">⭐ Featured</span>
+              )}
             </div>
           )}
 
           <div className="flex flex-wrap items-start gap-x-2 gap-y-1">
             <p className="text-base md:text-lg font-bold text-gray-900 leading-snug line-clamp-2 basis-full md:basis-0 md:flex-1 min-w-0 order-2 md:order-1">{coupon.title}</p>
-            {showTrending && (
+            {/* STORE PAGE variant: trending/featured beside title (mobile right / desktop inline) */}
+            {hideStore && showTrending && (
               <span className="text-[12px] text-orange-800 bg-orange-100 border border-orange-200 px-2 py-px rounded-full font-semibold whitespace-nowrap w-fit flex-shrink-0 ml-auto md:ml-0 order-1 md:order-2 md:mt-0.5">🔥 Trending</span>
             )}
-            {showFeatured && !showTrending && (
+            {hideStore && showFeatured && !showTrending && (
               <span className="text-[12px] text-yellow-700 bg-yellow-50 border border-yellow-200 px-2 py-px rounded-full font-semibold whitespace-nowrap w-fit flex-shrink-0 ml-auto md:ml-0 order-1 md:order-2 md:mt-0.5">⭐ Featured</span>
             )}
           </div>
