@@ -99,9 +99,6 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
 
           <div>
             <p className="text-[15px] font-bold text-gray-900 leading-tight line-clamp-2">{coupon.title}</p>
-            {coupon.description && (
-              <p className="text-[13px] text-gray-400 mt-0.5 leading-snug line-clamp-1">{coupon.description}</p>
-            )}
           </div>
 
           <div className="flex flex-col gap-2 mt-auto sm:flex-row sm:items-center sm:justify-between">
@@ -158,6 +155,9 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
 
         <div className={`overflow-hidden transition-all duration-300 ease-in-out ${showDetails ? 'max-h-[400px]' : 'max-h-0'}`}>
           <div className="bg-gray-50 border-t border-gray-200 p-4">
+            {coupon.description && (
+              <p className="text-[13px] text-gray-600 leading-relaxed mb-4">{coupon.description}</p>
+            )}
             <div className="grid grid-cols-2 gap-x-4 gap-y-3 mb-4">
               {coupon.discount && (
                 <div>
