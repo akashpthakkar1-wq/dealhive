@@ -230,7 +230,7 @@ export default async function StorePage({ params }: Props) {
               </div>
               {/* Content */}
               <div className="flex-1 min-w-0">
-                <h1 className="text-3xl leading-tight font-extrabold text-gray-900 mb-2">
+                <h1 className="text-2xl md:text-3xl leading-tight font-extrabold text-gray-900 mb-2">
                   {store.h1 ? applyDateTokens(store.h1) : <>{store.name} Coupons, Promo Codes &amp; Voucher Codes – {month}</>}
                 </h1>
                 <div className="flex items-start gap-1.5 mb-2">
@@ -319,7 +319,7 @@ export default async function StorePage({ params }: Props) {
             {activeCoupons.length > 0 && (
               <div className="bg-white rounded-xl border border-gray-300 shadow-sm overflow-hidden">
                 <div className="bg-primary-50 px-5 py-3 border-b border-primary-100">
-                  <h2 className="font-bold text-gray-900">Today's Best {store.name} Deals & Coupon Codes – {month}</h2>
+                  <h2 className="text-xl md:text-2xl font-bold text-gray-900">Today's Best {store.name} Deals & Coupon Codes – {month}</h2>
                 </div>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
@@ -352,7 +352,7 @@ export default async function StorePage({ params }: Props) {
 
             {/* About store */}
             <div className="bg-white rounded-xl border border-gray-300 shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-2">About {store.name} Coupon Codes & Deals</h2>
+              <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">About {store.name} Coupon Codes & Deals</h2>
               <h3 className="text-sm font-semibold text-primary-600 mb-3">Verified {store.name} Discount Codes & Voucher Codes</h3>
               <div className="text-base text-gray-600 leading-relaxed space-y-3">
                 {store.about_content
@@ -383,7 +383,7 @@ export default async function StorePage({ params }: Props) {
 
             {/* How to use */}
             <div className="bg-white rounded-xl border border-gray-300 shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-5">How to Use a {store.name} Coupon Code or Promo Code</h2>
+              <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-5">How to Use a {store.name} Coupon Code or Promo Code</h2>
               {store.how_to_use_content ? (
                 <p className="text-gray-600 text-base leading-relaxed whitespace-pre-line">{store.how_to_use_content}</p>
               ) : (
@@ -410,7 +410,7 @@ export default async function StorePage({ params }: Props) {
             {/* Saving tips — pipeline content only; section hidden if none */}
             {store.saving_tips_content && (
               <div className="bg-white rounded-xl border border-gray-300 shadow-sm p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-2">How to Save More at {store.name} – Tips & Tricks</h2>
+                <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">How to Save More at {store.name} – Tips & Tricks</h2>
                 <h3 className="text-sm font-semibold text-primary-600 mb-3">Top money-saving strategies for {store.name} shoppers</h3>
                 <p className="text-gray-600 text-base leading-relaxed whitespace-pre-line">{store.saving_tips_content}</p>
               </div>
@@ -419,7 +419,7 @@ export default async function StorePage({ params }: Props) {
             {/* FAQs — pipeline content only; section hidden if none */}
             {faqs.length > 0 && (
             <div className="bg-white rounded-xl border border-gray-300 shadow-sm p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-5">{store.name} Coupon Codes – Frequently Asked Questions</h2>
+              <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-5">{store.name} Coupon Codes – Frequently Asked Questions</h2>
               <div className="space-y-3">
                 {faqs.map((faq, i) => (
                   <details key={i} className="group border border-gray-200 rounded-xl overflow-hidden">
