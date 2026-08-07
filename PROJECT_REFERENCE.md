@@ -505,3 +505,76 @@ Full playbook saved to `/mnt/user-data/outputs/EndOverPay_Backlink_Playbook.md` 
 - **Always `npm run build` green BEFORE `git push`** (main auto-deploys).
 - **Heading-to-content fit matters** — a heading must describe the content below it (the About H3 "how to use" over brand content was both a collision AND a mismatch).
 - **Empty coupon pages (Flipkart 0 coupons) = thin-content liability** — real fix is adding coupons, not just hiding the zero UI.
+
+---
+
+# ═══════════════════════════════════════════════════════════
+# SESSION UPDATE 2 — Coupon-card redesign (HotDeals-inspired), responsive headers,
+# perf re-verify, SEO heading fixes. (Latest session; where this conflicts with
+# earlier notes, THIS WINS.)
+# ═══════════════════════════════════════════════════════════
+
+## Coupon Card — full redesign (all live). File: `components/coupon/CouponCard.tsx`
+Inspired by HotDeals density, but kept HONEST (no fabricated counts/screenshots — the March-2026 trap). Iterated heavily with mockups→review→build. Final state:
+
+### Layout & typography
+- **Compacted** (commit c17480a): hero discount 18→22px extrabold (left panel, the visual hero); title punchier; muted small description; tighter gaps/padding. "Eye-catchy = size CONTRAST (big discount + bold title + small muted detail), not a new font."
+- **Title** responsive: `text-base md:text-lg` (16px mobile / 18px desktop), bold, line-clamp-2.
+- **Description moved into the "Offer info & terms" expander** (commit 0c7e84c) — card face shows only discount + title + trust + CTA. Description STAYS IN DOM (expander collapses via CSS) = SEO-safe.
+- **Content + button vertically centered** (`justify-center`) so the wide desktop card doesn't look empty.
+
+### Elevation (commit 921c287) — makes white cards pop on the white page
+- `shadow-sm`→`shadow-md hover:shadow-lg` + border `gray-200`→`gray-300`. (NOT emboss — dated. Drop-shadow = modern elevation.) Recently-added keeps its orange 2px border.
+
+### Badges — final responsive behavior (commits e326523, d9077bb, b05e8df, 3cb0b73)
+- **Recently-added:** full-width "✨ Recently added — likely working" banner at card top (reverted from a brief panel-tag experiment — user preferred the banner).
+- **Trending/Featured logic (auto, store page only):** in `lib/couponRanking.ts`. **Trending = single highest-discount coupon** (parses number from `discount`). **Featured = single latest-verified coupon that isn't Trending** (none if no verified). Homepage/search/chat still use MANUAL `is_trending`/`is_featured` DB booleans (unchanged).
+- **STORE PAGE card (`hideStore=true`):** Trending/Featured badge sits beside the title — **mobile: compact pill RIGHT-aligned on its own line above title** (`w-fit ml-auto md:ml-0`, title `basis-full md:flex-1`); **desktop: inline top-right** of title, title wraps under if long.
+- **HOMEPAGE/search card (`hideStore=false`):** discount badge LEFT + Trending/Featured RIGHT on the SAME line (`justify-between`), both mobile+desktop; title below.
+- **⚠️ SEO-duplication lesson (user caught this — important):** rendering the badge twice via CSS `display:none` (md:hidden / hidden md:) puts the text in the DOM TWICE = duplication smell. FIXED two ways: (1) store-page badge uses ONE element repositioned by CSS flex `order`/`basis` (no dup); (2) homepage vs store-page variants are gated by OPPOSITE conditions (`!hideStore` vs `hideStore`) = conditional render, only ONE ever in the DOM. Both are SEO-clean. **Rule: don't duplicate content in the DOM for responsive layouts — use flex order/conditional render.**
+
+### Whole card clickable (commit b2c814c) — fires affiliate link on card click
+- Card wrapper: `onClick={handleCTA}` + `role="button"` + `tabIndex={0}` + Enter/Space keydown (a11y).
+- **stopPropagation** on the two CTA buttons (no double-popup) AND on the "Show details" toggle (expanding terms must NOT fire the affiliate link).
+- SEO-safe: affiliate links are `rel="sponsored nofollow"` anyway (not meant to be crawled); content unchanged; a11y preserved (role+keyboard). Verified: Accessibility 96 / Best Practices 96 held after this change.
+
+## Store page — responsive headings (commit 410e7e6)
+Headings were ONE fixed size for mobile+desktop. Made responsive (font size is NOT an SEO factor — pure UX, zero ranking risk):
+- H1: `text-2xl md:text-3xl` (24px mobile → 30px desktop).
+- Section H2s (About/How-to/Save/FAQ): `text-xl md:text-2xl` (20→24px).
+- Fixed the "Today's Best" table H2 (was unsized ~16px → now matches others).
+- **Rationale:** mobile-majority audience → big-on-desktop, comfortable-on-mobile. Flat bumps would oversize mobile.
+
+## Search-volume-per-store feature — REQUESTED then DEFERRED (again)
+User asked about a DontPayFull-style "brand search demand" section (12-mo trend chart). Investigated: NO clean auto-fetch (SEMrush API paid, Google Ads API heavy + rounded, Google Trends = relative-only + unofficial, sandbox can't reach any). Manual 12-mo data = staleness liability (March-2026 risk). **DECIDED: leave it.** If ever built, do the SIMPLE durable version (one stat: "~X searches/mo, peaks at Diwali") not a stale chart. Parked.
+
+## Performance — RE-VERIFIED (still done, don't chase)
+- **Homepage mobile: 99** (FCP 0.9s, **LCP 1.5s**, TBT 80ms, CLS 0.015). Store page: 84 (TBT-driven, not a ranking factor). LCP improved via the next/image work.
+- Clickable-card change added NO measurable cost; a11y/best-practices held.
+- Remaining diagnostics ALL previously investigated + correctly skipped: 1079ms doc-latency (Vercel Hobby cold start, hosting), render-blocking CSS (150ms, minor), **Legacy JS 12KiB (this is the browserslist trap that BROKE the build — DO NOT touch)**, unused GTM JS (Google's script). **Perf is DONE.**
+
+## SEO — heading cannibalization (recap; already in earlier section as e361e69)
+About-section H3 is "Verified {store} Discount Codes & Voucher Codes" (matches brand content, unique variants). Do NOT reword it back to a "How to Use..." phrasing — that collides with the dedicated How-to H2 AND mismatches the brand content below it. Full heading map is in the earlier SEO-audit section.
+
+## Backlink playbook — produced (recap)
+Full doc at `/mnt/user-data/outputs/EndOverPay_Backlink_Playbook.md`. TL;DR: keyword selection beats links (own research); do Tier-1 foundation (social/brand profiles + ~8-10 national directories) ONCE, then STOP and publish; Tier-2 brand/merchant partnerships as you scale; Tier-3 one India-stats link-magnet page; NEVER buy links. Backlinks are NOT the bottleneck at 10 stores.
+
+## Pending / Next (THE priority — supersedes earlier lists)
+- **[THE priority] STORE EXPANSION + COUPONS** (next session, fresh chat recommended):
+  1. **Flipkart coupons** — has 0 coupons (empty page = thin-content liability); owner HAS real coupons → add via /admin/coupons. Fixes the empty page + finally shows the polished cards with real content.
+  2. **boAt** — first new-pipeline store; keyword analysis DONE ("boat coupon code" ~3,600-4,400/KD23; "boat ed" MIRAGE excluded; segments first-order/₹500-off, product-specific earbuds/headphones, student hedge). Needs real coupons + affiliate network + public offer → target_keywords + offer_facts → generate → publish.
+  3. **5 ready stores** — Rapido, Souled Store, Smytten, Cashify, Decathlon (content generated a prior session).
+  4. Then low-KD expansion toward 30+ (18 Quick Wins KD<20); regenerate Nykaa (old-pipeline templated); Diwali prep September.
+- **Re-upload PROJECT_REFERENCE.md to project knowledge base** after this update (repo push ≠ project-knowledge copy a fresh chat reads).
+- **Quick SQL:** check which OTHER stores have 0 coupons (like Flipkart) — thin-content audit.
+- **Standing (unchanged):** rotate ADMIN_PASSWORD (shared in chat); delete placeholder/expired seed coupons; GA4 Key Events; submit sitemap to GSC; Deal-of-Day slots 4&5; blog/authority content; cookie consent (DPDP ~2027); Next.js 14.2.5 bump; Tier-1 backlinks (social profiles).
+- **Design: DONE.** Card + headers + page are polished across both variants (homepage/store) and both breakpoints. Further tweaking = diminishing returns. **Stop polishing, start publishing.**
+
+## Key learnings added this session
+- **Don't duplicate content in the DOM for responsive layouts** (CSS display:none dup = SEO smell) — use flex `order`/`basis` to reposition ONE element, or conditional render gated by opposite conditions.
+- **Font size is NOT an SEO ranking factor** — heading TAGS + content are. Resizing headers = pure UX, safe.
+- **"Eye-catchy" typography = size CONTRAST** (big hero + bold title + small muted detail), not a fancier font.
+- **White cards on a white page need elevation** (shadow-md + gray-300 border), NOT emboss (dated).
+- **Clickable-card pattern is SEO-safe** IF done accessibly (role=button + tabIndex + keydown) and inner interactives use stopPropagation; affiliate links are nofollow anyway.
+- **HotDeals' "premium" density is partly FABRICATED** (fake codes, fake test screenshots, invented stats) — adopt only the HONEST density (real rating data, durable sale calendar); never copy the fabrication (March-2026 trap).
+- **Reminder reinforced:** the site is technically excellent + fully polished; the ONLY bottleneck is content/traffic. Highest leverage = publish stores + add coupons.
