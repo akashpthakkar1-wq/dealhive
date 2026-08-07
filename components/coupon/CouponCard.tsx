@@ -85,20 +85,20 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
 
         <div className="flex-1 py-2.5 px-4 flex flex-col justify-center gap-1.5 min-w-0">
 
-          <div className="flex items-center justify-between gap-2">
-            {!hideStore && coupon.discount ? (
+          {!hideStore && coupon.discount && (
+            <div className="flex items-center gap-2 mb-1">
               <span className="text-[13px] font-bold text-[#EA580C] bg-orange-50 border border-orange-100 px-2 py-0.5 rounded-md whitespace-nowrap flex-shrink-0">{coupon.discount}</span>
-            ) : <span />}
+            </div>
+          )}
+
+          <div className="flex flex-wrap items-start gap-x-2 gap-y-1">
+            <p className="text-base md:text-lg font-bold text-gray-900 leading-snug line-clamp-2 flex-1 min-w-0 order-2 md:order-1">{coupon.title}</p>
             {showTrending && (
-              <span className="text-[12px] text-orange-800 bg-orange-100 border border-orange-200 px-2 py-px rounded-full font-semibold whitespace-nowrap flex-shrink-0">🔥 Trending</span>
+              <span className="text-[12px] text-orange-800 bg-orange-100 border border-orange-200 px-2 py-px rounded-full font-semibold whitespace-nowrap order-1 basis-full md:basis-auto md:flex-shrink-0 md:order-2 md:mt-0.5">🔥 Trending</span>
             )}
             {showFeatured && !showTrending && (
-              <span className="text-[12px] text-yellow-700 bg-yellow-50 border border-yellow-200 px-2 py-px rounded-full font-semibold whitespace-nowrap flex-shrink-0">⭐ Featured</span>
+              <span className="text-[12px] text-yellow-700 bg-yellow-50 border border-yellow-200 px-2 py-px rounded-full font-semibold whitespace-nowrap order-1 basis-full md:basis-auto md:flex-shrink-0 md:order-2 md:mt-0.5">⭐ Featured</span>
             )}
-          </div>
-
-          <div>
-            <p className="text-base md:text-lg font-bold text-gray-900 leading-snug line-clamp-2">{coupon.title}</p>
           </div>
 
           <div className="flex flex-col gap-2 mt-auto sm:flex-row sm:items-center sm:justify-between">
