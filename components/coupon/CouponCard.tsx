@@ -62,7 +62,12 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
   const fmtDate = (d: Date) => d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 
   return (
-    <div className={`bg-white rounded-2xl border shadow-md hover:shadow-lg transition-shadow overflow-hidden h-full flex flex-col ${recentlyAdded ? 'border-[#EA580C] border-2' : 'border-gray-300'}`}>
+    <div
+      onClick={handleCTA}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleCTA(); } }}
+      className={`bg-white rounded-2xl border shadow-md hover:shadow-lg transition-shadow overflow-hidden h-full flex flex-col cursor-pointer ${recentlyAdded ? 'border-[#EA580C] border-2' : 'border-gray-300'}`}>
       {recentlyAdded && (
         <div className="bg-orange-50 text-[#C2410C] text-[11px] font-semibold px-3 py-1 text-center border-b border-orange-100">
           ✨ Recently added — likely working
@@ -115,7 +120,7 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
             </div>
 
             {isCode ? (
-              <button onClick={handleCTA} disabled={loading} className="self-end sm:self-auto inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#EA580C]">
+              <button onClick={(e) => { e.stopPropagation(); handleCTA(); }} disabled={loading} className="self-end sm:self-auto inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#EA580C]">
                 <span className="bg-[#EA580C] text-white px-3 py-1.5 flex flex-col items-start justify-center gap-0 hover:bg-[#C2410C] transition-colors">
                   <span className="text-[13px] font-semibold leading-snug whitespace-nowrap">{loading ? 'Opening...' : 'Get Code'}</span>
                   <span className="text-[11px] text-white/80 font-normal leading-snug whitespace-nowrap">tap to reveal</span>
@@ -128,7 +133,7 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
                 </span>
               </button>
             ) : (
-              <button onClick={handleCTA} disabled={loading} className="self-end sm:self-auto inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#059669]">
+              <button onClick={(e) => { e.stopPropagation(); handleCTA(); }} disabled={loading} className="self-end sm:self-auto inline-flex items-stretch rounded-lg overflow-hidden flex-shrink-0 disabled:opacity-75 active:scale-95 transition-transform border-2 border-[#059669]">
                 <span className="bg-[#059669] text-white px-3 py-1.5 flex flex-col items-start justify-center gap-0 hover:bg-[#047857] transition-colors">
                   <span className="text-[13px] font-semibold leading-snug whitespace-nowrap">{loading ? 'Opening...' : 'Activate Deal'}</span>
                   <span className="text-[11px] text-white/80 font-normal leading-snug whitespace-nowrap">auto-applied at checkout</span>
@@ -144,7 +149,7 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
       </div>
 
       <div className="border-t border-gray-200">
-        <button onClick={() => setShowDetails(!showDetails)} className="w-full flex items-center justify-center gap-1.5 px-4 py-1.5 text-xs text-gray-500 hover:bg-gray-50 transition-colors">
+        <button onClick={(e) => { e.stopPropagation(); setShowDetails(!showDetails); }} className="w-full flex items-center justify-center gap-1.5 px-4 py-1.5 text-xs text-gray-500 hover:bg-gray-50 transition-colors">
           <svg className={`w-3.5 h-3.5 transition-transform duration-250 ${showDetails ? 'rotate-180' : ''}`} viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M3 5L7 9L11 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
