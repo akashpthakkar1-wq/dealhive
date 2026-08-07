@@ -63,14 +63,18 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
 
   return (
     <div className={`bg-white rounded-2xl border shadow-sm hover:shadow-md transition-shadow overflow-hidden h-full flex flex-col ${recentlyAdded ? 'border-[#EA580C] border-2' : 'border-gray-200'}`}>
-      {recentlyAdded && (
-        <div className="bg-orange-50 text-[#C2410C] text-[11px] font-semibold px-3 py-1 text-center border-b border-orange-100">
-          ✨ Recently added — likely working
-        </div>
-      )}
       <div className="flex flex-1">
 
-        <div className="relative flex flex-col items-center justify-center flex-shrink-0 text-center px-2.5 bg-white" style={{ minWidth: '90px', maxWidth: '90px', borderRight: '3px dotted #E5E7EB' }}>
+        <div className="relative flex flex-col items-center justify-center flex-shrink-0 text-center px-2.5 pt-4 bg-white" style={{ minWidth: '90px', maxWidth: '90px', borderRight: '3px dotted #E5E7EB' }}>
+          {recentlyAdded && (
+            <span className="absolute top-1.5 left-1/2 -translate-x-1/2 bg-amber-100 text-amber-800 text-[9px] font-bold px-1.5 py-px rounded whitespace-nowrap tracking-wide">NEW</span>
+          )}
+          {!recentlyAdded && showTrending && (
+            <span className="absolute top-1.5 left-1/2 -translate-x-1/2 bg-orange-100 text-orange-800 text-[9px] font-bold px-1.5 py-px rounded whitespace-nowrap tracking-wide">🔥 HOT</span>
+          )}
+          {!recentlyAdded && !showTrending && showFeatured && (
+            <span className="absolute top-1.5 left-1/2 -translate-x-1/2 bg-yellow-50 text-yellow-700 text-[9px] font-bold px-1.5 py-px rounded whitespace-nowrap tracking-wide border border-yellow-200">⭐ PICK</span>
+          )}
           {hideStore ? (
             <span className="font-extrabold break-words w-full" style={{ fontSize: '22px', lineHeight: '1.05', color: '#EA580C' }}>
               {coupon.discount}
@@ -83,19 +87,13 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
           )}
         </div>
 
-        <div className="flex-1 py-2.5 px-4 flex flex-col gap-1.5 min-w-0">
+        <div className="flex-1 py-2.5 px-4 flex flex-col justify-center gap-1.5 min-w-0">
 
-          <div className="flex items-center justify-between gap-2">
-            {!hideStore && coupon.discount ? (
+          {!hideStore && coupon.discount && (
+            <div className="flex items-center gap-2">
               <span className="text-[13px] font-bold text-[#EA580C] bg-orange-50 border border-orange-100 px-2 py-0.5 rounded-md whitespace-nowrap flex-shrink-0">{coupon.discount}</span>
-            ) : <span />}
-            {showTrending && (
-              <span className="text-[12px] text-orange-800 bg-orange-100 border border-orange-200 px-2 py-px rounded-full font-semibold whitespace-nowrap flex-shrink-0">🔥 Trending</span>
-            )}
-            {showFeatured && !showTrending && (
-              <span className="text-[12px] text-yellow-700 bg-yellow-50 border border-yellow-200 px-2 py-px rounded-full font-semibold whitespace-nowrap flex-shrink-0">⭐ Featured</span>
-            )}
-          </div>
+            </div>
+          )}
 
           <div>
             <p className="text-[15px] font-bold text-gray-900 leading-tight line-clamp-2">{coupon.title}</p>
