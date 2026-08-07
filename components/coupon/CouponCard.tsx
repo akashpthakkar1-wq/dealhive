@@ -96,7 +96,7 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
           )}
 
           <div>
-            <p className="text-[15px] font-bold text-gray-900 leading-tight line-clamp-2">{coupon.title}</p>
+            <p className="text-base md:text-lg font-bold text-gray-900 leading-snug line-clamp-2">{coupon.title}</p>
           </div>
 
           <div className="flex flex-col gap-2 mt-auto sm:flex-row sm:items-center sm:justify-between">
