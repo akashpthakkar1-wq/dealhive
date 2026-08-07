@@ -72,7 +72,7 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
 
         <div className="relative flex flex-col items-center justify-center flex-shrink-0 text-center px-2.5 bg-white" style={{ minWidth: '90px', maxWidth: '90px', borderRight: '3px dotted #E5E7EB' }}>
           {hideStore ? (
-            <span className="font-extrabold leading-tight break-words w-full" style={{ fontSize: '18px', color: '#EA580C' }}>
+            <span className="font-extrabold break-words w-full" style={{ fontSize: '22px', lineHeight: '1.05', color: '#EA580C' }}>
               {coupon.discount}
             </span>
           ) : (
@@ -83,7 +83,7 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
           )}
         </div>
 
-        <div className="flex-1 py-3 px-4 flex flex-col gap-2 min-w-0">
+        <div className="flex-1 py-2.5 px-4 flex flex-col gap-1.5 min-w-0">
 
           <div className="flex items-center justify-between gap-2">
             {!hideStore && coupon.discount ? (
@@ -98,9 +98,9 @@ export default function CouponCard({ coupon, hideStore = false }: CouponCardProp
           </div>
 
           <div>
-            <p className="text-[16px] font-semibold text-gray-800 leading-snug line-clamp-2">{coupon.title}</p>
+            <p className="text-[15px] font-bold text-gray-900 leading-tight line-clamp-2">{coupon.title}</p>
             {coupon.description && (
-              <p className="text-[16px] text-gray-500 mt-1 leading-snug line-clamp-1">{coupon.description}</p>
+              <p className="text-[13px] text-gray-400 mt-0.5 leading-snug line-clamp-1">{coupon.description}</p>
             )}
           </div>
 
