@@ -17,11 +17,20 @@ NON-NEGOTIABLE RULES
 10. DATES via tokens. The website injects the live date at render time through the literal placeholders {month} and {year}. In meta_title and meta_description, write any date using these exact tokens — e.g. "{month} {year}" — never a real month name or year, because a hard-coded date goes stale. Put NO date anywhere else: not in h1, about_content, how_to_use_content, saving_tips_content or faq_content. Refer to seasons and named sale events (e.g. Diwali, End of Season Sale) instead. The tokens render to roughly "Month YYYY", so keep meta_title short enough to stay under 60 characters once rendered.
 11. India-first targeting. This site serves Indian shoppers. Make the India context explicit, not just implied: state whether the store ships to / operates in India, reference INR pricing, Indian payment methods (UPI, cards, COD where applicable), Indian delivery expectations, and India-specific sale events. Where a store is global, make the page unmistakably about the India experience of shopping it — availability, India-specific offers, and how Indian shoppers should compare it against Indian marketplaces. Never write copy that would read identically for a US or UK audience.
 
+12. SALE CALENDAR (universal). Produce a short intro (60-110 words) about this store's yearly sale rhythm in India, then a month-by-month table of recurring sale EVENTS. Use only real, recurring India sale events appropriate to the store (e.g. Republic Day, Holi, End of Season Sale, Independence Day, Big Billion/Festive/Diwali, Black Friday, Year-End). Give TENTATIVE months and an EXPECTED discount RANGE phrased as a range ("up to X%") only if generically well-known for that category — otherwise say "major discounts" without a fabricated number. Never claim a specific live sale is on now. Never use literal current dates. Output the table as clean rows inside sale_calendar_content using this exact plain-text row format, one per line: "Sale Event | Tentative Month | Expected Discount". Header row first: "Sale Event | Tentative Month | Expected Discount". No markdown pipes styling beyond the single " | " separators.
+
+13. BANK & UPI OFFERS (universal). 60-100 words on the TYPES of bank, card and UPI offers Indian shoppers commonly see for this store or its category (e.g. instant discounts on specific banks IF named in the facts, EMI, UPI cashback, wallet offers). Describe types honestly and generally; name a specific bank ONLY if it appears in the brand facts. Never fabricate a specific percentage or a specific current bank offer. No literal dates.
+
+14. CUSTOM SECTIONS (category-adaptive — the depth engine). Generate 2 to 5 additional sections that fit THIS store's category and are supported by the brand facts. Choose sections a shopper genuinely needs for this kind of store. Examples by category (illustrative, not mandatory): Fashion/Electronics -> top-selling categories with real brand names, return/exchange policy, shipping & delivery charges, warranty, loyalty programme, first-order offer. Travel -> cancellation & refund policy, date-change charges, baggage allowance, web check-in/booking process, segment (flight/hotel/bus) offers. Food -> membership tiers & benefits, delivery fees explained, first-order offer, sub-services (grocery/instant). GOLDEN RULE: generate a custom section ONLY if the brand facts contain real information to fill it — never invent a policy, a fee, a brand list, or a number. If the facts do not support a section, omit it (fewer sections is fine). HEADING RULES for each custom section: (a) MUST include the store name and, where natural, a keyword variant (policy, offers, guide, charges, discount); (b) MUST accurately describe the content below it; (c) MUST NOT duplicate a universal-section heading (About, How to Use, Saving Tips, FAQ, Sale Calendar, Bank Offers). Each custom section is plain prose (70-130 words), same no-markdown rule as everything else. No literal dates.
+
 LENGTH LIMITS (stay within, do not exceed):
 - about_content: 280-330 words
 - how_to_use_content: 120-160 words
 - saving_tips_content: 170-210 words
 - faq_content: exactly 6 Q&A pairs; each answer 30-55 words
+- sale_calendar_content: 60-110 words of intro prose (see SALE CALENDAR rule), then the table rows
+- bank_offers_content: 60-100 words
+- custom_sections: 2 to 5 sections; each content 70-130 words
 Sit at the top of each range for very large marketplaces, never above.
 
 OUTPUT — return ONLY the JSON object. Your entire response must start with { and end with } — no preamble, no explanation, no markdown code fences, no other characters. Do not append the site name to meta_title.
@@ -33,7 +42,10 @@ PLAIN PROSE ONLY — the text inside every content field (about_content, how_to_
   "about_content": "Original brand story + what they sell + India positioning + why coupons and sale timing matter. No literal dates.",
   "how_to_use_content": "Step-by-step redemption via EndOverPay to the store site, plus 1-2 store-specific caveats.",
   "saving_tips_content": "5-6 store-specific saving tactics: sale timing, first-order/segment offers, marketplace comparison, bank/UPI offers, category-specific tips.",
-  "faq_content": [ six {"q","a"} objects covering: how to use the code, are the coupons verified, first-order/new-user discount, biggest sale timing, where else to buy and where it's cheaper, is the brand genuine ]
+  "faq_content": [ six {"q","a"} objects covering: how to use the code, are the coupons verified, first-order/new-user discount, biggest sale timing, where else to buy and where it's cheaper, is the brand genuine ],
+  "sale_calendar_content": "Intro prose (60-110 words) then table rows. First line is the header exactly: 'Sale Event | Tentative Month | Expected Discount'. Then one line per real recurring India sale event for this store/category, same ' | ' format. See rule 12. Plain text only.",
+  "bank_offers_content": "60-100 words on the TYPES of bank/card/UPI offers common for this store or category. Name a bank ONLY if in the facts. No fabricated numbers or live offers. See rule 13.",
+  "custom_sections": [ "2 to 5 objects, each {\"heading\", \"content\"}. Category-adaptive sections supported by the brand facts only. Heading includes store name + keyword variant, accurately labels its content, does not duplicate a universal heading. Content is plain prose 70-130 words. See rule 14. If facts support none, return an empty array []." ]
 }`
 
 export async function POST(req: NextRequest) {
@@ -79,7 +91,7 @@ Rules: Only present an offer as a real, specific coupon/discount if it is listed
       },
       body: JSON.stringify({
         model: 'claude-sonnet-5',
-        max_tokens: 6000,
+        max_tokens: 8000,
         system: SYSTEM_PROMPT,
         messages: [{ role: 'user', content: userMessage }],
       }),
@@ -130,6 +142,20 @@ Rules: Only present an offer as a real, specific coupon/discount if it is listed
     }
     if (!Array.isArray(page.faq_content) || page.faq_content.length === 0) {
       return NextResponse.json({ error: 'faq_content must be a non-empty array', raw: rawText }, { status: 502 })
+    }
+
+    // v2 sections: coerce to safe shapes (optional fields; never hard-fail on them)
+    if (typeof page.sale_calendar_content !== 'string') page.sale_calendar_content = ''
+    if (typeof page.bank_offers_content !== 'string') page.bank_offers_content = ''
+    if (!Array.isArray(page.custom_sections)) {
+      page.custom_sections = []
+    } else {
+      // keep only well-formed {heading, content} objects with real content
+      page.custom_sections = page.custom_sections
+        .filter((sec: any) => sec && typeof sec.heading === 'string' && typeof sec.content === 'string'
+          && sec.heading.trim() && sec.content.trim())
+        .slice(0, 5)
+        .map((sec: any) => ({ heading: sec.heading.trim(), content: sec.content.trim() }))
     }
 
     return NextResponse.json({ page })

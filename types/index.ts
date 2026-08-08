@@ -21,6 +21,9 @@ export interface Store {
   hero_summary?: string | null
   target_keywords?: string | null
   offer_facts?: string | null
+  sale_calendar_content?: string | null
+  bank_offers_content?: string | null
+  custom_sections?: { heading: string; content: string }[] | null
   rating_sum?: number
   rating_count?: number
 }

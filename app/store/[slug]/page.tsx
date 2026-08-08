@@ -416,6 +416,66 @@ export default async function StorePage({ params }: Props) {
               </div>
             )}
 
+            {/* Custom (category-adaptive) sections — pipeline-generated; each hidden if empty */}
+            {Array.isArray(store.custom_sections) && store.custom_sections.map((sec, i) => (
+              sec && sec.heading && sec.content ? (
+                <div key={i} className="bg-white rounded-xl border border-gray-300 shadow-sm p-6">
+                  <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">{sec.heading}</h2>
+                  <p className="text-gray-600 text-base leading-relaxed whitespace-pre-line">{sec.content}</p>
+                </div>
+              ) : null
+            ))}
+
+            {/* Bank & UPI offers — pipeline content only; hidden if none */}
+            {store.bank_offers_content && (
+              <div className="bg-white rounded-xl border border-gray-300 shadow-sm p-6">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">{store.name} Bank & UPI Offers</h2>
+                <p className="text-gray-600 text-base leading-relaxed whitespace-pre-line">{store.bank_offers_content}</p>
+              </div>
+            )}
+
+            {/* Sale calendar — pipeline content; intro prose + parsed table; hidden if none */}
+            {store.sale_calendar_content && (() => {
+              const raw = store.sale_calendar_content.trim()
+              const lines = raw.split(/\n+/).map(l => l.trim()).filter(Boolean)
+              const tableLines = lines.filter(l => l.includes(' | '))
+              const introLines = lines.filter(l => !l.includes(' | '))
+              const rows = tableLines.map(l => l.split(' | ').map(c => c.trim()))
+              const hasHeader = rows.length > 0 && /event/i.test(rows[0][0] || '')
+              const headerRow = hasHeader ? rows[0] : ['Sale Event', 'Tentative Month', 'Expected Discount']
+              const bodyRows = hasHeader ? rows.slice(1) : rows
+              return (
+                <div className="bg-white rounded-xl border border-gray-300 shadow-sm p-6">
+                  <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">{store.name} Sale Calendar {new Date().getFullYear()}</h2>
+                  {introLines.length > 0 && (
+                    <p className="text-gray-600 text-base leading-relaxed mb-4 whitespace-pre-line">{introLines.join('\n')}</p>
+                  )}
+                  {bodyRows.length > 0 && (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm border-collapse">
+                        <thead>
+                          <tr className="border-b border-gray-300">
+                            {headerRow.map((h, hi) => (
+                              <th key={hi} className="text-left py-2 px-3 font-semibold text-gray-900">{h}</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {bodyRows.map((r, ri) => (
+                            <tr key={ri} className="border-b border-gray-200">
+                              {r.map((c, ci) => (
+                                <td key={ci} className="py-2 px-3 text-gray-600">{c}</td>
+                              ))}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              )
+            })()}
+
             {/* FAQs — pipeline content only; section hidden if none */}
             {faqs.length > 0 && (
             <div className="bg-white rounded-xl border border-gray-300 shadow-sm p-6">
