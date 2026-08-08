@@ -9,7 +9,19 @@ import { isExpired, SITE_NAME, SITE_URL } from '@/lib/utils'
 
 interface Props { params: { slug: string } }
 
-export const revalidate = 60
+export const revalidate = 3600 // 1 hour — served from CDN edge (was 60, caused frequent re-renders)
+export const dynamicParams = true
+
+export async function generateStaticParams() {
+  const { createClient } = await import('@supabase/supabase-js')
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { persistSession: false } }
+  )
+  const { data } = await supabase.from('categories').select('slug')
+  return (data || []).map(c => ({ slug: c.slug }))
+}
 
 function interleaveCoupons(coupons: any[]) {
   const byStore: Record<string, any[]> = {}
