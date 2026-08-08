@@ -91,7 +91,7 @@ Rules: Only present an offer as a real, specific coupon/discount if it is listed
       },
       body: JSON.stringify({
         model: 'claude-sonnet-5',
-        max_tokens: 8000,
+        max_tokens: 12000,
         system: SYSTEM_PROMPT,
         messages: [{ role: 'user', content: userMessage }],
       }),
@@ -111,7 +111,7 @@ Rules: Only present an offer as a real, specific coupon/discount if it is listed
       .trim()
 
     if (!rawText) {
-      return NextResponse.json({ error: 'Empty response', raw: JSON.stringify(data) }, { status: 502 })
+      return NextResponse.json({ error: `Empty response (stop_reason: ${data.stop_reason || 'unknown'}). The model may have returned no text — try again, or reduce brand_facts length.`, raw: JSON.stringify(data).slice(0, 2000) }, { status: 502 })
     }
 
     // Strip accidental code fences, slice from first { to last }
